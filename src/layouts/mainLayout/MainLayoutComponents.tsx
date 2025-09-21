@@ -11,10 +11,6 @@ const MainLayoutComponents = () => {
       <div
         className={`
           ${isShowSideBar ? 'block' : 'hidden'}
-          absolute
-          top-0
-          left-0
-          z-50
           w-64
           h-full
           bg-white

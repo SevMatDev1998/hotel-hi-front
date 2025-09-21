@@ -22,7 +22,10 @@ export default {
       },
       
       fontSize: {
+        12: '12px',
         14: '14px',
+        16: '16x',
+
       },
       lineHeight:{
         1.5:"24px",
