@@ -1,10 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Hotel = () => {
+  const { t } = useTranslation();
+
   return (
     <div className='main-title'>
-      Սենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներ
-
+      <h1>{t('hotel')}</h1>
+      <p>{t('welcome')}</p>
     </div>
   );
 };

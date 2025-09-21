@@ -1,6 +1,7 @@
 import { Bell, LogOut, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import useModal from '../hooks/useModal';
+import LanguageSwitcher from './LanguageSwitcher';
 // import { logOut } from '../store/slices/auth.slice';
 // import { useGetUnreadNotificationsCountQuery } from '../../services/notifications/notifications';
 // import NotificationsModal from '../../modals/NotificationsModal';
@@ -39,6 +40,7 @@ export const Header: FC<IHeader> = ({ setIsShowSideBar }) => {
           />
         </div>
         <div className="flex items-center space-x-4">
+          <LanguageSwitcher />
           <button
             className="relative rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
             onClick={() => {
