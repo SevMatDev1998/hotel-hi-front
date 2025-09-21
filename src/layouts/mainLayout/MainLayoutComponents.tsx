@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
 import { useState } from "react";
-import { Sidebar } from '../Sidebar';
-import { Header } from '../Header';
+import { Sidebar } from '../sidebar/Sidebar';
+import { Header } from '../header/Header';
 
-const LayoutComponents = () => {
+const MainLayoutComponents = () => {
   const [isShowSideBar, setIsShowSideBar] = useState<boolean>(true);
 
   return (
@@ -35,4 +35,4 @@ const LayoutComponents = () => {
   );
 };
 
-export default LayoutComponents;
+export default MainLayoutComponents;

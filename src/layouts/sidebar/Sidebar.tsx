@@ -16,7 +16,7 @@ import {
   
 } from 'lucide-react';
 import { UserRole } from '../../types';
-import RouteEnum from '../enums/route.enum';
+import RouteEnum from '../../enums/route.enum';
 
 const navigation: {
   name: string;

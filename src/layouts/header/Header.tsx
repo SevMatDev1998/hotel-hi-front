@@ -1,13 +1,13 @@
 import { Bell, LogOut, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import useModal from '../hooks/useModal';
-import LanguageSwitcher from './LanguageSwitcher';
+import useModal from '../../hooks/useModal';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
 // import { logOut } from '../store/slices/auth.slice';
 // import { useGetUnreadNotificationsCountQuery } from '../../services/notifications/notifications';
 // import NotificationsModal from '../../modals/NotificationsModal';
-import RouteEnum from '../enums/route.enum';
+// import RouteEnum from '../../enums/route.enum';
 import { FC } from 'react';
-import useAppDispatch from '../hooks/useAppDisaptch';
+import useAppDispatch from '../../hooks/useAppDisaptch';
 
 
 interface IHeader {

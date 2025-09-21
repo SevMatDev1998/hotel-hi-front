@@ -88,39 +88,33 @@ html{
 }
 
 body {
-    font-size: 16px;
-    line-height: 1.2;
+    font-size: 12px;
     font-weight: 400;
     font-family: theme("fontFamily.armenian");
 }
 
 .main-title {
-    font-size: 32px;
-    line-height: 1.25;
+    font-size: 20px;
     font-weight: 600;
 }
 
-.main-sub-title {
-    font-size: 18px;
-    line-height: 1.4;
-    font-weight: 600;
+.block-title {
+    font-size: 16px;
+    font-weight: 700;
 }
 
 /* blok title  */
-.sub-title {
+/* .sub-title {
     font-size: 20px;
     line-height: 1.25;
-    font-weight: 500;
-    /* @media screen(theme(screens.mobile)) {
-        font-size: 14px;
-    } */
-}
+    font-weight: 700;
+} */
 
-.title {
+/* .title {
     font-size: 20px;
     line-height: 1.25;
     font-weight: 500;
-}
+} */
 
 /* Hide scrollbar for Chrome, Safari, and Opera */
 .no-scrollbar::-webkit-scrollbar {

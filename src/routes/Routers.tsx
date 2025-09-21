@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import NotFound from "../pages/404/NotFound";
 import RouteEnum from "../enums/route.enum";
-import { Layout } from "../components/Layout/Layout";
 import Hotel from "../pages/hotel/Hotel";
+import { MainLayout } from "../layouts/mainLayout/MainLayout";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -54,7 +54,7 @@ import Hotel from "../pages/hotel/Hotel";
 const router = createBrowserRouter([
   {
     path: RouteEnum.HOME,
-    element: <Layout />,
+    element: <MainLayout />,
     children: [
       // { path: RouteEnum.HOME, element: <DashboardPage /> },
       { path: RouteEnum.HOME, element: <div>Dashboard</div> },

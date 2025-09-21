@@ -7,9 +7,9 @@ import useAppSelector from '../../hooks/useAppSelector';
 import RouteEnum from '../../enums/route.enum';
 import PRIVATE_ROUTES from '../../constants/private-routes';
 import PUBLIC_ROUTES from '../../constants/publict-routes';
-import LayoutComponents from './LayoutComponents';
+import MainLayoutComponents from './MainLayoutComponents';
 
-export const Layout: FC = () => {
+export const MainLayout: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const jwtToken = getJwtToken();
@@ -39,7 +39,7 @@ export const Layout: FC = () => {
   // }, [navigate, pathname, isLogin, isLoading]);
   }, [navigate, pathname, isLogin]);
 
-  return <LayoutComponents/>
+  return <MainLayoutComponents/>
 };
 
 
