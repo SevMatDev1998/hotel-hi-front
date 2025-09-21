@@ -107,7 +107,7 @@ export const Sidebar: FC<ISideBar> = ({ setIsShowSideBar }) => {
   const navigate = useNavigate()
 
   return (
-    <div className="flex h-full w-64 flex-col bg-gray-900">
+    <div className="flex h-full w-64 flex-col bg-dusty-teal">
       <div className="flex h-16 items-center justify-center border-b border-gray-800 cursor-pointer" onClick={()=>{navigate("/")}}>
         <h1 className="text-xl font-bold text-white">Admin Panel</h1>
       </div>

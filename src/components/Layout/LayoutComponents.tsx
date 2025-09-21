@@ -4,7 +4,7 @@ import { Sidebar } from '../Sidebar';
 import { Header } from '../Header';
 
 const LayoutComponents = () => {
-  const [isShowSideBar, setIsShowSideBar] = useState<boolean>(false);
+  const [isShowSideBar, setIsShowSideBar] = useState<boolean>(true);
 
   return (
     <div className="flex h-screen bg-gray-100 relative">
