@@ -1,7 +1,87 @@
 @import "@fontsource/montserrat/index.css";
+
+/* NotoSansArmenian Font Face Declarations */
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans Armenian';
+    src: url('./assets/fonts/NotoSansArmenian/NotoSansArmenian-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    color: #545454;
+  }
+}
 
 html{
     scroll-behavior: smooth;
@@ -11,7 +91,7 @@ body {
     font-size: 16px;
     line-height: 1.2;
     font-weight: 400;
-    font-family: theme("fontFamily.sans");
+    font-family: theme("fontFamily.armenian");
 }
 
 .main-title {

@@ -2,8 +2,9 @@ import React from 'react';
 
 const Hotel = () => {
   return (
-    <div>
-      hotel
+    <div className='main-title'>
+      Սենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներՍենյակների տեսակներ
+
     </div>
   );
 };

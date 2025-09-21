@@ -7,12 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        "rich-black": "#01050F",
         "dusty-teal": "#589A8F",
-        "test": "red",
-
+        "deep-teal": "#428277",
+        "aqua-sky": "#40C7E6",
+        "ice-blue": "#EBF9FC",
+        "cloud-gray": "#EAEAEA",
+        "ash-gray": "#D5D5D5",
+        "charcoal-gray": "#545454",
+        "brick-red": "#CD5555",
+        "snow": "#FFFFFF",
       },
-      
       backgroundImage: {
         "blue-gradient": "linear-gradient(to right, #95D0EA, #74B9D8)",
       },
@@ -26,6 +30,7 @@ export default {
     },
     fontFamily: {
       sans: ["Montserrat", "sans-serif"],
+      armenian: ["Noto Sans Armenian", "sans-serif"],
     },
 
     
