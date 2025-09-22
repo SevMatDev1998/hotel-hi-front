@@ -3,6 +3,7 @@ import NotFound from "../pages/404/NotFound";
 import RouteEnum from "../enums/route.enum";
 import Hotel from "../pages/hotel/Hotel";
 import { MainLayout } from "../layouts/mainLayout/MainLayout";
+import LoginPage from "../pages/auth/LoginPage";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -142,7 +143,7 @@ const router = createBrowserRouter([
   {
     path: RouteEnum.HOME,
     children: [
-      // { path: RouteEnum.LOGIN, element: <LoginPage /> },
+      { path: RouteEnum.LOGIN, element: <LoginPage /> },
       // { path: RouteEnum.RESET_PASSWORD, element: <ResetPasswordPage /> },
       // { path: RouteEnum.NEW_PASSWORD, element: <NewPasswordPage /> },
       // { path: RouteEnum.CHECK_EMAIL_VERIFICATION, element: <CheckEmailVerificationPage /> },
