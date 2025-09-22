@@ -24,8 +24,17 @@ export default {
       fontSize: {
         12: '12px',
         14: '14px',
-        16: '16x',
+        16: '16px',
+        18: '18px',
+        54: '54px',
+        inherit: 'inherit',
 
+      },
+      fontWeight: {
+        400: '400',
+        500: '500',
+        600: '600',
+        inherit: 'inherit',
       },
       lineHeight:{
         1.5:"24px",
