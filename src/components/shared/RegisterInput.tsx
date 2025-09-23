@@ -7,7 +7,7 @@ interface IRegisterInput {
   label?: string;
   name: string;
   type?: string;
-  errors: Record<string, any>;
+  errors?: Record<string, any>;
   className?: string;
   labelClassName?: string;
   disabled?: boolean;

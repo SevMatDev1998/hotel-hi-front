@@ -39,7 +39,6 @@ const SignUpContainer = () => {
           <Label htmlFor="hotelName" className="block" text={t('auth.hotel_name')} />
           <RegisterInput
             register={register}
-            errors={errors}
             name="hotelName"
             type="text"
             className='rounded-none border !border-dusty-teal'
@@ -49,7 +48,6 @@ const SignUpContainer = () => {
           <Label htmlFor="email" className="block" text={t('auth.email')} />
           <RegisterInput
             register={register}
-            errors={errors}
             label="Email address"
             name="email"
             type="email"
@@ -61,7 +59,6 @@ const SignUpContainer = () => {
           <div className="relative">
             <RegisterInput
               register={register}
-              errors={errors}
               label="password"
               name="password"
               type={showPassword ? "text" : "password"}
@@ -85,7 +82,6 @@ const SignUpContainer = () => {
           <div className="relative">
             <RegisterInput
               register={register}
-              errors={errors}
               label="password"
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
@@ -104,6 +100,43 @@ const SignUpContainer = () => {
             </button>
           </div>
         </div>
+        
+        {/* Form Errors */}
+        {Object.keys(errors).length > 0 && (
+          <div className="flex flex-col gap-2">
+            {Object.entries(errors).map(([field, error], index) => {
+              // Map error messages to translation keys
+              const getErrorTranslationKey = (fieldName: string, errorMessage: string) => {
+                if (errorMessage?.includes('required')) {
+                  return `auth.errors.${fieldName}_required`;
+                }
+                if (errorMessage?.includes('Invalid email')) {
+                  return 'auth.errors.email_invalid';
+                }
+                if (errorMessage?.includes('Password must be at least')) {
+                  return 'auth.errors.password_min';
+                }
+                if (errorMessage?.includes('Passwords must match')) {
+                  return 'auth.errors.passwords_not_match';
+                }
+                // Fallback
+                return `auth.errors.${fieldName}_required`;
+              };
+
+              const translationKey = getErrorTranslationKey(field, error?.message || '');
+              
+              return (
+                <div key={field} className="flex items-center gap-2 text-red-500 text-sm">
+                  <span className="flex items-center justify-center w-6 h-6 bg-red-100 rounded-full text-red-600 font-semibold text-xs">
+                    {index + 1}
+                  </span>
+                  <span>{t(translationKey)}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
         <div className='flex justify-center '>
           <Button className='justify-center w-full'>
             {t('auth.login')}

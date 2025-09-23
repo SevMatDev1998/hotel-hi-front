@@ -16,6 +16,15 @@
     "forgot_password": "Մոռացել եք գաղտնաբառը",
     "no_account":"Գրանցված չեմ համակարգում",
     "hotel_name":"Հյուրանոցի անվանում",
-    "confirm_password":"Հաստատել գաղտնաբառը"
+    "confirm_password":"Հաստատել գաղտնաբառը",
+    "errors": {
+      "hotelName_required": "Հյուրանոցի անվանումը պարտադիր է",
+      "email_required": "Էլ. փոստը պարտադիր է",
+      "email_invalid": "Էլ. փոստի ֆորմատը սխալ է",
+      "password_required": "Գաղտնաբառը պարտադիր է",
+      "password_min": "Գաղտնաբառը պետք է լինի առնվազն 8 նիշ",
+      "confirmPassword_required": "Գաղտնաբառի հաստատումը պարտադիր է",
+      "passwords_not_match": "Գաղտնաբառերը չեն համընկնում"
+    }
   }
 }
