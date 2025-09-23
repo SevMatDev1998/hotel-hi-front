@@ -8,13 +8,21 @@ interface IRegisterInput {
   name: string;
   type?: string;
   errors: Record<string, any>;
-  className?: string
-
-  labelClassName?: string
-  disabled?: boolean
+  className?: string;
+  labelClassName?: string;
+  disabled?: boolean;
 }
 
-const RegisterInput: FC<IRegisterInput> = ({ register, errors, label = "", name, type = "text", labelClassName, disabled = false }) => {
+const RegisterInput: FC<IRegisterInput> = ({ 
+  register, 
+  errors, 
+  label = "", 
+  name, 
+  type = "text", 
+  className,
+  labelClassName, 
+  disabled = false 
+}) => {
   return (
     <div>
       <label htmlFor={name} className={clsx("sr-only", labelClassName)}>
@@ -24,24 +32,10 @@ const RegisterInput: FC<IRegisterInput> = ({ register, errors, label = "", name,
         {...register(name, { required: `${label} is required` })}
         type={type}
         autoComplete={type === "password" ? "current-password" : "off"}
-        className="
-          appearance-none 
-          relative 
-          block 
-          w-full
-          px-3 
-          py-2
-          border
-          border-gray-300
-          placeholder-gray-500
-          text-gray-900 
-          focus:outline-none
-          focus:ring-indigo-500
-          focus:border-indigo-500 
-          focus:z-10 
-          sm:text-sm 
-          rounded-lg
-        "
+        className={clsx(
+          "appearance-none relative block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none mt-2",
+          className
+        )}
         placeholder={label}
         disabled={disabled}
       />

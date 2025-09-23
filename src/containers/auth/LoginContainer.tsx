@@ -1,13 +1,11 @@
-import React from 'react';
 import AuthLayout from '../../layouts/auth/AuthLayout';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
 import { LoginFormType, loginSchema } from '../../yupValidation/AuthValidation';
 import { useLoginMutation } from '../../services/auth/auth.service';
 import RegisterInput from '../../components/shared/RegisterInput';
-
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
+import Label from '../../components/shared/label';
 
 const LoginContainer = () => {
 
@@ -26,14 +24,16 @@ const LoginContainer = () => {
 
   return (
     <AuthLayout>
-      <form className="w-[100%] space-y-5" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-[100%] " onSubmit={handleSubmit(onSubmit)}>
+        <Label htmlFor="email" className="block" text="Email address" />
         <RegisterInput
           register={register}
           errors={errors}
           label="Email address"
           name="email"
           type="email"
-          cl
+          className='rounded-none border !border-dusty-teal'
+          
         />
       </form>
     </AuthLayout>
