@@ -30,7 +30,7 @@ export const Header: FC<IHeader> = ({ setIsShowSideBar }) => {
   };
 
   return (
-    <header className="bg-white shadow">
+    <header className="">
       <div className="flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <img

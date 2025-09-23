@@ -7,13 +7,12 @@ const MainLayoutComponents = () => {
   const [isShowSideBar, setIsShowSideBar] = useState<boolean>(true);
 
   return (
-    <div className="flex h-screen bg-gray-100 relative">
+    <div className="flex h-screen  relative">
       <div
         className={`
           ${isShowSideBar ? 'block' : 'hidden'}
           w-64
           h-full
-          bg-white
           md:static
           md:block
         `}

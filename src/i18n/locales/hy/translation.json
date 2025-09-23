@@ -4,6 +4,17 @@
   "language": "Լեզու",
   "armenian": "Հայերեն",
   "russian": "Ռուսերեն",
+  "menu":{
+    "settings":"Կարգավորումներ",
+    "hotel":"Հյուրանոց",
+    "basic":"Հիմնական",
+    "rooms":"Սենյակներ",
+    "food":"Սնունդ",
+    "services":"Ծառայություններ",
+    "price settings":"Գնային կարգավորում",
+    "partners":"Գործընկերներ",
+    "notifications":"Ծանուցումներ"
+  },
 
   "auth":{
     "create_account": "Ստեղծել հաշիվ",
@@ -27,4 +38,5 @@
       "passwords_not_match": "Գաղտնաբառերը չեն համընկնում"
     }
   }
+  
 }

@@ -4,6 +4,17 @@
   "language": "Язык",
   "armenian": "Армянский",
   "russian": "Русский",
+  "menu":{
+    "settings":"Настройки",
+    "hotel":"Отель",
+    "basic":"Основное",
+    "rooms":"Номера",
+    "food":"Еда",
+    "services":"Услуги",
+    "price settings":"Настройки цен",
+    "partners":"Партнеры",
+    "notifications":"Уведомления"
+  },
 
   "auth":{
     "create_account": "Создать аккаунт",
