@@ -16,6 +16,7 @@ export default {
         "charcoal-gray": "#545454",
         "brick-red": "#CD5555",
         "snow": "#FFFFFF",
+        "light-gray": "rgba(243, 242, 243, 1)",
       },
       backgroundImage: {
         "blue-gradient": "linear-gradient(to right, #95D0EA, #74B9D8)",
@@ -39,6 +40,9 @@ export default {
       },
       lineHeight:{
         1.5:"24px",
+      },
+      boxShadow: {
+        'block-shadow': '2px -1px 15px 1px rgba(0,0,0,0.30)',
       }
     },
     fontFamily: {
