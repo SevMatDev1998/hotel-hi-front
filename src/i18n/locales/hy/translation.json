@@ -3,5 +3,17 @@
   "welcome": "Բարի գալուստ",
   "language": "Լեզու",
   "armenian": "Հայերեն",
-  "russian": "Ռուսերեն"
+  "russian": "Ռուսերեն",
+
+  "auth":{
+    "create_account": "Ստեղծել հաշիվ",
+    "login": "Մուտք գործել",
+    "logout": "Ելք",
+    "email": "Էլ. փոստ",
+    "password": "Գաղտնաբառ",
+    "not_registered_system": "Գրանցված չեմ համակարգում",
+    "register": "Գրանցվել",
+    "forgot_password": "Մոռացել եք գաղտնաբառը",
+    "no_account":"Գրանցված չեմ համակարգում"
+  }
 }

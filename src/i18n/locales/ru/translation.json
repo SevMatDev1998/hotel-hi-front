@@ -3,5 +3,16 @@
   "welcome": "Добро пожаловать",
   "language": "Язык",
   "armenian": "Армянский",
-  "russian": "Русский"
+  "russian": "Русский",
+
+  "auth":{
+    "create_account": "Создать аккаунт",
+    "login": "Войти",
+    "logout": "Выйти",
+    "email": "Эл. почта",
+    "password": "Пароль",
+    "not_registered_system": "Не зарегистрирован в системе",
+    "register": "Зарегистрироваться",
+    "forgot_password": "Забыли пароль"
+  }
 }

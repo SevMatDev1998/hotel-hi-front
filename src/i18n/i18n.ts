@@ -2,25 +2,17 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+// Import translation files
+import hyTranslation from './locales/hy/translation.json';
+import ruTranslation from './locales/ru/translation.json';
+
 // Translation resources
 const resources = {
   hy: {
-    translation: {
-      hotel: 'Հյուրանոց',
-      welcome: 'Բարի գալուստ',
-      language: 'Լեզու',
-      armenian: 'Հայերեն',
-      russian: 'Ռուսերեն'
-    },
+    translation: hyTranslation,
   },
   ru: {
-    translation: {
-      hotel: 'Отель',
-      welcome: 'Добро пожаловать',
-      language: 'Язык',
-      armenian: 'Армянский',
-      russian: 'Русский'
-    },
+    translation: ruTranslation,
   },
 };
 

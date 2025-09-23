@@ -39,9 +39,9 @@ const RegisterInput: FC<IRegisterInput> = ({
         placeholder={label}
         disabled={disabled}
       />
-      {errors[name] && (
+      {/* {errors[name] && (
         <p className="mt-1 ml-1 text-sm text-black">{errors[name].message}</p>
-      )}
+      )} */}
     </div>
   );
 };
