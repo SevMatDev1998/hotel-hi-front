@@ -43,34 +43,6 @@ export interface UserWithRelations extends User {
   userHotels: UserHotel[];
 }
 
-// User creation data
-export interface CreateUserData {
-  userName?: string;
-  email?: string;
-  emailConfirmed?: boolean;
-  passwordHash?: string;
-  phoneNumber?: string;
-  phoneNumberConfirmed?: boolean;
-  twoFactorEnabled?: boolean;
-  lockoutEnabled?: boolean;
-  defaultLanguageId: number;
-}
-
-// User update data
-export interface UpdateUserData {
-  userName?: string;
-  email?: string;
-  emailConfirmed?: boolean;
-  passwordHash?: string;
-  phoneNumber?: string;
-  phoneNumberConfirmed?: boolean;
-  twoFactorEnabled?: boolean;
-  lockoutEnd?: Date;
-  lockoutEnabled?: boolean;
-  accessFailedCount?: number;
-  defaultLanguageId?: number;
-}
-
 // User authentication data
 export interface UserAuthData {
   email: string;
