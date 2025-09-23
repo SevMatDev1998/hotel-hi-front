@@ -1,21 +1,3 @@
-// Forward declarations to avoid circular imports
-interface Language {
-  id: number;
-  name: string;
-  code: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface UserHotel {
-  id: number;
-  userId: number;
-  hotelId: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Base User interface
 export interface User {
   id: number;
   userName?: string;
@@ -35,32 +17,4 @@ export interface User {
   defaultLanguageId: number;
   createdAt: Date;
   updatedAt: Date;
-}
-
-// User with relations
-export interface UserWithRelations extends User {
-  defaultLanguage: Language;
-  userHotels: UserHotel[];
-}
-
-// User authentication data
-export interface UserAuthData {
-  email: string;
-  password: string;
-}
-
-// User registration data
-export interface UserRegistrationData {
-  userName?: string;
-  email: string;
-  password: string;
-  phoneNumber?: string;
-  defaultLanguageId: number;
-}
-
-// User login response
-export interface UserLoginResponse {
-  user: User;
-  token: string;
-  refreshToken: string;
 }

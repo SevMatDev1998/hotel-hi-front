@@ -1,8 +1,7 @@
-export interface Currency {
+export interface HotelState {
   id: number;
   name: string;
-  code: string;
-  symbol: string;
+  countryId: number;
   createdAt: Date;
   updatedAt: Date;
 }

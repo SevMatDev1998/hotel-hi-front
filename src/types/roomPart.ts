@@ -1,8 +1,6 @@
-export interface Currency {
+export interface RoomPart {
   id: number;
   name: string;
-  code: string;
-  symbol: string;
   createdAt: Date;
   updatedAt: Date;
 }

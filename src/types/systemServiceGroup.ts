@@ -1,8 +1,6 @@
-export interface Currency {
+export interface SystemServiceGroup {
   id: number;
   name: string;
-  code: string;
-  symbol: string;
   createdAt: Date;
   updatedAt: Date;
 }

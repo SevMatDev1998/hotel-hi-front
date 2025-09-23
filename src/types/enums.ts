@@ -1,4 +1,3 @@
-// Enums based on Prisma schema
 export enum EmailSentStatus {
   Scheduled = 'Scheduled',
   Delivered = 'Delivered',
@@ -13,7 +12,7 @@ export enum FoodType {
 
 export enum LegalEntityType {
   LLC = 'LLC',
-  PE = 'PE', // Private Entrepreneur
+  PE = 'PE',
   CJSC = 'CJSC',
   OJSC = 'OJSC',
   NGO = 'NGO'
@@ -52,9 +51,9 @@ export enum PartnerStatus {
 }
 
 export enum PhoneCodesEnum {
-  AM = 'AM', // +374
-  USA = 'USA', // +1
-  RUS = 'RUS' // +7
+  AM = 'AM',
+  USA = 'USA',
+  RUS = 'RUS'
 }
 
 export enum PriceNotificationStatus {
