@@ -41,22 +41,7 @@ export const Header: FC<IHeader> = ({ setIsShowSideBar }) => {
         </div>
         <div className="flex items-center space-x-4">
           <LanguageSwitcher />
-          <button
-            className="relative rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-            onClick={() => {
-              // open(NotificationsModal, {
-              //   title: "", onSubmit: (id: string) => {
-              //     navigate(`${RouteEnum.NOTIFICATIONS}/${id}`)
-
-              //   }
-              // });
-            }}
-          >
-            <Bell className="h-6 w-6" />
-            {/* {unreadCount > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">{unreadCount}</span>
-            )} */}
-          </button>
+        
           <button
             onClick={() => { handleLogOut() }}
             className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
