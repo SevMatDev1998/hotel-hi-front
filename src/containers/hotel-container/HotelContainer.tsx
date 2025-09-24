@@ -1,5 +1,5 @@
 import { useTranslation } from "../../hooks/useTranslation";
-import BaseInfoContainer from "./BaseInfoContainer";
+import BaseInfoContainer from "./base-info/BaseInfoContainer";
 
 const HotelContainer = () => {
   const { t } = useTranslation();

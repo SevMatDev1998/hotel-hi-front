@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import HotelContainer from '../../containers/hotelContainer/HotelContainer';
+import HotelContainer from '../../containers/hotel-container/HotelContainer';
 
 const Hotel = () => {
   const { t } = useTranslation();
