@@ -1,5 +1,4 @@
 {
-  "hotel": "Հյուրանոց",
   "welcome": "Բարի գալուստ",
   "language": "Լեզու",
   "armenian": "Հայերեն",
@@ -37,6 +36,15 @@
       "confirmPassword_required": "Գաղտնաբառի հաստատումը պարտադիր է",
       "passwords_not_match": "Գաղտնաբառերը չեն համընկնում"
     }
+  },
+
+  "hotel":{
+    "hotel_base_info":"Հյուրանոցի հիմնական տեղեկություններ",
+    "hotel_address":"Հյուրանոցի հասցե",
+    "contact_person":"Կոնտակտային անձ",
+    "phone_number":"Հեռախոսահամար",
+    "value":"Արժեք",
+    "product_logo":"Ապրանքի նշան"
   }
   
 }

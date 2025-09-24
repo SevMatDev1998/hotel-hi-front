@@ -82,6 +82,18 @@
     color: #545454;
   }
   
+  h1 {
+    font-size: 20px;
+  }
+  
+  h2 {
+    font-size: 16px;
+  }
+}
+p{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: theme("fontFamily.armenian");    
 }
 
 html{
@@ -89,7 +101,7 @@ html{
 }
 
 body {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     font-family: theme("fontFamily.armenian");
 }
