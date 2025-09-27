@@ -4,7 +4,6 @@ import { LoginFormType, loginSchema } from '../../yupValidation/AuthValidation';
 import { useLoginMutation } from '../../services/auth/auth.service';
 import RegisterInput from '../../components/shared/RegisterInput';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
 import Label from '../../components/shared/label';
 import { Button } from '../../components/shared/Button';
 import RouteEnum from '../../enums/route.enum';
@@ -54,15 +53,15 @@ const LoginContainer = () => {
           />
         </div>
         <div className='flex justify-center '>
-          <Button className='justify-center w-full'>
+          <Button className='justify-center w-full' isLoading={isLoading} type="submit">
             {t('auth.login')}
           </Button>
         </div>
         <div className='flex flex-col text-dusty-teal text-18'>
-          <a href={RouteEnum.RESET_PASSWORD} className='font-400'>{t('auth.forgot_password')}</a>
+          <a href={RouteEnum.RESET_PASSWORD} className=''>{t('auth.forgot_password')}</a>
           <div className='flex gap-1 '>
-          <div className='text-18 font-400 text-charcoal-gray'>{t('auth.no_account')}:</div>
-          <a href={RouteEnum.SIGN_UP} className='  font-600'>{t('auth.register')}</a>
+          <div className='text-18 text-charcoal-gray'>{t('auth.no_account')}:</div>
+          <a href={RouteEnum.SIGN_UP} className='  font-semibold'>{t('auth.register')}</a>
           </div>
         </div>
       </form>

@@ -15,7 +15,7 @@ const AuthLayout: FC<IAuthLayoutProps> = ({ children }) => {
             <div className="">
               <img src="images/icons/mainLogo.svg" />
             </div>
-            <h1 className="text-54 font-400">hotel hive</h1>
+            <h1 className="text-54">hotel hive</h1>
           </div>
         </div>
 

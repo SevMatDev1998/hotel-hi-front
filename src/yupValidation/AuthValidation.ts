@@ -23,10 +23,17 @@ export const signUpSchema = yup.object().shape({
       'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
     )
     .required('Password is required'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Passwords must match')
-    .required('Confirm password is required'),
+confirmPassword: yup
+  .string()
+  .notRequired()
+  .when('password', (password, schema) =>
+    password
+      ? schema.oneOf([yup.ref('password')], 'Passwords must match')
+      : schema
+  )
+  .strip(),
+
+
 });
 
 export type LoginFormType = yup.InferType<typeof loginSchema>;

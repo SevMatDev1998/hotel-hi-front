@@ -33,7 +33,7 @@ const RegisterInput: FC<IRegisterInput> = ({
         type={type}
         autoComplete={type === "password" ? "current-password" : "off"}
         className={clsx(
-          "appearance-none relative block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none mt-2",
+          "appearance-none relative block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none",
           className
         )}
         placeholder={label}

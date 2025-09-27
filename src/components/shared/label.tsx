@@ -19,7 +19,6 @@ const Label: React.FC<LabelProps> = ({
     <label
       className={cn(
         'text-12',
-        'font-400',
         'leading-none',
         'tracking-normal',
         'text-charcoal-gray',

@@ -17,6 +17,7 @@ export default {
         "brick-red": "#CD5555",
         "snow": "#FFFFFF",
         "light-gray": "rgba(243, 242, 243, 1)",
+        "light-blue": "rgba(235, 249, 252, 1)",
       },
       backgroundImage: {
         "blue-gradient": "linear-gradient(to right, #95D0EA, #74B9D8)",
@@ -29,15 +30,8 @@ export default {
         24: '24px',
         18: '18px',
         54: '54px',
-        inherit: 'inherit',
+      },
 
-      },
-      fontWeight: {
-        400: '400',
-        500: '500',
-        600: '600',
-        inherit: 'inherit',
-      },
       lineHeight:{
         1.5:"24px",
       },

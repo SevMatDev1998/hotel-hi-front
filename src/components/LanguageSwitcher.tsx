@@ -14,8 +14,8 @@ const LanguageSwitcher: FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const languages: Language[] = [
-    { code: 'hy', name: 'Armenian', flag: '/public/images/flags/am_flag.svg' },
-    { code: 'ru', name: 'Russian', flag: '/public/images/flags/ru_flag.svg' },
+    { code: 'hy', name: 'Armenian', flag: '/images/flags/am_flag.svg' },
+    { code: 'ru', name: 'Russian', flag: '/images/flags/ru_flag.svg' },
     // { code: 'en', name: 'English', flag: '/public/images/flags/en_flag.svg' },
   ];
 

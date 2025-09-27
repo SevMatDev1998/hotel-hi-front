@@ -80,13 +80,7 @@
 @layer base {
   html {
     color: #545454;
-  }
-  
-}
-p{
-    font-size: 14px;
-    font-weight: 400;
-    font-family: theme("fontFamily.armenian");    
+  } 
 }
 
 html{
@@ -99,14 +93,11 @@ body {
     font-family: theme("fontFamily.armenian");
 }
 
-.main-title {
-    font-size: 20px;
-    font-weight: 600;
-}
 
-.block-title {
+h3{
     font-size: 16px;
     font-weight: 700;
+    font-family: theme("fontFamily.armenian");
 }
 
 /* blok title  */

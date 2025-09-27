@@ -1,13 +1,19 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { LoginResponse } from "./auth.types";
-import { User } from "../../types";
+import { LoginDTO, LoginResponse, SignUpDTO } from "./auth.types";
 
 const AuthService = ApiInstance.injectEndpoints({
     endpoints: build => ({
-        login: build.mutation<LoginResponse, Partial<User>>({
+        login: build.mutation<LoginResponse, LoginDTO>({
             query: (body) => ({
                 url: ApiEnum.AUTH_LOGIN,
+                method: "POST",
+                body
+            })
+        }),
+        signUp: build.mutation<LoginResponse, SignUpDTO>({
+            query: (body) => ({
+                url: ApiEnum.REGISTER,
                 method: "POST",
                 body
             })
@@ -17,5 +23,6 @@ const AuthService = ApiInstance.injectEndpoints({
 
 export const {
     useLoginMutation,
+    useSignUpMutation   
 } = AuthService;
 export const { endpoints: { login } } = AuthService

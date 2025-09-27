@@ -11,7 +11,8 @@ interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 
 // Base button variant styles
 const variantClasses = {
-  base: 'p-[12px] bg-dusty-teal rounded-[8px] min-w-[164px] flex items-center text-16 text-white',
+  base: 'p-[12px] bg-dusty-teal rounded-[8px] min-w-[164px] flex items-center justify-center text-xs text-white ',
+
   outline: 'p-[10px] border border-dusty-teal rounded-[8px] min-w-[164px] flex items-center text-dusty-teal ',
 };
 
