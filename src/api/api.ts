@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi, fetchBaseQuery, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
-import {clearTokens, getJwtToken, getRefreshToken, setJwtToken, setRefreshToken} from "../utils/tokenUtil.ts";
+import { clearTokens, getJwtToken, getRefreshToken, setJwtToken, setRefreshToken } from "../utils/tokenUtil.ts";
 import ApiEnum from '../enums/api.enum.ts';
 
 const mutex = new Mutex();
@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({
     },
 });
 
-export const baseQueryInstance: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (args, api, options) => {
+export const baseQueryInstance: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError, { action?: string }> = async (args, api, options) => {
     await mutex.waitForUnlock();
     let result = await baseQuery(args, api, options);
 
@@ -59,6 +59,7 @@ export const baseQueryInstance: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryEr
         }
     }
     return result;
+
 };
 
 const tagTypes = Object.values(ApiEnum)

@@ -7,21 +7,7 @@ export enum RouteEnum {
     SIGN_UP = "/sign-up",
 
     // Private
-    HOME="/",
-    USERS="/users",
-    COURSES = "/courses", 
-    LESSONS = "/lessons",
-    FAQS="/faqs",
-    USERGROUPS="/userGroups",
-    COMMENTS="/comments",
-    MEETS="/meets",
-    NOTES="/notes",
-    SUBSCRIPTIONS="/subscriptions",
-    NOTIFICATIONS="/notifications",
-    MESSAGES="/messages",
-    NEWS="/news",
-    LESSON_OWNERS = "/lesson-owners",
-    REVIEWS='/reviews',
+    HOTEL = "/hotel",
     NOT_FOUND = "*",
   }
 

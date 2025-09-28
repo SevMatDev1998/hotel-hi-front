@@ -5,6 +5,7 @@ import ModalProvider from './providers/ModalProvider';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import router from './routes/Routers';
+import ToastContainer from './containers/public/ToastContainer';
 
 
 
@@ -14,7 +15,7 @@ const App: React.FC = () => {
         <ModalProvider>
         <RouterProvider router={router} />
         </ModalProvider>
-      <Toaster position="top-right" />
+      <ToastContainer  />
     </Provider>
 
   );

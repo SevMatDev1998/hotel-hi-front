@@ -8,28 +8,32 @@ import Label from '../../components/shared/label';
 import { Button } from '../../components/shared/Button';
 import RouteEnum from '../../enums/route.enum';
 import { useTranslation } from '../../hooks/useTranslation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signUpEffect } from '../../services/auth/auth.effects';
 
 const SignUpContainer = () => {
   const { t } = useTranslation();
   
-  // State for password visibility
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [signUp, { isSuccess, isError, error, isLoading }] = useSignUpMutation()
+  const [signUp, { isSuccess, isError, isLoading }] = useSignUpMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpFormType>({
     resolver: yupResolver(signUpSchema),
   });
-  const onSubmit = async (data: SignUpFormType) => {
-    await signUp(data)
-  };
+  
+  useEffect(() => {
+    signUpEffect(isSuccess, isError, navigate,t)
+  }, [t, navigate, isError, isSuccess]);
+
 
   return (
     <AuthLayout>
       <div className='max-w-[400px]'>
-      <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(signUp)}>
         <div className='flex justify-between text-24'>
         <div>{t('auth.create_account')}</div>
         <a href={RouteEnum.LOGIN} className='underline text-dusty-teal' >{t('auth.login')}</a>

@@ -9,7 +9,10 @@ const AuthService = ApiInstance.injectEndpoints({
                 url: ApiEnum.AUTH_LOGIN,
                 method: "POST",
                 body
-            })
+            }),
+            extraOptions:{
+                action: 'LOGIN'
+            }
         }),
         signUp: build.mutation<LoginResponse, SignUpDTO>({
             query: (body) => ({
