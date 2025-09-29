@@ -55,15 +55,11 @@ import SignUpPage from "../pages/auth/SignUpPage";
 
 const router = createBrowserRouter([
   {
-    path: RouteEnum.HOME,
+    path: RouteEnum.HOTEL,
     element: <MainLayout />,
     children: [
       // { path: RouteEnum.HOME, element: <DashboardPage /> },
-      { path: RouteEnum.HOME, element: <div>Dashboard</div> },
-
-
-        //users
-      { path: "/hotel", element: <Hotel /> },
+      { path: RouteEnum.HOTEL, element: <Hotel /> },
 
 
       // //users
@@ -142,7 +138,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: RouteEnum.HOME,
+    path: "/",
     children: [
       { path: RouteEnum.LOGIN, element: <LoginPage /> },
       { path: RouteEnum.SIGN_UP, element: <SignUpPage /> },
@@ -150,7 +146,6 @@ const router = createBrowserRouter([
       // { path: RouteEnum.RESET_PASSWORD, element: <ResetPasswordPage /> },
       // { path: RouteEnum.NEW_PASSWORD, element: <NewPasswordPage /> },
       // { path: RouteEnum.CHECK_EMAIL_VERIFICATION, element: <CheckEmailVerificationPage /> },
-      { path: RouteEnum.LOGIN, element: <div>Login Page</div>  },
       
     ]
   }

@@ -6,23 +6,23 @@ import { TFunction } from "i18next";
 export const loginEffect = (isSuccess:boolean, isError:boolean, navigate:NavigateFunction,t:TFunction<"translation", undefined>
 ) => {
   if (isSuccess) {
-    appToast('success', t('menu.settings'), { duration: 4000 });
+    appToast('success', t('auth.messages.login_success'), { duration: 4000 });
     navigate(RouteEnum.HOTEL);
   }
 
   if (isError) {
-    appToast('error', t('menu.settings'), { duration: 4000 });
+    appToast('error', t('auth.messages.login_error'), { duration: 4000 });
   }
 }
 
 export const signUpEffect = (isSuccess:boolean, isError:boolean, navigate:NavigateFunction,t:TFunction<"translation", undefined>
 ) => {
   if (isSuccess) {
-    appToast('success', t('menu.settings'), { duration: 4000 });
+    appToast('success', t('auth.messages.register_success'), { duration: 4000 });
     navigate(RouteEnum.HOTEL);
   }
 
   if (isError) {
-    appToast('error', t('menu.settings'), { duration: 4000 });
+    appToast('error', t('auth.messages.register_error'), { duration: 4000 });
   }
 }

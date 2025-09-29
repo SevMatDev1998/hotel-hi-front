@@ -3,15 +3,20 @@ import { Toaster } from "react-hot-toast";
 const ToastContainer: React.FC = () => {
   return <Toaster
     position="top-right"
+    
     toastOptions={{
       success: {
+        icon: null, // Removes the default success icon
         style: {
-          background: 'green',
+          background: '#589A8F',
+          color: '#FFFFFF',
         },
       },
       error: {
+        icon: null, // Removes the default error icon
         style: {
-          background: 'red',
+          background: '#CD5555',
+          color: '#FFFFFF',
         },
       },
     }}

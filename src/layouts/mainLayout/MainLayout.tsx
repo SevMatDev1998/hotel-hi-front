@@ -8,23 +8,24 @@ import RouteEnum from '../../enums/route.enum';
 import PRIVATE_ROUTES from '../../constants/private-routes';
 import PUBLIC_ROUTES from '../../constants/publict-routes';
 import MainLayoutComponents from './MainLayoutComponents';
+import { useGetInfoQuery } from '../../services/auth';
 
 export const MainLayout: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const jwtToken = getJwtToken();
 
-  // const { isLoading } = useGetInfoQuery(undefined, {
-  //   skip: !jwtToken
-  // });
+
+
+  const { isLoading } = useGetInfoQuery(undefined, {
+    skip: !jwtToken
+  });
 
   const { isLogin } = useAppSelector((state: any) => state.auth);
 
 
   useEffect(() => {
-    // if (isLoading) return;
-    if (false) return;
-
+    
     const isPrivate = PRIVATE_ROUTES.includes(pathname as RouteEnum);
     const isPublic = PUBLIC_ROUTES.includes(pathname as RouteEnum);
 
@@ -33,11 +34,10 @@ export const MainLayout: FC = () => {
     }
 
     if (isLogin && isPublic) {
-      navigate(RouteEnum.HOME);
+      navigate(RouteEnum.HOTEL);
     }
 
-  // }, [navigate, pathname, isLogin, isLoading]);
-  }, [navigate, pathname, isLogin]);
+  }, [navigate, pathname, isLogin, isLoading]);
 
   return <MainLayoutComponents/>
 };
