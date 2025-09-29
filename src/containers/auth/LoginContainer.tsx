@@ -26,8 +26,6 @@ const LoginContainer = () => {
     loginEffect(isSuccess, isError, navigate,t)
   }, [t, navigate, isError, isSuccess]);
 
-
-
   return (
     <AuthLayout>
       <div className='max-w-[400px]'>

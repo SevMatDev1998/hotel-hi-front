@@ -4,10 +4,12 @@ import BaseInfoEditContainer from './BaseInfoEditContainer';
 
 const BaseInfo = () => {
   const [isEditing, setIsEditing] = useState(false);
+
+  
   return (
     <div>
       {
-        isEditing ? <BaseInfoEditContainer /> : <BaseInfoContainer setIsEditing={setIsEditing} />
+        isEditing ? <BaseInfoEditContainer setIsEditing={setIsEditing} /> : <BaseInfoContainer setIsEditing={setIsEditing} />
       }
     </div>
   );
