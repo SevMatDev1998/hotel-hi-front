@@ -20,12 +20,13 @@ export const MainLayout: FC = () => {
   const { isLoading } = useGetInfoQuery(undefined, {
     skip: !jwtToken
   });
+  
 
   const { isLogin } = useAppSelector((state: any) => state.auth);
 
-
   useEffect(() => {
-    
+    if (isLoading) return;
+
     const isPrivate = PRIVATE_ROUTES.includes(pathname as RouteEnum);
     const isPublic = PUBLIC_ROUTES.includes(pathname as RouteEnum);
 

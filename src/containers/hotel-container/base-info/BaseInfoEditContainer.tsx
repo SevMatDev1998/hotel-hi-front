@@ -2,36 +2,51 @@ import BlockContainer from '../../public/BlockContainer';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { FC } from 'react';
 import RegisterInput from '../../../components/shared/RegisterInput';
-import { useLoginMutation } from '../../../services/auth';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSelect } from '../../../components/shared/RegisterSelect';
 import { Button } from '../../../components/shared/Button';
 import InfoBlock from '../../../components/shared/InfoBlock';
 import { UpdateHotelBaseInfoFormData, UpdateHotelBaseInfoSchema } from '../../../yupValidation/HotelValidation';
+import { Country, Currency, Hotel } from '../../../types';
+import { useUpdateHotelBaseInformationMutation } from '../../../services/hotel/hotel.service';
 
 interface BaseInfoEditnoContainerProps {
   setIsEditing: (value: boolean) => void;
+  hotelBaseInformationData?: Partial<Hotel> 
+  countriesData?:Country[]
+  currenciesData?: Currency[],
+  hotelId?: string
 }
 
-const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing }) => {
+const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing, hotelBaseInformationData,countriesData,currenciesData, hotelId }) => {
   const { t } = useTranslation();
 
-  const [login, { isSuccess, isError, error, isLoading }] = useLoginMutation()
+  const [updateHotelBaseInformation, {  isLoading }] = useUpdateHotelBaseInformationMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<UpdateHotelBaseInfoFormData>({
     resolver: yupResolver(UpdateHotelBaseInfoSchema),
+    defaultValues: { ...hotelBaseInformationData }
   });
+  
   const onSubmit = async (data: UpdateHotelBaseInfoFormData) => {
 
-    await login(data)
+    await updateHotelBaseInformation({ id: hotelId!, data })
   };
 
-  const courseOptions = [
-    { value: 'course1', label: 'Course 1' },
-    { value: 'course2', label: 'Course 2' },
-    { value: 'course3', label: 'Course 3' },
-  ];
+
+    const countryOptions = countriesData?.map((country) => ({
+    value: country.id,
+    label: country.name,
+  })) || [];
+
+  const currencyOptions = currenciesData?.map((currency) => ({
+    value: currency.id,
+    label: currency.name,
+  })) || [];
+
+
+  
 
   return (
     <BlockContainer>
@@ -43,7 +58,11 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing 
               <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
             </span>
           </div>
+          <div className='mb-6'>
+
           <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
+          </div>
+
           <div className="space-y-4 ml-5">
 
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
@@ -69,7 +88,7 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing 
                 <div  >
                   <RegisterSelect
                     name="countryId"
-                    options={courseOptions}
+                    options={countryOptions}
                     register={register}
                     // error={errors.courseId}
                     required
@@ -108,8 +127,8 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing 
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'>
                 <RegisterSelect
-                  name="phonecode"
-                  options={courseOptions}
+                  name="phoneCode"
+                  options={countryOptions}
                   register={register}
                   // error={errors.courseId}
                   required
@@ -131,8 +150,8 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing 
               <div className="grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-6 items-center">
                 <div>
                   <RegisterSelect
-                    name="curency"
-                    options={courseOptions}
+                    name="currencyId"
+                    options={currencyOptions}
                     register={register}
                     required
                   />

@@ -4,7 +4,7 @@ import { LoginDTO, LoginResponse, SignUpDTO } from "./auth.types";
 
 const AuthService = ApiInstance.injectEndpoints({
     endpoints: build => ({
-        getInfo: build.query<GetInfoResponse, void>({
+        getInfo: build.query<any, void>({
             query: () => ({
                 url: ApiEnum.GET_ME,
             })
@@ -34,4 +34,4 @@ export const {
     useLoginMutation,
     useSignUpMutation   
 } = AuthService;
-export const { endpoints: { login } } = AuthService
+export const { endpoints: {getInfo, login } } = AuthService

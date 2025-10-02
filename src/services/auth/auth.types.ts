@@ -15,6 +15,6 @@ export interface SignUpDTO {
 
 export interface LoginResponse {
   user: Partial<User>;
-  token: string;
+  accessToken: string;
   refreshToken: string;
 }

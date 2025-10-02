@@ -1,12 +1,14 @@
 import BlockContainer from '../../public/BlockContainer';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { FC } from 'react';
+import { Hotel } from '../../../types';
 
 interface IBaseInfoContainerProps {
   setIsEditing: (value: boolean) => void;
+  hotelBaseInformationData: Partial<Hotel> | undefined;
 }
 
-const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ setIsEditing }) => {
+const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ setIsEditing, hotelBaseInformationData }) => {
   const { t } = useTranslation();
 
   return (
@@ -19,19 +21,43 @@ const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ setIsEditing }) => {
           </span>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-10">
           {/* Hotel Name */}
-            <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
-              <div >
-                <span >{t("hotel.hotel_name")} *</span>
-              </div>
-              <div >
-                <span className='text-16 font-medium'>Grand Hotel</span>
-              </div>
+          <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
+            <div >
+              <span >{t("hotel.hotel_name")} *</span>
+            </div>
+            <div >
+              <span >{hotelBaseInformationData?.name}</span>
             </div>
           </div>
-
+          <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
+            <div >
+              <span >{t("hotel.hotel_address")} *</span>
+            </div>
+            <div >
+              <span >{hotelBaseInformationData?.hotelAddress}</span>
+            </div>
+          </div>
+          <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
+            <div >
+              <span >{t("hotel.contact_person")} *</span>
+            </div>
+            <div >
+              <span >{hotelBaseInformationData?.contactPerson}</span>
+            </div>
+          </div>
+           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
+            <div >
+              <span >{t("hotel.phone_number")} *</span>
+            </div>
+            <div >
+              <span >{hotelBaseInformationData?.phoneNumber}</span>
+            </div>
+          </div>
         </div>
+
+      </div>
     </BlockContainer>
   );
 };

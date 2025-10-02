@@ -1,11 +1,6 @@
 import * as yup from 'yup';
 
 export const UpdateHotelBaseInfoSchema = yup.object({
-  id: yup
-    .number()
-    .required('Hotel ID is required')
-    .positive('Hotel ID must be a positive number'),
-  
   contactPerson: yup
     .string()
     .required('Contact person is required')
@@ -30,13 +25,7 @@ export const UpdateHotelBaseInfoSchema = yup.object({
     .number()
     .required('Country is required')
     .positive('Country ID must be a positive number'),
-  
-  state: yup
-    .string()
-    .required('State is required')
-    .min(2, 'State must be at least 2 characters')
-    .max(50, 'State must be less than 50 characters'),
-  
+
   city: yup
     .string()
     .required('City is required')
@@ -49,4 +38,48 @@ export const UpdateHotelBaseInfoSchema = yup.object({
     .positive('Currency ID must be a positive number')
 });
 
+
+export const UpdateHotelLegalInfoSchema = yup.object({
+  legalPerson: yup
+    .string()
+    .optional()
+    .min(2, 'Legal person must be at least 2 characters')
+    .max(100, 'Legal person must be less than 100 characters'),
+
+  registerCountryId: yup
+    .number()
+    .optional()
+    .positive('Country ID must be a positive number'),
+
+  registerCity: yup
+    .string()
+    .optional()
+    .min(2, 'City must be at least 2 characters')
+    .max(50, 'City must be less than 50 characters'),
+
+  tinNumber: yup
+    .string()
+    .optional()
+    .min(5, 'TIN number must be at least 5 characters')
+    .max(50, 'TIN number must be less than 50 characters'),
+
+  director: yup
+    .string()
+    .optional()
+    .min(2, 'Director must be at least 2 characters')
+    .max(100, 'Director must be less than 100 characters'),
+
+    phoneNumber: yup
+    .string()
+    .optional(),
+
+  priceSendEmail: yup
+    .string()
+    .optional()
+    .email('Price send email must be a valid email')
+});
+
+
+
 export type UpdateHotelBaseInfoFormData = yup.InferType<typeof UpdateHotelBaseInfoSchema>;
+export type UpdateHotelLegalInfoFormData = yup.InferType<typeof UpdateHotelLegalInfoSchema>;

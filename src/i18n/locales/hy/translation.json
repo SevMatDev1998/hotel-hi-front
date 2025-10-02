@@ -46,15 +46,27 @@
 
   "hotel":{
     "hotel_base_info":"Հյուրանոցի հիմնական տեղեկություններ",
+    "hotel_legal_info":"Հյուրանոցի իրավաբանական տեղեկություններ",
     "hotel_address":"Հյուրանոցի հասցե",
     "contact_person":"Կոնտակտային անձ",
     "phone_number":"Հեռախոսահամար",
     "value":"Արժեք",
     "product_logo":"Ապրանքի նշան",
     "country":"Երկիր",
-    "curency":"Արժույթ"
+    "curency":"Արժույթ",
+    "hotel_name":"Հյուրանոցի անվանում",
+    "legal_name":"Իրավաբանական անվանում",
+    "legal_address":"Իրավաբանական հասցե",
+    "tax_id":"ՀՎՀՀ",
+    "account_number":"Հաշվեհամար",
+    "director":"Տնօրեն",
+    "adress_to_get_emails":"Էլ. փոստի հասցե հաղորդագրություններ ստանալու համար"
   },
 
+  "user":{
+    "hotel_name":"Ազգանուն",
+    "email":"Էլ. փոստ"
+  },
   "buttons":{
     "save":"Պահպանել",
     "cancel":"Չեղարկել",

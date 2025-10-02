@@ -1,8 +1,9 @@
+import clsx from 'clsx';
 import React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 interface SelectOption {
-  value: string;
+  value: string | number;
   label: string;
 }
 
@@ -13,6 +14,8 @@ interface SelectProps {
   register: UseFormRegister<any>; // or a more specific type if you know your form data interface
   error?: FieldError;
   required?: boolean;
+  className?: string;
+
 }
 
 export const RegisterSelect: React.FC<SelectProps> = ({
@@ -22,6 +25,8 @@ export const RegisterSelect: React.FC<SelectProps> = ({
   register,
   error,
   required,
+  className,
+
   ...props
 }) => {
   return (
@@ -34,24 +39,10 @@ export const RegisterSelect: React.FC<SelectProps> = ({
 
       <select
         id={name}
-        className="
-          appearance-none 
-          relative 
-          block 
-          w-full
-          px-3 
-          py-2 
-          border
-          border-gray-300
-          placeholder-gray-500
-          text-gray-900 
-          focus:outline-none
-          focus:ring-indigo-500
-          focus:border-indigo-500 
-          focus:z-10 
-          sm:text-sm 
-          rounded-lg
-        "
+        className={clsx(
+          "appearance-none relative block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
+          className
+        )}
         {...register(name, { required: required ? `${label || 'This field'} is required` : false })}
         {...props}
       >

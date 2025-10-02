@@ -9,6 +9,7 @@ export enum RouteEnum {
     // Private
     HOTEL = "/hotel",
     NOT_FOUND = "*",
+    
   }
 
   export default RouteEnum
