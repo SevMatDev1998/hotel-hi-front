@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import NotFound from "../pages/404/NotFound";
 import RouteEnum from "../enums/route.enum";
-import Hotel from "../pages/hotel/Hotel";
+import HotelPage from "../pages/hotel/HotelPage";
 import { MainLayout } from "../layouts/mainLayout/MainLayout";
 import LoginPage from "../pages/auth/LoginPage";
 import SignUpPage from "../pages/auth/SignUpPage";
+import RoomsPage from "../pages/rooms/RoomsPage";
+import NewRoomPage from "../pages/rooms/NewRoomPage";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -55,11 +57,16 @@ import SignUpPage from "../pages/auth/SignUpPage";
 
 const router = createBrowserRouter([
   {
-    path: RouteEnum.HOTEL,
-    element: <MainLayout />,
+ element: <MainLayout />,        // нет path — просто layout
+    errorElement: <NotFound />,
     children: [
       // { path: RouteEnum.HOME, element: <DashboardPage /> },
-      { path: RouteEnum.HOTEL, element: <Hotel /> },
+      { path: RouteEnum.HOTEL, element: <HotelPage /> },
+
+
+      // rooms
+      { path: RouteEnum.ROOMS, element: <RoomsPage /> },
+      { path: `${RouteEnum.ROOMS}/create`, element: <NewRoomPage /> },
 
 
       // //users

@@ -24,21 +24,21 @@ export const MainLayout: FC = () => {
 
   const { isLogin } = useAppSelector((state: any) => state.auth);
 
-  useEffect(() => {
-    if (isLoading) return;
+  // useEffect(() => {
+  //   if (isLoading) return;
 
-    const isPrivate = PRIVATE_ROUTES.includes(pathname as RouteEnum);
-    const isPublic = PUBLIC_ROUTES.includes(pathname as RouteEnum);
+  //   const isPrivate = PRIVATE_ROUTES.includes(pathname as RouteEnum);
+  //   const isPublic = PUBLIC_ROUTES.includes(pathname as RouteEnum);
 
-    if (!isLogin && isPrivate) {
-      navigate(RouteEnum.LOGIN);
-    }
+  //   if (!isLogin && isPrivate) {
+  //     navigate(RouteEnum.LOGIN);
+  //   }
 
-    if (isLogin && isPublic) {
-      navigate(RouteEnum.HOTEL);
-    }
+  //   if (isLogin && isPublic) {
+  //     navigate(RouteEnum.HOTEL);
+  //   }
 
-  }, [navigate, pathname, isLogin, isLoading]);
+  // }, [navigate, pathname, isLogin, isLoading]);
 
   return <MainLayoutComponents/>
 };

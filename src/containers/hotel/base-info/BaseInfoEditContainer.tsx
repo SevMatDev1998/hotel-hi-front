@@ -10,28 +10,34 @@ import InfoBlock from '../../../components/shared/InfoBlock';
 import { UpdateHotelBaseInfoFormData, UpdateHotelBaseInfoSchema } from '../../../yupValidation/HotelValidation';
 import { Country, Currency, Hotel } from '../../../types';
 import { useUpdateHotelBaseInformationMutation } from '../../../services/hotel/hotel.service';
+import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
+import useAppDispatch from '../../../hooks/useAppDisaptch';
+import useAppSelector from '../../../hooks/useAppSelector';
 
 interface BaseInfoEditnoContainerProps {
-  setIsEditing: (value: boolean) => void;
   hotelBaseInformationData?: Partial<Hotel> 
   countriesData?:Country[]
   currenciesData?: Currency[],
-  hotelId?: string
+  hotelId?:number
 }
 
-const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing, hotelBaseInformationData,countriesData,currenciesData, hotelId }) => {
+const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInformationData,countriesData,currenciesData, hotelId }) => {
   const { t } = useTranslation();
 
   const [updateHotelBaseInformation, {  isLoading }] = useUpdateHotelBaseInformationMutation()
+
+  const { hotelInfoType } = useAppSelector((state) => state.hotelSlice);
 
   const { register, handleSubmit, formState: { errors } } = useForm<UpdateHotelBaseInfoFormData>({
     resolver: yupResolver(UpdateHotelBaseInfoSchema),
     defaultValues: { ...hotelBaseInformationData }
   });
-  
-  const onSubmit = async (data: UpdateHotelBaseInfoFormData) => {
 
-    await updateHotelBaseInformation({ id: hotelId!, data })
+  const dispatch = useAppDispatch();
+  
+  const onSubmit = async () => {
+    // await updateHotelBaseInformation({ id: hotelId!, data })
+    dispatch(changeHotelInfoType("legal"));
   };
 
 
@@ -50,14 +56,14 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ setIsEditing,
 
   return (
     <BlockContainer>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className='text-14 text-charcoal-gray'>
-          <div className='flex items-center justify-between mb-6'>
-            <h3 className="">{t("hotel.hotel_base_info")}</h3>
-            <span onClick={() => setIsEditing(true)}>
+          {hotelInfoType !== "base" && <div className='flex items-center justify-between mb-6'>
+            <h3 >{t("hotel.hotel_base_info")}</h3>
+            <span onClick={() => dispatch(changeHotelInfoType("base"))}>
               <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
             </span>
-          </div>
+          </div>}
           <div className='mb-6'>
 
           <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />

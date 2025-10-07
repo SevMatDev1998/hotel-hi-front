@@ -10,19 +10,21 @@ import RegisterInput from '../../../components/shared/RegisterInput';
 import { RegisterSelect } from '../../../components/shared/RegisterSelect';
 import { Country, Hotel } from '../../../types';
 import { useUpdateHotelLegalInformationMutation } from '../../../services/hotel';
+import useAppDispatch from '../../../hooks/useAppDisaptch';
+import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
 
 interface ILegalInfoEditContainerProps {
-  setIsEditing: (value: boolean) => void;
   hotelLegalInformationData?: Partial<Hotel>
   hotelId?: string
   countriesData?: Country[]
 
 }
 
-const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ setIsEditing, hotelLegalInformationData, countriesData, hotelId }) => {
+const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalInformationData, countriesData, hotelId }) => {
 
   const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
 
   const [updateHotelLegalInformation, { isSuccess, isError, error, isLoading }] = useUpdateHotelLegalInformationMutation()
 
@@ -49,7 +51,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ setIsEditing
         <div className='text-14 text-charcoal-gray'>
           <div className='flex items-center justify-between mb-6'>
             <h3 className="">{t("hotel.hotel_legal_info")}</h3>
-            <span onClick={() => setIsEditing(true)}>
+            <span onClick={() => dispatch(changeHotelInfoType("none"))}>
               <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
             </span>
           </div>

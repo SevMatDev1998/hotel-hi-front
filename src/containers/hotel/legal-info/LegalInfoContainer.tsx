@@ -1,23 +1,26 @@
+import useAppDispatch from "../../../hooks/useAppDisaptch";
 import { useTranslation } from "../../../hooks/useTranslation";
+import { changeHotelInfoType } from "../../../store/slices/hotel.slice";
 import { Hotel } from "../../../types";
 import BlockContainer from "../../public/BlockContainer";
 
 
 interface ILegalInfoContainerProps {
-  setIsEditing: (value: boolean) => void;
   hotelLegalInformationData?: Partial<Hotel>
 }
 
-const LegalInfoContainer = ({ setIsEditing, hotelLegalInformationData }: ILegalInfoContainerProps) => {
+const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerProps) => {
 
-    const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   
+  const { t } = useTranslation();
+
   return (
-   <BlockContainer shadow={false}>
+    <BlockContainer shadow={false}>
       <div className='text-14 text-charcoal-gray'>
         <div className='flex items-center justify-between mb-5'>
           <h3 className="">{t("hotel.hotel_legal_info")}</h3>
-          <span onClick={() => setIsEditing(true)}>
+          <span onClick={() => dispatch(changeHotelInfoType("none"))}>
             <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
           </span>
         </div>
@@ -69,7 +72,7 @@ const LegalInfoContainer = ({ setIsEditing, hotelLegalInformationData }: ILegalI
           </div>
 
 
-           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
+          <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
               <span >{t("hotel.adress_to_get_emails")} *</span>
             </div>

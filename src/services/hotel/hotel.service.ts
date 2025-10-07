@@ -16,7 +16,7 @@ const HotelService = ApiInstance.injectEndpoints({
         body: data
       })
     }),
-      getHotelLegalInformation: build.query<Partial<Hotel>, { hotelId: string }>({
+      getHotelLegalInformation: build.query<Partial<Hotel>, { hotelId: number }>({
       query: ({ hotelId }) => ({
         url: `${ApiEnum.HOTEL}/${hotelId}/legal-information`,
       })

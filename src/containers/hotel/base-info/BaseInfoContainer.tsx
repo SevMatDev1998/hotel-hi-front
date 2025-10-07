@@ -2,21 +2,24 @@ import BlockContainer from '../../public/BlockContainer';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { FC } from 'react';
 import { Hotel } from '../../../types';
+import useAppDispatch from '../../../hooks/useAppDisaptch';
+import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
 
 interface IBaseInfoContainerProps {
-  setIsEditing: (value: boolean) => void;
   hotelBaseInformationData: Partial<Hotel> | undefined;
 }
 
-const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ setIsEditing, hotelBaseInformationData }) => {
+const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ hotelBaseInformationData }) => {
   const { t } = useTranslation();
+
+  const dispatch = useAppDispatch();
 
   return (
     <BlockContainer shadow={false}>
       <div className='text-14 text-charcoal-gray'>
         <div className='flex items-center justify-between mb-5'>
-          <h3 className="">{t("hotel.hotel_base_info")}</h3>
-          <span onClick={() => setIsEditing(true)}>
+          <h3 >{t("hotel.hotel_base_info")}</h3>
+          <span onClick={() => dispatch(changeHotelInfoType("base"))}>
             <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
           </span>
         </div>

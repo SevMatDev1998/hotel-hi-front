@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import ApiInstance from "../api/api";
 import authReducer from "./slices/auth.slice"
+import generalReducer from "./slices/general.slice"
+import hotelReducer from "./slices/hotel.slice"
 
 const store = configureStore({
   reducer: {
     [ApiInstance.reducerPath]: ApiInstance.reducer,
-    auth: authReducer
+    auth: authReducer,
+    general: generalReducer,
+    hotelSlice: hotelReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

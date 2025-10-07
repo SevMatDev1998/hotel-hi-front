@@ -8,6 +8,9 @@ enum ApiEnum {
     HOTEL="hotels",
     COUNTRIES="countries",
     CURRENCIES="currencies",
+    HOTEL_ROOMS="hotel-rooms",
+    ROOM_VIEWS="room-views",
+    ROOM_CLASSES="room-classes",
 }
 
 export default ApiEnum

@@ -63,16 +63,70 @@
     "adress_to_get_emails":"Էլ. փոստի հասցե հաղորդագրություններ ստանալու համար"
   },
 
+  "rooms":{
+    "room":"Սենյակ",
+    "rooms_types":"Սենյակների տեսակներ",
+    "type_of_rooms_in_the_hotel":"Հյուրանոցի սենյակների տեսակները",
+    "total_number_of_rooms":"Ընդհանուր սենյակների քանակը",
+    "approved_hotel_number_of_rooms":"Հաստատված հյուրանոցի սենյակների քանակը",
+    "add_new_room":"Ավելացնել նոր սենյակ",
+    "count_main_guest":"Հիմնական հյուրերի քանակ",
+    "room_type_description":"Սենյակի տեսակի նկարագրություն",
+    "room_type":"Սենյակի տեսակը",
+    "room_view":"Սենյակի Տեսարանը",
+    "room_area_m2":"Սենյակի տարածք (մ²)",
+    "room_numbers":"Սենյակների համարներ"
+  },
+
   "user":{
     "hotel_name":"Ազգանուն",
     "email":"Էլ. փոստ"
   },
+
   "buttons":{
     "save":"Պահպանել",
     "cancel":"Չեղարկել",
     "add":"Ավելացնել",
     "delete":"Ջնջել",
     "edit":"Խմբագրել"
+  },
+
+  "room_class": {
+    "Affordable": "Արժեքավոր",
+    "AFrame": "Ա-ֆրեյմ",
+    "Apartment": "Բնակարան",
+    "Barnhouse": "Բարնհաուս",
+    "Boutique": "Բուտիկ",
+    "Bungalow": "Բունգալո",
+    "Cabana": "Կաբանա",
+    "CabinOrCottage": "Քոթեջ",
+    "Camp": "Բանակատեղի",
+    "Capsule": "Կապսուլա",
+    "Chalet": "Շալե",
+    "Deluxe": "Դելյուքս",
+    "Dormitory": "Ննջասենյակային տուն",
+    "Economy": "Էկոնոմ",
+    "Family": "Ընտանեկան",
+    "GlampingTent": "Գլեմփինգ վրան",
+    "Luxe": "Լյուքս",
+    "Presidental": "Նախագահական",
+    "Standard": "Ստանդարտ",
+    "Studio": "Ստուդիա",
+    "Suite": "Սյուիտ",
+    "Tent": "Վրան",
+    "Villa": "Վիլլա",
+    "Micro": "Միկրո"
+  },
+  "room_view":{
+    "City": "Քաղաքային",
+    "Courtyard": "Բակային",
+    "Forest": "Անտառային",
+    "Garden": "Այգու",
+    "Lake": "Լճային",
+    "Mountain": "Լեռնային",
+    "Parking": "Կայանատեղիի",
+    "Pool": "Լողավազանի",
+    "River": "Գետի",
+    "Sea": "Ծովային"
   }
-  
 }

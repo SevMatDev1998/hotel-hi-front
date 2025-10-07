@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface SelectOption {
   value: string | number;
@@ -15,7 +16,7 @@ interface SelectProps {
   error?: FieldError;
   required?: boolean;
   className?: string;
-
+  tr_name: string;
 }
 
 export const RegisterSelect: React.FC<SelectProps> = ({
@@ -26,9 +27,12 @@ export const RegisterSelect: React.FC<SelectProps> = ({
   error,
   required,
   className,
+  tr_name,
 
   ...props
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div>
       {label && (
@@ -40,7 +44,7 @@ export const RegisterSelect: React.FC<SelectProps> = ({
       <select
         id={name}
         className={clsx(
-          "appearance-none relative block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
+          "appearance-none block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
           className
         )}
         {...register(name, { required: required ? `${label || 'This field'} is required` : false })}
@@ -49,7 +53,7 @@ export const RegisterSelect: React.FC<SelectProps> = ({
         <option value="">-- Select an option --</option>
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
-            {opt.label}
+            {t(`${tr_name}.${opt.label}`)}
           </option>
         ))}
       </select>
