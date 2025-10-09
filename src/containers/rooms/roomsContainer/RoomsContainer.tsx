@@ -2,16 +2,17 @@ import { useNavigate } from "react-router";
 import { Button } from "../../../components/shared/Button";
 import InfoBlock from "../../../components/shared/InfoBlock";
 import { useTranslation } from "../../../hooks/useTranslation";
-import { useGetRoomsQuery } from "../../../services/rooms";
 import RoomCard from "./RoomCard";
 import RouteEnum from "../../../enums/route.enum";
+import { useGetHotelRoomsQuery } from "../../../services/rooms";
+import useAppSelector from "../../../hooks/useAppSelector";
 
 const RoomsContainer = () => {
 
   const navigate = useNavigate();
-
+  const {user} = useAppSelector(state => state.auth);
   const { t } = useTranslation();
-  const { data: roomsData } = useGetRoomsQuery();
+  const { data: roomsData } = useGetHotelRoomsQuery({ hotelId: user?.hotelId }  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -26,10 +27,12 @@ const RoomsContainer = () => {
           <Button>{t("rooms.approved_hotel_number_of_rooms")} </Button>
         </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-4">
         <Button variant="outline" onClick={() => {navigate(`${RouteEnum.ROOMS}/create`);}}>{t("rooms.add_new_room")}</Button>
-        <div>
-          <RoomCard room={{}} />
+        <div className="flex flex-col gap-4">
+          {[...roomsData,...roomsData,...roomsData]?.map(room => (
+            <RoomCard key={room.id} room={room} />
+          )) }
         </div>
       </div>
 

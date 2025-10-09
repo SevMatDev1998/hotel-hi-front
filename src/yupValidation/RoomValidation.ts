@@ -13,7 +13,7 @@ export const CreateHotelRoomSchema = yup.object({
     .integer('Room view ID must be an integer')
     .optional(),
 
-  numbers: yup
+  roomNumberQuantity: yup
     .string()
     .trim()
     .required('Room numbers are required')

@@ -23,7 +23,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
   const [createRoom, { isLoading }] = useCreateRoomMutation()
 
   const onSubmit = async (data: CreateHotelRoomFormData) => {
-    await createRoom({ id: hotelId!, data })
+    await createRoom({ hotelId: hotelId!, data })
   };
   const { t } = useTranslation();
 
@@ -40,13 +40,13 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
 
   const roomViewsOptions = roomViewsData?.map((roomView) => ({
     value: roomView.id,
-    label: roomView.name,
+    label: roomView.name
   })) || [];
   console.log(errors);
 
   return (
     <BlockContainer>
-      <h2>{t("rooms.room_type_description")}</h2>
+      <h2>{t("rooms.x")}</h2>
       <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
       <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -95,7 +95,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
             <RegisterInput
               register={register}
               errors={errors}
-              name="numbers"
+              name="roomNumberQuantity"
               className='rounded-[5px]'
             />
           </div>
