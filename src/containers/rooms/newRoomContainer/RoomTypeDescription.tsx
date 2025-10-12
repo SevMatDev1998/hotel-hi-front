@@ -46,7 +46,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
 
   return (
     <BlockContainer>
-      <h2>{t("rooms.x")}</h2>
+      <h2>{t("rooms.room_type_description")}</h2>
       <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
       <form onSubmit={handleSubmit(onSubmit)}>
 

@@ -23,14 +23,14 @@ const RoomsContainer = () => {
           <p>{t("rooms.type_of_rooms_in_the_hotel")}- {4}</p>
           <p>{t("rooms.total_number_of_rooms")}-{4}</p>
         </div>
-        <div>
+        <div className="grid justify-items-end mobile:justify-items-start">
           <Button>{t("rooms.approved_hotel_number_of_rooms")} </Button>
         </div>
       </div>
       <div className="flex flex-col gap-4">
         <Button variant="outline" onClick={() => {navigate(`${RouteEnum.ROOMS}/create`);}}>{t("rooms.add_new_room")}</Button>
         <div className="flex flex-col gap-4">
-          {[...roomsData,...roomsData,...roomsData]?.map(room => (
+          {roomsData?.map(room => (
             <RoomCard key={room.id} room={room} />
           )) }
         </div>
