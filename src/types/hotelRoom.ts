@@ -1,7 +1,10 @@
 import { HotelRoomStatus, CompletenessStatus } from './enums';
+import { RoomClass } from './roomClass';
+import { RoomPart } from './roomPart';
+import { RoomView } from './roomView';
 
 export interface HotelRoom {
-  id: number;
+  id: string;
   name: string;
   hotelId: number;
   roomClassId: number;
@@ -16,4 +19,7 @@ export interface HotelRoom {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+  roomClass?: RoomClass;
+  roomView?: RoomView;
+  roomParts?: RoomPart[]; 
 }

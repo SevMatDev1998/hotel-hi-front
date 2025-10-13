@@ -6,9 +6,10 @@ import { useTranslation } from "react-i18next";
 import { CreateHotelRoomFormData, CreateHotelRoomSchema } from "../../../yupValidation/RoomValidation";
 import { useForm } from "react-hook-form";
 import { useCreateRoomMutation, useGetRoomClassesQuery, useGetRoomViewsQuery } from "../../../services/rooms";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Button } from "../../../components/shared/Button";
 import { RegisterSelect } from "../../../components/shared/RegisterSelect";
+import { useNavigate } from "react-router-dom";
 
 interface RoomTypeDescriptionProps {
   hotelId?: number
@@ -16,16 +17,25 @@ interface RoomTypeDescriptionProps {
 
 const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
 
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const { register, handleSubmit, formState: { errors } } = useForm<CreateHotelRoomFormData>({
     resolver: yupResolver(CreateHotelRoomSchema),
   });
 
-  const [createRoom, { isLoading }] = useCreateRoomMutation()
+  const [createRoom, { data, isLoading }] = useCreateRoomMutation()
 
   const onSubmit = async (data: CreateHotelRoomFormData) => {
     await createRoom({ hotelId: hotelId!, data })
   };
-  const { t } = useTranslation();
+
+
+  useEffect(() => {
+    if (data?.id) {
+      navigate(`/rooms/${data.id}`);
+    }
+  }, [data, navigate]);
 
 
   const { data: roomClassesData } = useGetRoomClassesQuery();
@@ -42,14 +52,15 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
     value: roomView.id,
     label: roomView.name
   })) || [];
-  console.log(errors);
+
+
 
   return (
-    <BlockContainer>
+    <BlockContainer shadow={false}>
+      <div className="flex flex-col gap-6">
       <h2>{t("rooms.room_type_description")}</h2>
       <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
       <form onSubmit={handleSubmit(onSubmit)}>
-
         <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
           <div >
             <span >{t("rooms.room_type")} *</span>
@@ -106,6 +117,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
           </Button>
         </div>
       </form>
+      </div>
     </BlockContainer>
   )
 }

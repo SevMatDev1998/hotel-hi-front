@@ -13,39 +13,56 @@ interface RoomTypeInformationProps {
 }
 
 const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ hotelId }) => {
-
+  // Все хуки должны быть в начале компонента
+  const { t } = useTranslation();
   const open = useModal();
   const { data: hotelRoomParts } = useGetHotelRoomPartsQuery({ hotelRoomId: hotelId ?? 0 }, { skip: !hotelId });
 
+
   // Adjust handleSubmit to accept the payload expected by the modal
-  const handleSubmit = (payload: any) => {
+  const handleSubmit = (_payload: any) => {
     // handle the payload here
   };
 
   const handleLogOut = () => {
     // You must provide a valid hotelRoomId (replace 0 with the actual id if available)
     open(SelectRoomPartsModal, {
+      hotelRoomParts: hotelRoomParts,
       hotelRoomId: hotelId ?? 0,
       onSubmit: handleSubmit,
     });
   };
 
+  // Early returns после хуков
+  if (!hotelRoomParts) return null;
 
-  const { t } = useTranslation();
+  // Проверяем, является ли hotelRoomParts массивом и не пустым
+  const hasRoomParts = Array.isArray(hotelRoomParts) && hotelRoomParts.length > 0;
+
+
+
   return (
-    <BlockContainer>
-      <h2>{t("rooms.room_type_information")}</h2>
-      <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
-      <Button
-        variant="outline"
-        onClick={() => { handleLogOut() }}
-      >
-        {t("rooms.add_room_part")}
+    <BlockContainer shadow={false}>
+      <div className="flex flex-col gap-6">
 
-      </Button>
-      <div>
-        <RoomTypeInformationCard />
+        <h2>{t("rooms.room_type_information")}</h2>
+        <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
+        <Button
+          variant="outline"
+          onClick={() => { handleLogOut() }}
+        >
+          {t("rooms.add_room_part")}
+        </Button>
+        <div className="flex flex-col gap-4">
+
+          {hasRoomParts && hotelRoomParts.map((roomPart) => (
+            <div key={roomPart.id}>
+              <RoomTypeInformationCard roomPart={roomPart} />
+            </div>
+          ))}
+        </div>
       </div>
+
     </BlockContainer>
   )
 

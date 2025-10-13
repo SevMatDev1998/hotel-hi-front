@@ -14,10 +14,10 @@ export const CreateHotelRoomSchema = yup.object({
     .optional(),
 
   roomNumberQuantity: yup
-    .string()
-    .trim()
+    .number()
     .required('Room numbers are required')
-    .matches(/^\d+(,\s*\d+)*$/, 'Room numbers must be comma-separated numbers (e.g., "101, 102, 103")'),
+    .min(1, 'Room numbers must be at least 1')
+    .typeError('Room numbers must be a number'),
 
   area: yup
     .string()
@@ -26,4 +26,31 @@ export const CreateHotelRoomSchema = yup.object({
 });
 
 
+export const EditHotelRoomSchema = yup.object({
+  roomClassId: yup
+    .number()
+    .typeError('Room class ID must be a number')
+    .integer('Room class ID must be an integer')
+    .optional(),
+
+  roomViewId: yup
+    .number()
+    .typeError('Room view ID must be a number')
+    .integer('Room view ID must be an integer')
+    .optional(),
+
+  roomNumberQuantity: yup
+    .number()
+    .min(1, 'Room numbers must be at least 1')
+    .typeError('Room numbers must be a number')
+    .optional(),
+
+  area: yup
+    .string()
+    .trim()
+    .optional(),
+});
+
+
 export type CreateHotelRoomFormData = yup.InferType<typeof CreateHotelRoomSchema>;
+export type EditHotelRoomFormData = yup.InferType<typeof EditHotelRoomSchema>;

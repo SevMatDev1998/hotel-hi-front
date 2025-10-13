@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../../../hooks/useTranslation";
 import { HotelRoom } from "../../../types";
 import BlockContainer from "../../public/BlockContainer";
@@ -8,7 +9,7 @@ interface IRoomCardProps {
 }
 
 const RoomCard = ({ room }: IRoomCardProps) => {
-  
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   return (
@@ -19,7 +20,9 @@ const RoomCard = ({ room }: IRoomCardProps) => {
           <p>{t("rooms.count_main_guest")}-{room.mainGuestQuantity}</p>
         </div>
         <div className="grid justify-items-end gap-2">
+          <div onClick={() => navigate(`/rooms/${room.id}`)}>
           <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
+          </div>
           <p>{t("rooms.room")}-{room.roomNumberQuantity}</p>
         </div>
       </div>

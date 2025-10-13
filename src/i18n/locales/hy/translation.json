@@ -74,11 +74,12 @@
     "room_type_description":"Սենյակի տեսակի նկարագրություն",
     "room_type":"Սենյակի տեսակը",
     "room_view":"Սենյակի Տեսարանը",
-    "room_area_m2":"Սենյակի տարածք (մ²)",
+    "room_area_m2":"Սենյակի տարածք",
     "room_numbers":"Սենյակների համարներ",
     "room_type_information":"Սենյակի տեսակի տեղեկություն",
     "add_room_part":"Ավելացնել սենյակի մաս",
-    "select_room_parts":"Ընտրել սենյակի մասերը"
+    "select_room_parts":"Ընտրել սենյակի մասերը",
+    "area_unit":"(մ²)"
   },
 
   "user":{

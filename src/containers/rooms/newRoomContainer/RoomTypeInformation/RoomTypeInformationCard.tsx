@@ -1,20 +1,24 @@
 import { FC, useState } from "react"
-import { HotelRoomPart } from "../../../../types"
+import { HotelRoomPart, RoomPart } from "../../../../types"
 import { useTranslation } from "../../../../hooks/useTranslation";
 import { Button } from "../../../../components/shared/Button";
 
 interface RoomTypeInformationCardProps {
-  hotelRoomPart: HotelRoomPart
+  roomPart: HotelRoomPart
 }
 
-const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = () => {
+const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ roomPart }) => {
   const { t } = useTranslation();
   const [isBadAvailable, setIsBadAvailable] = useState(false);
+
+  console.log(44444,roomPart);
+  
   return (
     <div className="flex flex-col gap-4">
 
       <div className="grid grid-cols-2 mobile:grid-cols-1 gap-4">
-        <div>naxasrah</div>
+
+        <div>{t(`room_parts.${roomPart.roomPart.name}`)}</div>
         <div className="flex items-center justify-center mobile:justify-start gap-2">
           <p>{t("room_bad.bed_available")}</p>
           <Button variant="checkButton" checked={isBadAvailable} onClick={() => setIsBadAvailable(true)}>

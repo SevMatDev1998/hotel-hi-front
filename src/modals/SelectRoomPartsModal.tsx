@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Button } from "../components/shared/Button";
 import { useTranslation } from "../hooks/useTranslation";
-import { useGetRoomPartsQuery } from "../services/rooms";
+import { useAddHotelRoomPartsMutation, useGetRoomPartsQuery } from "../services/rooms";
 import InfoBlock from "../components/shared/InfoBlock";
+import { HotelRoomPart } from "../types";
 
 interface IModalProps {
   hotelRoomId: number;
-  onSubmit: (payload: CreateHotelRoomPartsDto) => void;
+  hotelRoomParts?: HotelRoomPart[];
+  onSubmit: (payload: any) => void;
   onCancel?: () => void;
 }
 
@@ -17,24 +19,41 @@ interface RoomPartState {
   selected: boolean;
 }
 
-const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, onSubmit, onCancel }) => {
+const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomParts, onSubmit, onCancel }) => {
   const { t } = useTranslation();
   const { data: roomParts } = useGetRoomPartsQuery();
   const [parts, setParts] = useState<RoomPartState[]>([]);
+  const [addHotelRoomParts] = useAddHotelRoomPartsMutation();
 
   // initialize parts when data is fetched
   useEffect(() => {
     if (roomParts) {
+      // Group hotelRoomParts by roomPartId
+      const partQuantities: Record<number, number> = {};
+
+      hotelRoomParts?.forEach((hp) => {
+        const id = hp.roomPartId || hp.roomPartId;
+        if (id) {
+          partQuantities[id] = (partQuantities[id] || 0) + 1;
+        }
+      });
+
       setParts(
-        roomParts.map((p: any) => ({
-          id: p.id,
-          name: p.name,
-          quantity: 1,
-          selected: false,
-        }))
+        roomParts.map((p: any) => {
+          const quantity = partQuantities[p.id] || 1;
+          const selected = !!partQuantities[p.id];
+
+          return {
+            id: p.id,
+            name: p.name,
+            quantity,
+            selected,
+          };
+        })
       );
     }
-  }, [roomParts]);
+  }, [roomParts, hotelRoomParts]);
+
 
   const toggleSelect = (id: number) => {
     setParts((prev) =>
@@ -64,12 +83,12 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, onSubmit, onC
           quantity: p.quantity,
         })),
     };
-    console.log(payload);
-    
-    onSubmit(payload);
+
+    addHotelRoomParts({ hotelRoomId, roomParts: payload.roomParts });
     if (onCancel) onCancel();
   };
-  console.log(123456);
+  console.log(333, hotelRoomParts);
+
 
   return (
     <div className="p-5 flex flex-col space-y-5 ">

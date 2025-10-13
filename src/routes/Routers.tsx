@@ -7,6 +7,8 @@ import LoginPage from "../pages/auth/LoginPage";
 import SignUpPage from "../pages/auth/SignUpPage";
 import RoomsPage from "../pages/rooms/RoomsPage";
 import NewRoomPage from "../pages/rooms/NewRoomPage";
+import RoomPage from "../pages/rooms/RoomPage";
+import EditRoomPage from "../pages/rooms/EditRoomPage";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -57,7 +59,7 @@ import NewRoomPage from "../pages/rooms/NewRoomPage";
 
 const router = createBrowserRouter([
   {
- element: <MainLayout />,        // нет path — просто layout
+    element: <MainLayout />,        // нет path — просто layout
     errorElement: <NotFound />,
     children: [
       // { path: RouteEnum.HOME, element: <DashboardPage /> },
@@ -67,6 +69,8 @@ const router = createBrowserRouter([
       // rooms
       { path: RouteEnum.ROOMS, element: <RoomsPage /> },
       { path: `${RouteEnum.ROOMS}/create`, element: <NewRoomPage /> },
+      { path: `${RouteEnum.ROOMS}/:roomId/edit`, element: <EditRoomPage /> },
+      { path: `${RouteEnum.ROOMS}/:roomId`, element: <RoomPage /> },
 
 
       // //users
@@ -153,7 +157,7 @@ const router = createBrowserRouter([
       // { path: RouteEnum.RESET_PASSWORD, element: <ResetPasswordPage /> },
       // { path: RouteEnum.NEW_PASSWORD, element: <NewPasswordPage /> },
       // { path: RouteEnum.CHECK_EMAIL_VERIFICATION, element: <CheckEmailVerificationPage /> },
-      
+
     ]
   }
   ,

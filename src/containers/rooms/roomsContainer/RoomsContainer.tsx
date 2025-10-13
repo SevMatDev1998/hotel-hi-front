@@ -4,15 +4,15 @@ import InfoBlock from "../../../components/shared/InfoBlock";
 import { useTranslation } from "../../../hooks/useTranslation";
 import RoomCard from "./RoomCard";
 import RouteEnum from "../../../enums/route.enum";
-import { useGetHotelRoomsQuery } from "../../../services/rooms";
+import { useGetHotelRoomsByHotelIdQuery } from "../../../services/rooms";
 import useAppSelector from "../../../hooks/useAppSelector";
 
 const RoomsContainer = () => {
 
   const navigate = useNavigate();
-  const {user} = useAppSelector(state => state.auth);
+  const { user } = useAppSelector(state => state.auth);
   const { t } = useTranslation();
-  const { data: roomsData } = useGetHotelRoomsQuery({ hotelId: user?.hotelId }  );
+  const { data: roomsData } = useGetHotelRoomsByHotelIdQuery({ hotelId: user?.hotelId });
 
   return (
     <div className="flex flex-col gap-6">
@@ -28,11 +28,11 @@ const RoomsContainer = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <Button variant="outline" onClick={() => {navigate(`${RouteEnum.ROOMS}/create`);}}>{t("rooms.add_new_room")}</Button>
+        <Button variant="outline" onClick={() => { navigate(`${RouteEnum.ROOMS}/create`); }}>{t("rooms.add_new_room")}</Button>
         <div className="flex flex-col gap-4">
           {roomsData?.map(room => (
             <RoomCard key={room.id} room={room} />
-          )) }
+          ))}
         </div>
       </div>
 
