@@ -1,32 +1,27 @@
 import { FC, useState } from "react"
-import { HotelRoomPart, HotelRoomPartBed, RoomBedSize, RoomBedType } from "../../../../types"
+import { HotelRoomPart } from "../../../../types"
 import { useTranslation } from "../../../../hooks/useTranslation";
 import { Button } from "../../../../components/shared/Button";
-import RoomTypeInformationCardRows from "./RoomTypeInformationCardRows";
-import { useGetHotelRoomPartBedsByPartIdQuery } from "../../../../services/rooms";
+import RoomTypeInformationCardRows, { RoomPartBedWithRowIndex } from "./RoomTypeInformationCardRows";
+import { useEditHotelRoomPartBedsMutation } from "../../../../services/rooms";
 
 interface RoomTypeInformationCardProps {
   hotelRoomPart: HotelRoomPart,
-  roomBedTypes?: RoomBedType[],
-  roomBedSizes?: RoomBedSize[]
 }
 
 
-const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPart, roomBedTypes, roomBedSizes }) => {
+const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPart }) => {
+
   const { t } = useTranslation();
   const [isBadAvailable, setIsBadAvailable] = useState(false);
+  const [roomPartBedsState, setRoomPartBedsState] = useState<RoomPartBedWithRowIndex[]>([]);
 
-  const { data: hotelRoomPartBeds } = useGetHotelRoomPartBedsByPartIdQuery({ roomPartId: hotelRoomPart?.id });
-
-  const [hotelRoomPartBedsState, setHotelRoomPartBedsState] = useState<Partial<HotelRoomPartBed>[]>(hotelRoomPartBeds || []);
+  const [editHotelRoomPartBedsMutation] = useEditHotelRoomPartBedsMutation();
 
   const isRoomHasBeds = hotelRoomPart?.beds && hotelRoomPart?.beds.length > 0;
 
-
-
-
-  const addHotelRoomPartBeds = (roomPartBed: Partial<HotelRoomPartBed>) => {
-    setHotelRoomPartBedsState((prev) => [
+  const addHotelRoomPartBeds = (roomPartBed:RoomPartBedWithRowIndex ) => {
+    setRoomPartBedsState((prev) => [
       ...prev,
       roomPartBed
     ]);
@@ -34,6 +29,7 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
 
   const handleRoomBadChange = () => {
     setIsBadAvailable(false);
+    editHotelRoomPartBedsMutation({hotelRoomPartId: hotelRoomPart?.id, bedConfigurations: roomPartBedsState});
   }
 
 
@@ -59,22 +55,17 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
               </Button>
           }
         </div>
-
       </div>
       {
         isBadAvailable &&
         <RoomTypeInformationCardRows
-          hotelRoomPartBeds={hotelRoomPartBedsState}
+          roomPartBedsState={roomPartBedsState}
+          setRoomPartBedsState={setRoomPartBedsState}
+          roomPartId={hotelRoomPart?.id}
           hendelAddHotelRoomPartBeds={addHotelRoomPartBeds}
-
-          roomBedTypes={roomBedTypes}
-          roomBedSizes={roomBedSizes}
         />
-
       }
-
     </div>
-
   )
 }
 

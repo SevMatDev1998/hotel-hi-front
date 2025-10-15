@@ -72,7 +72,7 @@ export enum HotelRoomStatus {
 
 export enum BedType {
   Main = 'Main',
-  Cradle = 'Cradle',
+  // Cradle = 'Cradle',
   Additional = 'Additional'
 }
 

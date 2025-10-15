@@ -16,6 +16,8 @@ interface SelectProps {
   required?: boolean;
   className?: string;
   tr_name?: string;
+  onSelect?: (value: string | number) => void;
+  value?: string | number; 
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -23,13 +25,20 @@ export const Select: React.FC<SelectProps> = ({
   name,
   options,
   error,
-  required,
   className,
   tr_name,
-
+  onSelect,
+  value,
   ...props
 }) => {
   const { t } = useTranslation();
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if (onSelect) {
+      onSelect(value);
+    }
+  };
 
   return (
     <div>
@@ -41,6 +50,8 @@ export const Select: React.FC<SelectProps> = ({
 
       <select
         id={name}
+        onChange={handleChange} // ✅ attach handler
+        value={value ?? ''} // ✅ this is what was missing
         className={clsx(
           "appearance-none block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
           className
@@ -54,6 +65,7 @@ export const Select: React.FC<SelectProps> = ({
           </option>
         ))}
       </select>
+
       {error && (
         <p className="mt-1 text-sm text-red-600">{error.message}</p>
       )}
