@@ -5,10 +5,10 @@ import { BedType, HotelRoomPartBed, RoomBedSize, RoomBedType } from '../../../..
 import { Select } from '../../../../components/shared/Select';
 
 interface IRoomTypeInformationCardRowsProps {
-  hotelRoomPartBeds: HotelRoomPartBed[];
+  hotelRoomPartBeds: Partial<HotelRoomPartBed>[];
   hendelAddHotelRoomPartBeds: (bed: HotelRoomPartBed) => void;
-  roomBedTypes: RoomBedType[];
-  roomBedSizes: RoomBedSize[];
+  roomBedTypes?: RoomBedType[];
+  roomBedSizes?: RoomBedSize[];
 }
 
 
@@ -44,11 +44,11 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
               <div key={bed.id} className="flex  items-center justify-between mobile:justify-start gap-4">
                 <div className='flex gap-3'>
                   <p>{t(`room_bed_types.${bed.bedType}`)}</p>
-                  <p>{bed.quantity}</p>
+                  {/* <p>{bed.quantity}</p> */}
                 </div>
 
                 <Select
-                  name={`bed-${bed.id}-size`}
+                  name={`bed-${bed.id}-type`}
                   options={roomBedTypes.map(type => ({ value: type.id, label: type.name }))}
                   tr_name="room_bed_types_names"
                 />

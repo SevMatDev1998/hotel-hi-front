@@ -1,6 +1,6 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { HotelRoom, HotelRoomPart, HotelRoomPartBed, RoomBedType, RoomClass, RoomPart, RoomView } from "../../types";
+import { HotelRoom, HotelRoomPart, HotelRoomPartBed, RoomBedSize, RoomBedType, RoomClass, RoomPart, RoomView } from "../../types";
 
 const RoomsService = ApiInstance.injectEndpoints({
   endpoints: build => ({
@@ -81,7 +81,7 @@ const RoomsService = ApiInstance.injectEndpoints({
       })
     }),
 
-    getRoomBedSizes:build.query<RoomBedType[], void>({
+    getRoomBedSizes:build.query<RoomBedSize[], void>({
       query: () => ({
         url: `${ApiEnum.ROOM_BED_SIZES}`,
       })

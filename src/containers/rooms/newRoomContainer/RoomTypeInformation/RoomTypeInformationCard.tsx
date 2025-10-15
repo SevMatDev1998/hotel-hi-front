@@ -1,35 +1,31 @@
 import { FC, useState } from "react"
-import { HotelRoomPart, RoomBedSize, RoomBedType } from "../../../../types"
+import { HotelRoomPart, HotelRoomPartBed, RoomBedSize, RoomBedType } from "../../../../types"
 import { useTranslation } from "../../../../hooks/useTranslation";
 import { Button } from "../../../../components/shared/Button";
 import RoomTypeInformationCardRows from "./RoomTypeInformationCardRows";
 import { useGetHotelRoomPartBedsByPartIdQuery } from "../../../../services/rooms";
 
 interface RoomTypeInformationCardProps {
-  roomPart: HotelRoomPart,
-  roomBedTypes: RoomBedType[],
-  roomBedSizes: RoomBedSize[]
+  hotelRoomPart: HotelRoomPart,
+  roomBedTypes?: RoomBedType[],
+  roomBedSizes?: RoomBedSize[]
 }
 
-type RoomPartBedType = {
-  bedType: string;
-  roomBedSizeId: number;
-  roomBedTypeId: number;
-}
 
-const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ roomPart, roomBedTypes, roomBedSizes }) => {
+const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPart, roomBedTypes, roomBedSizes }) => {
   const { t } = useTranslation();
   const [isBadAvailable, setIsBadAvailable] = useState(false);
-  const { data: hotelRoomPartBeds } = useGetHotelRoomPartBedsByPartIdQuery({ roomPartId: roomPart.id });
 
-  const [hotelRoomPartBedsState, setHotelRoomPartBedsState] = useState<RoomPartBedType[]>(hotelRoomPartBeds || []);
+  const { data: hotelRoomPartBeds } = useGetHotelRoomPartBedsByPartIdQuery({ roomPartId: hotelRoomPart?.id });
 
-  const isRoomHasBeds = roomPart.beds && roomPart.beds.length > 0;
+  const [hotelRoomPartBedsState, setHotelRoomPartBedsState] = useState<Partial<HotelRoomPartBed>[]>(hotelRoomPartBeds || []);
+
+  const isRoomHasBeds = hotelRoomPart?.beds && hotelRoomPart?.beds.length > 0;
 
 
 
 
-  const addHotelRoomPartBeds = (roomPartBed: RoomPartBedType) => {
+  const addHotelRoomPartBeds = (roomPartBed: Partial<HotelRoomPartBed>) => {
     setHotelRoomPartBedsState((prev) => [
       ...prev,
       roomPartBed
@@ -44,7 +40,7 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ roomPart, r
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-4">
-        <div>{t(`room_parts.${roomPart.roomPart.name}`)}</div>
+        <div>{t(`room_parts.${hotelRoomPart?.roomPart?.name}`)}</div>
         <div className="flex  justify-end mobile:justify-start gap-4">
           <p>{t("room_bad.bed_available")}</p>
           {

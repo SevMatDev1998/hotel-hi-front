@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import RoomTypeInformationCard from './RoomTypeInformationCard';
 import { useGetRoomBedSizesQuery, useGetRoomBedTypesQuery } from '../../../../services/rooms';
 
@@ -17,7 +17,7 @@ const RoomTypeInformationCards: FC<RoomTypeInformationCardsProps> = ({ hotelRoom
     <div className="flex flex-col gap-4">
       {hasRoomParts && hotelRoomParts.map((roomPart) => (
         <div key={roomPart.id}>
-          <RoomTypeInformationCard roomPart={roomPart} roomBedTypes={roomBedTypes} roomBedSizes={roomBedSizes} />
+          <RoomTypeInformationCard hotelRoomPart={roomPart} roomBedTypes={roomBedTypes} roomBedSizes={roomBedSizes} />
         </div>
       ))}
     </div>
