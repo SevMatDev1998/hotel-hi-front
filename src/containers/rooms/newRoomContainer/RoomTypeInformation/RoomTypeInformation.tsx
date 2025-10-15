@@ -6,7 +6,7 @@ import { Button } from "../../../../components/shared/Button";
 import useModal from "../../../../hooks/useModal";
 import SelectRoomPartsModal from "../../../../modals/SelectRoomPartsModal";
 import { useGetHotelRoomPartsQuery } from "../../../../services/rooms";
-import RoomTypeInformationCard from "./RoomTypeInformationCard";
+import RoomTypeInformationCards from "./RoomTypeInformationCards";
 
 interface RoomTypeInformationProps {
   hotelId?: number
@@ -37,7 +37,7 @@ const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ hotelId }) => {
   if (!hotelRoomParts) return null;
 
   // Проверяем, является ли hotelRoomParts массивом и не пустым
-  const hasRoomParts = Array.isArray(hotelRoomParts) && hotelRoomParts.length > 0;
+
 
 
 
@@ -53,13 +53,8 @@ const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ hotelId }) => {
         >
           {t("rooms.add_room_part")}
         </Button>
-        <div className="flex flex-col gap-4">
-
-          {hasRoomParts && hotelRoomParts.map((roomPart) => (
-            <div key={roomPart.id}>
-              <RoomTypeInformationCard roomPart={roomPart} />
-            </div>
-          ))}
+        <div>
+          <RoomTypeInformationCards hotelRoomParts={hotelRoomParts}/>
         </div>
       </div>
 

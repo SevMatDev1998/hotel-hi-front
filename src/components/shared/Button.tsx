@@ -14,7 +14,7 @@ interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 const variantClasses = {
   base: 'p-[12px] bg-dusty-teal rounded-[8px] min-w-[164px] flex items-center justify-center text-xs text-white ',
   outline: 'p-[10px] border border-dusty-teal rounded-[8px] min-w-[164px] w-full flex items-center text-dusty-teal ',
-  checkButton: 'w-[70px] h-[26px] items-center justify-center rounded-[5px] flex text-white border border-charcoal-gray text-charcoal-gray'
+  checkButton: 'w-[90px] h-[26px] items-center justify-center rounded-[5px] flex text-white border border-charcoal-gray text-charcoal-gray'
 };
 export const Button: React.FC<BaseButtonProps> = ({
   children,

@@ -1,6 +1,6 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { HotelRoom, HotelRoomPart, RoomClass, RoomPart, RoomView } from "../../types";
+import { HotelRoom, HotelRoomPart, HotelRoomPartBed, RoomBedType, RoomClass, RoomPart, RoomView } from "../../types";
 
 const RoomsService = ApiInstance.injectEndpoints({
   endpoints: build => ({
@@ -67,10 +67,25 @@ const RoomsService = ApiInstance.injectEndpoints({
         method: 'PUT',
         body: data
       })
-    })
+    }),
 
+    getHotelRoomPartBedsByPartId: build.query<HotelRoomPartBed[], { roomPartId: string }>({
+      query: ({ roomPartId }) => ({
+        url: `${ApiEnum.HOTEL_ROOM_PART_BEDS}/${roomPartId}`,
+      })
+    }), 
 
+    getRoomBedTypes:build.query<RoomBedType[], void>({
+      query: () => ({
+        url: `${ApiEnum.ROOM_BED_TYPES}`,
+      })
+    }),
 
+    getRoomBedSizes:build.query<RoomBedType[], void>({
+      query: () => ({
+        url: `${ApiEnum.ROOM_BED_SIZES}`,
+      })
+    }),
 
   }),
 })
@@ -85,7 +100,10 @@ export const {
   useGetHotelRoomPartsQuery,
   useAddHotelRoomPartsMutation,
   useCreateRoomMutation,
-  useEditRoomMutation
+  useEditRoomMutation,
+  useGetHotelRoomPartBedsByPartIdQuery,
+  useGetRoomBedTypesQuery,
+  useGetRoomBedSizesQuery
 } = RoomsService;
 
 export const { endpoints: { editRoom } } = RoomsService
