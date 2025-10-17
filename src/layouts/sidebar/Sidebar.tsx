@@ -42,7 +42,7 @@ export const Sidebar = () => {
         },
         {
           name: 'menu.food',
-          href: '/food',
+          href: '/foods',
           icon: Coffee,
         },
         {

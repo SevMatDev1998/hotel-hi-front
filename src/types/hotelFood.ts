@@ -13,3 +13,16 @@ export interface HotelFood {
   updatedAt: Date;
   deletedAt?: Date;
 }
+
+
+
+export interface AddHotelFoodDto {
+  // hotelId: number;
+  name?: string;
+  description?: string;
+  foodType: FoodType;
+  startDate: string;
+  endDate: string;
+  cuisineIds: number[];
+  foodOfferTypeIds: number[];
+}

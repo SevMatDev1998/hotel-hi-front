@@ -16,6 +16,10 @@ enum ApiEnum {
     HOTEL_ROOM_PART_BEDS = "hotel-room-part-beds",
     ROOM_BED_TYPES = "room-bed-types",
     ROOM_BED_SIZES = "room-bed-sizes",
+
+    HOTEL_FOODS = "hotel-foods",
+    FOOD_OFFER_TYPES = "food-offer-types",
+    CUISNESSE = "cuisines",
 }
 
 export default ApiEnum
