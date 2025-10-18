@@ -10,6 +10,7 @@ import NewRoomPage from "../pages/rooms/NewRoomPage";
 import RoomPage from "../pages/rooms/RoomPage";
 import EditRoomPage from "../pages/rooms/EditRoomPage";
 import FoodsPage from "../pages/foods/FoodsPage";
+import HotelServicesPage from "../pages/hotelServices/HotelServicesPage";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -76,6 +77,8 @@ const router = createBrowserRouter([
 
       { path: RouteEnum.FOODS, element: <FoodsPage /> },
 
+
+      { path: RouteEnum.HOTEL_SERVICES, element: <HotelServicesPage /> },
       // //users
       // { path: RouteEnum.USERS, element: <UsersPage /> },
       // { path: `${RouteEnum.USERS}/create`, element: <NewUser /> },

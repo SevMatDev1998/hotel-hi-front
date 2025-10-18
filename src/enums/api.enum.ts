@@ -20,6 +20,9 @@ enum ApiEnum {
     HOTEL_FOODS = "hotel-foods",
     FOOD_OFFER_TYPES = "food-offer-types",
     CUISNESSE = "cuisines",
+
+    HOTEL_SERVICES = "hotel-services",
+    SYSTEM_SERVICE_GROUPS = "system-service-groups",
 }
 
 export default ApiEnum

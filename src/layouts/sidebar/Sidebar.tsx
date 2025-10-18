@@ -47,7 +47,7 @@ export const Sidebar = () => {
         },
         {
           name: 'menu.services',
-          href: '/services',
+          href: '/hotel-services',
           icon: CreditCard,
         },
 

@@ -10,7 +10,9 @@ export enum RouteEnum {
     HOTEL = "/hotel",
     ROOMS = "/rooms",
     FOODS = "/foods",
-    
+    HOTEL_SERVICES = "/hotel-services",
+
+    SYSTEM_SERVICE_GROUPS = "/system-service-groups",
     NOT_FOUND = "*",
     
   }
