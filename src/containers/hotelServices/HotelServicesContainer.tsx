@@ -25,11 +25,6 @@ const HotelServicesContainer = () => {
           </div>
         </div>
         <HotelSericeGroups serviceGroups={serviceGroups} />
-        {/* {
-          mainFoods?.map((food, index) => {
-            return <FoodContainerCard key={index} mainFood={food} hotelFood={foodData?.find(item => item.foodType === food.type)} />
-          })
-        } */}
       </div>
     </div>
   );

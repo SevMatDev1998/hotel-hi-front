@@ -1,5 +1,5 @@
 export interface SystemService {
-  id: number;
+  id: string;
   systemServiceGroupId: number;
   systemServiceTypeId: number;
   name: string;
