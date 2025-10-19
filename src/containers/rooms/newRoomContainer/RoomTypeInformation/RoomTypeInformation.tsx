@@ -6,6 +6,7 @@ import { Button } from "../../../../components/shared/Button";
 import useModal from "../../../../hooks/useModal";
 import SelectRoomPartsModal from "../../../../modals/SelectRoomPartsModal";
 import { useGetHotelRoomPartsQuery } from "../../../../services/rooms";
+
 import RoomTypeInformationCards from "./RoomTypeInformationCards";
 
 interface RoomTypeInformationProps {
@@ -35,10 +36,6 @@ const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ hotelId }) => {
 
   // Early returns после хуков
   if (!hotelRoomParts) return null;
-
-  // Проверяем, является ли hotelRoomParts массивом и не пустым
-
-
 
 
   return (

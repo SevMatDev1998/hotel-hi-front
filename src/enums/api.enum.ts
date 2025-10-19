@@ -25,6 +25,7 @@ enum ApiEnum {
     SYSTEM_SERVICE_GROUPS = "system-service-groups",
     SYSTEM_SERVICE_TYPES = "system-service-types",
     SYSTEM_SERVICES = "system-services",
+    HOTEL_SERVICE_AVAILABILITY="hotel-service-availability"
 }
 
 export default ApiEnum
