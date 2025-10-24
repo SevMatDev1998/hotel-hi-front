@@ -177,6 +177,19 @@
   "Cradle": "Օղակի մահճակալ",
   "Crib": "Մանկական մահճակալ",
   "Bassinet": "Նորածնի օրորոց"
+},
+"price_policy":{
+  "hotel_pricing_policy":"Հյուրանոցի գնային քաղաքականություն",
+  "add_pricing_policy":"Ավելացնել գնային քաղաքականություն",
+  "price_offer_settings":"Գնային առաջարկի կարգավորումներ",
+  "price_list":"գնացուցակ",
+  "room_value_settings":"Սենյակի արժեքի կարգավորումներ"
+},
+"hotel_availability": {
+  "price_offer_name": "գնային առաջարկի անվանում",
+  "arrival_and_departure_times":"Ժամանման և մեկնման ժամերը",
+  
+  "add_age_range":"Ավելացնել տարիքային միջակայք"
 }
 
 }

@@ -55,7 +55,7 @@ export const Sidebar = () => {
     },
     {
       name: 'menu.price settings',
-      href: '/price-settings',
+      href: '/price-policy',
       icon: BarChart3,
       hasSubItems: false
     },

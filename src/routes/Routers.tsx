@@ -11,6 +11,8 @@ import RoomPage from "../pages/rooms/RoomPage";
 import EditRoomPage from "../pages/rooms/EditRoomPage";
 import FoodsPage from "../pages/foods/FoodsPage";
 import HotelServicesPage from "../pages/hotelServices/HotelServicesPage";
+import PricePolicyPage from "../pages/pricePolicy/PricePolicyPage";
+import AddPricePolicyPage from "../pages/pricePolicy/AddPricePolicyPage";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -79,6 +81,10 @@ const router = createBrowserRouter([
 
 
       { path: RouteEnum.HOTEL_SERVICES, element: <HotelServicesPage /> },
+
+      { path: RouteEnum.PRICE_POLICY, element: <PricePolicyPage /> },
+      { path: `${RouteEnum.PRICE_POLICY}/create`, element: <AddPricePolicyPage /> },
+
       // //users
       // { path: RouteEnum.USERS, element: <UsersPage /> },
       // { path: `${RouteEnum.USERS}/create`, element: <NewUser /> },

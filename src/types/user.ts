@@ -1,6 +1,6 @@
 export interface User {
-  id: number;
-  hotelId?: number;
+  id: string;
+  hotelId?: string;
   userName?: string;
   normalizedUserName?: string;
   email?: string;

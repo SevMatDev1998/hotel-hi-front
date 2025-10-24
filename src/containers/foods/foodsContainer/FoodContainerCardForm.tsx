@@ -49,7 +49,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
       className=" space-y-6"
     >
       {/* --- Time Range Section --- */}
-      <fieldset className="">
+      <div >
         <div >
           <h3>Ժամանակի միջակայք</h3>
         </div>
@@ -78,7 +78,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
             )}
           />
         </div>
-      </fieldset>
+      </div>
 
       {/* --- Food Offer Types --- */}
       <div className="space-y-3">

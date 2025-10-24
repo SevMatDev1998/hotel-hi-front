@@ -1,8 +1,9 @@
 export interface HotelAvailability {
   id: number;
   hotelId: number;
-  dateFrom: Date;
-  dateTo: Date;
+  title: string;
+  checkInTime: Date;
+  checkoutTime: Date;
   createdAt: Date;
   updatedAt: Date;
 }
