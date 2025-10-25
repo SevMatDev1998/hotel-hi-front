@@ -3,19 +3,18 @@
   "language": "Լեզու",
   "armenian": "Հայերեն",
   "russian": "Ռուսերեն",
-  "menu":{
-    "settings":"Կարգավորումներ",
-    "hotel":"Հյուրանոց",
-    "basic":"Հիմնական",
-    "rooms":"Սենյակներ",
-    "food":"Սնունդ",
-    "services":"Ծառայություններ",
-    "price settings":"Գնային կարգավորում",
-    "partners":"Գործընկերներ",
-    "notifications":"Ծանուցումներ"
+  "menu": {
+    "settings": "Կարգավորումներ",
+    "hotel": "Հյուրանոց",
+    "basic": "Հիմնական",
+    "rooms": "Սենյակներ",
+    "food": "Սնունդ",
+    "services": "Ծառայություններ",
+    "price settings": "Գնային կարգավորում",
+    "partners": "Գործընկերներ",
+    "notifications": "Ծանուցումներ"
   },
-
-  "auth":{
+  "auth": {
     "create_account": "Ստեղծել հաշիվ",
     "login": "Մուտք գործել",
     "logout": "Ելք",
@@ -24,18 +23,9 @@
     "not_registered_system": "Գրանցված չեմ համակարգում",
     "register": "Գրանցվել",
     "forgot_password": "Մոռացել եք գաղտնաբառը",
-    "no_account":"Գրանցված չեմ համակարգում",
-    "hotel_name":"Հյուրանոցի անվանում",
-    "confirm_password":"Հաստատել գաղտնաբառը",
-    "errors": {
-      "hotelName_required": "Հյուրանոցի անվանումը պարտադիր է",
-      "email_required": "Էլ. փոստը պարտադիր է",
-      "email_invalid": "Էլ. փոստի ֆորմատը սխալ է",
-      "password_required": "Գաղտնաբառը պարտադիր է",
-      "password_min": "Գաղտնաբառը պետք է լինի առնվազն 8 նիշ",
-      "confirmPassword_required": "Գաղտնաբառի հաստատումը պարտադիր է",
-      "passwords_not_match": "Գաղտնաբառերը չեն համընկնում"
-    },
+    "no_account": "Գրանցված չեմ համակարգում",
+    "hotel_name": "Հյուրանոցի անվանում",
+    "confirm_password": "Հաստատել գաղտնաբառը",
     "messages": {
       "login_success": "Դուք հաջողությամբ մուտք գործեցիք",
       "login_error": "Մուտքը ձախողվեց, խնդրում ենք փորձել կրկին",
@@ -43,62 +33,57 @@
       "register_error": "Գրանցումը ձախողվեց, խնդրում ենք փորձել կրկին"
     }
   },
-
-  "hotel":{
-    "hotel_base_info":"Հյուրանոցի հիմնական տեղեկություններ",
-    "hotel_legal_info":"Հյուրանոցի իրավաբանական տեղեկություններ",
-    "hotel_address":"Հյուրանոցի հասցե",
-    "contact_person":"Կոնտակտային անձ",
-    "phone_number":"Հեռախոսահամար",
-    "value":"Արժեք",
-    "product_logo":"Ապրանքի նշան",
-    "country":"Երկիր",
-    "curency":"Արժույթ",
-    "hotel_name":"Հյուրանոցի անվանում",
-    "legal_name":"Իրավաբանական անվանում",
-    "legal_address":"Իրավաբանական հասցե",
-    "tax_id":"ՀՎՀՀ",
-    "account_number":"Հաշվեհամար",
-    "director":"Տնօրեն",
-    "adress_to_get_emails":"Էլ. փոստի հասցե հաղորդագրություններ ստանալու համար"
+  "hotel": {
+    "hotel_base_info": "Հյուրանոցի հիմնական տեղեկություններ",
+    "hotel_legal_info": "Հյուրանոցի իրավաբանական տեղեկություններ",
+    "hotel_address": "Հյուրանոցի հասցե",
+    "contact_person": "Կոնտակտային անձ",
+    "phone_number": "Հեռախոսահամար",
+    "value": "Արժեք",
+    "product_logo": "Ապրանքի նշան",
+    "country": "Երկիր",
+    "curency": "Արժույթ",
+    "hotel_name": "Հյուրանոցի անվանում",
+    "legal_name": "Իրավաբանական անվանում",
+    "legal_address": "Իրավաբանական հասցե",
+    "tax_id": "ՀՎՀՀ",
+    "account_number": "Հաշվեհամար",
+    "director": "Տնօրեն",
+    "adress_to_get_emails": "Էլ. փոստի հասցե հաղորդագրություններ ստանալու համար"
   },
-
-  "rooms":{
-    "room":"Սենյակ",
-    "rooms_types":"Սենյակների տեսակներ",
-    "type_of_rooms_in_the_hotel":"Հյուրանոցի սենյակների տեսակները",
-    "total_number_of_rooms":"Ընդհանուր սենյակների քանակը",
-    "approved_hotel_number_of_rooms":"Հաստատված հյուրանոցի սենյակների քանակը",
-    "add_new_room":"Ավելացնել նոր սենյակ",
-    "count_main_guest":"Հիմնական հյուրերի քանակ",
-    "room_type_description":"Սենյակի տեսակի նկարագրություն",
-    "room_type":"Սենյակի տեսակը",
-    "room_view":"Սենյակի Տեսարանը",
-    "room_area_m2":"Սենյակի տարածք",
-    "room_numbers":"Սենյակների համարներ",
-    "room_type_information":"Սենյակի տեսակի տեղեկություն",
-    "add_room_part":"Ավելացնել սենյակի մաս",
-    "select_room_parts":"Ընտրել սենյակի մասերը",
-    "area_unit":"(մ²)"
+  "rooms": {
+    "room": "Սենյակ",
+    "rooms_types": "Սենյակների տեսակներ",
+    "type_of_rooms_in_the_hotel": "Հյուրանոցի սենյակների տեսակները",
+    "total_number_of_rooms": "Ընդհանուր սենյակների քանակը",
+    "approved_hotel_number_of_rooms": "Հաստատված հյուրանոցի սենյակների քանակը",
+    "add_new_room": "Ավելացնել նոր սենյակ",
+    "count_main_guest": "Հիմնական հյուրերի քանակ",
+    "room_type_description": "Սենյակի տեսակի նկարագրություն",
+    "room_type": "Սենյակի տեսակը",
+    "room_view": "Սենյակի Տեսարանը",
+    "room_area_m2": "Սենյակի տարածք",
+    "room_numbers": "Սենյակների համարներ",
+    "room_type_information": "Սենյակի տեսակի տեղեկություն",
+    "add_room_part": "Ավելացնել սենյակի մաս",
+    "select_room_parts": "Ընտրել սենյակի մասերը",
+    "area_unit": "(մ²)"
   },
-
-  "user":{
-    "hotel_name":"Ազգանուն",
-    "email":"Էլ. փոստ"
+  "user": {
+    "hotel_name": "Ազգանուն",
+    "email": "Էլ. փոստ"
   },
-
-  "buttons":{
-    "save":"Պահպանել",
-    "cancel":"Չեղարկել",
-    "add":"Ավելացնել",
-    "delete":"Ջնջել",
-    "change":"Փոփոխել",
-    "edit":"Խմբագրել",
-    "yes":"Այո",
-    "no":"Ոչ"
+  "buttons": {
+    "save": "Պահպանել",
+    "cancel": "Չեղարկել",
+    "add": "Ավելացնել",
+    "delete": "Ջնջել",
+    "change": "Փոփոխել",
+    "edit": "Խմբագրել",
+    "yes": "Այո",
+    "no": "Ոչ"
   },
-
-  "room_class": {
+  "room_class_options": {
     "Affordable": "Արժեքավոր",
     "AFrame": "Ա-ֆրեյմ",
     "Apartment": "Բնակարան",
@@ -124,7 +109,7 @@
     "Villa": "Վիլլա",
     "Micro": "Միկրո"
   },
-  "room_view":{
+  "room_view_options": {
     "City": "Քաղաքային",
     "Courtyard": "Բակային",
     "Forest": "Անտառային",
@@ -136,60 +121,94 @@
     "River": "Գետի",
     "Sea": "Ծովային"
   },
-  "room_parts": {
-  "Bedroom": "Ննջասենյակ",
-  "Kitchen": "Խոհանոց",
-  "Living room": "Հյուրասենյակ",
-  "Bathroom": "Լոգասենյակ",
-  "Balcony": "Պատշգամբ",
-  "Terrace": "Տարածք",
-  "Dining room": "Ճաշասենյակ",
-  "Office": "Գրասենյակ",
-  "Garage": "Ավտոտնակ",
-  "Closet": "Հագուստապահարան",
-  "Toilet": "Զուգարան"
-},
-"room_bad":{
-  "bed_available": "Առկա մահճակալ",
-  "add_base_bed": "Ավելացնել հիմնական մահճակալ",
-  "add_additional_bed": "Ավելացնել լրացուցիչ մահճակալ"
-},
+  "room_parts_options": {
+    "Bedroom": "Ննջասենյակ",
+    "Kitchen": "Խոհանոց",
+    "Living room": "Հյուրասենյակ",
+    "Bathroom": "Լոգասենյակ",
+    "Balcony": "Պատշգամբ",
+    "Terrace": "Տարածք",
+    "Dining room": "Ճաշասենյակ",
+    "Office": "Գրասենյակ",
+    "Garage": "Ավտոտնակ",
+    "Closet": "Հագուստապահարան",
+    "Toilet": "Զուգարան"
+  },
+  "room_bad": {
+    "bed_available": "Առկա մահճակալ",
+    "add_base_bed": "Ավելացնել հիմնական մահճակալ",
+    "add_additional_bed": "Ավելացնել լրացուցիչ մահճակալ"
+  },
+  "room_bed_types": {
+    "Main": "Հիմնական",
+    "Additional": "Լրացուցիչ"
+  },
+  "room_bed_types_names_options": {
+    "Single": "Միանձնյա",
+    "Double": "Կրկնակի",
+    "Queen": "Քուին չափսի",
+    "King": "Կինգ չափսի",
+    "Twin": "Կրկնակի (առանձին մահճակալներով)",
+    "Full": "Լրիվ չափսի",
+    "California King": "Կալիֆորնիական կինգ",
+    "Bunk": "Երկհարկանի մահճակալ",
+    "Sofa": "Դիվան",
+    "Murphy": "Ծալվող մահճակալ (Murphy)",
+    "Daybed": "Օրվա մահճակալ",
+    "Futon": "Ֆուտոն",
+    "Rollaway": "Շարժական մահճակալ",
+    "Cradle": "Օղակի մահճակալ",
+    "Crib": "Մանկական մահճակալ",
+    "Bassinet": "Նորածնի օրորոց"
+  },
+  "price_policy": {
+    "hotel_pricing_policy": "Հյուրանոցի գնային քաղաքականություն",
+    "add_pricing_policy": "Ավելացնել գնային քաղաքականություն",
+    "price_offer_settings": "Գնային առաջարկի կարգավորումներ",
+    "price_list": "գնացուցակ",
+    "room_value_settings": "Սենյակի արժեքի կարգավորումներ"
+  },
+  "hotel_availability": {
+    "price_offer_name": "գնային առաջարկի անվանում",
+    "arrival_and_departure_times": "Ժամանման և մեկնման ժամերը",
+    "add_age_range": "Ավելացնել տարիքային միջակայք"
+  },
+  "partners": {
+    "partners": "Գործընկերներ",
+    "add_partner": "Ավելացնել գործընկեր",
+    "register_country": "Գրանցման երկիր",
+    "tax_id": "ՀՎՀՀ",
+    "legal_person_name": "Իրավաբանական անձի անվանում",
+    "legal_person": "Իրավաբանական անձ",
+    "name": "Անվանում",
+    "product_logo": "Ապրանքի նշան",
+    "email": "Էլ. հասցե",
+    "phone_number": "Հեռախոսահամար",
+    "account_number": "Հաշվեհամար",
+    "director": "Տնօրեն"
+  },
+  "partners_status": {
+    "Draft": "Սևագիր",
+    "Pending": "Սպասման մեջ",
+    "Waiting": "Սպասում",
+    "Approved": "Հաստատված"
+  },
+  "errors": {
+    "required": "դաշտը պարտադիր է",
+    "typeError": "դաշտի ֆորմատը սխալ է"
+  },
 
-"room_bed_types":{
-  "Main": "Հիմնական",
-  "Additional": "Լրացուցիչ"
-},
+  "registration_country_options": {
+    "Armenia": "Հայաստան",
+    "Russia": "Ռուսաստան",
+    "United States": "ԱՄՆ"
+  },
 
-"room_bed_types_names": {
-  "Single": "Միանձնյա",
-  "Double": "Կրկնակի",
-  "Queen": "Քուին չափսի",
-  "King": "Կինգ չափսի",
-  "Twin": "Կրկնակի (առանձին մահճակալներով)",
-  "Full": "Լրիվ չափսի",
-  "California King": "Կալիֆորնիական կինգ",
-  "Bunk": "Երկհարկանի մահճակալ",
-  "Sofa": "Դիվան",
-  "Murphy": "Ծալվող մահճակալ (Murphy)",
-  "Daybed": "Օրվա մահճակալ",
-  "Futon": "Ֆուտոն",
-  "Rollaway": "Շարժական մահճակալ",
-  "Cradle": "Օղակի մահճակալ",
-  "Crib": "Մանկական մահճակալ",
-  "Bassinet": "Նորածնի օրորոց"
-},
-"price_policy":{
-  "hotel_pricing_policy":"Հյուրանոցի գնային քաղաքականություն",
-  "add_pricing_policy":"Ավելացնել գնային քաղաքականություն",
-  "price_offer_settings":"Գնային առաջարկի կարգավորումներ",
-  "price_list":"գնացուցակ",
-  "room_value_settings":"Սենյակի արժեքի կարգավորումներ"
-},
-"hotel_availability": {
-  "price_offer_name": "գնային առաջարկի անվանում",
-  "arrival_and_departure_times":"Ժամանման և մեկնման ժամերը",
-  
-  "add_age_range":"Ավելացնել տարիքային միջակայք"
+"legal_entity_type_options": {
+  "LLC": "ՍՊԸ",
+  "PE": "Ա/Ձ",
+  "CJSC": "ՓԲԸ",
+  "OJSC": "ԲԲԸ",
+  "NGO": "ՀԿ"
 }
-
 }

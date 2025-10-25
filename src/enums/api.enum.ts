@@ -28,7 +28,10 @@ enum ApiEnum {
     HOTEL_SERVICE_AVAILABILITY="hotel-service-availability",
 
 
-    HOTEL_AVAILABILITY="hotel-availability"
+    HOTEL_AVAILABILITY="hotel-availability",
+
+    HOTEL_PARTNERS="hotel-partners",
+    PARTNERS="partners"
 
 }
 

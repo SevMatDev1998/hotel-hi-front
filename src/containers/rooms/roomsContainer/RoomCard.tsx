@@ -16,7 +16,7 @@ const RoomCard = ({ room }: IRoomCardProps) => {
     <BlockContainer>
       <div className="grid grid-cols-2  items-center justify-between">
         <div className="flex flex-col gap-2">
-          <h3>{t(`room_class.${room.roomClass.name}`)},{t(`room_view.${room.roomView.name}`)}- {room.area}</h3>
+          <h3>{t(`room_class_options.${room.roomClass.name}`)},{t(`room_view_options.${room.roomView.name}`)}- {room.area}</h3>
           <p>{t("rooms.count_main_guest")}-{room.mainGuestQuantity}</p>
         </div>
         <div className="grid justify-items-end gap-2">

@@ -13,7 +13,7 @@ interface SelectProps {
   name: string;
   options: SelectOption[];
   register: UseFormRegister<any>; // or a more specific type if you know your form data interface
-  error?: FieldError;
+  errors?: FieldError;
   required?: boolean;
   className?: string;
   tr_name: string;
@@ -24,7 +24,7 @@ export const RegisterSelect: React.FC<SelectProps> = ({
   name,
   options,
   register,
-  error,
+  errors,
   required,
   className,
   tr_name,
@@ -33,6 +33,9 @@ export const RegisterSelect: React.FC<SelectProps> = ({
 }) => {
   const { t } = useTranslation();
 
+
+  console.log("errorserrorserrors",errors);
+  
   return (
     <div>
       {label && (
@@ -45,6 +48,9 @@ export const RegisterSelect: React.FC<SelectProps> = ({
         id={name}
         className={clsx(
           "appearance-none block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
+           errors 
+            ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+            : "border-charcoal-gray",
           className
         )}
         {...register(name, { required: required ? `${label || 'This field'} is required` : false })}
@@ -57,8 +63,8 @@ export const RegisterSelect: React.FC<SelectProps> = ({
           </option>
         ))}
       </select>
-      {error && (
-        <p className="mt-1 text-sm text-red-600">{error.message}</p>
+      {errors && (
+        <p className="mt-1 text-sm text-red-600">{errors.message}</p>
       )}
     </div>
   );

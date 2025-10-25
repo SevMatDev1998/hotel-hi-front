@@ -72,7 +72,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
               register={register}
               // error={errors.courseId}
               required
-              tr_name="room_class"
+              tr_name="room_class_options"
             />
           </div>
           <div >
@@ -85,7 +85,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
               register={register}
               // error={errors.courseId}
               required
-              tr_name="room_view"
+              tr_name="room_view_options"
             />
           </div>
           <div >

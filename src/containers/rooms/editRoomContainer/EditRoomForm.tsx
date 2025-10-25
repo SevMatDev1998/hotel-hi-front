@@ -54,7 +54,7 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
                 register={register}
                 // error={errors.courseId}
                 required
-                tr_name="room_class"
+                tr_name="room_class_options"
               />
             </div>
             <div >
@@ -67,7 +67,7 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
                 register={register}
                 // error={errors.courseId}
                 required
-                tr_name="room_view"
+                tr_name="room_view_options"
               />
             </div>
             <div >

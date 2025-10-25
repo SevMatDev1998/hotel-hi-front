@@ -13,6 +13,8 @@ import FoodsPage from "../pages/foods/FoodsPage";
 import HotelServicesPage from "../pages/hotelServices/HotelServicesPage";
 import PricePolicyPage from "../pages/pricePolicy/PricePolicyPage";
 import AddPricePolicyPage from "../pages/pricePolicy/AddPricePolicyPage";
+import HotelPartnersPage from "../pages/hotelPartners/HotelPartnersPage";
+import NewHotelPartnerPage from "../pages/hotelPartners/NewHotelPartnerPage";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -78,84 +80,13 @@ const router = createBrowserRouter([
 
 
       { path: RouteEnum.FOODS, element: <FoodsPage /> },
-
-
       { path: RouteEnum.HOTEL_SERVICES, element: <HotelServicesPage /> },
 
       { path: RouteEnum.PRICE_POLICY, element: <PricePolicyPage /> },
       { path: `${RouteEnum.PRICE_POLICY}/create`, element: <AddPricePolicyPage /> },
 
-      // //users
-      // { path: RouteEnum.USERS, element: <UsersPage /> },
-      // { path: `${RouteEnum.USERS}/create`, element: <NewUser /> },
-      // { path: `${RouteEnum.USERS}/:userId`, element: <UserDetailsPage /> },
-      // { path: `${RouteEnum.USERS}/:userId/edit`, element: <EditUserPage /> },
-
-      // //courses
-      // { path: RouteEnum.COURSES, element: <CoursesPage /> },
-      // { path: `${RouteEnum.COURSES}/create`, element: <NewCourse /> },
-      // { path: `${RouteEnum.COURSES}/:courseId`, element: <CourseDetailsPage /> },
-      // { path: `${RouteEnum.COURSES}/:courseId/edit`, element: <EditCoursePage /> },
-
-      // // lessons
-      // { path: RouteEnum.LESSONS, element: <LessonsPage /> },
-      // { path: `${RouteEnum.LESSONS}/create`, element: <NewLessonPage /> },
-      // { path: `${RouteEnum.LESSONS}/:id`, element: <LessonDetailsPage /> },
-      // { path: `${RouteEnum.LESSONS}/:lessonId/edit`, element: <EditLessonPage /> },
-
-      // // faqs
-      // { path: RouteEnum.FAQS, element: <FAQsPage /> },
-      // { path: `${RouteEnum.FAQS}/create`, element: <NewFAQPage /> },
-      // { path: `${RouteEnum.FAQS}/:faqId`, element: <FAQDetailsPage /> },
-      // { path: `${RouteEnum.FAQS}/:faqId/edit`, element: <EditFAQPage /> },
-
-
-      // // news
-      // { path: RouteEnum.NEWS, element: <NewsPage /> },
-      // { path: `${RouteEnum.NEWS}/create`, element: <NewNewsPage /> },
-      // { path: `${RouteEnum.NEWS}/:newsId`, element: <NewsDetailsPage /> },
-      // { path: `${RouteEnum.NEWS}/:newsId/edit`, element: <EditNewsPage /> },
-
-
-      // // lesson owner
-      // { path: RouteEnum.LESSON_OWNERS, element: <LessonOwnersPage /> },
-      // { path: `${RouteEnum.LESSON_OWNERS}/create`, element: <NewLessonOwnerPage /> },
-      // { path: `${RouteEnum.LESSON_OWNERS}/:ownerId`, element: <LessonOwnerDetailsPage /> },
-      // { path: `${RouteEnum.LESSON_OWNERS}/:ownerId/edit`, element: <EditLessonOwnerPage /> },
-
-
-      // // userGroup
-      // { path: RouteEnum.USERGROUPS, element: <UserGroupsPage /> },
-      // { path: `${RouteEnum.USERGROUPS}/create`, element: <NewUserGroup /> },
-      // { path: `${RouteEnum.USERGROUPS}/:userGroupId`, element: <UserGroupDetailsPage /> },
-      // { path: `${RouteEnum.USERGROUPS}/:userGroupId/edit`, element: <EditUserGroupPage /> },
-      // { path: `${RouteEnum.USERGROUPS}/swapUsers`, element: <SwapUsersPage /> },
-
-
-      // // SUBSCRIPTIONS
-      // { path: RouteEnum.SUBSCRIPTIONS, element: <SubscriptionsPage /> },
-      // { path: `${RouteEnum.SUBSCRIPTIONS}/:subscriptionId`, element: <SubscriptionsDetailsPage /> },
-
-
-      // // notifications
-      // { path: RouteEnum.NOTIFICATIONS, element: <NotificationsPage /> },
-      // { path: `${RouteEnum.NOTIFICATIONS}/:id`, element: <NotificationDetailsPage /> },
-
-      // // meets
-      // { path: RouteEnum.MEETS, element: <MeetsPage /> },
-      // { path: `${RouteEnum.MEETS}/:meetId`, element: <MeetDetailsPage /> },
-      // { path: `${RouteEnum.MEETS}/create`, element: <NewMeetPage /> },
-
-
-      // // { path: `${RouteEnum.NOTIFICATIONS}/:id`, element: <NotificationDetailsPage /> },
-
-      // //reviews
-      // { path: `${RouteEnum.REVIEWS}`, element: <ReviewsPage /> },
-      // { path: `${RouteEnum.REVIEWS}/:reviewId`, element: <ReviewDetailsPage /> },
-
-
-      // //comments
-      // { path: `${RouteEnum.COMMENTS}/:commentId`, element: <CommentDetailsPage /> },
+      { path: RouteEnum.HOTEL_PARTNERS, element: <HotelPartnersPage /> },
+      { path: `${RouteEnum.HOTEL_PARTNERS}/create`, element: <NewHotelPartnerPage /> },
 
       { errorElement: <NotFound /> }
     ],

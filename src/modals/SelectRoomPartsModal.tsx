@@ -110,7 +110,7 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
                 className="w-4 h-4 accent-blue-600"
               />
               <span className="text-gray-700 text-sm">
-                {t(`room_parts.${part.name}`)}
+                {t(`room_parts_options.${part.name}`)}
               </span>
             </div>
 

@@ -96,7 +96,7 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
                 <Select
                   name={`bed-${bed.id}-type`}
                   options={roomBedTypes?.map(type => ({ value: type.id, label: type.name })) || []}
-                  tr_name="room_bed_types_names"
+                  tr_name="room_bed_types_names_options"
                   onSelect={(e)=>{handleBedTypeChange(bed.rowIndex!, e)}}
                   value={bed.roomBedTypeId?.toString()}
                 />

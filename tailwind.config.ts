@@ -16,6 +16,7 @@ export default {
         "charcoal-gray": "#545454",
         "brick-red": "#CD5555",
         "snow": "#FFFFFF",
+        "breaker-bay":"#5A9B90",
         "light-gray": "rgba(243, 242, 243, 1)",
         "light-blue": "rgba(235, 249, 252, 1)",
       },

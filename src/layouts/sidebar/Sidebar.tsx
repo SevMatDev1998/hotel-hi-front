@@ -61,7 +61,7 @@ export const Sidebar = () => {
     },
     {
       name: 'menu.partners',
-      href: '/partners',
+      href: '/hotel-partners',
       icon: Users,
       hasSubItems: false
     },
