@@ -14,6 +14,8 @@ export enum RouteEnum {
     PRICE_POLICY="/price-policy",
     HOTEL_PARTNERS = "/hotel-partners",
 
+    NOTIFICATIONS = "/notifications",
+
     SYSTEM_SERVICE_GROUPS = "/system-service-groups",
     NOT_FOUND = "*",
     
