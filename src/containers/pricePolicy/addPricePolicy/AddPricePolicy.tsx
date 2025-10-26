@@ -8,6 +8,8 @@ import { useAddHotelAvailabilityMutation } from '../../../services/hotelAvailabi
 import { Button } from '../../../components/shared/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
+import { useGetRoomBedTypesQuery } from '../../../services/rooms';
+import { RegisterSelect } from '../../../components/shared/RegisterSelect';
 
 interface IAddPricePolicyProps {
   hotelId?: string;
@@ -17,25 +19,33 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
   const { t } = useTranslation();
   const [addHotelAvailability, { isLoading }] = useAddHotelAvailabilityMutation();
 
+  const { data: roomBedTypes } = useGetRoomBedTypesQuery();
+
+  const roomBedTypeOptions = roomBedTypes?.map((bedType) => ({
+    value: bedType.name,
+    label: bedType.name,
+  })) || [];
+
+
   const { register, handleSubmit, control, formState: { errors } } = useForm<CreateHotelAvailabilityFormData>({
     resolver: yupResolver(CreateHotelAvailabilitySchema),
     defaultValues: {
-      ageThresholds: [],
+      hotelAgeAssignments: [],
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "ageThresholds",
+    name: "hotelAgeAssignments",
   });
 
   const onSubmit = async (data: CreateHotelAvailabilityFormData) => {
-    console.log(data);
+    console.log("submit data", data);
 
-    // addHotelAvailability({ body: data, hotelId }, { skip: !hotelId });
+    addHotelAvailability({ body: data, hotelId }, { skip: !hotelId });
   };
 
-  console.log(errors);
+  console.log(roomBedTypeOptions);
 
   return (
     <div>
@@ -59,7 +69,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
             </div>
           </div>
 
-          {/* Ժամեր */}
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center mt-4'>
             <div><span>{t("hotel_availability.arrival_and_departure_times")} *</span></div>
             <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none">
@@ -76,50 +85,75 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
             </div>
           </div>
 
-          {/* Տարիքային շեմեր */}
-          {/* Տարիքային շեմեր */}
-          <div className='mt-6'>
+          <div className='flex flex-col gap-3 mt-6'>
             <h4 className="font-semibold mb-2">{t("hotel_availability.age_thresholds")}</h4>
 
             {fields.map((item, index) => (
               <div
                 key={index}
+                className='flex items-center'
               >
-                <RegisterInput
-                  register={register}
-                  errors={errors}
-                  name="name"
-                  type="text"
-                  className='rounded-[5px]'
-                />
 
-                <input
-                  {...register(`ageThresholds.${index}.minAge`)}
-                  type="number"
-                  placeholder={t("age_threshold.min_age")}
-                  className="border rounded-md px-2 py-1"
-                />
-                <input
-                  {...register(`ageThresholds.${index}.maxAge`)}
-                  type="number"
-                  placeholder={t("age_threshold.max_age")}
-                  className="border rounded-md px-2 py-1"
-                />
+                <div onClick={() => { remove(index) }}>
+                  <img
+                    src="/images/icons/remove-button-icon.svg"
+                    alt="add icon"
+                    className="cursor-pointer"
+                  />
+                </div>
+                <div>
+                  <p className='text-12'>{t("price_policy.defined_intervals")}</p>
+                  <RegisterInput
+                    register={register}
+                    errors={errors}
+                    name={`hotelAgeAssignments.${index}.name`}
+                    type="text"
+                    className='border-none'
+                  />
+                </div>
 
-                <button
-                  type="button"
-                  onClick={() => remove(index)}
-                  className="text-red-500"
-                >
-                  -
-                </button>
+                <div>
+                  <p className='text-12'>{t("price_policy.from_age")}</p>
+                  <RegisterInput
+                    register={register}
+                    errors={errors}
+                    name={`hotelAgeAssignments.${index}.fromAge`}
+                    type="number"
+                    className='border-none'
+                  />
+                </div>
+
+                <div>
+                  <p className='text-12'>{t("price_policy.to_age")}</p>
+                  <RegisterInput
+                    register={register}
+                    errors={errors}
+                    name={`hotelAgeAssignments.${index}.toAge`}
+                    type="number"
+                    className='border-none'
+                  />
+                </div>
+
+                <div>
+                  <p className='text-12'>{t("price_policy.available_beds")}</p>
+                  <RegisterSelect
+                    name={`hotelAgeAssignments.${index}.bedType`}
+                    options={roomBedTypeOptions}
+                    register={register}
+                    // error={errors.courseId}
+                    required
+                    className='border-none'
+                  />
+                </div>
+
+
               </div>
             ))}
 
             <Button
               variant='outline'
               onClick={() =>
-                append({ minAge: 0, maxAge: 0, })
+                append({ name: '', fromAge: 0, toAge: 0, bedType: '' })
               }
             >
               {t("hotel_availability.add_age_range")}

@@ -165,11 +165,15 @@
     "hotel_pricing_policy": "Հյուրանոցի գնային քաղաքականություն",
     "add_pricing_policy": "Ավելացնել գնային քաղաքականություն",
     "price_offer_settings": "Գնային առաջարկի կարգավորումներ",
-    "price_list": "գնացուցակ",
-    "room_value_settings": "Սենյակի արժեքի կարգավորումներ"
+    "price_list": "Գնացուցակ",
+    "room_value_settings": "Սենյակի արժեքի կարգավորումներ",
+    "defined_intervals": "Սահմանված միջակայքներ",
+    "from_age": "Սկսված",
+    "to_age": "Մինչև",
+    "available_beds": "Տրամադրվող մահճակալներ"
   },
   "hotel_availability": {
-    "price_offer_name": "գնային առաջարկի անվանում",
+    "price_offer_name": "Գնային առաջարկի անվանում",
     "arrival_and_departure_times": "Ժամանման և մեկնման ժամերը",
     "add_age_range": "Ավելացնել տարիքային միջակայք"
   },

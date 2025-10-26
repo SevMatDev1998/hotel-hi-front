@@ -13,28 +13,31 @@ export const CreateHotelAvailabilitySchema = yup.object({
     .string()
     .required('End date of availability period is required'),
 
-  // 🔹 Добавляем ageThresholds
-  ageThresholds: yup.array().of(
+  hotelAgeAssignments: yup.array().of(
     yup.object({
       name: yup
         .string()
         .required('Age threshold title is required'),
 
-      minAge: yup
+      fromAge: yup
         .number()
         .typeError('Minimum age must be a number')
         .min(0, 'Minimum age cannot be negative')
         .required('Minimum age is required'),
 
-      maxAge: yup
+      toAge: yup
         .number()
         .typeError('Maximum age must be a number')
-        .moreThan(yup.ref('minAge'), 'Maximum age must be greater than minimum age')
+        .moreThan(yup.ref('fromAge'), 'Maximum age must be greater than minimum age')
         .required('Maximum age is required'),
 
-      isActive: yup
-        .boolean()
-        .required('Active status is required'),
+bedType: yup
+  .mixed()
+  .required('Bed type is required'),
+
+      // isActive: yup
+      //   .boolean()
+      //   .required('Active status is required'),
     })
   ).optional(), // Можно сделать обязательным, если нужно хотя бы одно правило
 });

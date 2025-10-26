@@ -34,7 +34,6 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
 
 
   useEffect(() => {
-    console.log(444,hotelRoomPartBeds);
     
     if(hotelRoomPartBeds) {
       setRoomPartBedsState(hotelRoomPartBeds);
