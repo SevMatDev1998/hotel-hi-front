@@ -24,7 +24,6 @@ const AddRoomPricePolicy:FC<IAddRoomPricePolicyProps> = ({ hotelId }) => {
         roomsData?.map(room => (
           <div key={room.id}>
             <AddRoomPricePolicyCard room={room} />
-
           </div>
 
         ))

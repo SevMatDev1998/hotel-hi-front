@@ -36,7 +36,7 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-4">
-        <div>{t(`room_parts.${hotelRoomPart?.roomPart?.name}`)}</div>
+        <div>{t(`room_parts_options.${hotelRoomPart?.roomPart?.name}`)}</div>
         <div className="flex  justify-end mobile:justify-start gap-4">
           <p>{t("room_bad.bed_available")}</p>
           {
