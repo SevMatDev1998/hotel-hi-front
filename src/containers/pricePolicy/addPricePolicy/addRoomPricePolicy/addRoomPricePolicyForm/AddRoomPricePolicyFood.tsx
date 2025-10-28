@@ -1,27 +1,151 @@
-import React from 'react';
-import { useGetHotelFoodsByHotelIdQuery } from '../../../../../services/foods';
+import React, { useState, useMemo } from 'react';
+import { HotelAgeAssignment, HotelFood } from '../../../../../types';
+import CardContainer from '../../../../public/CardContainer';
 
 interface IAddRoomPricePolicyFoodProps {
-  hotelId?: string | null;
+  hotelFoods?: HotelFood[];
+  hotelAvailabilityAgeAssessments?: HotelAgeAssignment[];
+  hotelAvailabilityId: number;
 }
 
-const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({ hotelId }) => {
+interface CreateHotelFoodPriceDto {
+  hotelAvailabilityId: number;
+  hotelAgeAssignmentId?: number;
+  hotelFoodId: number;
+  price: number;
+  includedInPrice?: boolean;
+}
 
-  const { data: foods, isLoading, isError } = useGetHotelFoodsByHotelIdQuery({ hotelId: hotelId || '' }, { skip: !hotelId });
-  console.log(foods);
-  
+const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
+  hotelFoods = [],
+  hotelAvailabilityAgeAssessments = [],
+  hotelAvailabilityId,
+}) => {
+  const [selectedFoods, setSelectedFoods] = useState<number[]>([]);
+  const [prices, setPrices] = useState<Record<string, number>>({});
+
+  // Фильтруем только те виды питания, которые НЕ включены в стоимость
+  const visibleFoods = useMemo(
+    () => hotelFoods.filter((f) => !selectedFoods.includes(f.id)),
+    [hotelFoods, selectedFoods]
+  );
+
+  const toggleFood = (foodId: number) => {
+    setSelectedFoods((prev) =>
+      prev.includes(foodId)
+        ? prev.filter((id) => id !== foodId)
+        : [...prev, foodId]
+    );
+  };
+
+  const handlePriceChange = (foodId: number, ageId: number, value: string) => {
+    const key = `${foodId}-${ageId}`;
+    setPrices((prev) => ({
+      ...prev,
+      [key]: parseFloat(value) || 0,
+    }));
+  };
+
+  const handleSubmit = () => {
+    const result: CreateHotelFoodPriceDto[] = [];
+
+    // Включённые в цену (чекбоксы)
+    selectedFoods.forEach((food) => {
+      result.push({
+        hotelAvailabilityId,
+        hotelFoodId: food,
+        price: 0,
+        includedInPrice: true,
+      });
+    });
+
+    // Таблица
+    visibleFoods.forEach((food) => {
+      hotelAvailabilityAgeAssessments.forEach((age) => {
+        const key = `${food.id}-${age.id}`;
+        result.push({
+          hotelAvailabilityId,
+          hotelFoodId: food.id,
+          hotelAgeAssignmentId: age.id,
+          price: prices[key] ?? 0,
+          includedInPrice: false,
+        });
+      });
+    });
+
+
+    console.log(result);
+
+
+    // onSubmit(result);
+  };
+
   return (
-    <div>
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Error loading foods</p>}
-      {foods && (
-        <ul>
-          {foods.map(food => (
-            <li key={food.id}>{food.foodType}</li>
+
+      <CardContainer className=''>
+
+        <h3 className="font-semibold text-lg mb-2">Выберите тип питания</h3>
+        <div className="flex flex-wrap gap-4 mb-4">
+          {hotelFoods.map((food) => (
+            <label key={food.id} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={selectedFoods.includes(food.id)}
+                onChange={() => toggleFood(food.id)}
+              />
+              {food.foodType}
+            </label>
           ))}
-        </ul>
-      )}
-    </div>
+        </div>
+
+        {visibleFoods.length > 0 && (
+          <table className="min-w-full border text-center">
+            <thead>
+              <tr>
+                <th className="border px-3 py-2">Тип питания</th>
+                {hotelAvailabilityAgeAssessments.map((age) => (
+                  <th key={age.id} className="border px-3 py-2">
+                    {age.fromAge}-{age.toAge}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {visibleFoods.map((food) => (
+                <tr key={food.id}>
+                  <td className="border px-3 py-2">{food.foodType}</td>
+                  {hotelAvailabilityAgeAssessments.map((age) => {
+                    const key = `${food.id}-${age.id}`;
+                    return (
+                      <td key={key} className="border px-3 py-2">
+                        <input
+                          type="number"
+                          className="w-20 text-center border rounded"
+                          value={prices[key] ?? ''}
+                          onChange={(e) =>
+                            handlePriceChange(food.id, age.id, e.target.value)
+                          }
+                        />
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={handleSubmit}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Сохранить
+          </button>
+        </div>
+      </CardContainer>
+
+
   );
 };
 

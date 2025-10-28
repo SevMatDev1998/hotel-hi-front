@@ -58,6 +58,8 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
       }
       return bed;
     });
+    console.log(updatedBeds);
+    
     setRoomPartBedsState(updatedBeds);
   }
 
@@ -96,7 +98,7 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
                   name={`bed-${bed.id}-type`}
                   options={roomBedTypes?.map(type => ({ value: type.id, label: type.name })) || []}
                   tr_name="room_bed_types_names_options"
-                  onSelect={(e)=>{handleBedTypeChange(bed.rowIndex!, e)}}
+                  onSelect={(e)=>{handleBedTypeChange(bed.rowIndex!, e, )}}
                   value={bed.roomBedTypeId?.toString()}
                 />
                 <Select
