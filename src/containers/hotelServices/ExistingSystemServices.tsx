@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SystemService } from "../../types";
 import { useDeleteHotelServiceMutation } from "../../services/hotelService";
-import MakeServiceAvailabilityModal from "../../modals/MakeServiceAvailabilityModal";
+import MakeServiceAvailabilityModal from "../../modals/makeServiceAvailabilityModal/MakeServiceAvailabilityModal";
 import useModal from "../../hooks/useModal";
 import { Button } from "../../components/shared/Button";
 
@@ -27,6 +27,8 @@ const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSyst
   };
 
 
+  console.log(333,existingSystemServices);
+  
   return (
     <div className="space-y-2">
       {existingSystemServices.map((systemService) => (
@@ -39,8 +41,18 @@ const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSyst
             />
             {systemService.service.name}
           </div>
+          
           <div>
-            <Button onClick={() => { handleLogOut(systemService.id) }}> asd</Button>
+            {!!systemService.hotelServiceAvailabilities.length ?
+
+            <Button onClick={() => { handleLogOut(systemService.id) }}> ditel</Button>
+            :
+            <Button onClick={() => { handleLogOut(systemService.id) }}> sahmanel</Button>
+
+              
+
+             }
+            {/* {systemService.} */}
 
           </div>
         </div>

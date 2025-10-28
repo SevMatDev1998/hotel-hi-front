@@ -27,7 +27,6 @@ const RegisterInput: FC<IRegisterInput> = ({
 
   const {t} = useTranslation(); 
 
-  console.log();
   
   return (
     <div>
@@ -40,19 +39,19 @@ const RegisterInput: FC<IRegisterInput> = ({
         autoComplete={type === "password" ? "current-password" : "off"}
         className={clsx(
           "appearance-none block w-full px-3 py-2 border placeholder-charcoal-gray text-charcoal-gray focus:outline-none",
-          errors[name]
-            ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-            : "border-charcoal-gray",
+          // errors[name]
+          //   ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+          //   : "border-charcoal-gray",
           className
         )}
         placeholder={label}
         disabled={disabled}
       />
-      {errors[name] && (
+      {/* {errors[name] && (
         <p className="mt-1 ml-1 text-sm text-red-700">
           {t(`partners.${name}`)} {errors[name]?.message}
         </p>
-      )}
+      )} */}
     </div>
   );
 };
