@@ -9,6 +9,8 @@ import LanguageSwitcher from '../../components/LanguageSwitcher';
 import useAppDispatch from '../../hooks/useAppDisaptch';
 import { toggleSidebar } from '../../store/slices/general.slice';
 import useAppSelector from '../../hooks/useAppSelector';
+import { logOut } from '../../store/slices/auth.slice';
+import SignOutModal from '../../modals/SignOutModal';
 
 
 export const Header = () => {
@@ -18,16 +20,14 @@ export const Header = () => {
 
   const { isSidebarOpen } = useAppSelector(state => state.general)
 
-  // const { data } = useGetUnreadNotificationsCountQuery();
-  // const unreadCount = data?.count || 0;
 
-  // const handleSubmit = () => {
-  //   dispatch(logOut());
-  //   navigate("/login");
-  // };
+  const handleSubmit = () => {
+    dispatch(logOut());
+    navigate("/login");
+  };
 
   const handleLogOut = () => {
-    // open(SignOutModal, { title: "", onSubmit: () => handleSubmit() });
+    open(SignOutModal, { title: "", onSubmit: () => handleSubmit() });
   };
 
   return (

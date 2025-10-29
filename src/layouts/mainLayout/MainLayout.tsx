@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import {  useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { getJwtToken } from '../../utils/tokenUtil';
 import useAppSelector from '../../hooks/useAppSelector';
 
@@ -9,6 +9,7 @@ import PRIVATE_ROUTES from '../../constants/private-routes';
 import PUBLIC_ROUTES from '../../constants/publict-routes';
 import MainLayoutComponents from './MainLayoutComponents';
 import { useGetInfoQuery } from '../../services/auth';
+import AuthLayout from '../auth/AuthLayout';
 
 export const MainLayout: FC = () => {
   const navigate = useNavigate();
@@ -16,31 +17,34 @@ export const MainLayout: FC = () => {
   const jwtToken = getJwtToken();
 
 
+    const isPrivate = PRIVATE_ROUTES.includes(pathname as RouteEnum);
+    const isPublic = PUBLIC_ROUTES.includes(pathname as RouteEnum);
 
   const { isLoading } = useGetInfoQuery(undefined, {
     skip: !jwtToken
   });
-  
 
-  const { isLogin } = useAppSelector((state: any) => state.auth);
 
-  // useEffect(() => {
-  //   if (isLoading) return;
+  const { isLogin } = useAppSelector((state) => state.auth);
 
-  //   const isPrivate = PRIVATE_ROUTES.includes(pathname as RouteEnum);
-  //   const isPublic = PUBLIC_ROUTES.includes(pathname as RouteEnum);
 
-  //   if (!isLogin && isPrivate) {
-  //     navigate(RouteEnum.LOGIN);
-  //   }
+  useEffect(() => {
+    if (isLoading) return;
 
-  //   if (isLogin && isPublic) {
-  //     navigate(RouteEnum.HOTEL);
-  //   }
+    console.log(333, isLogin, isPrivate);
 
-  // }, [navigate, pathname, isLogin, isLoading]);
+    if (!isLogin && isPrivate) {
+      navigate(RouteEnum.LOGIN);
+    }
 
-  return <MainLayoutComponents/>
+    if (isLogin && isPublic) {
+      navigate(RouteEnum.HOTEL);
+    }
+
+  }, [navigate, pathname, isLogin, isLoading, isPrivate, isPublic]);
+
+
+  return isPrivate ? <MainLayoutComponents /> : <AuthLayout><Outlet /></AuthLayout>;
 };
 
 

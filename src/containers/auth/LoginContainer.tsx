@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import AuthLayout from '../../layouts/auth/AuthLayout';
 import { useForm } from 'react-hook-form';
 import { LoginFormType, loginSchema } from '../../yupValidation/AuthValidation';
 import { useLoginMutation } from '../../services/auth/auth.service';
@@ -27,7 +26,6 @@ const LoginContainer = () => {
   }, [t, navigate, isError, isSuccess]);
 
   return (
-    <AuthLayout>
       <div className='max-w-[400px]'>
         <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(login)}>
           <div className='flex justify-between text-24'>
@@ -70,8 +68,6 @@ const LoginContainer = () => {
           </div>
         </form>
       </div>
-
-    </AuthLayout>
   );
 };
 

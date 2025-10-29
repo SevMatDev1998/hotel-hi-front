@@ -1,4 +1,3 @@
-import AuthLayout from '../../layouts/auth/AuthLayout';
 import { useForm } from 'react-hook-form';
 import { SignUpFormType, signUpSchema } from '../../yupValidation/AuthValidation';
 import {  useSignUpMutation } from '../../services/auth/auth.service';
@@ -21,7 +20,7 @@ const SignUpContainer = () => {
 
   const [signUp, { isSuccess, isError, isLoading }] = useSignUpMutation()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpFormType>({
+  const { register, handleSubmit} = useForm<SignUpFormType>({
     resolver: yupResolver(signUpSchema),
   });
   
@@ -31,7 +30,6 @@ const SignUpContainer = () => {
 
 
   return (
-    <AuthLayout>
       <div className='max-w-[400px]'>
       <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(signUp)}>
         <div className='flex justify-between text-24'>
@@ -39,33 +37,30 @@ const SignUpContainer = () => {
         <a href={RouteEnum.LOGIN} className='underline text-dusty-teal' >{t('auth.login')}</a>
         </div>
          <div>
-          <Label htmlFor="hotelName" className="block" text={t('auth.hotel_name')} />
+          <Label className="block" text={t('auth.hotel_name')} />
           <RegisterInput
             register={register}
             name="hotelName"
             type="text"
-            className='rounded-none border !border-dusty-teal'
           />
         </div>
         <div>
-          <Label htmlFor="email" className="block" text={t('auth.email')} />
+          <Label  className="block" text={t('auth.email')} />
           <RegisterInput
             register={register}
             label="Email address"
             name="email"
             type="email"
-            className='rounded-none border !border-dusty-teal'
           />
         </div>
         <div>
-          <Label htmlFor="password" className="block" text={t('auth.password')} />
+          <Label  className="block" text={t('auth.password')} />
           <div className="relative">
             <RegisterInput
               register={register}
               label="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              className='rounded-none border !border-dusty-teal pr-10'
             />
             <button
               type="button"
@@ -121,8 +116,6 @@ const SignUpContainer = () => {
         </div>
       </form>
     </div>
-
-    </AuthLayout>
   );
 };
 

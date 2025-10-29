@@ -7,22 +7,27 @@ import CardContainer from '../../containers/public/CardContainer';
 import RegisterInput from '../../components/shared/RegisterInput';
 import { Button } from '../../components/shared/Button';
 import { useAddHotelServiceAvailabilityMutation } from '../../services/hotelServiceAvailability';
+import { RegisterSelect } from '../../components/shared/RegisterSelect';
 
 interface IMakeServiceAvailabilityModalFormProps {
-  hotelServiceAvailabilities: HotelServiceAvailability
-  hotelServiceId: string
+  hotelServiceAvailabilities: HotelServiceAvailability;
+  hotelServiceId: string;
 }
 
-const MakeServiceAvailabilityModalForm: FC<IMakeServiceAvailabilityModalFormProps> = ({ hotelServiceAvailabilities, hotelServiceId }) => {
+const MakeServiceAvailabilityModalForm: FC<IMakeServiceAvailabilityModalFormProps> = ({
+  hotelServiceAvailabilities,
+  hotelServiceId,
+}) => {
+  const [addHotelServiceAvailability] = useAddHotelServiceAvailabilityMutation();
 
-  const [addHotelServiceAvailability] = useAddHotelServiceAvailabilityMutation()
-
-  const { control, register, handleSubmit, formState: { errors } } = useForm({
+  const { control, register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(CreateHotelServiceAvailabilitySchema),
     defaultValues: {
       availabilities: [
         {
-          isPaid: false,
+          isPaid: true, // первый — վճարովի (платный)
+          isActive: true, // активная
+
           startMonth: '',
           endMonth: '',
           hourlyAvailabilityTypeId: HotelServiceHourlyAvailabilityType.AllDay,
@@ -30,7 +35,9 @@ const MakeServiceAvailabilityModalForm: FC<IMakeServiceAvailabilityModalFormProp
           endHour: '',
         },
         {
-          isPaid: false,
+          isPaid: false, // второй — անվճար (бесплатный)
+          isActive: false,// неактивная
+
           startMonth: '',
           endMonth: '',
           hourlyAvailabilityTypeId: HotelServiceHourlyAvailabilityType.Hours,
@@ -41,109 +48,92 @@ const MakeServiceAvailabilityModalForm: FC<IMakeServiceAvailabilityModalFormProp
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields } = useFieldArray({
     control,
     name: 'availabilities',
   });
 
   const onSubmit = (data) => {
-    addHotelServiceAvailability({ hotelServiceId: hotelServiceId, data })
+    // addHotelServiceAvailability({ hotelServiceId: hotelServiceId, data });
     console.log('✅ Final Data:', data);
   };
+
+  const watchIsPaid = watch('availabilities');
 
   console.log(errors);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-      {fields.map((field, index) => (
-        <CardContainer className='rounded-md' key={index}>
-          <div>
-            <input type='checkbox' {...register(`availabilities.${index}.isPaid`)} />
-          </div>
-          <div className=''>
-            <h3>Availability </h3>
-            <RegisterInput
-              type='date'
-              register={register}
-              name={`availabilities.${index}.startMonth`}
-              label='Start Month'
-            />
-            <RegisterInput
-              type='date'
-              register={register}
-              name={`availabilities.${index}.endMonth`}
-              label='End Month'
-            />
+      {fields.map((field, index) => {
+        const isActive = watchIsPaid?.[index]?.isPaid; // если чекбокс неактивен — disable поля
 
-            <input type='checkbox' {...register(`availabilities.${index}.hourlyAvailabilityTypeId`)} />
+        return (
+          <CardContainer className="rounded-md" key={index}>
+            <div className="flex items-center gap-2">
+              <input type="checkbox" {...register(`availabilities.${index}.isActive`)} />
+              <p>{index === 0 ? 'վճարովի' : 'անվճար'}</p>
+            </div>
 
-            <Controller
-              name={`availabilities.${index}.startHour`}
-              control={control}
-              render={({ field }) => <input type="time" {...field} />}
-            />
-            <Controller
-              name={`availabilities.${index}.endHour`}
-              control={control}
-              render={({ field }) => <input type="time" step="60" {...field} />}
-            />
+            <div className={`${!isActive ? 'opacity-50 pointer-events-none' : ''}`}>
+              <h3>Availability</h3>
 
-          </div>
+              <RegisterInput
+                type="date"
+                register={register}
+                name={`availabilities.${index}.startMonth`}
+                label="Start Month"
+                disabled={!isActive}
+                errors={errors.availabilities?.[index]}
 
-        </CardContainer>
-      ))}
+              />
 
+              <RegisterInput
+                type="date"
+                register={register}
+                name={`availabilities.${index}.endMonth`}
+                label="End Month"
+                disabled={!isActive}
+                errors={errors.availabilities?.[index]?.endHour}
+              />
+              <RegisterSelect
+
+                name={`availabilities.${index}.hourlyAvailabilityTypeId`}
+                label="Availability Type"
+                options={[
+                  { label: 'All Day', value: HotelServiceHourlyAvailabilityType.AllDay },
+                  { label: 'Hours', value: HotelServiceHourlyAvailabilityType.Hours },
+                ]}
+                register={register}
+                disabled={!isActive}
+              />
+
+              <Controller
+                name={`availabilities.${index}.startHour`}
+                control={control}
+                render={({ field }) => (
+                  <input type="time" {...field} disabled={!isActive} />
+                )}
+              />
+
+              <Controller
+                name={`availabilities.${index}.endHour`}
+                control={control}
+                render={({ field }) => (
+                  <input type="time" step="60" {...field} disabled={!isActive} />
+                )}
+              />
+            </div>
+          </CardContainer>
+        );
+      })}
 
       <div className="flex justify-end gap-2">
-        <Button
-          onClick={() => { }}
-        >
-          {("buttons.save")}
+        <Button onClick={() => { }}>
+          {('buttons.save')}
         </Button>
       </div>
     </form>
   );
-}
-
+};
 
 export default MakeServiceAvailabilityModalForm;
-
-//         <div key={field.id} className="border p-3 rounded">
-//   <h3 className="font-bold">Availability {index + 1}</h3>
-
-//   <label>
-//     <input type="checkbox" {...register(`availabilities.${index}.isPaid`)} />
-//     Paid?
-//   </label>
-
-//   <input type="date" {...register(`availabilities.${index}.startMonth`)} />
-//   {errors.availabilities?.[index]?.startMonth && (
-//     <p>{errors.availabilities[index].startMonth.message}</p>
-//   )}
-
-//   <input type="date" {...register(`availabilities.${index}.endMonth`)} />
-//   {errors.availabilities?.[index]?.endMonth && (
-//     <p>{errors.availabilities[index].endMonth.message}</p>
-//   )}
-
-//   <select {...register(`availabilities.${index}.hourlyAvailabilityTypeId`)}>
-//     {Object.values(HotelServiceHourlyAvailabilityType).map((type) => (
-//       <option key={type} value={type}>{type}</option>
-//     ))}
-//   </select>
-//   {errors.availabilities?.[index]?.hourlyAvailabilityTypeId && (
-//     <p>{errors.availabilities[index].hourlyAvailabilityTypeId.message}</p>
-//   )}
-
-//   <input type="time" {...register(`availabilities.${index}.startHour`)} />
-//   {errors.availabilities?.[index]?.startHour && (
-//     <p>{errors.availabilities[index].startHour.message}</p>
-//   )}
-
-//   <input type="time" {...register(`availabilities.${index}.endHour`)} />
-//   {errors.availabilities?.[index]?.endHour && (
-//     <p>{errors.availabilities[index].endHour.message}</p>
-//   )}
-
-//   <button type="button" onClick={() => remove(index)}>Remove</button>
-// </div>

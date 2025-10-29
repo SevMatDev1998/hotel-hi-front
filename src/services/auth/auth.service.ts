@@ -26,12 +26,19 @@ const AuthService = ApiInstance.injectEndpoints({
                 body
             })
         }),
+        verifyRegistration: build.query<void, { token: string }>({
+            query: ({ token }) => ({
+                url: `${ApiEnum.VERIFY_REGISTRATION}/${token}`,
+                method: "GET",
+            })
+        })
     })
 })
 
 export const {
     useGetInfoQuery,
     useLoginMutation,
-    useSignUpMutation   
+    useSignUpMutation,
+    useVerifyRegistrationQuery
 } = AuthService;
 export const { endpoints: {getInfo, login } } = AuthService
