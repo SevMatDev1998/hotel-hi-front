@@ -14,6 +14,7 @@ export enum RouteEnum {
     FOODS = "/foods",
     HOTEL_SERVICES = "/hotel-services",
     PRICE_POLICY="/price-policy",
+    PRICE_POLICY_DATES="/price-policy-dates",
     PRICE_POLICY_CREATE="/price-policy/create",
     
     HOTEL_PARTNERS = "/hotel-partners",

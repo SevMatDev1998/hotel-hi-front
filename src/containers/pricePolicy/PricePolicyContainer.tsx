@@ -12,7 +12,7 @@ const PricePolicyContainer = () => {
   const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.auth)
 
-  const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId })
+  const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId },{skip:!user?.hotelId})
 
   return (
     <div>

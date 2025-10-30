@@ -17,6 +17,7 @@ import HotelPartnersPage from "../pages/hotelPartners/HotelPartnersPage";
 import NewHotelPartnerPage from "../pages/hotelPartners/NewHotelPartnerPage";
 import NotificationsPage from "../pages/notifications/NotificationsPage";
 import VerifyPage from "../pages/auth/VerifyPage";
+import PricePolicyDatesPage from "../pages/pricePolicy/PricePolicyDatesPage";
 
 // import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
@@ -85,6 +86,8 @@ const router = createBrowserRouter([
       { path: RouteEnum.HOTEL_SERVICES, element: <HotelServicesPage /> },
 
       { path: RouteEnum.PRICE_POLICY, element: <PricePolicyPage /> },
+      { path: RouteEnum.PRICE_POLICY_DATES, element: <PricePolicyDatesPage /> },
+
       { path: `${RouteEnum.PRICE_POLICY_CREATE}`, element: <AddPricePolicyPage /> },
 
       { path: RouteEnum.HOTEL_PARTNERS, element: <HotelPartnersPage /> },
