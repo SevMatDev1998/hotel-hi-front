@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import InfoBlock from '../../components/shared/InfoBlock';
 import { Button } from '../../components/shared/Button';
@@ -22,7 +21,7 @@ const PricePolicyContainer = () => {
         <InfoBlock text='Հյուրանոցի հիմնական արժեքները սահմանվում են սենյակների և ծառայությունների համար որոշակի ժամկետով։ Դուք ունեք հնարավորություն կատարել առանձնահատուկ փոփոխություններ սենյակի կամ ծառայության հիմնական արժեքի մեջ գնային քաղաքականություն ավելացնելուց հետո գնային կարգավորման միջոցով։' />
       </div>
       <div>
-        <Button variant='outline' onClick={() => { navigate(`${RouteEnum.PRICE_POLICY}/create`) }}>{t("price_policy.add_pricing_policy")} </Button>
+        <Button variant='outline' onClick={() => { navigate(`${RouteEnum.PRICE_POLICY_CREATE}`) }}>{t("price_policy.add_pricing_policy")} </Button>
       </div>
       <div className='flex flex-col gap-3'>
         {!!hotelAvailabilites?.length && hotelAvailabilites?.map((item) => (

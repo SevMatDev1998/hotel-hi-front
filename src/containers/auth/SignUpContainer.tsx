@@ -76,7 +76,7 @@ const SignUpContainer = () => {
           </div>
         </div>
          <div>
-          <Label htmlFor="confirmPassword" className="block" text={t('auth.confirm_password')} />
+          <Label className="block" text={t('auth.confirm_password')} />
           <div className="relative">
             <RegisterInput
               register={register}

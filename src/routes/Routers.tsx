@@ -76,7 +76,7 @@ const router = createBrowserRouter([
 
       // rooms
       { path: RouteEnum.ROOMS, element: <RoomsPage /> },
-      { path: `${RouteEnum.ROOMS}/create`, element: <NewRoomPage /> },
+      { path: `${RouteEnum.ROOMS_CREATE}`, element: <NewRoomPage /> },
       { path: `${RouteEnum.ROOMS}/:roomId/edit`, element: <EditRoomPage /> },
       { path: `${RouteEnum.ROOMS}/:roomId`, element: <RoomPage /> },
 
@@ -85,10 +85,10 @@ const router = createBrowserRouter([
       { path: RouteEnum.HOTEL_SERVICES, element: <HotelServicesPage /> },
 
       { path: RouteEnum.PRICE_POLICY, element: <PricePolicyPage /> },
-      { path: `${RouteEnum.PRICE_POLICY}/create`, element: <AddPricePolicyPage /> },
+      { path: `${RouteEnum.PRICE_POLICY_CREATE}`, element: <AddPricePolicyPage /> },
 
       { path: RouteEnum.HOTEL_PARTNERS, element: <HotelPartnersPage /> },
-      { path: `${RouteEnum.HOTEL_PARTNERS}/create`, element: <NewHotelPartnerPage /> },
+      { path: `${RouteEnum.HOTEL_PARTNERS_CREATE}`, element: <NewHotelPartnerPage /> },
 
       { path: `${RouteEnum.NOTIFICATIONS}`, element: <NotificationsPage /> },
 
