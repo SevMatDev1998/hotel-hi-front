@@ -55,55 +55,55 @@ const PricePolicyDatesCalendar = ({
     ...months.map((_, i) => getDaysInMonth(i) + getFirstDayIndex(i))
   );
 
-  // 🔹 Клик по отдельному дню
-  const toggleDay = (monthIndex: number, day: number) => {
-    if (!activeAvailability) return;
-    const calendarId = `m${monthIndex + 1}-d${day}`;
-    const date = new Date(year, monthIndex, day);
+const toggleDay = (monthIndex: number, day: number) => {
+  if (!activeAvailability) return;
+  const calendarId = `m${monthIndex + 1}-d${day}`;
+  const date = new Date(year, monthIndex, day);
 
-    setAvailabilities((prev) => {
-      const updated = prev.map((a) => {
-        if (a.id === activeAvailability.id) {
-          const exists = a.dates.some((d) => d.calendarId === calendarId);
-          return {
-            ...a,
-            dates: exists
-              ? a.dates.filter((d) => d.calendarId !== calendarId)
-              : [
-                  ...a.dates,
-                  {
-                    id: String(Date.now()) + "-" + calendarId,
-                    date,
-                    calendarId,
-                  },
-                ],
-          };
-        } else {
-          return a;
-        }
-      });
-
-      // удаляем этот день из других availability
-      updated.forEach((a) => {
-        if (
-          a.id !== activeAvailability.id &&
-          a.dates.some((d) => d.calendarId === calendarId)
-        ) {
-          a.dates = a.dates.filter((d) => d.calendarId !== calendarId);
-        }
-      });
-
-      // обновляем карту цветов
-      const map: Record<string, string> = {};
-      updated.forEach((a) =>
-        a.dates.forEach((d) => (map[d.calendarId] = a.color))
-      );
-      setColorMap(map);
-
-      onChange?.(updated);
-      return [...updated];
+  setAvailabilities((prev) => {
+    const updated = prev.map((a) => {
+      if (a.id === activeAvailability.id) {
+        const exists = a.dates.some((d) => d.calendarId === calendarId);
+        return {
+          ...a,
+          dates: exists
+            ? a.dates.filter((d) => d.calendarId !== calendarId)
+            : [
+                ...a.dates,
+                {
+                  id: String(Date.now()) + "-" + calendarId,
+                  date,
+                  calendarId,
+                },
+              ],
+        };
+      } else {
+        return a;
+      }
     });
-  };
+
+    // удаляем день из других availability (иммутабельно)
+    const cleaned = updated.map((a) =>
+      a.id !== activeAvailability.id
+        ? {
+            ...a,
+            dates: a.dates.filter((d) => d.calendarId !== calendarId),
+          }
+        : a
+    );
+
+    // обновляем карту цветов
+    const map: Record<string, string> = {};
+    cleaned.forEach((a) =>
+      a.dates.forEach((d) => (map[d.calendarId] = a.color))
+    );
+    setColorMap(map);
+
+    onChange?.(cleaned);
+    return [...cleaned];
+  });
+};
+
 
   // 🔹 Клик по месяцу
   const toggleMonth = (monthIndex: number) => {
@@ -193,6 +193,9 @@ const PricePolicyDatesCalendar = ({
     });
   };
 
+  console.log(123);
+  
+
   return (
     <div className="p-4 bg-gray-50 rounded-lg shadow-md overflow-x-auto">
       <h2 className="text-lg font-semibold mb-3 text-gray-700">
@@ -250,11 +253,11 @@ const PricePolicyDatesCalendar = ({
               );
             }
 
-            while (cells.length < maxDays) {
-              cells.push(
-                <td key={`end-${cells.length}`} className="border p-1"></td>
-              );
-            }
+            // while (cells.length < maxDays) {
+            //   cells.push(
+            //     <td key={`end-${cells.length}`} className="border p-1"></td>
+            //   );
+            // }
 
             return (
               <tr key={month}>
