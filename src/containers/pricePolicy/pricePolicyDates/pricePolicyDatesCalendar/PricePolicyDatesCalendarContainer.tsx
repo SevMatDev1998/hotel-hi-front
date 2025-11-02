@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PricePolicyDatesCalendar from "./PricePolicyDatesCalendar";
-import { useUpdateHotelAvailabilitesWithDatesMutation } from "../../../services/hotelAvailability/hotelAvailability.service";
-import BlockContainer from "../../public/BlockContainer";
-import { Button } from "../../../components/shared/Button";
-import { useTranslation } from "../../../hooks/useTranslation";
-import { Select } from "../../../components/shared/Select";
-import AddCommissionModal from "../../../modals/AddCommisionModal";
-import useModal from "../../../hooks/useModal";
+import { useUpdateHotelAvailabilitesWithDatesMutation } from "../../../../services/hotelAvailability/hotelAvailability.service";
+import BlockContainer from "../../../public/BlockContainer";
+import { Button } from "../../../../components/shared/Button";
+import { useTranslation } from "../../../../hooks/useTranslation";
+import { Select } from "../../../../components/shared/Select";
+import AddCommissionModal from "../../../../modals/AddCommisionModal";
+import useModal from "../../../../hooks/useModal";
 
 interface IPricePolicyDatesCalendarContainerProps {
   hotelAvailabilityWithDates?: any;
