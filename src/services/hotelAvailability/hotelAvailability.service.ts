@@ -33,7 +33,7 @@ const hotelAvailability = ApiInstance.injectEndpoints({
       query: ({ hotelId, body }) => ({
         url: `${ApiEnum.HOTEL_AVAILABILITY}/dates/${hotelId}`,
         method: "PUT",
-    body: { availabilities: body }, // ✅ исправлено
+    body // ✅ исправлено
       }),
     }),
 

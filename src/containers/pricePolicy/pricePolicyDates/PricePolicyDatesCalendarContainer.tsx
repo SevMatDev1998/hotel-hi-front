@@ -5,6 +5,8 @@ import BlockContainer from "../../public/BlockContainer";
 import { Button } from "../../../components/shared/Button";
 import { useTranslation } from "../../../hooks/useTranslation";
 import { Select } from "../../../components/shared/Select";
+import AddCommissionModal from "../../../modals/AddCommisionModal";
+import useModal from "../../../hooks/useModal";
 
 interface IPricePolicyDatesCalendarContainerProps {
   hotelAvailabilityWithDates?: any;
@@ -15,6 +17,8 @@ interface IPricePolicyDatesCalendarContainerProps {
 const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId }: IPricePolicyDatesCalendarContainerProps) => {
 
   const { t } = useTranslation();
+  const open = useModal();
+
   useEffect(() => {
     if (hotelAvailabilityWithDates) {
       setAvailabilities(hotelAvailabilityWithDates);
@@ -30,8 +34,27 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
     setAvailabilities(updatedData);
   };
 
+
+  
+const handleModalSubmit = async (commissionDate: any) => {
+  console.log("Commission Data:", commissionDate);
+
+    const payload = {
+      availabilities,  // список всех availability
+      commissionDate,  // объект комиссий
+    };
+
+    // 2️⃣ Отправляем запрос
+    await updateHotelAvailabilitesWithDates({
+      hotelId,
+      body: payload,
+    });
+  // You can also refresh UI or close modal here
+};
+
+
   const handleSubmit = async () => {
-    updateHotelAvailabilitesWithDates({ hotelId: hotelId, body: availabilities });
+    open(AddCommissionModal, { title: "", onSubmit: (data) => handleModalSubmit(data) });
   };
 
   return (

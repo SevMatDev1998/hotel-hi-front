@@ -12,7 +12,6 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { logOut } from '../../store/slices/auth.slice';
 import SignOutModal from '../../modals/SignOutModal';
 
-
 export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

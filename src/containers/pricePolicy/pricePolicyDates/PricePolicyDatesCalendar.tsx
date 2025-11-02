@@ -14,7 +14,7 @@ interface Day {
 interface Availability {
   id: number;
   color: string;
-  dates: { id: string; date: string | Date; calendarId: string }[];
+  hotelAvailabilityDateCommissions: { id: string; date: string | Date; calendarId: string }[];
 }
 interface ActiveAvailability {
   id: number;
@@ -41,7 +41,7 @@ const PricePolicyDatesCalendar = ({
       setAvailabilities(initialSelectedDays);
       const map: Record<string, string> = {};
       initialSelectedDays.forEach((a) =>
-        a.dates.forEach((d) => (map[d.calendarId || d.id] = a.color))
+        a.hotelAvailabilityDateCommissions.forEach((d) => (map[d.calendarId || d.id] = a.color))
       );
       setColorMap(map);
     }
@@ -62,19 +62,19 @@ const PricePolicyDatesCalendar = ({
       const updated = prev.map((a) => {
         if (a.id === activeAvailability.id) {
           const allSelected = cells.every((c) =>
-            a.dates.some((d) => d.calendarId === c.calendarId)
+            a.hotelAvailabilityDateCommissions.some((d) => d.calendarId === c.calendarId)
           );
           const newDays = allSelected
-            ? a.dates.filter(
+            ? a.hotelAvailabilityDateCommissions.filter(
                 (d) => !cells.some((c) => c.calendarId === d.calendarId)
               )
             : [
-                ...a.dates,
+                ...a.hotelAvailabilityDateCommissions,
                 ...cells.filter(
-                  (c) => !a.dates.some((d) => d.calendarId === c.calendarId)
+                  (c) => !a.hotelAvailabilityDateCommissions.some((d) => d.calendarId === c.calendarId)
                 ),
               ];
-          return { ...a, dates: newDays };
+          return { ...a, hotelAvailabilityDateCommissions: newDays };
         }
         return a;
       });
@@ -84,7 +84,7 @@ const PricePolicyDatesCalendar = ({
         a.id !== activeAvailability.id
           ? {
               ...a,
-              dates: a.dates.filter(
+              hotelAvailabilityDateCommissions: a.hotelAvailabilityDateCommissions.filter(
                 (d) => !cells.some((c) => c.calendarId === d.calendarId)
               ),
             }
@@ -105,7 +105,7 @@ const PricePolicyDatesCalendar = ({
         // обновляем карту цветов
         const map: Record<string, string> = {};
         newState.forEach((a) =>
-          a.dates.forEach((d) => (map[d.calendarId] = a.color))
+          a.hotelAvailabilityDateCommissions.forEach((d) => (map[d.calendarId] = a.color))
         );
         setColorMap(map);
 
