@@ -22,11 +22,28 @@ const hotelAvailability = ApiInstance.injectEndpoints({
         url: `${ApiEnum.HOTEL_AGE_ASSIGNMENTS }/hotelAvailability/${hotelAvailabilityId}`,
       })
     }),
+
+    getHotelAvailabilityWithDates: build.query<HotelAvailability[], { hotelId: string }>({
+      query: ({ hotelId }) => ({
+        url: `${ApiEnum.HOTEL_AVAILABILITY}/dates/${hotelId}`,
+      })
+    }),
+
+    updateHotelAvailabilitesWithDates: build.mutation<any, { hotelId: string, body: any[] }>({
+      query: ({ hotelId, body }) => ({
+        url: `${ApiEnum.HOTEL_AVAILABILITY}/dates/${hotelId}`,
+        method: "PUT",
+    body: { availabilities: body }, // ✅ исправлено
+      }),
+    }),
+
   }),
 })
 
 export const {
   useGetHotelAvailabilityQuery,
   useAddHotelAvailabilityMutation,
-  useGetHotelAgeAssessmentByHotelAvailabilityIdQuery
+  useGetHotelAgeAssessmentByHotelAvailabilityIdQuery,
+  useGetHotelAvailabilityWithDatesQuery,
+  useUpdateHotelAvailabilitesWithDatesMutation
 } = hotelAvailability;
