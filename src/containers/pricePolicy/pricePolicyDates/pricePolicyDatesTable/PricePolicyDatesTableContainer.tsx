@@ -1,5 +1,8 @@
 import React, { FC } from "react";
 import { Trash2 } from "lucide-react"; // или любой другой icon set, например heroicons
+import EditCommissionModal from "../../../../modals/EditCommisionModal";
+import useModal from "../../../../hooks/useModal";
+import DeleteCommissionModal from "../../../../modals/DeleteCommisionModal";
 
 interface HotelAvailabilityDateCommission {
   id: number;
@@ -26,6 +29,8 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
   hotelAvailabilityWithDates = [],
   onDelete,
 }) => {
+  const open = useModal();
+
   if (!hotelAvailabilityWithDates.length) {
     return (
       <div className="p-4 text-center text-gray-500">
@@ -33,6 +38,23 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
       </div>
     );
   }
+
+
+  
+  const handleModalSubmit = async (data: any) => {  
+    console.log("Commission Data:", data);
+  };
+
+  const handleEditSubmit = async (commission: any, availabilityId: number) => {
+    open(EditCommissionModal, { title: "", commission, availabilityId, onSubmit: (data) => handleModalSubmit(data) });
+  };
+
+
+  const handleDeleteSubmit = async (availabilityId: number) => {
+    console.log("Delete Commission ID:", availabilityId);
+    open(DeleteCommissionModal, { title: "", availabilityId});
+
+  };
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -75,7 +97,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
               </div>
 
               {/* 3️⃣ Комиссии */}
-              <div className="text-gray-700">
+              <div className="text-gray-700" onClick={()=>{handleEditSubmit(commission,availability.id)}} >
                 Նомер: {commission.roomFee} ֏ | Եда: {commission.foodFee} ֏ | Լավել:{" "}
                 {commission.additionalFee} ֏ | Սերվիս: {commission.serviceFee} ֏
               </div>
@@ -83,7 +105,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
               {/* 4️⃣ Удаление */}
               <div className="flex justify-center">
                 <button
-                  onClick={() => onDelete?.(availability.id)}
+                  onClick={() => handleDeleteSubmit(availability.id)}
                   className="text-gray-400 hover:text-red-500 transition"
                   title="Удалить"
                 >
