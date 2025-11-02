@@ -9,11 +9,12 @@ const weekdays = ["Կիր", "Երկ", "Երք", "Չրք", "Հնգ", "Ուրբ", 
 interface Day {
   id: string;
   date: Date;
+  calendarId: string;
 }
 interface Availability {
   id: number;
   color: string;
-  dates: { id: string; date: string | Date }[];
+  dates: { id: string; date: string | Date; calendarId: string }[];
 }
 interface ActiveAvailability {
   id: number;
@@ -32,9 +33,7 @@ const PricePolicyDatesCalendar = ({
   activeAvailability,
   onChange,
 }: PricePolicyDatesCalendarProps) => {
-  // локальный state для availabilities
   const [availabilities, setAvailabilities] = useState<Availability[]>([]);
-  // мапа для быстрого отображения цвета ячейки
   const [colorMap, setColorMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const PricePolicyDatesCalendar = ({
       const map: Record<string, string> = {};
       initialSelectedDays.forEach((a) => {
         a.dates.forEach((d) => {
-          map[d.id] = a.color;
+          map[d.calendarId || d.id] = a.color;
         });
       });
       setColorMap(map);
@@ -56,41 +55,48 @@ const PricePolicyDatesCalendar = ({
     ...months.map((_, i) => getDaysInMonth(i) + getFirstDayIndex(i))
   );
 
-  // 🔹 клик по отдельному дню
+  // 🔹 Клик по отдельному дню
   const toggleDay = (monthIndex: number, day: number) => {
     if (!activeAvailability) return;
-    const id = `m${monthIndex + 1}-d${day}`;
+    const calendarId = `m${monthIndex + 1}-d${day}`;
     const date = new Date(year, monthIndex, day);
 
     setAvailabilities((prev) => {
       const updated = prev.map((a) => {
         if (a.id === activeAvailability.id) {
-          const exists = a.dates.some((d) => d.id === id);
+          const exists = a.dates.some((d) => d.calendarId === calendarId);
           return {
             ...a,
             dates: exists
-              ? a.dates.filter((d) => d.id !== id)
-              : [...a.dates, { id, date }],
+              ? a.dates.filter((d) => d.calendarId !== calendarId)
+              : [
+                  ...a.dates,
+                  {
+                    id: String(Date.now()) + "-" + calendarId,
+                    date,
+                    calendarId,
+                  },
+                ],
           };
         } else {
           return a;
         }
       });
 
-      // если этот день был в другом availability — удалить оттуда
+      // удаляем этот день из других availability
       updated.forEach((a) => {
         if (
           a.id !== activeAvailability.id &&
-          a.dates.some((d) => d.id === id)
+          a.dates.some((d) => d.calendarId === calendarId)
         ) {
-          a.dates = a.dates.filter((d) => d.id !== id);
+          a.dates = a.dates.filter((d) => d.calendarId !== calendarId);
         }
       });
 
       // обновляем карту цветов
       const map: Record<string, string> = {};
       updated.forEach((a) =>
-        a.dates.forEach((d) => (map[d.id] = a.color))
+        a.dates.forEach((d) => (map[d.calendarId] = a.color))
       );
       setColorMap(map);
 
@@ -99,26 +105,31 @@ const PricePolicyDatesCalendar = ({
     });
   };
 
-  // 🔹 клик по месяцу
+  // 🔹 Клик по месяцу
   const toggleMonth = (monthIndex: number) => {
     if (!activeAvailability) return;
     const daysInMonth = getDaysInMonth(monthIndex);
     const cells: Day[] = [];
     for (let i = 1; i <= daysInMonth; i++) {
-      const id = `m${monthIndex + 1}-d${i}`;
+      const calendarId = `m${monthIndex + 1}-d${i}`;
       const date = new Date(year, monthIndex, i);
-      cells.push({ id, date });
+      cells.push({ id: String(Date.now()) + "-" + calendarId, date, calendarId });
     }
 
     setAvailabilities((prev) => {
       const updated = prev.map((a) => {
         if (a.id === activeAvailability.id) {
           const allSelected = cells.every((c) =>
-            a.dates.some((d) => d.id === c.id)
+            a.dates.some((d) => d.calendarId === c.calendarId)
           );
           const newDays = allSelected
-            ? a.dates.filter((d) => !cells.some((c) => c.id === d.id))
-            : [...a.dates, ...cells.filter((c) => !a.dates.some((d) => d.id === c.id))];
+            ? a.dates.filter((d) => !cells.some((c) => c.calendarId === d.calendarId))
+            : [
+                ...a.dates,
+                ...cells.filter(
+                  (c) => !a.dates.some((d) => d.calendarId === c.calendarId)
+                ),
+              ];
           return { ...a, dates: newDays };
         }
         return a;
@@ -126,7 +137,7 @@ const PricePolicyDatesCalendar = ({
 
       const map: Record<string, string> = {};
       updated.forEach((a) =>
-        a.dates.forEach((d) => (map[d.id] = a.color))
+        a.dates.forEach((d) => (map[d.calendarId] = a.color))
       );
       setColorMap(map);
       onChange?.(updated);
@@ -134,7 +145,7 @@ const PricePolicyDatesCalendar = ({
     });
   };
 
-  // 🔹 клик по дню недели
+  // 🔹 Клик по дню недели
   const toggleWeekday = (weekdayIndex: number) => {
     if (!activeAvailability) return;
     const cells: Day[] = [];
@@ -143,7 +154,12 @@ const PricePolicyDatesCalendar = ({
       for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, mIndex, d);
         if (date.getDay() === weekdayIndex) {
-          cells.push({ id: `m${mIndex + 1}-d${d}`, date });
+          const calendarId = `m${mIndex + 1}-d${d}`;
+          cells.push({
+            id: String(Date.now()) + "-" + calendarId,
+            date,
+            calendarId,
+          });
         }
       }
     });
@@ -152,11 +168,16 @@ const PricePolicyDatesCalendar = ({
       const updated = prev.map((a) => {
         if (a.id === activeAvailability.id) {
           const allSelected = cells.every((c) =>
-            a.dates.some((d) => d.id === c.id)
+            a.dates.some((d) => d.calendarId === c.calendarId)
           );
           const newDays = allSelected
-            ? a.dates.filter((d) => !cells.some((c) => c.id === d.id))
-            : [...a.dates, ...cells.filter((c) => !a.dates.some((d) => d.id === c.id))];
+            ? a.dates.filter((d) => !cells.some((c) => c.calendarId === d.calendarId))
+            : [
+                ...a.dates,
+                ...cells.filter(
+                  (c) => !a.dates.some((d) => d.calendarId === c.calendarId)
+                ),
+              ];
           return { ...a, dates: newDays };
         }
         return a;
@@ -164,7 +185,7 @@ const PricePolicyDatesCalendar = ({
 
       const map: Record<string, string> = {};
       updated.forEach((a) =>
-        a.dates.forEach((d) => (map[d.id] = a.color))
+        a.dates.forEach((d) => (map[d.calendarId] = a.color))
       );
       setColorMap(map);
       onChange?.(updated);
@@ -207,12 +228,12 @@ const PricePolicyDatesCalendar = ({
             }
 
             for (let d = 1; d <= daysInMonth; d++) {
-              const id = `m${mIndex + 1}-d${d}`;
-              const color = colorMap[id];
+              const calendarId = `m${mIndex + 1}-d${d}`;
+              const color = colorMap[calendarId];
               const isSelected = !!color;
               cells.push(
                 <td
-                  key={id}
+                  key={calendarId}
                   onClick={() => toggleDay(mIndex, d)}
                   className={`border text-center cursor-pointer p-1 min-w-[30px] rounded transition-all ${
                     isSelected
