@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PricePolicyDatesCalendar from "./PricePolicyDatesCalendar";
 import { useUpdateHotelAvailabilitesWithDatesMutation } from "../../../services/hotelAvailability/hotelAvailability.service";
+import BlockContainer from "../../public/BlockContainer";
+import { Button } from "../../../components/shared/Button";
+import { useTranslation } from "../../../hooks/useTranslation";
+import { Select } from "../../../components/shared/Select";
 
 interface IPricePolicyDatesCalendarContainerProps {
   hotelAvailabilityWithDates?: any;
@@ -10,6 +14,7 @@ interface IPricePolicyDatesCalendarContainerProps {
 
 const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId }: IPricePolicyDatesCalendarContainerProps) => {
 
+  const { t } = useTranslation();
   useEffect(() => {
     if (hotelAvailabilityWithDates) {
       setAvailabilities(hotelAvailabilityWithDates);
@@ -26,31 +31,23 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
   };
 
   const handleSubmit = async () => {
-
-
-    try {
-      updateHotelAvailabilitesWithDates({ hotelId: hotelId, body: availabilities });
-      // В реальном коде можно использовать fetch или axios:
-      // await fetch("/api/availabilities", { method: "POST", body: JSON.stringify(availabilities) });
-    } catch (error) {
-      console.error("Ошибка при отправке:", error);
-    }
+    updateHotelAvailabilitesWithDates({ hotelId: hotelId, body: availabilities });
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4 text-gray-800">
-        Управление календарём ценовой политики
-      </h1>
-
-      {/* 🔽 выбор активного availability */}
-      <div className="flex items-center gap-4 mb-4">
-        <label className="font-medium text-gray-700">Выбрать тип:</label>
-        <select
-          className="border border-gray-300 rounded px-2 py-1"
-          value={selectedAvailability.id}
-          onChange={(e) => {
-            const id = Number(e.target.value);
+    <BlockContainer  >
+      <div className="flex justify-end gap-4 mb-4">
+     
+        <Select
+          name="hotelAvailability"
+          options={
+            hotelAvailabilityWithDates?.map((a) => ({
+              value: a.id,
+              label: `ID ${a.id} (${a.color})`,
+            })) || []
+          }
+          onSelect={(value) => {
+            const id = Number(value);
             const found = hotelAvailabilityWithDates.find((a) => a.id === id);
             if (found) {
               setSelectedAvailability({
@@ -59,16 +56,15 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
               });
             }
           }}
-        >
-          {hotelAvailabilityWithDates.map((a) => (
-            <option key={a.id} value={a.id}>
-              ID {a.id} ({a.color})
-            </option>
-          ))}
-        </select>
+          value={selectedAvailability.id}
+        />
+        <Button onClick={handleSubmit}>
+          {t("buttons.save")}
+        </Button>
+
       </div>
 
-      {/* 🗓 сам календарь */}
+
       <PricePolicyDatesCalendar
         year={2025}
         initialSelectedDays={availabilities}
@@ -76,16 +72,7 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
         onChange={handleCalendarChange}
       />
 
-      {/* 🔘 кнопка отправки */}
-      <div className="mt-6">
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-        >
-          💾 Сохранить изменения
-        </button>
-      </div>
-    </div>
+    </BlockContainer>
   );
 };
 

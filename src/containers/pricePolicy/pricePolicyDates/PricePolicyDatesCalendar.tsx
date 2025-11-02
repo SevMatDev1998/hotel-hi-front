@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const months = [
   "Հունվար", "Փետրվար", "Մարտ", "Ապրիլ", "Մայիս", "Հունիս",
@@ -40,11 +40,9 @@ const PricePolicyDatesCalendar = ({
     if (initialSelectedDays.length) {
       setAvailabilities(initialSelectedDays);
       const map: Record<string, string> = {};
-      initialSelectedDays.forEach((a) => {
-        a.dates.forEach((d) => {
-          map[d.calendarId || d.id] = a.color;
-        });
-      });
+      initialSelectedDays.forEach((a) =>
+        a.dates.forEach((d) => (map[d.calendarId || d.id] = a.color))
+      );
       setColorMap(map);
     }
   }, [initialSelectedDays]);
@@ -55,149 +53,122 @@ const PricePolicyDatesCalendar = ({
     ...months.map((_, i) => getDaysInMonth(i) + getFirstDayIndex(i))
   );
 
-const toggleDay = (monthIndex: number, day: number) => {
-  if (!activeAvailability) return;
-  const calendarId = `m${monthIndex + 1}-d${day}`;
-  const date = new Date(year, monthIndex, day);
+  // ✅ отдельный чистый метод обновления availabilities
+  const computeUpdatedAvailabilities = useCallback(
+    (prev: Availability[], cells: Day[]): Availability[] => {
+      if (!activeAvailability) return prev;
 
-  setAvailabilities((prev) => {
-    const updated = prev.map((a) => {
-      if (a.id === activeAvailability.id) {
-        const exists = a.dates.some((d) => d.calendarId === calendarId);
-        return {
-          ...a,
-          dates: exists
-            ? a.dates.filter((d) => d.calendarId !== calendarId)
+      // Обновляем выбранный availability
+      const updated = prev.map((a) => {
+        if (a.id === activeAvailability.id) {
+          const allSelected = cells.every((c) =>
+            a.dates.some((d) => d.calendarId === c.calendarId)
+          );
+          const newDays = allSelected
+            ? a.dates.filter(
+                (d) => !cells.some((c) => c.calendarId === d.calendarId)
+              )
             : [
                 ...a.dates,
-                {
-                  id: String(Date.now()) + "-" + calendarId,
-                  date,
-                  calendarId,
-                },
-              ],
-        };
-      } else {
+                ...cells.filter(
+                  (c) => !a.dates.some((d) => d.calendarId === c.calendarId)
+                ),
+              ];
+          return { ...a, dates: newDays };
+        }
         return a;
-      }
-    });
+      });
 
-    // удаляем день из других availability (иммутабельно)
-    const cleaned = updated.map((a) =>
-      a.id !== activeAvailability.id
-        ? {
-            ...a,
-            dates: a.dates.filter((d) => d.calendarId !== calendarId),
+      // Удаляем эти даты из других availability
+      const cleaned = updated.map((a) =>
+        a.id !== activeAvailability.id
+          ? {
+              ...a,
+              dates: a.dates.filter(
+                (d) => !cells.some((c) => c.calendarId === d.calendarId)
+              ),
+            }
+          : a
+      );
+
+      return cleaned;
+    },
+    [activeAvailability]
+  );
+
+  // ✅ универсальный метод обновления состояния
+  const updateAvailabilities = useCallback(
+    (cells: Day[]) => {
+      setAvailabilities((prev) => {
+        const newState = computeUpdatedAvailabilities(prev, cells);
+
+        // обновляем карту цветов
+        const map: Record<string, string> = {};
+        newState.forEach((a) =>
+          a.dates.forEach((d) => (map[d.calendarId] = a.color))
+        );
+        setColorMap(map);
+
+        onChange?.(newState);
+        return newState;
+      });
+    },
+    [computeUpdatedAvailabilities, onChange]
+  );
+
+  // 🔹 Обработчики
+  const toggleDay = useCallback(
+    (monthIndex: number, day: number) => {
+      const calendarId = `m${monthIndex + 1}-d${day}`;
+      const date = new Date(year, monthIndex, day);
+      updateAvailabilities([{ id: `${Date.now()}-${calendarId}`, date, calendarId }]);
+    },
+    [year, updateAvailabilities]
+  );
+
+  const toggleMonth = useCallback(
+    (monthIndex: number) => {
+      const daysInMonth = getDaysInMonth(monthIndex);
+      const cells: Day[] = [];
+      for (let i = 1; i <= daysInMonth; i++) {
+        const calendarId = `m${monthIndex + 1}-d${i}`;
+        cells.push({
+          id: `${Date.now()}-${calendarId}`,
+          date: new Date(year, monthIndex, i),
+          calendarId,
+        });
+      }
+      updateAvailabilities(cells);
+    },
+    [year, updateAvailabilities]
+  );
+
+  const toggleWeekday = useCallback(
+    (weekdayIndex: number) => {
+      const cells: Day[] = [];
+      months.forEach((_, mIndex) => {
+        const daysInMonth = getDaysInMonth(mIndex);
+        for (let d = 1; d <= daysInMonth; d++) {
+          const date = new Date(year, mIndex, d);
+          if (date.getDay() === weekdayIndex) {
+            const calendarId = `m${mIndex + 1}-d${d}`;
+            cells.push({
+              id: `${Date.now()}-${calendarId}`,
+              date,
+              calendarId,
+            });
           }
-        : a
-    );
-
-    // обновляем карту цветов
-    const map: Record<string, string> = {};
-    cleaned.forEach((a) =>
-      a.dates.forEach((d) => (map[d.calendarId] = a.color))
-    );
-    setColorMap(map);
-
-    onChange?.(cleaned);
-    return [...cleaned];
-  });
-};
-
-
-  // 🔹 Клик по месяцу
-  const toggleMonth = (monthIndex: number) => {
-    if (!activeAvailability) return;
-    const daysInMonth = getDaysInMonth(monthIndex);
-    const cells: Day[] = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      const calendarId = `m${monthIndex + 1}-d${i}`;
-      const date = new Date(year, monthIndex, i);
-      cells.push({ id: String(Date.now()) + "-" + calendarId, date, calendarId });
-    }
-
-    setAvailabilities((prev) => {
-      const updated = prev.map((a) => {
-        if (a.id === activeAvailability.id) {
-          const allSelected = cells.every((c) =>
-            a.dates.some((d) => d.calendarId === c.calendarId)
-          );
-          const newDays = allSelected
-            ? a.dates.filter((d) => !cells.some((c) => c.calendarId === d.calendarId))
-            : [
-                ...a.dates,
-                ...cells.filter(
-                  (c) => !a.dates.some((d) => d.calendarId === c.calendarId)
-                ),
-              ];
-          return { ...a, dates: newDays };
         }
-        return a;
       });
-
-      const map: Record<string, string> = {};
-      updated.forEach((a) =>
-        a.dates.forEach((d) => (map[d.calendarId] = a.color))
-      );
-      setColorMap(map);
-      onChange?.(updated);
-      return [...updated];
-    });
-  };
-
-  // 🔹 Клик по дню недели
-  const toggleWeekday = (weekdayIndex: number) => {
-    if (!activeAvailability) return;
-    const cells: Day[] = [];
-    months.forEach((_, mIndex) => {
-      const daysInMonth = getDaysInMonth(mIndex);
-      for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(year, mIndex, d);
-        if (date.getDay() === weekdayIndex) {
-          const calendarId = `m${mIndex + 1}-d${d}`;
-          cells.push({
-            id: String(Date.now()) + "-" + calendarId,
-            date,
-            calendarId,
-          });
-        }
-      }
-    });
-
-    setAvailabilities((prev) => {
-      const updated = prev.map((a) => {
-        if (a.id === activeAvailability.id) {
-          const allSelected = cells.every((c) =>
-            a.dates.some((d) => d.calendarId === c.calendarId)
-          );
-          const newDays = allSelected
-            ? a.dates.filter((d) => !cells.some((c) => c.calendarId === d.calendarId))
-            : [
-                ...a.dates,
-                ...cells.filter(
-                  (c) => !a.dates.some((d) => d.calendarId === c.calendarId)
-                ),
-              ];
-          return { ...a, dates: newDays };
-        }
-        return a;
-      });
-
-      const map: Record<string, string> = {};
-      updated.forEach((a) =>
-        a.dates.forEach((d) => (map[d.calendarId] = a.color))
-      );
-      setColorMap(map);
-      onChange?.(updated);
-      return [...updated];
-    });
-  };
+      updateAvailabilities(cells);
+    },
+    [year, updateAvailabilities]
+  );
 
   console.log(123);
   
-
   return (
-    <div className="p-4 bg-gray-50 rounded-lg shadow-md overflow-x-auto">
+    <div className=" overflow-x-auto">
       <h2 className="text-lg font-semibold mb-3 text-gray-700">
         Գնային քաղաքականության օրացույց {year}
       </h2>
@@ -227,13 +198,14 @@ const toggleDay = (monthIndex: number, day: number) => {
             const cells: JSX.Element[] = [];
 
             for (let i = 0; i < firstDay; i++) {
-              cells.push(<td key={`empty-${i}`} className="border p-1"></td>);
+              cells.push(<td key={`empty-${i}`} className="border p-1" />);
             }
 
             for (let d = 1; d <= daysInMonth; d++) {
               const calendarId = `m${mIndex + 1}-d${d}`;
               const color = colorMap[calendarId];
               const isSelected = !!color;
+
               cells.push(
                 <td
                   key={calendarId}
@@ -252,12 +224,6 @@ const toggleDay = (monthIndex: number, day: number) => {
                 </td>
               );
             }
-
-            // while (cells.length < maxDays) {
-            //   cells.push(
-            //     <td key={`end-${cells.length}`} className="border p-1"></td>
-            //   );
-            // }
 
             return (
               <tr key={month}>

@@ -170,7 +170,8 @@
     "defined_intervals": "Սահմանված միջակայքներ",
     "from_age": "Սկսված",
     "to_age": "Մինչև",
-    "available_beds": "Տրամադրվող մահճակալներ"
+    "available_beds": "Տրամադրվող մահճակալներ",
+    "attach_date_to_price_offer": "Գնային առաջարկին կցել ամսաթիվ"
   },
   "hotel_availability": {
     "price_offer_name": "Գնային առաջարկի անվանում",
