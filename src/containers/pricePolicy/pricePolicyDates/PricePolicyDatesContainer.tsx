@@ -6,7 +6,7 @@ import useAppSelector from "../../../hooks/useAppSelector";
 // import { useState } from "react";
 import PricePolicyDatesCalendarContainer from "./pricePolicyDatesCalendar/PricePolicyDatesCalendarContainer";
 import { useGetHotelAvailabilityWithDatesQuery } from "../../../services/hotelAvailability/hotelAvailability.service";
-import PricePolicyDatesTableContainer from "./pricePolicyDatesTable/pricePolicyDatesTableContainer";
+import PricePolicyDatesTableContainer from "./pricePolicyDatesTable/PricePolicyDatesTableContainer";
 
 const PricePolicyDatesContainer = () => {
 
