@@ -25,16 +25,16 @@ const RegisterInput: FC<IRegisterInput> = ({
   disabled = false
 }) => {
 
-  const {t} = useTranslation(); 
+  const { t } = useTranslation();
 
-  
+
   return (
     <div>
       <label htmlFor={name} className={clsx("sr-only", labelClassName)}>
         {label}
       </label>
       <input
-        {...register(name, { required: `${label} is required` })}
+        {...register(name)}
         type={type}
         autoComplete={type === "password" ? "current-password" : "off"}
         className={clsx(
