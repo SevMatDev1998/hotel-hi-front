@@ -50,12 +50,13 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
   };
 
 
-  const handleDeleteSubmit = async (availabilityId: number) => {
-    console.log("Delete Commission ID:", availabilityId);
+  const handleDeleteSubmit = async (availabilityId: string) => {
     open(DeleteCommissionModal, { title: "", availabilityId});
 
   };
 
+  console.log(hotelAvailabilityWithDates);
+  
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       {/* Заголовки */}
@@ -78,16 +79,20 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
             };
 
             if (!availability.hotelAvailabilityDateCommissions[0]) return
-
+            
           return (
             <div
               key={availability.id}
               className="grid grid-cols-[1fr_2fr_3fr_50px] items-center px-4 py-3 text-sm hover:bg-gray-50 transition"
             >
-              {/* 1️⃣ Дата */}
-              <div className="text-gray-500">—</div>
+              <div className="text-gray-500">
 
-              {/* 2️⃣ Название и цвет */}
+                {availability.hotelAvailabilityDateCommissions.map((dateCommission) => (
+                  <div key={dateCommission.id}>{dateCommission.date}</div>
+                ))}
+
+              </div>
+
               <div className="flex items-center gap-2 text-gray-800">
                 <span
                   className="inline-block w-3 h-3 rounded-full"
@@ -96,7 +101,6 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
                 {availability.title}
               </div>
 
-              {/* 3️⃣ Комиссии */}
               <div className="text-gray-700" onClick={()=>{handleEditSubmit(commission,availability.id)}} >
                 Նомер: {commission.roomFee} ֏ | Եда: {commission.foodFee} ֏ | Լավել:{" "}
                 {commission.additionalFee} ֏ | Սերվիս: {commission.serviceFee} ֏

@@ -50,7 +50,7 @@ export function DataTable<T>({ showPagination = true, showSearch = true, data, t
 
   return (
     <div className="w-full bg-white">
-      <div className="rounded-md border">
+      <div className="rounded-md">
         {showSearch && <div>
           <TableSearch onChange={onSearch} search={search} />
         </div>}

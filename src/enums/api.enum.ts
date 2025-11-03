@@ -35,6 +35,7 @@ enum ApiEnum {
     HOTEL_SERVICE_AVAILABILITY="hotel-service-availability",
 
 
+    NOTIFICATIONS="notifications",
 
     HOTEL_AVAILABILITY="hotel-availability",
     HOTEL_AGE_ASSIGNMENTS="hotel-age-assignments",

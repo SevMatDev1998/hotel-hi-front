@@ -202,18 +202,25 @@
     "required": "դաշտը պարտադիր է",
     "typeError": "դաշտի ֆորմատը սխալ է"
   },
-
   "registration_country_options": {
     "Armenia": "Հայաստան",
     "Russia": "Ռուսաստան",
     "United States": "ԱՄՆ"
   },
-
-"legal_entity_type_options": {
-  "LLC": "ՍՊԸ",
-  "PE": "Ա/Ձ",
-  "CJSC": "ՓԲԸ",
-  "OJSC": "ԲԲԸ",
-  "NGO": "ՀԿ"
-}
+  "legal_entity_type_options": {
+    "LLC": "ՍՊԸ",
+    "PE": "Ա/Ձ",
+    "CJSC": "ՓԲԸ",
+    "OJSC": "ԲԲԸ",
+    "NGO": "ՀԿ"
+  },
+  "notifications": {
+    "notifications": "Ծանուցումներ",
+    "tax_id": "ՀՎՀՀ",
+    "legal_person_name": "Իրավ. անձ",
+    "name": "Անվանում",
+    "email": "Էլ. հասցե",
+    "commission": "Միջնորդավճար",
+    "notified": "ծանուցված"
+  }
 }
