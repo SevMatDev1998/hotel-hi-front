@@ -39,14 +39,14 @@ const RoomsService = ApiInstance.injectEndpoints({
       })
     }),
 
-    getHotelRoomParts: build.query<HotelRoomPart[], { hotelRoomId: number }>({
+    getHotelRoomParts: build.query<HotelRoomPart[], { hotelRoomId: string }>({
       query: ({ hotelRoomId }) => ({
         url: `${ApiEnum.HOTEL_ROOM_PARTS}/${hotelRoomId}`,
       }),
       providesTags: [ApiEnum.HOTEL_ROOM_PARTS]
     }),
 
-    addHotelRoomParts: build.mutation<void, { hotelRoomId: number; roomParts: { roomPartId: number; quantity: number }[] }>({
+    addHotelRoomParts: build.mutation<void, { hotelRoomId: string; roomParts: { roomPartId: number; quantity: number }[] }>({
       query: ({ hotelRoomId, roomParts }) => ({
         url: `${ApiEnum.HOTEL_ROOM_PARTS}/${hotelRoomId}`,
         method: 'POST',
@@ -55,7 +55,7 @@ const RoomsService = ApiInstance.injectEndpoints({
       invalidatesTags: [ApiEnum.HOTEL_ROOM_PARTS]
     }),
 
-    createRoom: build.mutation<HotelRoom, { hotelId: number; data: Partial<HotelRoom> }>({
+    createRoom: build.mutation<HotelRoom, { hotelId: string; data: Partial<HotelRoom> }>({
       query: ({ hotelId, data }) => ({
         url: `${ApiEnum.HOTEL_ROOMS}/create/${hotelId}`,
         method: 'POST',
@@ -75,7 +75,9 @@ const RoomsService = ApiInstance.injectEndpoints({
     getHotelRoomPartBedsByPartId: build.query<HotelRoomPartBed[], { roomPartId: string }>({
       query: ({ roomPartId }) => ({
         url: `${ApiEnum.HOTEL_ROOM_PART_BEDS}/${roomPartId}`,
-      })
+      }),
+      providesTags: [ApiEnum.HOTEL_ROOM_PART_BEDS],
+
     }),
 
     editHotelRoomPartBeds: build.mutation<HotelRoomPartBed, HotelRoomPartBedMutation>({
@@ -83,7 +85,10 @@ const RoomsService = ApiInstance.injectEndpoints({
         url: `${ApiEnum.HOTEL_ROOM_PART_BEDS}/edit`,
         method: 'PUT',
         body
-      })
+      }),
+        invalidatesTags: [ApiEnum.HOTEL_ROOM_PART_BEDS],
+
+
     }),
 
     getRoomBedTypes: build.query<RoomBedType[], void>({

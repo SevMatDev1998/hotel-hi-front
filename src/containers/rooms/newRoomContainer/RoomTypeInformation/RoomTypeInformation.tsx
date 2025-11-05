@@ -10,26 +10,26 @@ import { useGetHotelRoomPartsQuery } from "../../../../services/rooms";
 import RoomTypeInformationCards from "./RoomTypeInformationCards";
 
 interface RoomTypeInformationProps {
-  hotelId?: number
+  roomId?: string
 }
 
-const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ hotelId }) => {
-  // Все хуки должны быть в начале компонента
+const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ roomId  }) => {
   const { t } = useTranslation();
   const open = useModal();
-  const { data: hotelRoomParts } = useGetHotelRoomPartsQuery({ hotelRoomId: hotelId ?? 0 }, { skip: !hotelId });
 
 
-  // Adjust handleSubmit to accept the payload expected by the modal
+  // need to send hotelRoomId
+  const { data: hotelRoomParts } = useGetHotelRoomPartsQuery({ hotelRoomId: roomId ?? "0" }, { skip: !roomId });
+
+
   const handleSubmit = (_payload: any) => {
     // handle the payload here
   };
 
-  const handleLogOut = () => {
-    // You must provide a valid hotelRoomId (replace 0 with the actual id if available)
+  const handleSelectRoomParts = () => {
     open(SelectRoomPartsModal, {
       hotelRoomParts: hotelRoomParts,
-      hotelRoomId: hotelId ?? 0,
+      hotelRoomId: roomId ?? "0",
       onSubmit: handleSubmit,
     });
   };
@@ -41,12 +41,11 @@ const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ hotelId }) => {
   return (
     <BlockContainer shadow={false}>
       <div className="flex flex-col gap-6">
-
         <h2>{t("rooms.room_type_information")}</h2>
         <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
         <Button
           variant="outline"
-          onClick={() => { handleLogOut() }}
+          onClick={() => { handleSelectRoomParts() }}
         >
           {t("rooms.add_room_part")}
         </Button>
@@ -54,7 +53,6 @@ const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ hotelId }) => {
           <RoomTypeInformationCards hotelRoomParts={hotelRoomParts}/>
         </div>
       </div>
-
     </BlockContainer>
   )
 

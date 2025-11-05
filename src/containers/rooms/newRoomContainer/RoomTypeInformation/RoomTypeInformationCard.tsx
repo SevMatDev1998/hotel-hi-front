@@ -18,7 +18,7 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
 
   const [editHotelRoomPartBedsMutation] = useEditHotelRoomPartBedsMutation();
 
-  const isRoomHasBeds = hotelRoomPart?.beds && hotelRoomPart?.beds.length > 0;
+  const isRoomHasBeds = hotelRoomPart?.hotelRoomPartBeds && hotelRoomPart?.hotelRoomPartBeds.length > 0;
 
   const addHotelRoomPartBeds = (roomPartBed:RoomPartBedWithRowIndex ) => {
     setRoomPartBedsState((prev) => [
@@ -31,7 +31,6 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
     setIsBadAvailable(false);
     editHotelRoomPartBedsMutation({hotelRoomPartId: hotelRoomPart?.id, bedConfigurations: roomPartBedsState});
   }
-
 
   return (
     <div className="flex flex-col gap-4">

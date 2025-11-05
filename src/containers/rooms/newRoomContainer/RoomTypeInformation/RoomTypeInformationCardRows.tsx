@@ -33,13 +33,15 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
   const { data: roomBedSizes } = useGetRoomBedSizesQuery();
 
 
-  useEffect(() => {
-    
-    if(hotelRoomPartBeds) {
-      setRoomPartBedsState(hotelRoomPartBeds);
-    }
-   }, [hotelRoomPartBeds,setRoomPartBedsState]);
-
+useEffect(() => {
+  if (hotelRoomPartBeds) {
+    const bedsWithRowIndex = hotelRoomPartBeds.map(bed => ({
+      ...bed,
+      rowIndex: bed.rowIndex ?? bed.id ?? Date.now().toString() + Math.random()
+    }));
+    setRoomPartBedsState(bedsWithRowIndex);
+  }
+}, [hotelRoomPartBeds, setRoomPartBedsState]);
 
   const hendleAddBed = (type: string) => {
     const newBed: RoomPartBedWithRowIndex = {
@@ -58,7 +60,6 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
       }
       return bed;
     });
-    console.log(updatedBeds);
     
     setRoomPartBedsState(updatedBeds);
   }
@@ -74,9 +75,10 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
   } 
 
   const hendleBedSizeRowDelete = (bedId: string) => {
+
     setRoomPartBedsState(prev => prev.filter(bed => bed.rowIndex !== bedId));
   }
-
+  
   return (
     <div >
       <div className="flex gap-4">
@@ -89,7 +91,7 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
           roomPartBedsState.map((bed) => {
             return (
               <div key={bed.rowIndex} className="flex  items-center justify-between mobile:justify-start gap-4">
-                <div onClick={() => hendleBedSizeRowDelete(bed.rowIndex)}>x</div>
+                <div className='cursor-pointer' onClick={() => hendleBedSizeRowDelete(bed.rowIndex)}>x</div>
                 <div className='flex gap-3'>
                   <p>{t(`room_bed_types.${bed.bedType}`)}</p>
                 </div>

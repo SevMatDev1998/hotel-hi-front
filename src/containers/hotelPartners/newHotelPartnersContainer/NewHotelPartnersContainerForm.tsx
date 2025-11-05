@@ -151,7 +151,6 @@ const NewHotelPartnersContainerForm: FC<BaseInfoEditnoContainerProps> = ({ count
                   <RegisterInput
                     register={register}
                     errors={errors}
-                    label="Phone Number"
                     name="phone"
                     type="text"
                     className='rounded-[5px]'

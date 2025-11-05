@@ -5,6 +5,8 @@ import InfoBlock from '../../../components/shared/InfoBlock';
 import { useTranslation } from 'react-i18next';
 import useAppSelector from '../../../hooks/useAppSelector';
 import RoomTypeInformation from '../newRoomContainer/RoomTypeInformation/RoomTypeInformation';
+import { Button } from '../../../components/shared/Button';
+import RouteEnum from '../../../enums/route.enum';
 
 const RoomContainer = () => {
   const { roomId } = useParams();
@@ -44,9 +46,12 @@ const RoomContainer = () => {
         </div>
 
       </BlockContainer>
-
-      <RoomTypeInformation hotelId={user?.hotelId} />
-
+      <RoomTypeInformation roomId={roomId} />
+      <div className='flex justify-end'>
+        <Button onClick={()=>{navigate(RouteEnum.ROOMS)}}> 
+          {t("rooms.save_room_types")}
+        </Button>
+      </div>
     </div>
   );
 };

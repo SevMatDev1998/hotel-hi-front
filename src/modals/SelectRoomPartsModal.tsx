@@ -6,14 +6,14 @@ import InfoBlock from "../components/shared/InfoBlock";
 import { HotelRoomPart } from "../types";
 
 interface IModalProps {
-  hotelRoomId: number;
+  hotelRoomId: string;
   hotelRoomParts?: HotelRoomPart[];
   onSubmit: (payload: any) => void;
   onCancel?: () => void;
 }
 
 interface RoomPartState {
-  id: number;
+  id: string;
   name: string;
   quantity: number;
   selected: boolean;
@@ -55,7 +55,7 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
   }, [roomParts, hotelRoomParts]);
 
 
-  const toggleSelect = (id: number) => {
+  const toggleSelect = (id: string) => {
     setParts((prev) =>
       prev.map((p) =>
         p.id === id ? { ...p, selected: !p.selected } : p
@@ -63,7 +63,7 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
     );
   };
 
-  const changeQuantity = (id: number, delta: number) => {
+  const changeQuantity = (id: string, delta: number) => {
     setParts((prev) =>
       prev.map((p) =>
         p.id === id

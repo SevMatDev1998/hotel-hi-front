@@ -7,6 +7,6 @@ export interface HotelRoomPart {
   roomPartId: number;
   createdAt: Date;
   updatedAt: Date;
-  beds?:HotelRoomPartBed[]
+  hotelRoomPartBeds?:HotelRoomPartBed[]
   roomPart?: RoomPart
 }

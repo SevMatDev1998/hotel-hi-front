@@ -42,7 +42,7 @@ export const getHotelPartnersColumns = (
       cell: ({ row }: { row: { original: User } }) => (
         <div className="flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <div
-            onClick={() => navigate && navigate(`/users/${row.original.id}`)}
+            onClick={() => navigate && navigate(`/partners/${row.original.id}/edit`)}
             className='cursor-pointer'
           >
             <ArrowBigRight className="h-4 w-4" />
