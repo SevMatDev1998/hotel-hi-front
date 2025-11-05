@@ -10,6 +10,7 @@ import { FC, useEffect } from "react";
 import { Button } from "../../../components/shared/Button";
 import { RegisterSelect } from "../../../components/shared/RegisterSelect";
 import { useNavigate } from "react-router-dom";
+import RouteEnum from "../../../enums/route.enum";
 
 interface RoomTypeDescriptionProps {
   hotelId?: number
@@ -27,7 +28,8 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
   const [createRoom, { data, isLoading }] = useCreateRoomMutation()
 
   const onSubmit = async (data: CreateHotelRoomFormData) => {
-    await createRoom({ hotelId: hotelId!, data })
+    await createRoom({ hotelId: hotelId!, data }).unwrap();
+    navigate(RouteEnum.ROOMS);
   };
 
 
@@ -47,13 +49,10 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
     label: roomClass.name,
   })) || [];
 
-
   const roomViewsOptions = roomViewsData?.map((roomView) => ({
     value: roomView.id,
     label: roomView.name
   })) || [];
-
-
 
   return (
     <BlockContainer shadow={false}>
@@ -111,7 +110,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
             />
           </div>
         </div>
-        <div>
+        <div className="flex justify-end">
           <Button type="submit" disabled={isLoading} className="mt-6">
             {t("buttons.save")}
           </Button>

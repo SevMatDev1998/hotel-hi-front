@@ -93,7 +93,7 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
               />
             </div>
           </div>
-          <div>
+          <div className="flex justify-end">
             <Button type="submit" disabled={isLoading} className="mt-6">
               {t("buttons.save")}
             </Button>

@@ -12,21 +12,22 @@ import { Country, Hotel } from '../../../types';
 import { useUpdateHotelLegalInformationMutation } from '../../../services/hotel';
 import useAppDispatch from '../../../hooks/useAppDisaptch';
 import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
+import { useNavigate } from 'react-router-dom';
+import RouteEnum from '../../../enums/route.enum';
 
 interface ILegalInfoEditContainerProps {
   hotelLegalInformationData?: Partial<Hotel>
   hotelId?: string
   countriesData?: Country[]
-
 }
 
 const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalInformationData, countriesData, hotelId }) => {
 
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [updateHotelLegalInformation, { isSuccess, isError, error, isLoading }] = useUpdateHotelLegalInformationMutation()
+  const [updateHotelLegalInformation, {  isLoading }] = useUpdateHotelLegalInformationMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<UpdateHotelLegalInfoFormData>({
     resolver: yupResolver(UpdateHotelLegalInfoSchema),
@@ -34,16 +35,15 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   });
 
   const onSubmit = async (data: UpdateHotelLegalInfoFormData) => {
-    console.log(5555, data);
-    
-    await updateHotelLegalInformation({ id: hotelId!, data })
+    await updateHotelLegalInformation({ id: hotelId!, data }).unwrap();
+    navigate(RouteEnum.ROOMS);
   };
 
 
   const countryOptions = countriesData?.map((country) => ({
     value: country.id,
     label: country.name,
-  })) || [];
+  })) || [];  
 
   return (
     <BlockContainer>
@@ -66,14 +66,13 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
               <div >
                 <RegisterInput
                   register={register}
-                  errors={errors}
                   name="legalPerson"
                   type="text"
                   className='rounded-[5px]'
+                  errors={errors}
                 />
               </div>
             </div>
-
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.legal_address")} *</span>
@@ -84,10 +83,10 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
                     name="registerCountryId"
                     options={countryOptions}
                     register={register}
-                    // error={errors.courseId}
+                    errors={errors.registerCountryId}
                     required
                     className='rounded-[5px]'
-
+                    tr_name="countries"
                   />
                 </div>
                 <div className='' >
@@ -149,7 +148,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
 
                   />
                 </div> */}
-                <div className='' >
+                <div>
                   <RegisterInput
                     register={register}
                     errors={errors}

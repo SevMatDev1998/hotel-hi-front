@@ -12,6 +12,7 @@ interface IRegisterInput {
   className?: string;
   labelClassName?: string;
   disabled?: boolean;
+  tr_name?: string;
 }
 
 const RegisterInput: FC<IRegisterInput> = ({
@@ -22,15 +23,15 @@ const RegisterInput: FC<IRegisterInput> = ({
   type = "text",
   className,
   labelClassName,
-  disabled = false
+  disabled = false,
+  tr_name=''
 }) => {
 
   const { t } = useTranslation();
 
-
   return (
     <div>
-      <label htmlFor={name} className={clsx("sr-only", labelClassName)}>
+      <label className={clsx("block mb-1", labelClassName)}>
         {label}
       </label>
       <input
@@ -49,7 +50,7 @@ const RegisterInput: FC<IRegisterInput> = ({
       />
       {errors?.[name] && (
         <p className="mt-1 ml-1 text-sm text-red-700">
-          {t(`partners.${name}`)} {errors[name]?.message}
+          {t(`${tr_name}.${name}`)} {t(`errors.${errors[name]?.type}`)} 
         </p>
       )}
     </div>

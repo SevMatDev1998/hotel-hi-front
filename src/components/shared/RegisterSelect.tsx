@@ -12,11 +12,11 @@ interface SelectProps {
   label?: string;
   name: string;
   options: SelectOption[];
-  register: UseFormRegister<any>; // or a more specific type if you know your form data interface
+  register: UseFormRegister<any>;
   errors?: FieldError;
   required?: boolean;
   className?: string;
-  tr_name: string;
+  tr_name?: string;
 }
 
 export const RegisterSelect: React.FC<SelectProps> = ({
@@ -27,14 +27,12 @@ export const RegisterSelect: React.FC<SelectProps> = ({
   errors,
   required,
   className,
-  tr_name,
-
+  tr_name='',
   ...props
 }) => {
+
   const { t } = useTranslation();
-
-
-  console.log("errorserrorserrors",errors);
+  console.log(535353,errors);
   
   return (
     <div>
@@ -43,10 +41,9 @@ export const RegisterSelect: React.FC<SelectProps> = ({
           {label}
         </label>
       )}
-
       <select
         id={name}
-        className={clsx(
+        className={clsx( 
           "appearance-none block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
            errors 
             ? "border-red-500 focus:border-red-500 focus:ring-red-500"
@@ -64,7 +61,9 @@ export const RegisterSelect: React.FC<SelectProps> = ({
         ))}
       </select>
       {errors && (
-        <p className="mt-1 text-sm text-red-600">{errors.message}</p>
+        <>
+          <p className="mt-1 text-sm text-red-600">{t(`${tr_name}.${name}`)} {t(`errors.${errors[name]?.type}`)}</p>
+        </>
       )}
     </div>
   );

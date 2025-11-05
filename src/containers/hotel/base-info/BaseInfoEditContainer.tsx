@@ -104,7 +104,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                   <RegisterInput
                     register={register}
                     errors={errors}
-                    label="City"
                     name="city"
                     type="text"
                     className='rounded-[5px]'
@@ -120,7 +119,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                 <RegisterInput
                   register={register}
                   errors={errors}
-                  label="Contact Person"
                   name="contactPerson"
                   type="text"
                   className='rounded-[5px]'
@@ -136,13 +134,12 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                   name="phoneCode"
                   options={countryOptions}
                   register={register}
-                  // error={errors.courseId}
+                  errors={errors.phoneCode}
                   required
                 />
                 <RegisterInput
                   register={register}
-                  errors={errors}
-                  label="Phone Number"
+                  errors={errors.phoneNumber}
                   name="phoneNumber"
                   type="text"
                   className='rounded-[5px]'
@@ -160,6 +157,7 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                     options={currencyOptions}
                     register={register}
                     required
+                    errors={errors.currencyId}
                   />
                 </div>
                 <div>

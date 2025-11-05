@@ -24,7 +24,7 @@
     "register": "Գրանցվել",
     "forgot_password": "Մոռացել եք գաղտնաբառը",
     "no_account": "Գրանցված չեմ համակարգում",
-    "hotel_name": "Հյուրանոցի անվանում",
+    "hotelName": "Հյուրանոցի անվանում",
     "confirm_password": "Հաստատել գաղտնաբառը",
     "messages": {
       "login_success": "Դուք հաջողությամբ մուտք գործեցիք",
@@ -198,10 +198,8 @@
     "Waiting": "Սպասում",
     "Approved": "Հաստատված"
   },
-  "errors": {
-    "required": "դաշտը պարտադիր է",
-    "typeError": "դաշտի ֆորմատը սխալ է"
-  },
+
+
   "registration_country_options": {
     "Armenia": "Հայաստան",
     "Russia": "Ռուսաստան",
@@ -222,5 +220,9 @@
     "email": "Էլ. հասցե",
     "commission": "Միջնորդավճար",
     "notified": "ծանուցված"
+  },
+    "errors": {
+    "required": "դաշտը պարտադիր է",
+    "typeError": "դաշտի ֆորմատը սխալ է"
   }
 }

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import NotFound from "../pages/404/NotFound";
 import RouteEnum from "../enums/route.enum";
 import HotelPage from "../pages/hotel/HotelPage";
@@ -71,6 +71,8 @@ const router = createBrowserRouter([
     element: <MainLayout />,        // нет path — просто layout
     errorElement: <NotFound />,
     children: [
+
+      { path: "/", element: <Navigate to={RouteEnum.HOTEL} replace /> },
       // { path: RouteEnum.HOME, element: <DashboardPage /> },
       { path: RouteEnum.HOTEL, element: <HotelPage /> },
 
@@ -102,7 +104,7 @@ const router = createBrowserRouter([
       { errorElement: <NotFound /> }
     ],
   },
- 
+
   { path: RouteEnum.NOT_FOUND, element: <NotFound /> },
 ]);
 

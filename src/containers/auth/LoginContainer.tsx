@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { LoginFormType, loginSchema } from '../../yupValidation/AuthValidation';
 import { useLoginMutation } from '../../services/auth/auth.service';
 import RegisterInput from '../../components/shared/RegisterInput';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Label from '../../components/shared/label';
 import { Button } from '../../components/shared/Button';
 import RouteEnum from '../../enums/route.enum';
 import { useTranslation } from '../../hooks/useTranslation';
@@ -12,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import { loginEffect } from '../../services/auth/auth.effects';
 
 const LoginContainer = () => {
+  
   const { t } = useTranslation();
   const navigate = useNavigate();
-
+  const [showPassword, setShowPassword] = useState(false);
   const [login, { isSuccess, isError, isLoading }] = useLoginMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormType>({
@@ -33,7 +33,6 @@ const LoginContainer = () => {
           <div>{t('auth.login')}</div>
         </div>
         <div>
-          <Label htmlFor="email" className="block" text={t('auth.email')} />
           <RegisterInput
             register={register}
             errors={errors}
@@ -41,19 +40,31 @@ const LoginContainer = () => {
             name="email"
             type="email"
             className='rounded-none border !border-dusty-teal'
+            tr_name="auth"
           />
-
         </div>
         <div>
-          <Label htmlFor="password" className="block" text={t('auth.password')} />
-          <RegisterInput
-            register={register}
-            errors={errors}
-            label="password"
-            name="password"
-            type="password"
-            className='rounded-none border !border-dusty-teal'
-          />
+          <div className="relative">
+            <RegisterInput
+              register={register}
+              errors={errors}
+              label="password"
+              name="password"
+              className='rounded-none border !border-dusty-teal'
+              tr_name="auth"
+              type={showPassword ? "text" : "password"}
+            />
+            <button
+              type="button"
+              className="absolute bottom-2 right-0 pr-3 "
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <img
+                src="/images/icons/show-password.svg"
+                alt="Toggle password visibility"
+              />
+            </button>
+          </div>
         </div>
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">

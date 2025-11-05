@@ -3,7 +3,6 @@ import { SignUpFormType, signUpSchema } from '../../yupValidation/AuthValidation
 import { useSignUpMutation } from '../../services/auth/auth.service';
 import RegisterInput from '../../components/shared/RegisterInput';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Label from '../../components/shared/label';
 import { Button } from '../../components/shared/Button';
 import RouteEnum from '../../enums/route.enum';
 import { useTranslation } from '../../hooks/useTranslation';
@@ -37,79 +36,71 @@ const SignUpContainer = () => {
           <a href={RouteEnum.LOGIN} className='underline text-dusty-teal' >{t('auth.login')}</a>
         </div>
         <div>
-          <Label className="block" text={t('auth.hotel_name')} />
+          {/* <Label className="block" text={t('auth.hotel_name')} /> */}
           <RegisterInput
             register={register}
             name="hotelName"
             type="text"
             errors={errors}
-
+            label={t('auth.hotelName')}
+            tr_name="auth"
           />
         </div>
         <div>
-          <Label className="block" text={t('auth.email')} />
           <RegisterInput
             register={register}
-            label="Email address"
             name="email"
             type="email"
             errors={errors}
-
+            label={t('auth.email')}
+            tr_name="auth"
           />
         </div>
         <div>
-          <Label className="block" text={t('auth.password')} />
           <div className="relative">
             <RegisterInput
               register={register}
-              label="password"
               name="password"
               type={showPassword ? "text" : "password"}
               errors={errors}
-
+              label={t('auth.password')}
+              tr_name="auth"
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              className="absolute bottom-2 right-0 pr-3 "
               onClick={() => setShowPassword(!showPassword)}
             >
               <img
                 src="/images/icons/show-password.svg"
                 alt="Toggle password visibility"
-                className="h-5 w-5 text-gray-400"
               />
             </button>
           </div>
         </div>
         <div>
-          <Label className="block" text={t('auth.confirm_password')} />
           <div className="relative">
             <RegisterInput
               register={register}
-              label="password"
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               className='rounded-none border !border-dusty-teal pr-10'
               errors={errors}
-
+              label={t('auth.confirm_password')}
+              tr_name="auth"
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              className="absolute bottom-2 right-0 pr-3 "
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               <img
                 src="/images/icons/show-password.svg"
                 alt="Toggle password visibility"
-                className="h-5 w-5 text-gray-400"
               />
             </button>
           </div>
         </div>
-
-        {/* Form Errors */}
-
-
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">
             {t('auth.login')}
