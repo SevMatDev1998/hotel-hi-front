@@ -19,12 +19,22 @@ const HotelSericesService = ApiInstance.injectEndpoints({
         url: `${ApiEnum.SYSTEM_SERVICES}/types/${typeId}`,
       })
     }),
+
+    getAdditionalServices: build.query<SystemService, void>({
+      query: () => ({
+        url: `${ApiEnum.SYSTEM_SERVICES}/additional-services`,
+      }),
+    }),
+
     getHotelServices: build.query<SystemService[], { hotelId: number }>({
       query: ({ hotelId }) => ({
         url: `${ApiEnum.HOTEL_SERVICES}/hotels/${hotelId}`,
       }),
-      providesTags:[ApiEnum.HOTEL_SERVICES]
+      providesTags: [ApiEnum.HOTEL_SERVICES]
     }),
+
+
+
 
     addHotelService: build.mutation<void, { hotelId: string, hotelServiceId: string }>({
       query: ({ hotelId, hotelServiceId }) => ({
@@ -32,7 +42,7 @@ const HotelSericesService = ApiInstance.injectEndpoints({
         method: "POST",
         params: { hotelId, hotelServiceId }
       }),
-      invalidatesTags:[ApiEnum.HOTEL_SERVICES]
+      invalidatesTags: [ApiEnum.HOTEL_SERVICES]
     }),
 
     deleteHotelService: build.mutation<void, { hotelServiceId: string }>({
@@ -40,7 +50,7 @@ const HotelSericesService = ApiInstance.injectEndpoints({
         url: `${ApiEnum.HOTEL_SERVICES}/hotels/${hotelServiceId}`,
         method: "DELETE",
       }),
-      invalidatesTags:[ApiEnum.HOTEL_SERVICES]
+      invalidatesTags: [ApiEnum.HOTEL_SERVICES]
 
     }),
   }),
@@ -51,6 +61,7 @@ export const {
   useGetSystemServiceGroupsQuery,
   useGetSystemServiceTypesByGroupIdQuery,
   useGetSystemServicesByTypeIdQuery,
+  useGetAdditionalServicesQuery,
   useGetHotelServicesQuery,
   useAddHotelServiceMutation,
   useDeleteHotelServiceMutation

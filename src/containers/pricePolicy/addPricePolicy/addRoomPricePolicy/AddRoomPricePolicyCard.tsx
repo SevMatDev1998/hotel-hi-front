@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../types';
-import AddRoomPricePolicyForm from './addRoomPricePolicyForm/AddRoomPricePolicyForm';
+import AddRoomPricePolicyForm from './addRoomPricePolicyForm/AddRoomPricePolicyFormForm';
 
 interface IAddRoomPricePolicyCardProps {
   room: HotelRoom
