@@ -116,9 +116,45 @@ const AvailabilityGroupSchema = yup.object({
 });
 
 /** Корневая схема: ровно 2 группы (վճարովի / անվճար) */
-export const CreateHotelServiceAvailabilitySchema = yup.object({
-  availabilities: yup.array().of(AvailabilityGroupSchema).length(2).required(),
-});
+export const CreateHotelServiceAvailabilitySchema = yup
+  .object({
+    availabilities: yup.array().of(AvailabilityGroupSchema).length(2).required(),
+  })
+  .test("no-overlap-between-groups", "Ժամանակահատվածները չեն կարող հատվել", function (data) {
+    if (!data?.availabilities) return true;
+
+    // Собираем все периоды из всех активных групп
+    const allPeriods: Array<{ start: number; end: number; groupIndex: number; periodIndex: number }> = [];
+
+    data.availabilities.forEach((group, groupIndex) => {
+      if (!group?.isActive || !Array.isArray(group.periods)) return;
+
+      group.periods.forEach((period, periodIndex) => {
+        const start = period?.startMonth ? new Date(period.startMonth).getTime() : NaN;
+        const end = period?.endMonth ? new Date(period.endMonth).getTime() : NaN;
+
+        if (!Number.isNaN(start) && !Number.isNaN(end)) {
+          allPeriods.push({ start, end, groupIndex, periodIndex });
+        }
+      });
+    });
+
+    // Сортируем по дате начала
+    allPeriods.sort((a, b) => a.start - b.start);
+
+    // Проверяем пересечения между всеми периодами
+    for (let i = 1; i < allPeriods.length; i++) {
+      if (allPeriods[i].start <= allPeriods[i - 1].end) {
+        // Пересечение найдено
+        return this.createError({
+          path: `availabilities.${allPeriods[i].groupIndex}.periods.${allPeriods[i].periodIndex}.startMonth`,
+          message: "Ժամանակահատվածները չեն կարող հատվել",
+        });
+      }
+    }
+
+    return true;
+  });
 
 export type CreateHotelServiceAvailabilityValues = yup.InferType<
   typeof CreateHotelServiceAvailabilitySchema

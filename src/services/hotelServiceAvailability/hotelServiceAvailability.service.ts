@@ -14,6 +14,7 @@ const hotelServiceAvailability = ApiInstance.injectEndpoints({
       }),
     }),
 
+
     // 🆕 Add new service (mutation)
     addHotelServiceAvailability: build.mutation<
       void, // response type (you can replace with your backend response DTO)
@@ -24,6 +25,8 @@ const hotelServiceAvailability = ApiInstance.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: [ApiEnum.HOTEL_SERVICES]
+
     }),
   }),
 });

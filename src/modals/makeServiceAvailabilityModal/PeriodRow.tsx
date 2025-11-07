@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
-import RegisterInput from "../../components/shared/RegisterInput";
 import { HotelServiceHourlyAvailabilityType } from "../../types";
+import clsx from "clsx";
 
 interface Props {
   methods: UseFormReturn<any>;
@@ -18,73 +18,114 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
   const type = watch(`availabilities.${groupIndex}.periods.${periodIndex}.hourlyAvailabilityTypeId`);
   const isHours = type === HotelServiceHourlyAvailabilityType.Hours;
 
-  const e = errors?.availabilities?.[groupIndex]?.periods?.[periodIndex];
+  const e = (errors?.availabilities as any)?.[groupIndex]?.periods?.[periodIndex];
   console.log(errors);
   
+
   return (
-    <div className="flex flex-wrap items-center gap-3 w-full">
-      <div className="flex border border-gray-300 rounded-md">
-        <RegisterInput
-          type="date"
-          register={register}
-          name={`availabilities.${groupIndex}.periods.${periodIndex}.startMonth`}
-          disabled={!isActive}
-          errors={e?.startMonth}
-          className="border-none m-0"
-        />
-        <RegisterInput
-          type="date"
-          register={register}
-          name={`availabilities.${groupIndex}.periods.${periodIndex}.endMonth`}
-          disabled={!isActive}
-          errors={e?.endMonth}
-          className="border-none m-0"
-        />
-      </div>
+    <div className="flex flex-col gap-2 w-full">
+      <div className="flex flex-wrap items-center gap-3 w-full">
+        <div className="flex flex-col">
+          <div className="flex border border-gray-300 rounded-md">
+            <input
+              type="date"
+              {...register(`availabilities.${groupIndex}.periods.${periodIndex}.startMonth`)}
+              disabled={!isActive}
+              className={clsx("border-none m-0 px-2 py-1", e?.startMonth && "border-red-500")}
+            />
+            <input
+              type="date"
+              {...register(`availabilities.${groupIndex}.periods.${periodIndex}.endMonth`)}
+              disabled={!isActive}
+              className={clsx("border-none m-0 px-2 py-1", e?.endMonth && "border-red-500")}
+            />
+          </div>
+          {(e?.startMonth || e?.endMonth) && (
+            <span className="text-red-500 text-sm mt-1 font-medium">
+              ⚠️ {e?.startMonth?.message || e?.endMonth?.message}
+            </span>
+          )}
+        </div>
 
-      <div className="flex items-center gap-4">
-        <label className="flex items-center gap-1">
-          <input
-            type="radio"
-            value={HotelServiceHourlyAvailabilityType.AllDay}
-            {...register(`availabilities.${groupIndex}.periods.${periodIndex}.hourlyAvailabilityTypeId`)}
-            disabled={!isActive}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-1">
+              <input
+                type="radio"
+                value={HotelServiceHourlyAvailabilityType.AllDay}
+                {...register(`availabilities.${groupIndex}.periods.${periodIndex}.hourlyAvailabilityTypeId`)}
+                disabled={!isActive}
+              />
+              <span>24 ժամ</span>
+            </label>
+
+            <label className="flex items-center gap-1">
+              <input
+                type="radio"
+                value={HotelServiceHourlyAvailabilityType.Hours}
+                {...register(`availabilities.${groupIndex}.periods.${periodIndex}.hourlyAvailabilityTypeId`)}
+                disabled={!isActive}
+              />
+              <span>Սահմանել ժամը</span>
+            </label>
+          </div>
+          {e?.hourlyAvailabilityTypeId && (
+            <span className="text-red-500 text-sm mt-1">
+              {e.hourlyAvailabilityTypeId.message}
+            </span>
+          )}
+        </div>
+
+        <div className="flex flex-col">
+          <Controller
+            name={`availabilities.${groupIndex}.periods.${periodIndex}.startHour`}
+            control={control}
+            render={({ field }) => (
+              <input 
+                type="time" 
+                step="60" 
+                {...field} 
+                value={field.value || ''}
+                disabled={!isActive || !isHours}
+                className={e?.startHour ? 'border-red-500' : ''}
+              />
+            )}
           />
-          <span>24 ժամ</span>
-        </label>
+          {e?.startHour && (
+            <span className="text-red-500 text-sm mt-1">
+              {e.startHour.message}
+            </span>
+          )}
+        </div>
 
-        <label className="flex items-center gap-1">
-          <input
-            type="radio"
-            value={HotelServiceHourlyAvailabilityType.Hours}
-            {...register(`availabilities.${groupIndex}.periods.${periodIndex}.hourlyAvailabilityTypeId`)}
-            disabled={!isActive}
+        <div className="flex flex-col">
+          <Controller
+            name={`availabilities.${groupIndex}.periods.${periodIndex}.endHour`}
+            control={control}
+            render={({ field }) => (
+              <input 
+                type="time" 
+                step="60" 
+                {...field}
+                value={field.value || ''}
+                disabled={!isActive || !isHours}
+                className={e?.endHour ? 'border-red-500' : ''}
+              />
+            )}
           />
-          <span>Սահմանել ժամը</span>
-        </label>
+          {e?.endHour && (
+            <span className="text-red-500 text-sm mt-1">
+              {e.endHour.message}
+            </span>
+          )}
+        </div>
+
+        {canRemove && (
+          <button type="button" className="text-red-600 underline" onClick={onRemove}>
+            Ջնջել
+          </button>
+        )}
       </div>
-
-      <Controller
-        name={`availabilities.${groupIndex}.periods.${periodIndex}.startHour`}
-        control={control}
-        render={({ field }) => (
-          <input type="time" step="60" {...field} disabled={!isActive || !isHours} />
-        )}
-      />
-
-      <Controller
-        name={`availabilities.${groupIndex}.periods.${periodIndex}.endHour`}
-        control={control}
-        render={({ field }) => (
-          <input type="time" step="60" {...field} disabled={!isActive || !isHours} />
-        )}
-      />
-
-      {canRemove && (
-        <button type="button" className="text-red-600 underline" onClick={onRemove}>
-          Ջնջել
-        </button>
-      )}
     </div>
   );
 };
