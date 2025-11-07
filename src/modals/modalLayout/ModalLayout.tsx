@@ -41,7 +41,7 @@ const ModalLayout: ModalFC<IModalLayoutProps> = ({  children,title='', onCancel,
           {title}
           </div>
           <div className={styles.ModalLayoutHeaderClose} onClick={handleCancel}>
-            <img className="w-[30px] h-[30px]" src='/icons/modal-close-icon.png'/>
+            <img  src='/images/icons/modal-close-icon.svg'/>
           </div>
         </div>
         {children}

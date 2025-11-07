@@ -25,11 +25,17 @@ export const Sidebar = () => {
   const checkMobile = (isOpen: boolean) => {
     return dispatch(toggleSidebar(isOpen));
   };
-
   useEffect(() => {
-    window.addEventListener('resize', () => checkMobile(window.innerWidth > 768));
-    return () => window.removeEventListener('resize', () => checkMobile(window.innerWidth > 768));
-  }, []);
+    dispatch(toggleSidebar(window.innerWidth > 768));
+
+    const handleResize = () => {
+      dispatch(toggleSidebar(window.innerWidth > 768));
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [dispatch]);
 
   return (
     <div

@@ -16,28 +16,17 @@ const SystemServices = ({ typeId }: Props) => {
     { typeId },
     { refetchOnMountOrArgChange: true }
   );
+
   const { data: hotelServiceData } = useGetHotelServicesQuery({
     hotelId: user?.hotelId,
   });
 
   if (!services || !hotelServiceData) return null;
 
-  
-  // Extract all hotel service IDs for quick lookup
-  const hotelServiceIds = hotelServiceData.map((hs) => hs.serviceId);
-
-
-  const availableServices = services.filter(
-    (s) => !hotelServiceIds.includes(s.id)
-  );
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Already added services */}
-
-      {/* Services not yet added */}
-      <AvailableServices availableServices={availableServices} hotelId={ user?.hotelId} />
-      
+      <AvailableServices availableServices={services} hotelId={ user?.hotelId} />
       <ExistingSystemServices existingSystemServices={hotelServiceData} />
     </div>
   );

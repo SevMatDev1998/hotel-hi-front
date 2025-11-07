@@ -1,33 +1,66 @@
-import { Button } from "../../components/shared/Button";
 import { useTranslation } from "../../hooks/useTranslation";
-import InfoBlock from "../../components/shared/InfoBlock";
 import { useGetHotelServiceAvailabilityQuery } from "../../services/hotelServiceAvailability";
 import MakeServiceAvailabilityModalForm from "./MakeServiceAvailabilityModalForm";
 
 interface IMakeServiceAvailabilityModalProps {
   hotelServiceId: string;
   onSubmit: (payload: any) => void;
-  onCancel?: () => void;
+  onCancel: () => void;
 }
 
-const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> = ({ hotelServiceId, onSubmit, onCancel }) => {
- 
-    console.log(hotelServiceId);
-    const {data:hotelServiceAvailabilities} = useGetHotelServiceAvailabilityQuery({hotelServiceId})
+const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> = ({
+  hotelServiceId,
+  onCancel,
+}) => {
 
-    
+  const { data, isLoading } = useGetHotelServiceAvailabilityQuery({ hotelServiceId });
   const { t } = useTranslation();
 
+  if (isLoading) return null; // или loader, если захочешь
+
+  const availabilityData = data ?? {
+    availabilities: [
+      {
+        isPaid: true,
+        isActive: false,
+        periods: [
+          {
+            startMonth: "",
+            endMonth: "",
+            hourlyAvailabilityTypeId: "AllDay",
+            startHour: undefined,
+            endHour: undefined,
+          },
+        ],
+      },
+      {
+        isPaid: false,
+        isActive: false,
+        periods: [
+          {
+            startMonth: "",
+            endMonth: "",
+            hourlyAvailabilityTypeId: "Hours",
+            startHour: "",
+            endHour: "",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
-    <div className="p-5 flex flex-col space-y-5 ">
-      <h3 >
-        {t("shamanel hasaneliutyun")}
-      </h3>
+    <div className="p-5 flex flex-col space-y-5 w-[900px]">
+      <h3>{t("hotel_service.set_availability")}</h3>
 
-      <MakeServiceAvailabilityModalForm   hotelServiceAvailabilities={hotelServiceAvailabilities} hotelServiceId={hotelServiceId}/>
-
+      <MakeServiceAvailabilityModalForm
+        hotelServiceAvailabilities={availabilityData}
+        hotelServiceId={hotelServiceId}
+        onCancel={onCancel}
+      />
     </div>
   );
 };
 
 export default MakeServiceAvailabilityModal;
+

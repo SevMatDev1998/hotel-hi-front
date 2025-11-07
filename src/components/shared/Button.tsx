@@ -4,7 +4,7 @@ import { cn } from '../../utils/cn';
 // Base button props interface
 interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: 'base' | 'outline' | 'checkButton';
+  variant?: 'base' | 'outline' | 'checkButton' | 'textUnderline';
   isLoading?: boolean;
   disabled?: boolean;
   checked?: boolean; // new
@@ -14,7 +14,9 @@ interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 const variantClasses = {
   base: 'p-[12px] bg-dusty-teal rounded-[8px] min-w-[164px] flex items-center justify-center text-xs text-white ',
   outline: 'p-[10px] border border-dusty-teal rounded-[8px] min-w-[164px] w-full flex items-center text-dusty-teal ',
-  checkButton: 'w-[90px] h-[26px] items-center justify-center rounded-[5px] flex text-white border border-charcoal-gray text-charcoal-gray'
+  checkButton: 'w-[90px] h-[26px] items-center justify-center rounded-[5px] flex text-white border border-charcoal-gray text-charcoal-gray',
+  textUnderline: 'underline bg-transparent border-none p-0 text-xs cursor-pointer' 
+
 };
 export const Button: React.FC<BaseButtonProps> = ({
   children,
@@ -22,18 +24,20 @@ export const Button: React.FC<BaseButtonProps> = ({
   isLoading = false,
   disabled = false,
   checked = false,
+  color,
   className,
   ...props
 }) => {
   const classes = cn(
     variantClasses[variant],
-    variant === 'checkButton' && (checked && 'bg-dusty-teal border-none text-white' ),
+    variant === 'checkButton' && (checked && 'bg-dusty-teal border-none text-white'),
     className
   );
 
   return (
     <button
       className={classes}
+      style={variant === 'textUnderline' && color ? { color } : undefined}
       disabled={disabled || isLoading}
       {...props}
     >
@@ -64,3 +68,4 @@ export const Button: React.FC<BaseButtonProps> = ({
     </button>
   );
 };
+

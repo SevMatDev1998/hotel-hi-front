@@ -32,7 +32,6 @@ export const RegisterSelect: React.FC<SelectProps> = ({
 }) => {
 
   const { t } = useTranslation();
-  console.log(535353,errors);
   
   return (
     <div>

@@ -17,7 +17,7 @@ const hotelServiceAvailability = ApiInstance.injectEndpoints({
     // 🆕 Add new service (mutation)
     addHotelServiceAvailability: build.mutation<
       void, // response type (you can replace with your backend response DTO)
-      { hotelServiceId: string; data: CreateAvailabilityDto[] } // request payload
+      { hotelServiceId: string; data: { availabilities: CreateAvailabilityDto[] } }
     >({
       query: ({ hotelServiceId, data }) => ({
         url: `${ApiEnum.HOTEL_SERVICE_AVAILABILITY}/${hotelServiceId}`,

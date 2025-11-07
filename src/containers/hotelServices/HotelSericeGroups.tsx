@@ -11,15 +11,15 @@ const HotelSericeGroups = ({ serviceGroups }: HotelSericeGroupsProps) => {
     <Accordion type="single" collapsible className="w-full">
       {serviceGroups?.map((group) => (
         <div key={group.id} className="mb-4">
-        <BlockContainer shadow={false}>
-          <AccordionItem key={group.id} value={`group-${group.id}`}>
-            <AccordionTrigger>{group.name}</AccordionTrigger>
-            <AccordionContent>
-              <SystemServiceTypes groupId={group.id} />
-            </AccordionContent>
-          </AccordionItem>
-        </BlockContainer>
-</div>
+          <BlockContainer shadow={false}>
+            <AccordionItem key={group.id} value={`group-${group.id}`} className='border-none'>
+              <AccordionTrigger>{group.name}</AccordionTrigger>
+              <AccordionContent>
+                <SystemServiceTypes groupId={group.id} />
+              </AccordionContent>
+            </AccordionItem>
+          </BlockContainer>
+        </div>
       ))}
     </Accordion>
   );

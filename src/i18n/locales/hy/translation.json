@@ -162,6 +162,20 @@
     "Crib": "Մանկական մահճակալ",
     "Bassinet": "Նորածնի օրորոց"
   },
+  "hotel_service": {
+    "services": "Ծառայություններ",
+    "approve_services": "Հաստատել ծառայությունները",
+    "hotel_provided_services": "Հյուրանոցի կողմից տրամադրվող ծառայություններ",
+    "set_availability": "Սահմանել հասանելիություն",
+    "see_availability": "Տեսնել  հասանելիությունը",
+
+    "paid_service": "Վճարովի",
+    "free_service": "Անվճար",
+    "accessibility_period": "Հասանելիության ժամանակահատված"
+
+  },
+
+
   "price_policy": {
     "hotel_pricing_policy": "Հյուրանոցի գնային քաղաքականություն",
     "add_pricing_policy": "Ավելացնել գնային քաղաքականություն",
@@ -199,8 +213,6 @@
     "Waiting": "Սպասում",
     "Approved": "Հաստատված"
   },
-
-
   "registration_country_options": {
     "Armenia": "Հայաստան",
     "Russia": "Ռուսաստան",

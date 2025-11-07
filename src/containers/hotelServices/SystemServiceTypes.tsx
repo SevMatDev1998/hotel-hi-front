@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@radix-ui/react-accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/shared/Accordion';
 import { useGetSystemServiceTypesByGroupIdQuery } from "../../services/hotelService";
 import SystemServices from "./SystemServices";
 
@@ -15,7 +15,7 @@ const SystemServiceTypes = ({ groupId }: Props) => {
   return (
     <Accordion type="single" collapsible className="pl-4 ">
       {serviceTypes?.map((type) => (
-        <AccordionItem key={type.id} value={`type-${type.id}`}>
+        <AccordionItem key={type.id} value={`type-${type.id}`} className='border-none'>
           <AccordionTrigger>{type.name}</AccordionTrigger>
           <AccordionContent>
             <SystemServices typeId={type.id} />

@@ -7,9 +7,9 @@
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1000;
 }
-.ModalLayout {
-    width: 100%;
-    max-width: 540px;
+.ModalLayout { 
+    /* width: 100%;
+    max-width: 540px; */
     background: #FFF;
     position: fixed;
     top: 100%;
@@ -48,8 +48,8 @@
 
 .ModalLayoutHeaderClose {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 20px;
+    top: 20px;
     cursor: pointer;
     z-index: 9999;
 

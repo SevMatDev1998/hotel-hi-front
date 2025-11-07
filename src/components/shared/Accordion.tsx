@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "../../utils/cn";
 
 export const Accordion = AccordionPrimitive.Root;
@@ -23,24 +23,29 @@ export const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
+  <AccordionPrimitive.Header>
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-between py-2 text-left text-sm font-medium transition-all",
+        "group flex w-full items-center justify-between py-2 text-left text-sm font-medium transition-all",
         "hover:text-primary focus:outline-none",
         className
       )}
       {...props}
     >
-      {children}
-      <ChevronDown
-        className="h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-180"
-        aria-hidden="true"
-      />
+      <span className="flex gap-2">
+        {/* Icons MUST be inside the group element */}
+        <span className="ml-2 flex items-center">
+          <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+        </span>
+        {children}
+      </span>
+
+
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
+
 AccordionTrigger.displayName = "AccordionTrigger";
 
 export const AccordionContent = React.forwardRef<
