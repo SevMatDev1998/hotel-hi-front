@@ -1,27 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HotelRoom } from '../../../../../types';
+import { CreateHotelRoomPriceDto } from '../../../../../types/pricePolicyDto';
 import CardContainer from '../../../../public/CardContainer';
 
 interface IAddRoomPricePolicyRoomProps {
   room: HotelRoom;
-  onChange: (data: { roomId: number; price: number }) => void; // ✅ добавили
+  hotelAvailabilityId: number;
+  onChange: (data: Omit<CreateHotelRoomPriceDto, 'hotelAvailabilityId'>) => void;
+  initialData?: { hotelRoomId: number; price: number };
 }
 
-const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({ room, onChange }) => {
-  const [price, setPrice] = useState<string>("");
+const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({ 
+  room, 
+  onChange,
+  initialData
+}) => {
+  const [price, setPrice] = useState<string>(initialData?.price?.toString() || "");
 
-  const handlePriceChange = (value: string) => {
+  // ✅ Загрузить initialData при изменении
+  useEffect(() => {
+    if (initialData?.price) {
+      setPrice(initialData.price.toString());
+    }
+  }, [initialData]);
+
+  const handleChange = (value: string) => {
     setPrice(value);
-    onChange({ roomId: room.id, price: Number(value) || 0 }); // ✅ отправляем вверх
+    
+    const updatedData = {
+      hotelRoomId: Number(room.id),
+      price: Number(value) || 0,
+    };
+
+    onChange(updatedData);
   };
 
   return (
     <CardContainer className=''>
+      <h3 className="text-lg font-semibold mb-3">Ціна на номер</h3>
+
       <table className="min-w-full border text-center">
         <thead>
           <tr>
-            <th className="border px-4 py-2">senyakum hyureri qanaky</th>
-            <th className="border px-4 py-2">arjeqy</th>
+            <th className="border px-4 py-2">Кількість основних гостей</th>
+            <th className="border px-4 py-2">Ціна</th>
           </tr>
         </thead>
         <tbody>
@@ -30,9 +52,10 @@ const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({ room, 
             <td className="border px-4 py-2">
               <input
                 type="number"
-                className="w-20 text-center border rounded"
+                className="w-full border rounded px-3 py-2"
                 value={price}
-                onChange={(e) => handlePriceChange(e.target.value)}
+                placeholder="Введіть ціну"
+                onChange={(e) => handleChange(e.target.value)}
               />
             </td>
           </tr>

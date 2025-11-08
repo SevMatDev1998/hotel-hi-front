@@ -1,32 +1,75 @@
 import React, { useState, useEffect } from "react";
 import CardContainer from "../../../../public/CardContainer";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
+import { CreateHotelAdditionalServiceDto } from "../../../../../types/pricePolicyDto";
 
 interface IAddRoomPricePolicyArrivalDepartureFormProps {
-  onChange: (data: { serviceId: number; time: string; percentage: number }[]) => void; // ✅ добавили
+  hotelAvailabilityId: number;
+  hotelRoomId?: number;
+  onChange: (data: Omit<CreateHotelAdditionalServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]) => void;
+  initialData?: any[];
 }
 
-const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArrivalDepartureFormProps> = ({ onChange }) => {
-  const { data: additionalServices } = useGetAdditionalServicesQuery();
+interface RowData {
+  id: number;
+  serviceId: number;
+  name: string;
+  time: string;
+  percentage: string;
+}
 
-  const arrivalService = additionalServices?.find(s => s.name === "Arrival");
-  const departureService = additionalServices?.find(s => s.name === "Departure");
+const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArrivalDepartureFormProps> = ({ 
+  onChange,
+  initialData
+}) => {
+  const { data: additionalServicesData } = useGetAdditionalServicesQuery();
 
-  const [rows, setRows] = useState<any[]>([]);
+  const additionalServices = Array.isArray(additionalServicesData) 
+    ? additionalServicesData 
+    : additionalServicesData ? [additionalServicesData] : [];
 
-  // ✅ каждый раз, когда rows меняется → отправляем наверх
+  const arrivalService = additionalServices.find(s => s.name === "Arrival");
+  const departureService = additionalServices.find(s => s.name === "Departure");
+
+  const [rows, setRows] = useState<RowData[]>([]);
+
   useEffect(() => {
-    const formatted = rows.map(r => ({
-      serviceId: r.serviceId,
-      time: r.time,
-      percentage: Number(r.percentage) || 0,
-    }));
+    if (initialData && initialData.length > 0 && (arrivalService || departureService)) {
+      const loadedRows: RowData[] = initialData.map(item => {
+        const timeMatch = item.startTime ? new Date(item.startTime).toISOString().match(/T(\d{2}:\d{2})/) : null;
+        const time = timeMatch ? timeMatch[1] : '';
+
+        return {
+          id: Date.now() + Math.random(),
+          serviceId: item.systemServiceId,
+          name: item.serviceName,
+          time,
+          percentage: item.percentage?.toString() || ''
+        };
+      });
+      setRows(loadedRows);
+    }
+  }, [initialData, arrivalService, departureService]);
+
+  useEffect(() => {
+    const formatted: Omit<CreateHotelAdditionalServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[] = rows.map(r => {
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+      const startTime = r.time ? `${today}T${r.time}:00.000Z` : '';
+      
+      return {
+        systemServiceId: r.serviceId,
+        isTimeLimited: true,
+        startTime,
+        percentage: Number(r.percentage) || 0,
+        serviceName: r.name,
+      };
+    });
 
     onChange(formatted);
   }, [rows, onChange]);
 
   const addServiceRow = (service: any) => {
-    if (!service) return; // защита если сервисы не загружены
+    if (!service) return; 
     setRows(prev => [
       ...prev,
       {

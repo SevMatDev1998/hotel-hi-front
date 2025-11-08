@@ -66,7 +66,6 @@ const MakeServiceAvailabilityModalForm: FC<MakeServiceAvailabilityModalFormProps
   const { handleSubmit } = methods;
 
   const onSubmit = ({ availabilities }: FormValues) => {
-   console.log("result",availabilities);
    
     addHotelServiceAvailability({
       hotelServiceId,

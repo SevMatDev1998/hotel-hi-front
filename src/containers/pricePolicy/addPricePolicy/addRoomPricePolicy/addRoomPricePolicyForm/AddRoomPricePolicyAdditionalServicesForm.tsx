@@ -1,26 +1,30 @@
 import React, { useEffect, useMemo, useState } from "react";
 import CardContainer from "../../../../public/CardContainer";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
-
-interface IAdditionalServiceFormOutput {
-  serviceId: number;
-  price: number | null;
-  isNotFixed: boolean;
-}
+import { CreateOtherServiceDto } from "../../../../../types/pricePolicyDto";
 
 interface IAddRoomPricePolicyAdditionalServicesFormProps {
-  onChange: (data: IAdditionalServiceFormOutput[]) => void;
+  onChange: (data: Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]) => void;
+  initialData?: any[];
 }
 
 const TARGET_SERVICE_NAMES = ["Food delivery", "Provision of a crib"];
 
-const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAdditionalServicesFormProps> = ({ onChange }) => {
-  const { data: additionalServices } = useGetAdditionalServicesQuery();
+const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAdditionalServicesFormProps> = ({ 
+  onChange,
+  initialData
+}) => {
+  const { data: additionalServicesData } = useGetAdditionalServicesQuery();
 
   // ✅ Filter only required services safely and memoized
   const services = useMemo(
-    () => additionalServices?.filter(s => TARGET_SERVICE_NAMES.includes(s.name)) ?? [],
-    [additionalServices]
+    () => {
+      const servicesArray = Array.isArray(additionalServicesData) 
+        ? additionalServicesData 
+        : additionalServicesData ? [additionalServicesData] : [];
+      return servicesArray.filter(s => TARGET_SERVICE_NAMES.includes(s.name));
+    },
+    [additionalServicesData]
   );
 
   // ✅ Create state indexed by serviceId (clean scalable structure)
@@ -41,14 +45,34 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
     });
   }, [services]);
 
-  // ✅ Emit formatted data upward
   useEffect(() => {
-    const formatted = services
+    if (initialData && initialData.length > 0 && services.length > 0) {
+      setValues(prev => {
+        const updated = { ...prev };
+        initialData.forEach(item => {
+          const serviceId = item.systemServiceId;
+          if (updated[serviceId]) {
+            updated[serviceId] = {
+              enabled: true,
+              price: item.price ? item.price.toString() : "",
+              isNotFixed: item.notConstantValue || false
+            };
+          }
+        });
+        return updated;
+      });
+    }
+  }, [initialData, services]);
+
+  useEffect(() => {
+    const formatted: Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[] = services
       .filter(s => values[s.id]?.enabled)
       .map(s => ({
-        serviceId: s.id,
+        systemServiceId: s.id,
         price: values[s.id].price ? Number(values[s.id].price) : null,
-        isNotFixed: values[s.id].isNotFixed,
+        notConstantValue: values[s.id].isNotFixed,
+        serviceName: s.name,
+        isTimeLimited: false,
       }));
 
     onChange(formatted);

@@ -1,20 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { HotelAgeAssignment, HotelFood } from '../../../../../types';
+import { CreateHotelFoodPriceDto } from '../../../../../types/pricePolicyDto';
 import CardContainer from '../../../../public/CardContainer';
 
 interface IAddRoomPricePolicyFoodProps {
   hotelFoods?: HotelFood[];
   hotelAvailabilityAgeAssessments?: HotelAgeAssignment[];
   hotelAvailabilityId: number;
-  onChange: (data: CreateHotelFoodPriceDto[]) => void; // ✅ добавили
-}
-
-interface CreateHotelFoodPriceDto {
-  hotelAvailabilityId: number;
-  hotelAgeAssignmentId?: number;
-  hotelFoodId: number;
-  price: number;
-  includedInPrice?: boolean;
+  onChange: (data: CreateHotelFoodPriceDto[]) => void;
+  initialData?: CreateHotelFoodPriceDto[];
 }
 
 const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
@@ -22,9 +16,30 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
   hotelAvailabilityAgeAssessments = [],
   hotelAvailabilityId,
   onChange,
+  initialData,
 }) => {
   const [selectedFoods, setSelectedFoods] = useState<number[]>([]);
   const [prices, setPrices] = useState<Record<string, number>>({});
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // ✅ Загрузить initialData при первом рендере
+  useEffect(() => {
+    if (initialData && initialData.length > 0 && !isInitialized) {
+      const includedFoodIds = new Set<number>();
+      const pricesMap: Record<string, number> = {};
+      initialData.forEach(item => {
+        if (item.includedInPrice && item.hotelAgeAssignmentId === null) {
+          includedFoodIds.add(item.hotelFoodId);
+        } else if (!item.includedInPrice && item.hotelAgeAssignmentId) {
+          const key = `${item.hotelFoodId}-${item.hotelAgeAssignmentId}`;
+          pricesMap[key] = typeof item.price === 'string' ? Number(item.price) : item.price;
+        }
+      });
+      setSelectedFoods(Array.from(includedFoodIds));
+      setPrices(pricesMap);
+      setIsInitialized(true);
+    }
+  }, [initialData, isInitialized]);
 
   // Фильтруем только те виды питания, которые НЕ включены в стоимость
   const visibleFoods = useMemo(
