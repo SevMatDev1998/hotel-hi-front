@@ -19,6 +19,7 @@ const SystemServices = ({ typeId }: Props) => {
 
   const { data: hotelServiceData } = useGetHotelServicesQuery({
     hotelId: user?.hotelId,
+    serviceTypeId: typeId
   });
 
   if (!services || !hotelServiceData) return null;
@@ -26,7 +27,7 @@ const SystemServices = ({ typeId }: Props) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <AvailableServices availableServices={services} hotelId={ user?.hotelId} />
+      <AvailableServices availableServices={services} hotelId={user?.hotelId} />
       <ExistingSystemServices existingSystemServices={hotelServiceData} />
     </div>
   );

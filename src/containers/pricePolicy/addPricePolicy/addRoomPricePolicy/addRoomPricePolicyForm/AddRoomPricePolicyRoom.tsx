@@ -17,7 +17,6 @@ const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({
 }) => {
   const [price, setPrice] = useState<string>(initialData?.price?.toString() || "");
 
-  // ✅ Загрузить initialData при изменении
   useEffect(() => {
     if (initialData?.price) {
       setPrice(initialData.price.toString());

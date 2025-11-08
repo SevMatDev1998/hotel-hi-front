@@ -26,9 +26,11 @@ const HotelSericesService = ApiInstance.injectEndpoints({
       }),
     }),
 
-    getHotelServices: build.query<SystemService[], { hotelId: number }>({
-      query: ({ hotelId }) => ({
+    getHotelServices: build.query<SystemService[], { hotelId: number, serviceTypeId: number }>({
+      query: ({ hotelId, serviceTypeId }) => ({
         url: `${ApiEnum.HOTEL_SERVICES}/hotels/${hotelId}`,
+        params: { serviceTypeId }
+
       }),
       providesTags: [ApiEnum.HOTEL_SERVICES]
     }),
