@@ -31,11 +31,12 @@ const hotelAvailability = ApiInstance.injectEndpoints({
     }),
 
 
-    updateHotelAvailabilitesWithDates: build.mutation<any, { hotelId: string, body: any[] }>({
+
+    updateHotelAvailabilitesWithDates: build.mutation<any, { hotelId: string, body: { availability: any, commissionDate: any } }>({
       query: ({ hotelId, body }) => ({
         url: `${ApiEnum.HOTEL_AVAILABILITY}/dates/${hotelId}`,
         method: "PUT",
-        body // ✅ исправлено
+        body
       }),
       invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
     }),
@@ -48,6 +49,24 @@ const hotelAvailability = ApiInstance.injectEndpoints({
       }),
       invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
     }),
+    
+    deleteHotelAvailabilityDate: build.mutation<{ success: boolean; message: string }, { calendarId: string }>({
+      query: ({ calendarId }) => ({
+        url: `${ApiEnum.HOTEL_AVAILABILITY}/date/${calendarId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
+    }),
+
+    deleteHotelAvailabilityDatesBatch: build.mutation<{ success: boolean; message: string; count: number }, { calendarIds: string[] }>({
+      query: ({ calendarIds }) => ({
+        url: `${ApiEnum.HOTEL_AVAILABILITY}/dates/batch`,
+        method: "DELETE",
+        body: { calendarIds },
+      }),
+      invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
+    }),
+    
     deleteHotelAvailabilityDateCommissions: build.mutation<any, { hotelAvailabilityId: string }>({
       query: ({ hotelAvailabilityId }) => ({
         url: `${ApiEnum.HOTEL_AVAILABILITY_DATE_COMMISSIONS}/${hotelAvailabilityId}`,
@@ -63,10 +82,18 @@ export const {
   useAddHotelAvailabilityMutation,
   useGetHotelAgeAssessmentByHotelAvailabilityIdQuery,
   useGetHotelAvailabilityWithDatesQuery,
+
+  //from modal to create table commision like new 
   useUpdateHotelAvailabilitesWithDatesMutation,
 
-  //from modal to update table commision
+  //from modal to update table commision like edit
   useUpdateHotelAvailabilityDateCommissionsMutation,
+  
+  // delete single date
+  useDeleteHotelAvailabilityDateMutation,
+  
+  // delete multiple dates (batch)
+  useDeleteHotelAvailabilityDatesBatchMutation,
   
   useDeleteHotelAvailabilityDateCommissionsMutation
 } = hotelAvailability;

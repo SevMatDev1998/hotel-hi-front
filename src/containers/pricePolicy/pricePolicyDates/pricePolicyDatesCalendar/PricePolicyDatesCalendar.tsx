@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Trash2 } from "lucide-react";
 
 const months = [
   "Հունվար", "Փետրվար", "Մարտ", "Ապրիլ", "Մայիս", "Հունիս",
@@ -25,6 +26,9 @@ interface PricePolicyDatesCalendarProps {
   initialSelectedDays?: Availability[];
   activeAvailability?: ActiveAvailability;
   onChange?: (updated: Availability[]) => void;
+  onDeleteDate?: (calendarId: string) => void;
+  onDeleteMonth?: (monthIndex: number) => void;
+  onDeleteWeekday?: (weekdayIndex: number) => void;
 }
 
 const PricePolicyDatesCalendar = ({
@@ -32,9 +36,15 @@ const PricePolicyDatesCalendar = ({
   initialSelectedDays = [],
   activeAvailability,
   onChange,
+  onDeleteDate,
+  onDeleteMonth,
+  onDeleteWeekday,
 }: PricePolicyDatesCalendarProps) => {
   const [availabilities, setAvailabilities] = useState<Availability[]>([]);
   const [colorMap, setColorMap] = useState<Record<string, string>>({});
+  const [hoveredCell, setHoveredCell] = useState<string | null>(null);
+  const [hoveredMonth, setHoveredMonth] = useState<number | null>(null);
+  const [hoveredWeekday, setHoveredWeekday] = useState<number | null>(null);
 
   useEffect(() => {
     if (initialSelectedDays.length) {
@@ -47,8 +57,8 @@ const PricePolicyDatesCalendar = ({
     }
   }, [initialSelectedDays]);
 
-  const getDaysInMonth = (m: number) => new Date(year, m + 1, 0).getDate();
-  const getFirstDayIndex = (m: number) => new Date(year, m, 1).getDay();
+  const getDaysInMonth = useCallback((m: number) => new Date(year, m + 1, 0).getDate(), [year]);
+  const getFirstDayIndex = useCallback((m: number) => new Date(year, m, 1).getDay(), [year]);
   const maxDays = Math.max(
     ...months.map((_, i) => getDaysInMonth(i) + getFirstDayIndex(i))
   );
@@ -140,7 +150,7 @@ const PricePolicyDatesCalendar = ({
       }
       updateAvailabilities(cells);
     },
-    [year, updateAvailabilities]
+    [year, updateAvailabilities, getDaysInMonth]
   );
 
   const toggleWeekday = useCallback(
@@ -162,10 +172,36 @@ const PricePolicyDatesCalendar = ({
       });
       updateAvailabilities(cells);
     },
-    [year, updateAvailabilities]
+    [year, updateAvailabilities, getDaysInMonth]
   );
 
-  console.log(123);
+  // 🗑️ Обработчики удаления
+  const handleDeleteDate = useCallback(
+    (e: React.MouseEvent, calendarId: string) => {
+      e.stopPropagation();
+      onDeleteDate?.(calendarId);
+    },
+    [onDeleteDate]
+  );
+
+  const handleDeleteMonth = useCallback(
+    (e: React.MouseEvent, monthIndex: number) => {
+      e.stopPropagation();
+      onDeleteMonth?.(monthIndex);
+    },
+    [onDeleteMonth]
+  );
+
+  const handleDeleteWeekday = useCallback(
+    (e: React.MouseEvent, weekdayIndex: number) => {
+      e.stopPropagation();
+      onDeleteWeekday?.(weekdayIndex);
+    },
+    [onDeleteWeekday]
+  );
+
+  // Показываем trash icon только если НЕТ активного availability
+  const canDelete = !activeAvailability;
   
   return (
     <div className=" overflow-x-auto">
@@ -175,15 +211,36 @@ const PricePolicyDatesCalendar = ({
             <th className="bg-teal-700 text-white px-2 py-1 rounded-l-md w-24">
               {year}
             </th>
-            {Array.from({ length: maxDays }, (_, i) => (
-              <th
-                key={i}
-                onClick={() => toggleWeekday(i % 7)}
-                className="bg-gray-200 text-gray-800 font-medium px-2 py-1 border cursor-pointer hover:bg-gray-300 select-none"
-              >
-                {weekdays[i % 7]}
-              </th>
-            ))}
+            {Array.from({ length: maxDays }, (_, i) => {
+              const weekdayIndex = i % 7;
+              const hasSelectedDates = availabilities.some(a =>
+                a.hotelAvailabilityDateCommissions.some(d => {
+                  const date = new Date(d.date);
+                  return date.getDay() === weekdayIndex;
+                })
+              );
+              
+              return (
+                <th
+                  key={i}
+                  onClick={() => toggleWeekday(weekdayIndex)}
+                  onMouseEnter={() => setHoveredWeekday(weekdayIndex)}
+                  onMouseLeave={() => setHoveredWeekday(null)}
+                  className="bg-gray-200 text-gray-800 font-medium px-2 py-1 border cursor-pointer hover:bg-gray-300 select-none relative"
+                >
+                  <div className="flex items-center justify-center gap-1">
+                    {weekdays[weekdayIndex]}
+                    {canDelete && hasSelectedDates && hoveredWeekday === weekdayIndex && (
+                      <Trash2
+                        size={14}
+                        className="text-red-500 hover:text-red-700 cursor-pointer"
+                        onClick={(e) => handleDeleteWeekday(e, weekdayIndex)}
+                      />
+                    )}
+                  </div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
 
@@ -192,6 +249,14 @@ const PricePolicyDatesCalendar = ({
             const daysInMonth = getDaysInMonth(mIndex);
             const firstDay = getFirstDayIndex(mIndex);
             const cells: JSX.Element[] = [];
+
+            // Проверяем есть ли выбранные даты в этом месяце
+            const hasSelectedDatesInMonth = availabilities.some(a =>
+              a.hotelAvailabilityDateCommissions.some(d => {
+                const date = new Date(d.date);
+                return date.getMonth() === mIndex;
+              })
+            );
 
             for (let i = 0; i < firstDay; i++) {
               cells.push(<td key={`empty-${i}`} className="border p-1" />);
@@ -206,17 +271,27 @@ const PricePolicyDatesCalendar = ({
                 <td
                   key={calendarId}
                   onClick={() => toggleDay(mIndex, d)}
-                  className={`border text-center cursor-pointer p-1 min-w-[30px] rounded transition-all ${
+                  onMouseEnter={() => setHoveredCell(calendarId)}
+                  onMouseLeave={() => setHoveredCell(null)}
+                  className={`border text-center cursor-pointer p-1 min-w-[30px] rounded transition-all relative ${
                     isSelected
                       ? "text-white font-semibold"
                       : "bg-white hover:bg-blue-100 text-gray-800"
                   }`}
                   style={{
                     backgroundColor: color || "white",
-                    // borderColor: color || "#ccc",
                   }}
                 >
-                  {d}
+                  <div className="flex items-center justify-center gap-1">
+                    {d}
+                    {canDelete && isSelected && hoveredCell === calendarId && (
+                      <Trash2
+                        size={12}
+                        className="text-red-500 hover:text-red-700 cursor-pointer absolute right-0.5 top-0.5"
+                        onClick={(e) => handleDeleteDate(e, calendarId)}
+                      />
+                    )}
+                  </div>
                 </td>
               );
             }
@@ -225,9 +300,20 @@ const PricePolicyDatesCalendar = ({
               <tr key={month}>
                 <td
                   onClick={() => toggleMonth(mIndex)}
+                  onMouseEnter={() => setHoveredMonth(mIndex)}
+                  onMouseLeave={() => setHoveredMonth(null)}
                   className="bg-gray-100 text-gray-700 font-semibold px-2 py-1 text-left sticky left-0 cursor-pointer hover:bg-gray-200 select-none"
                 >
-                  {month}
+                  <div className="flex items-center justify-between gap-2">
+                    <span>{month}</span>
+                    {canDelete && hasSelectedDatesInMonth && hoveredMonth === mIndex && (
+                      <Trash2
+                        size={14}
+                        className="text-red-500 hover:text-red-700 cursor-pointer"
+                        onClick={(e) => handleDeleteMonth(e, mIndex)}
+                      />
+                    )}
+                  </div>
                 </td>
                 {cells}
               </tr>
