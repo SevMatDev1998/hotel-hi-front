@@ -188,6 +188,16 @@
     "available_beds": "Տրամադրվող մահճակալներ",
     "attach_date_to_price_offer": "Գնային առաջարկին կցել ամսաթիվ"
   },
+  "price_policy_dates": {
+    "price_offer":"Գնային առաջարկ",
+    "period":"ժամանակահատված",
+    "commission": "Միջնորդավճար",
+    "room":"Սենյակ",
+    "food":"Սնունդ",
+    "additional":"Հավելյալ",
+    "other":"Այլ"
+  },
+
   "hotel_availability": {
     "price_offer_name": "Գնային առաջարկի անվանում",
     "arrival_and_departure_times": "Ժամանման և մեկնման ժամերը",

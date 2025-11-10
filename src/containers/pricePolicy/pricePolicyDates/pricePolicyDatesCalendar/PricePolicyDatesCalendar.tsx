@@ -169,10 +169,6 @@ const PricePolicyDatesCalendar = ({
   
   return (
     <div className=" overflow-x-auto">
-      <h2 className="text-lg font-semibold mb-3 text-gray-700">
-        Գնային քաղաքականության օրացույց {year}
-      </h2>
-
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr>
@@ -217,7 +213,7 @@ const PricePolicyDatesCalendar = ({
                   }`}
                   style={{
                     backgroundColor: color || "white",
-                    borderColor: color || "#ccc",
+                    // borderColor: color || "#ccc",
                   }}
                 >
                   {d}

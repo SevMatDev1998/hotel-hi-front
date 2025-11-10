@@ -10,9 +10,8 @@ interface ICommissionModalProps {
   commission: CommissionFormType;
   availabilityId: string;
   onCancel: () => void;
-  onSubmit: (data: CommissionFormType) => void
 }
-const EditCommissionModal: ModalFC<ICommissionModalProps> = ({ commission, availabilityId, onSubmit, onCancel }) => {
+const EditCommissionModal: ModalFC<ICommissionModalProps> = ({ commission, availabilityId,  onCancel }) => {
   const {
     register,
     handleSubmit,
@@ -26,7 +25,8 @@ const EditCommissionModal: ModalFC<ICommissionModalProps> = ({ commission, avail
 
   
   const handleFormSubmit = (data: CommissionFormType) => {
-    updateHotelAvailabilityDateCommissions({ hotelAvailabilityId: availabilityId, body: data });
+    updateHotelAvailabilityDateCommissions({ hotelAvailabilityId: availabilityId, body: data }).unwrap()
+    onCancel()
   }
 
 

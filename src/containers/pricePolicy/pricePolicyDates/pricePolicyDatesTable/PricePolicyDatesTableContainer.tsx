@@ -1,11 +1,13 @@
-import React, { FC } from "react";
-import { Trash2 } from "lucide-react"; // или любой другой icon set, например heroicons
+import { FC } from "react";
+import { Trash2 } from "lucide-react";
 import EditCommissionModal from "../../../../modals/EditCommisionModal";
 import useModal from "../../../../hooks/useModal";
 import DeleteCommissionModal from "../../../../modals/DeleteCommisionModal";
+import BlockContainer from "../../../public/BlockContainer";
+import { useTranslation } from "../../../../hooks/useTranslation";
 
 interface HotelAvailabilityDateCommission {
-  id: number;
+  id: string;
   date: string;
   roomFee: string;
   foodFee: string;
@@ -14,7 +16,7 @@ interface HotelAvailabilityDateCommission {
 }
 
 interface HotelAvailability {
-  id: number;
+  id: string;
   title: string;
   color: string;
   hotelAvailabilityDateCommissions: HotelAvailabilityDateCommission[];
@@ -22,14 +24,15 @@ interface HotelAvailability {
 
 interface IPricePolicyDatesTableContainerProps {
   hotelAvailabilityWithDates?: HotelAvailability[];
-  onDelete?: (id: number) => void;
+  // onDelete?: (id: number) => void;
 }
 
 const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> = ({
   hotelAvailabilityWithDates = [],
-  onDelete,
+  // onDelete,
 }) => {
   const open = useModal();
+  const { t } = useTranslation()
 
   if (!hotelAvailabilityWithDates.length) {
     return (
@@ -40,34 +43,25 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
   }
 
 
-  
-  const handleModalSubmit = async (data: any) => {  
-    console.log("Commission Data:", data);
-  };
-
-  const handleEditSubmit = async (commission: any, availabilityId: number) => {
-    open(EditCommissionModal, { title: "", commission, availabilityId, onSubmit: (data) => handleModalSubmit(data) });
+  const handleEditSubmit = async (commission: any, availabilityId: string) => {
+    open(EditCommissionModal, { commission, availabilityId });
   };
 
 
   const handleDeleteSubmit = async (availabilityId: string) => {
-    open(DeleteCommissionModal, { title: "", availabilityId});
+    open(DeleteCommissionModal, { availabilityId });
 
   };
 
   console.log(hotelAvailabilityWithDates);
-  
-  return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-      {/* Заголовки */}
-      <div className="grid grid-cols-[1fr_2fr_3fr_50px] bg-gray-50 font-semibold text-gray-700 text-sm px-4 py-3">
-        <div>📅 День</div>
-        <div>🏨 Hotel Availability</div>
-        <div>💰 Комиссии</div>
-        <div className="text-center">🗑️</div>
-      </div>
 
-      {/* Строки */}
+  return (
+    <BlockContainer shadow={false} >
+      <div className="grid grid-cols-[1fr_2fr_3fr_50px] ">
+        <h3>{t("price_policy_dates.price_offer")}</h3>
+        <h3>{t("price_policy_dates.period")}</h3>
+        <h3>{t("price_policy_dates.commission")}</h3>
+      </div>
       <div className="divide-y divide-gray-100">
         {hotelAvailabilityWithDates.map((availability) => {
           const commission =
@@ -78,14 +72,14 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
               serviceFee: 0,
             };
 
-            if (!availability.hotelAvailabilityDateCommissions[0]) return
-            
+          if (!availability.hotelAvailabilityDateCommissions[0]) return
+
           return (
             <div
               key={availability.id}
-              className="grid grid-cols-[1fr_2fr_3fr_50px] items-center px-4 py-3 text-sm hover:bg-gray-50 transition"
+              className="grid grid-cols-[1fr_2fr_3fr_50px] items-center px-4 py-3"
             >
-              <div className="text-gray-500">
+              <div >
 
                 {availability.hotelAvailabilityDateCommissions.map((dateCommission) => (
                   <div key={dateCommission.id}>{dateCommission.date}</div>
@@ -93,7 +87,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
 
               </div>
 
-              <div className="flex items-center gap-2 text-gray-800">
+              <div className="flex items-center gap-2 ">
                 <span
                   className="inline-block w-3 h-3 rounded-full"
                   style={{ backgroundColor: availability.color }}
@@ -101,17 +95,19 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
                 {availability.title}
               </div>
 
-              <div className="text-gray-700" onClick={()=>{handleEditSubmit(commission,availability.id)}} >
-                Նомер: {commission.roomFee} ֏ | Եда: {commission.foodFee} ֏ | Լավել:{" "}
-                {commission.additionalFee} ֏ | Սերվիս: {commission.serviceFee} ֏
+              <div onClick={() => { handleEditSubmit(commission, availability.id) }} >
+                <p className="text-12">
+                  {t("price_policy_dates.room")} - {commission.roomFee}&nbsp;
+                  {t("price_policy_dates.food")} - {commission.foodFee}&nbsp;
+                  {t("price_policy_dates.additional")} - {commission.additionalFee}&nbsp;
+                  {t("price_policy_dates.other")} - {commission.serviceFee}
+                </p>
               </div>
 
-              {/* 4️⃣ Удаление */}
               <div className="flex justify-center">
                 <button
                   onClick={() => handleDeleteSubmit(availability.id)}
-                  className="text-gray-400 hover:text-red-500 transition"
-                  title="Удалить"
+                  className=" hover:text-red-500 transition"
                 >
                   <Trash2 size={18} />
                 </button>
@@ -120,7 +116,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
           );
         })}
       </div>
-    </div>
+    </BlockContainer>
   );
 };
 

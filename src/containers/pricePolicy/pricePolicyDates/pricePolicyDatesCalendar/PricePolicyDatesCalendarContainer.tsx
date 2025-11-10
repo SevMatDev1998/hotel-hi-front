@@ -37,7 +37,6 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
 
   
 const handleModalSubmit = async (commissionDate: any) => {
-  console.log("Commission Data:", commissionDate);
 
     const payload = {
       availabilities,  // список всех availability
@@ -49,7 +48,6 @@ const handleModalSubmit = async (commissionDate: any) => {
       hotelId,
       body: payload,
     });
-  // You can also refresh UI or close modal here
 };
 
 

@@ -26,8 +26,10 @@ const hotelAvailability = ApiInstance.injectEndpoints({
     getHotelAvailabilityWithDates: build.query<HotelAvailability[], { hotelId: string }>({
       query: ({ hotelId }) => ({
         url: `${ApiEnum.HOTEL_AVAILABILITY}/dates/${hotelId}`,
-      })
+      }),
+      providesTags: [ApiEnum.HOTEL_AVAILABILITY]
     }),
+
 
     updateHotelAvailabilitesWithDates: build.mutation<any, { hotelId: string, body: any[] }>({
       query: ({ hotelId, body }) => ({
@@ -35,6 +37,7 @@ const hotelAvailability = ApiInstance.injectEndpoints({
         method: "PUT",
         body // ✅ исправлено
       }),
+      invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
     }),
 
     updateHotelAvailabilityDateCommissions: build.mutation<any, { hotelAvailabilityId: string, body: any[] }>({
@@ -43,14 +46,15 @@ const hotelAvailability = ApiInstance.injectEndpoints({
         method: "PUT",
         body
       }),
+      invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
     }),
     deleteHotelAvailabilityDateCommissions: build.mutation<any, { hotelAvailabilityId: string }>({
       query: ({ hotelAvailabilityId }) => ({
         url: `${ApiEnum.HOTEL_AVAILABILITY_DATE_COMMISSIONS}/${hotelAvailabilityId}`,
         method: "DELETE",
       }),
+      invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
     }),
-
   }),
 })
 
@@ -60,6 +64,9 @@ export const {
   useGetHotelAgeAssessmentByHotelAvailabilityIdQuery,
   useGetHotelAvailabilityWithDatesQuery,
   useUpdateHotelAvailabilitesWithDatesMutation,
+
+  //from modal to update table commision
   useUpdateHotelAvailabilityDateCommissionsMutation,
+  
   useDeleteHotelAvailabilityDateCommissionsMutation
 } = hotelAvailability;

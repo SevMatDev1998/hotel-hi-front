@@ -17,12 +17,19 @@ const AddCommissionModal: ModalFC<ICommissionModalProps> = ({ onSubmit, onCancel
     resolver: yupResolver(commissionSchema),
   });
 
+  const handleOnSubmit = (data: CommissionFormType) => {
+    onSubmit(data)
+    onCancel()
+  }
+
+
+
   return (
     <BlockContainer>
       <div className="flex flex-col items-center p-4 space-y-5">
         <form
           className="w-full flex flex-col gap-5"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(handleOnSubmit)}
         >
           <RegisterInput
             register={register}
