@@ -1,14 +1,28 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { HotelServiceAvailability } from "../../types";
 
 const notificationsService = ApiInstance.injectEndpoints({
   endpoints: (build) => ({
 
-    getAllNotifications: build.query<void, { hotelId: string }>({
+    getAllNotifications: build.query<any, { hotelId: string }>({
       query: ({ hotelId }) => ({
         url: `${ApiEnum.NOTIFICATIONS}/${hotelId}`,
         method: "GET",
+      }),
+    }),
+
+    getPartnerCommissions: build.query<any, { hotelId: string; partnerId: string }>({
+      query: ({ hotelId, partnerId }) => ({
+        url: `${ApiEnum.NOTIFICATIONS}/${hotelId}/${partnerId}/commissions`,
+        method: "GET",
+      }),
+    }),
+
+    savePartnerCommissions: build.mutation<any, { partnerId: number; availabilityIds: number[] }>({
+      query: (body) => ({
+        url: `${ApiEnum.NOTIFICATIONS}/partner-commissions`,
+        method: "POST",
+        body,
       }),
     }),
   }),
@@ -16,4 +30,9 @@ const notificationsService = ApiInstance.injectEndpoints({
 
 export const {
   useGetAllNotificationsQuery,
+  useGetPartnerCommissionsQuery,
+  useLazyGetPartnerCommissionsQuery,
+  useSavePartnerCommissionsMutation,
 } = notificationsService;
+
+

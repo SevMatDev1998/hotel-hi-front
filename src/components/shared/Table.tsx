@@ -49,7 +49,7 @@ export function DataTable<T>({ showPagination = true, showSearch = true, data, t
   const totalPage = divideAndRoundUp(totalCount);
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white overflow-y-scroll">
       <div className="rounded-md">
         {showSearch && <div>
           <TableSearch onChange={onSearch} search={search} />
@@ -83,16 +83,25 @@ export function DataTable<T>({ showPagination = true, showSearch = true, data, t
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className="group hover:bg-gray-50 border-none transition-colors duration-200"
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-6 py-2 whitespace-nowrap">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
+              <React.Fragment key={row.id}>
+                <tr
+                  className="group hover:bg-gray-50 border-none transition-colors duration-200"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="px-6 py-2 whitespace-nowrap">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+                {/* Render expanded row if available */}
+                {(row.original as any).expandedContent && (
+                  <tr>
+                    <td colSpan={row.getVisibleCells().length} className="p-0">
+                      {(row.original as any).expandedContent}
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
             ))}
           </tbody>
         </table>

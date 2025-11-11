@@ -25,5 +25,31 @@
     "not_registered_system": "Не зарегистрирован в системе",
     "register": "Зарегистрироваться",
     "forgot_password": "Забыли пароль"
+  },
+
+  "notifications": {
+    "notifications": "Уведомления",
+    "tax_id": "ИНН",
+    "legal_person_name": "Юр. лицо",
+    "name": "Название",
+    "email": "Эл. адрес",
+    "commission": "Комиссия",
+    "notified": "уведомлен",
+    "general": "Общая",
+    "edit": "Изменить",
+    "notify": "Уведомить",
+    "availabilities": "Ценовая политика и общие комиссии",
+    "cancel": "Отменить",
+    "confirm": "Подтвердить",
+    "room": "Номер",
+    "food": "Еда",
+    "additional": "Дополнительно",
+    "service": "Услуга",
+    "price_offer": "Ценовое предложение",
+    "period": "Период"
+  },
+
+  "common": {
+    "loading": "Загрузка..."
   }
 }
