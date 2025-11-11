@@ -226,18 +226,20 @@ const PricePolicyDatesCalendar = ({
                   onClick={() => toggleWeekday(weekdayIndex)}
                   onMouseEnter={() => setHoveredWeekday(weekdayIndex)}
                   onMouseLeave={() => setHoveredWeekday(null)}
-                  className="bg-gray-200 text-gray-800 font-medium px-2 py-1 border cursor-pointer hover:bg-gray-300 select-none relative"
+                  className={`bg-gray-200 text-gray-800 font-medium px-2 py-1 border cursor-pointer select-none relative ${
+                    canDelete && hasSelectedDates && hoveredWeekday === weekdayIndex
+                      ? "bg-red-200 hover:bg-red-300"
+                      : "hover:bg-gray-300"
+                  }`}
                 >
-                  <div className="flex items-center justify-center gap-1">
-                    {weekdays[weekdayIndex]}
-                    {canDelete && hasSelectedDates && hoveredWeekday === weekdayIndex && (
-                      <Trash2
-                        size={14}
-                        className="text-red-500 hover:text-red-700 cursor-pointer"
-                        onClick={(e) => handleDeleteWeekday(e, weekdayIndex)}
-                      />
-                    )}
-                  </div>
+                  {weekdays[weekdayIndex]}
+                  {canDelete && hasSelectedDates && hoveredWeekday === weekdayIndex && (
+                    <Trash2
+                      size={14}
+                      className="text-red-600 cursor-pointer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                      onClick={(e) => handleDeleteWeekday(e, weekdayIndex)}
+                    />
+                  )}
                 </th>
               );
             })}
@@ -277,21 +279,19 @@ const PricePolicyDatesCalendar = ({
                     isSelected
                       ? "text-white font-semibold"
                       : "bg-white hover:bg-blue-100 text-gray-800"
-                  }`}
+                  } ${canDelete && isSelected && hoveredCell === calendarId ? "brightness-90" : ""}`}
                   style={{
                     backgroundColor: color || "white",
                   }}
                 >
-                  <div className="flex items-center justify-center gap-1">
-                    {d}
-                    {canDelete && isSelected && hoveredCell === calendarId && (
-                      <Trash2
-                        size={12}
-                        className="text-red-500 hover:text-red-700 cursor-pointer absolute right-0.5 top-0.5"
-                        onClick={(e) => handleDeleteDate(e, calendarId)}
-                      />
-                    )}
-                  </div>
+                  {d}
+                  {canDelete && isSelected && hoveredCell === calendarId && (
+                    <Trash2
+                      size={12}
+                      className="text-white cursor-pointer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 drop-shadow-lg"
+                      onClick={(e) => handleDeleteDate(e, calendarId)}
+                    />
+                  )}
                 </td>
               );
             }
@@ -302,14 +302,18 @@ const PricePolicyDatesCalendar = ({
                   onClick={() => toggleMonth(mIndex)}
                   onMouseEnter={() => setHoveredMonth(mIndex)}
                   onMouseLeave={() => setHoveredMonth(null)}
-                  className="bg-gray-100 text-gray-700 font-semibold px-2 py-1 text-left sticky left-0 cursor-pointer hover:bg-gray-200 select-none"
+                  className={`bg-gray-100 text-gray-700 font-semibold px-2 py-1 text-left sticky left-0 cursor-pointer select-none ${
+                    canDelete && hasSelectedDatesInMonth && hoveredMonth === mIndex
+                      ? "bg-red-200 hover:bg-red-300"
+                      : "hover:bg-gray-200"
+                  }`}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <span>{month}</span>
+                  <div className="relative">
+                    {month}
                     {canDelete && hasSelectedDatesInMonth && hoveredMonth === mIndex && (
                       <Trash2
                         size={14}
-                        className="text-red-500 hover:text-red-700 cursor-pointer"
+                        className="text-red-600 cursor-pointer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                         onClick={(e) => handleDeleteMonth(e, mIndex)}
                       />
                     )}
