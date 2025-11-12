@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import InfoBlock from "../../../components/shared/InfoBlock";
 import BlockContainer from "../../public/BlockContainer";
@@ -11,23 +11,60 @@ import { Button } from "../../../components/shared/Button";
 import { useAddHotelPartnerMutation } from "../../../services/partners";
 import { useNavigate } from "react-router-dom";
 import ApiEnum from "../../../enums/api.enum";
+import { useLazyDebounce } from "../../../hooks/useDebounse";
+import { Partner } from "../../../types";
 
 
 interface NewHotelPartnersContainerFormProps {
   countryOptions: any[];
   legalEntityOptions: any[];
   hotelId?: string;
+  onCheckPartnerByTin: (tin: string) => Promise<Partner | null>;
+  partner: Partner | null;
 }
 
-const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({ countryOptions, legalEntityOptions, hotelId }) => {
+const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({ 
+  countryOptions, 
+  legalEntityOptions, 
+  hotelId,
+  onCheckPartnerByTin ,
+  partner
+}) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<CreatePartnerFormData>({
+  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm<CreatePartnerFormData>({
     resolver: yupResolver(PartnerSchema(t)),
   });
 
   const [addHotelPartner] = useAddHotelPartnerMutation();
+  const setLazyValue = useLazyDebounce();
+
+  const tinValue = watch("tin");
+
+  useEffect(() => {
+    if (!tinValue) return;
+
+    setLazyValue(async () => {
+      await onCheckPartnerByTin(tinValue);
+    }, 1000);
+  }, [tinValue, onCheckPartnerByTin, setLazyValue]);
+
+  useEffect(() => {
+    if (partner) {
+      reset({
+        tin: partner.tin,
+        name: partner.name,
+        email: partner.email,
+        phone: partner.phone,
+        director: partner.director,
+        ltd: partner.ltd,
+        accountNumber: partner.accountNumber,
+        countryId: partner.countryId,
+        legalEntityTypeId: partner.legalEntityTypeId,
+      });
+    }
+  }, [partner, reset]);
 
   const onSubmit = async (data: CreatePartnerFormData) => {
     addHotelPartner({ data: data, hotelId: hotelId! }).unwrap();

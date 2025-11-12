@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import BlockContainer from '../../public/BlockContainer';
 import { Partner, PartnerStatus } from '../../../types';
 import { useTranslation } from '../../../hooks/useTranslation';

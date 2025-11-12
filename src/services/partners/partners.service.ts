@@ -12,6 +12,12 @@ const HotelPartnersService = ApiInstance.injectEndpoints({
       }),
     }),
 
+    getHotelPartnerByTin: build.query<Partner | null, { tin: string }>({
+      query: ({ tin }) => ({
+        url: `${ApiEnum.HOTEL_PARTNERS}/tin/${tin}`
+      }),
+    }),
+
     getHotelPartners: build.query<Partner[], { hotelId: string, page?: string; search?: string }>({
       query: ({ hotelId, page, search }) => ({
         url: `${ApiEnum.HOTEL_PARTNERS}/hotels/${hotelId}`,
@@ -37,6 +43,8 @@ const HotelPartnersService = ApiInstance.injectEndpoints({
 
 export const {
   useGetHotelPartnerQuery,
+  useGetHotelPartnerByTinQuery,
+  useLazyGetHotelPartnerByTinQuery,
   useGetHotelPartnersQuery,
   useAddHotelPartnerMutation
 } = HotelPartnersService;
