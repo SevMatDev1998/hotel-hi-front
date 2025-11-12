@@ -8,7 +8,7 @@ import { useLazyDebounce } from "../../../hooks/useDebounse";
 import InfoBlock from "../../../components/shared/InfoBlock";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../../components/shared/Button";
-import ApiEnum from "../../../enums/api.enum";
+import RouteEnum from "../../../enums/route.enum";
 
 const HotelPartnersContainer = () => {
 
@@ -39,7 +39,7 @@ const HotelPartnersContainer = () => {
     <div>
       <h2>{t("partners.partners")}</h2>
       <InfoBlock text="Գործընկերների ցանկում ներառեք բոլոր այն կազմակերպություններին, որոնց ցանկանում եք տեղեկացնել հյուրանոցի կողմից գնային քաղականության փոփոխությունների մասին։ Կարող եք յուրաքանաչյուր գործընկերի համար սահմանել առանձին միջնորդավճարներ։" />
-      <Button variant="outline" onClick={() => { navigate(`/${ApiEnum.HOTEL_PARTNERS}/create`) }}>{t("partners.add_partner")}</Button>
+      <Button variant="outline" onClick={() => { navigate(`/${RouteEnum.HOTEL_PARTNERS}/create`) }}>{t("partners.add_partner")}</Button>
       <DataTable
         data={hotelPartners?.data || []}
         columns={getHotelPartnersColumns(t, navigate)}

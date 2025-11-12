@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { LegalEntityType } from '../types';
 import { TFunction } from 'i18next';
 
-export const CreatePartnerSchema = (t: TFunction) =>
+export const PartnerSchema = (t: TFunction) =>
   yup.object({
 
 countryId: yup
@@ -27,4 +27,4 @@ countryId: yup
     director: yup.string().required(t('errors.required')),
   });
 
-export type CreatePartnerFormData = yup.InferType<ReturnType<typeof CreatePartnerSchema>>;
+export type CreatePartnerFormData = yup.InferType<ReturnType<typeof PartnerSchema>>;

@@ -8,33 +8,35 @@ import RegisterInput from "../../../components/shared/RegisterInput";
 import { CreatePartnerFormData, PartnerSchema } from "../../../yupValidation/PartnerValidation";
 import { RegisterSelect } from "../../../components/shared/RegisterSelect";
 import { Button } from "../../../components/shared/Button";
-import { useAddHotelPartnerMutation } from "../../../services/partners";
 import { useNavigate } from "react-router-dom";
 import ApiEnum from "../../../enums/api.enum";
+import { Partner } from "../../../types";
+import { useAcceptPartnerShipMutation } from "../../../services/guests/guest.service";
+import RouteEnum from "../../../enums/route.enum";
 
 
-interface NewHotelPartnersContainerFormProps {
+interface AcceptPartnerFormProps {
   countryOptions: any[];
   legalEntityOptions: any[];
-  hotelId?: string;
+  partnerData: Partner
 }
 
-const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({ countryOptions, legalEntityOptions, hotelId }) => {
+const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEntityOptions, partnerData }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm<CreatePartnerFormData>({
     resolver: yupResolver(PartnerSchema(t)),
+    defaultValues:partnerData
   });
 
-  const [addHotelPartner] = useAddHotelPartnerMutation();
+  const [acceptPartnerShip] = useAcceptPartnerShipMutation();
 
   const onSubmit = async (data: CreatePartnerFormData) => {
-    addHotelPartner({ data: data, hotelId: hotelId! }).unwrap();
-    navigate(`/${ApiEnum.HOTEL_PARTNERS}`);
+    acceptPartnerShip({ data, partnerId: partnerData.id }).unwrap();
+    navigate(`/${RouteEnum.HOTEL_PARTNERS}`);
   };
 
-  console.log(errors);
 
 
   return (
@@ -203,4 +205,4 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
   );
 };
 
-export default NewHotelPartnersContainerForm;
+export default AcceptPartnerForm;
