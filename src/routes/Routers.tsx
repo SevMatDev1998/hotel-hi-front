@@ -19,6 +19,8 @@ import NotificationsPage from "../pages/notifications/NotificationsPage";
 import VerifyPage from "../pages/auth/VerifyPage";
 import PricePolicyDatesPage from "../pages/pricePolicy/PricePolicyDatesPage";
 import AcceptPartnerPage from "../pages/guest/AcceptPartnerPage";
+import HotelPartnerPage from "../pages/hotelPartners/HotelPartnerPage";
+import EditHotelPartnerPage from "../pages/hotelPartners/EditHotelPartnerPage";
 
 
 const router = createBrowserRouter([
@@ -48,7 +50,10 @@ const router = createBrowserRouter([
 
       { path: RouteEnum.HOTEL_PARTNERS, element: <HotelPartnersPage /> },
       { path: `${RouteEnum.HOTEL_PARTNERS_CREATE}`, element: <NewHotelPartnerPage /> },
+      { path: `${RouteEnum.HOTEL_PARTNER}`, element: <HotelPartnerPage /> },
+      { path: `${RouteEnum.EDIT_HOTEL_PARTNER}`, element: <EditHotelPartnerPage /> },
 
+      
       { path: `${RouteEnum.NOTIFICATIONS}`, element: <NotificationsPage /> },
 
       { path: RouteEnum.LOGIN, element: <LoginPage /> },

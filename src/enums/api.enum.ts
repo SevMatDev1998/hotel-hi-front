@@ -40,7 +40,6 @@ enum ApiEnum {
     HOTEL_AVAILABILITY_DATE_COMMISSIONS="hotel-availability-date-commissions",
     
     HOTEL_PARTNERS="hotel-partners",
-    PARTNERS="partners",
     
     PRICE_POLICY="price-policy",
 

@@ -19,7 +19,10 @@ export enum RouteEnum {
 
   HOTEL_PARTNERS = "/hotel-partners",
   HOTEL_PARTNERS_CREATE = "/hotel-partners/create",
+  HOTEL_PARTNER = "/hotel-partners/:partnerId",
+  EDIT_HOTEL_PARTNER = "/hotel-partners/:partnerId/edit",
 
+  
   NOTIFICATIONS = "/notifications",
 
   SYSTEM_SERVICE_GROUPS = "/system-service-groups",

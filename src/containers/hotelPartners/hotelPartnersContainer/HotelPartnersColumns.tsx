@@ -1,6 +1,7 @@
 import { ArrowBigRight } from 'lucide-react';
 import {  Partner, PartnerStatus, User } from '../../../types';
 import { TFunction } from 'i18next';
+import RouteEnum from '../../../enums/route.enum';
 
 export const getHotelPartnersColumns = (
   t: TFunction<"translation", undefined>,
@@ -42,7 +43,7 @@ export const getHotelPartnersColumns = (
       cell: ({ row }: { row: { original: User } }) => (
         <div className="flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <div
-            onClick={() => navigate && navigate(`/partners/${row.original.id}/edit`)}
+            onClick={() => navigate && navigate(`${RouteEnum.HOTEL_PARTNERS}/${row.original.id}`)}
             className='cursor-pointer'
           >
             <ArrowBigRight className="h-4 w-4" />
