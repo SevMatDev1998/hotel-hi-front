@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import CardContainer from "../../../../public/CardContainer";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
 import { CreateHotelAdditionalServiceDto } from "../../../../../types/pricePolicyDto";
+import { useTranslation } from "../../../../../hooks/useTranslation";
+import { Button } from "../../../../../components/shared/Button";
 
 interface IAddRoomPricePolicyArrivalDepartureFormProps {
   hotelAvailabilityId: number;
@@ -18,14 +20,14 @@ interface RowData {
   percentage: string;
 }
 
-const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArrivalDepartureFormProps> = ({ 
+const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArrivalDepartureFormProps> = ({
   onChange,
   initialData
 }) => {
   const { data: additionalServicesData } = useGetAdditionalServicesQuery();
-
-  const additionalServices = Array.isArray(additionalServicesData) 
-    ? additionalServicesData 
+  const { t } = useTranslation();
+  const additionalServices = Array.isArray(additionalServicesData)
+    ? additionalServicesData
     : additionalServicesData ? [additionalServicesData] : [];
 
   const arrivalService = additionalServices.find(s => s.name === "Arrival");
@@ -55,7 +57,7 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
     const formatted: Omit<CreateHotelAdditionalServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[] = rows.map(r => {
       const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
       const startTime = r.time ? `${today}T${r.time}:00.000Z` : '';
-      
+
       return {
         systemServiceId: r.serviceId,
         isTimeLimited: true,
@@ -69,7 +71,7 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
   }, [rows, onChange]);
 
   const addServiceRow = (service: any) => {
-    if (!service) return; 
+    if (!service) return;
     setRows(prev => [
       ...prev,
       {
@@ -92,37 +94,42 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
 
   return (
     <CardContainer className='rounded-md p-4'>
-
+      <p>{t('price_policy.early_arrival_late_departure')}</p>
       <div style={{ display: "flex", gap: 20 }}>
-        <button onClick={() => addServiceRow(arrivalService)}>
-          + Добавить ранний заезд
-        </button>
+        <Button variant="outline" onClick={() => addServiceRow(arrivalService)}>
+          {t('price_policy.add_early_arrival')}
+        </Button>
 
-        <button onClick={() => addServiceRow(departureService)}>
-          + Добавить поздний выезд
-        </button>
+
+        <Button variant="outline" onClick={() => addServiceRow(departureService)}>
+          {t('price_policy.add_late_departure')}
+        </Button>
+
       </div>
 
       <br />
 
       {rows.map(row => (
-        <div key={row.id} style={{ display: "flex", gap: 15, alignItems: "center", marginBottom: 10 }}>
-          <span>{row.name}</span>
-
-          <input 
+        <div key={row.id} className="flex w-full justify-between">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => { deleteRow(row.id) }}>
+            <img
+              src="/images/icons/remove-button-icon.svg"
+              alt="add icon"
+              className="cursor-pointer"
+            />
+            <span>{t(`price_policy.${row.name}`)}</span>
+          </div>
+          <input
             type="time"
             value={row.time}
             onChange={e => updateRow(row.id, "time", e.target.value)}
           />
-
-          <input 
+          <input
             type="number"
             placeholder="%"
             value={row.percentage}
             onChange={e => updateRow(row.id, "percentage", e.target.value)}
           />
-
-          <button onClick={() => deleteRow(row.id)}>Удалить</button>
         </div>
       ))}
 

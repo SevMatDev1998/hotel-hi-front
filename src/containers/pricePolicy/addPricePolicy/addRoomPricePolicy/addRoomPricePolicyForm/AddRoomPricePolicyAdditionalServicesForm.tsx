@@ -2,6 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import CardContainer from "../../../../public/CardContainer";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
 import { CreateOtherServiceDto } from "../../../../../types/pricePolicyDto";
+import { useTranslation } from "../../../../../hooks/useTranslation";
+import { Switch } from "../../../../../components/shared/Switch";
+import CheckBox from "../../../../../components/shared/CheckBox";
 
 interface IAddRoomPricePolicyAdditionalServicesFormProps {
   onChange: (data: Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]) => void;
@@ -15,6 +18,7 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
   initialData
 }) => {
   const { data: additionalServicesData } = useGetAdditionalServicesQuery();
+    const { t } = useTranslation();
 
   // ✅ Filter only required services safely and memoized
   const services = useMemo(
@@ -87,7 +91,7 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
 
   return (
     <CardContainer className='rounded-md p-4'>
-      <h3 className="text-lg font-semibold mb-3">Այլ ծառայություններ</h3>
+      <p >{t("price_policy.other_services")}</p>
 
       {services.map(service => {
         const item = values[service.id];
@@ -96,14 +100,13 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
         return (
           <div key={service.id} className="flex justify-between items-center py-3 border-b last:border-none">
 
-            <label className="flex items-center gap-3">
-              <input
-                type="checkbox"
+            <div className="flex items-center gap-3">
+              <Switch
                 checked={item.enabled}
-                onChange={() => update(service.id, "enabled", !item.enabled)}
+                onCheckedChange={(checked) => update(service.id, "enabled", checked)}
               />
               <span>{service.name}</span>
-            </label>
+            </div>
 
             <input
               type="number"
@@ -114,15 +117,11 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
               onChange={e => update(service.id, "price", e.target.value)}
             />
 
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                disabled={!item.enabled}
-                checked={item.isNotFixed}
-                onChange={e => update(service.id, "isNotFixed", e.target.checked)}
-              />
-              <span>ոչ հաստատված արժեք</span>
-            </label>
+            <CheckBox
+              options={{ id: service.id, name: t("price_policy.not_confirmed_value") }}
+              isChecked={item.isNotFixed}
+              toggleValue={() => update(service.id, "isNotFixed", !item.isNotFixed)}
+            />
 
           </div>
         );

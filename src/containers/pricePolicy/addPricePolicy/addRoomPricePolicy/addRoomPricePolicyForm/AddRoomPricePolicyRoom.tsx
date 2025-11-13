@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HotelRoom } from '../../../../../types';
 import { CreateHotelRoomPriceDto } from '../../../../../types/pricePolicyDto';
 import CardContainer from '../../../../public/CardContainer';
+import { useTranslation } from '../../../../../hooks/useTranslation';
 
 interface IAddRoomPricePolicyRoomProps {
   room: HotelRoom;
@@ -16,7 +17,7 @@ const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({
   initialData
 }) => {
   const [price, setPrice] = useState<string>(initialData?.price?.toString() || "");
-
+  const { t } = useTranslation();  
   useEffect(() => {
     if (initialData?.price) {
       setPrice(initialData.price.toString());
@@ -36,13 +37,11 @@ const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({
 
   return (
     <CardContainer className='rounded-md p-4'>
-      <h3 className="text-lg font-semibold mb-3">Ціна на номер</h3>
-
       <table className="min-w-full border text-center">
         <thead>
           <tr>
-            <th className="border px-4 py-2">Кількість основних гостей</th>
-            <th className="border px-4 py-2">Ціна</th>
+            <th className="border px-4 py-2">{t('price_policy.number_of_guests_in_room')}</th>
+            <th className="border px-4 py-2">{t('price_policy.price')}</th>
           </tr>
         </thead>
         <tbody>
@@ -51,9 +50,8 @@ const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({
             <td className="border px-4 py-2">
               <input
                 type="number"
-                className="w-full border rounded px-3 py-2"
+                className="w-full"
                 value={price}
-                placeholder="Введіть ціну"
                 onChange={(e) => handleChange(e.target.value)}
               />
             </td>

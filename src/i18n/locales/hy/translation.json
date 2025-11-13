@@ -200,7 +200,22 @@
     "from_age": "Սկսված",
     "to_age": "Մինչև",
     "available_beds": "Տրամադրվող մահճակալներ",
-    "attach_date_to_price_offer": "Գնային առաջարկին կցել ամսաթիվ"
+    "attach_date_to_price_offer": "Գնային առաջարկին կցել ամսաթիվ",
+    "included_food_in_room_price":"Սենյակի արժեքներում ներառված սնունդ",
+    "annual":"տարեկան",
+    "food_types":"Ուտելիքի տեսակները",
+    "number_of_guests_in_room":"Սենյակում հյուրերի քանակը",
+    "price":"Արժեք",
+    "early_arrival_late_departure":"Շուտ ժամանում, ուշ մեկնում",
+    "add_early_arrival":"Ավելացնել շուտ ժամանում",
+    "add_late_departure":"Ավելացնել ուշ մեկնում",
+    "Arrival":"Շուտ ժամանում սկասած",
+    "Departure":"Ուշ մեկնում մինչև",
+
+    "other_services":"Այլ ծառայություններ",
+    "service_cost":"Ծառայության արժեքը",
+    "not_confirmed_value":"Ոչ հաստատված արժեք"
+
   },
   "price_policy_dates": {
     "price_offer":"Գնային առաջարկ",

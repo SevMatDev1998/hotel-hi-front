@@ -1,23 +1,24 @@
 import { FC, useState, useEffect } from 'react';
-import CardContainer from '../../../../public/CardContainer';
 import AddRoomPricePolicyFoodForm from './AddRoomPricePolicyFoodForm';
 import AddRoomPricePolicyRoomForm from './AddRoomPricePolicyRoom';
 import useAppSelector from '../../../../../hooks/useAppSelector';
 import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../../types';
 import AddRoomPricePolicyArrivalDepartureForm from './AddRoomPricePolicyArrivalDepartureForm';
 import AddRoomPricePolicyAdditionalServicesForm from './AddRoomPricePolicyAdditionalServicesForm';
-import { 
-  CreateHotelFoodPriceDto, 
-  CreateHotelRoomPriceDto, 
+import {
+  CreateHotelFoodPriceDto,
+  CreateHotelRoomPriceDto,
   CreateHotelAdditionalServiceDto,
   CreateOtherServiceDto,
-  CreateRoomPricePolicyDto 
+  CreateRoomPricePolicyDto
 } from '../../../../../types/pricePolicyDto';
-import { 
+import {
   useCreateRoomPricePolicyMutation,
-  useGetRoomPricePolicyQuery 
+  useGetRoomPricePolicyQuery
 } from '../../../../../services/pricePolicy/pricePolicy.service';
 import appToast from '../../../../../helpers/appToast';
+import { Button } from '../../../../../components/shared/Button';
+import { useTranslation } from '../../../../../hooks/useTranslation';
 
 interface IAddRoomPricePolicyFormProps {
   room: HotelRoom;
@@ -33,9 +34,9 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
   const { user } = useAppSelector((state) => state.auth);
   const hotelAvailabilityId = Number(user?.hotelId) || 0;
   const hotelRoomId = Number(room.id);
-
+  const { t } = useTranslation();
   const [createRoomPricePolicy, { isLoading }] = useCreateRoomPricePolicyMutation();
-  
+
   const { data: existingData } = useGetRoomPricePolicyQuery(
     { hotelAvailabilityId, roomId: hotelRoomId },
     { skip: !hotelAvailabilityId || !hotelRoomId }
@@ -48,26 +49,26 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
   const [otherServices, setOtherServices] = useState<Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]>([]);
 
   useEffect(() => {
-    
+
     if (existingData?.data) {
       const data = existingData.data;
-      
+
       if (data.foodPrices?.length > 0) {
         setFoodPrices(data.foodPrices);
       }
-      
+
       if (data.roomPrice) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, createdAt, updatedAt, hotelAvailabilityId, ...roomPriceData } = data.roomPrice;
         setRoomPrice(roomPriceData);
       }
-      
+
       if (data.arrivalDepartureServices?.length > 0) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const services = data.arrivalDepartureServices.map(({ id, createdAt, updatedAt, hotelAvailabilityId, hotelRoomId, ...rest }) => rest);
         setArrivalDeparturePolicies(services);
       }
-      
+
       if (data.otherServices?.length > 0) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const services = data.otherServices.map(({ id, createdAt, updatedAt, hotelAvailabilityId, hotelRoomId, ...rest }) => rest);
@@ -112,9 +113,9 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
       console.log("FINAL DATA TO SEND:", payload);
 
       await createRoomPricePolicy(payload).unwrap();
-      
+
       await appToast('success', 'Ценовая политика успешно сохранена!');
-      
+
     } catch (error: any) {
       console.error('Error creating price policy:', error);
       await appToast('error', error?.data?.message || 'Ошибка при сохранении ценовой политики');
@@ -148,20 +149,21 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
           onChange={setArrivalDeparturePolicies}
           initialData={existingData?.data?.arrivalDepartureServices}
         />
-        
+
         <AddRoomPricePolicyAdditionalServicesForm
           onChange={setOtherServices}
           initialData={existingData?.data?.otherServices}
         />
+        <div className='flex w-full justify-between mt-4'>
+          <Button variant='text'>
+            {t("buttons.cancel")}
+          </Button>
+          <Button onClick={handleSubmitAll} isLoading={isLoading}>
+            {t("buttons.save")}
+          </Button>
+        </div>
 
 
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
-          onClick={handleSubmitAll}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Сохранение...' : 'Сохранить всё'}
-        </button>
       </div>
     </div>
   );

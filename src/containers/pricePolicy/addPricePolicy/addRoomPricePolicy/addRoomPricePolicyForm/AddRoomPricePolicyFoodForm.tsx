@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { HotelAgeAssignment, HotelFood } from '../../../../../types';
 import { CreateHotelFoodPriceDto } from '../../../../../types/pricePolicyDto';
 import CardContainer from '../../../../public/CardContainer';
+import CheckBox from '../../../../../components/shared/CheckBox';
+import { useTranslation } from '../../../../../hooks/useTranslation';
 
 interface IAddRoomPricePolicyFoodProps {
   hotelFoods?: HotelFood[];
@@ -21,7 +23,7 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
   const [selectedFoods, setSelectedFoods] = useState<number[]>([]);
   const [prices, setPrices] = useState<Record<string, number>>({});
   const [isInitialized, setIsInitialized] = useState(false);
-
+  const { t } = useTranslation();
   // ✅ Загрузить initialData при первом рендере
   useEffect(() => {
     if (initialData && initialData.length > 0 && !isInitialized) {
@@ -96,18 +98,15 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
 
   return (
     <CardContainer className='rounded-md p-4'>
-      <h3 className="font-semibold text-lg mb-2">Выберите тип питания</h3>
-
+      <p >{t('price_policy.included_food_in_room_price'  )}</p>
       <div className="flex flex-wrap gap-4 mb-4">
         {hotelFoods.map((food) => (
-          <label key={food.id} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={selectedFoods.includes(food.id)}
-              onChange={() => toggleFood(food.id)}
-            />
-            {food.foodType}
-          </label>
+          <CheckBox
+            key={food.id}
+            options={{ id: food.id, name: t(`foods.${food.foodType}`) }}
+            isChecked={selectedFoods.includes(food.id)}
+            toggleValue={() => toggleFood(food.id)}
+          />
         ))}
       </div>
 
@@ -115,10 +114,10 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
         <table className="min-w-full border text-center">
           <thead>
             <tr>
-              <th className="border px-3 py-2">Тип питания</th>
+              <th className="border px-3 py-2">{t('price_policy.food_types')}</th>
               {hotelAvailabilityAgeAssessments.map((age) => (
                 <th key={age.id} className="border px-3 py-2">
-                  {age.fromAge}-{age.toAge}
+                  {age.fromAge}-{age.toAge}{t('price_policy.annual')  }
                 </th>
               ))}
             </tr>
@@ -126,14 +125,14 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
           <tbody>
             {visibleFoods.map((food) => (
               <tr key={food.id}>
-                <td className="border px-3 py-2">{food.foodType}</td>
+                <td className="border px-3 py-2">{t(`foods.${food.foodType}`)}</td>
                 {hotelAvailabilityAgeAssessments.map((age) => {
                   const key = `${food.id}-${age.id}`;
                   return (
                     <td key={key} className="border px-3 py-2">
                       <input
                         type="number"
-                        className="w-20 text-center border rounded"
+                        className="w-full text-center "
                         value={prices[key] ?? ''}
                         onChange={(e) =>
                           handlePriceChange(food.id, age.id, e.target.value)
