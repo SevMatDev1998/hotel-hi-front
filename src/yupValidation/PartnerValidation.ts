@@ -6,11 +6,10 @@ import { TFunction } from 'i18next';
 export const PartnerSchema = (t: TFunction) =>
   yup.object({
 
-countryId: yup
-  .mixed()
-  .required(t('errors.required')), // 👈 will provide the 
-
-
+    countryId: yup
+      .number()
+      .typeError(t('errors.required'))
+      .required(t('errors.required')),
     tin: yup.string().required(t('errors.required')),
     name: yup.string().required(t('errors.required')),
     ltd: yup.string().required(t('errors.required')),

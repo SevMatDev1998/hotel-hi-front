@@ -13,10 +13,10 @@ interface SelectProps {
   name: string;
   options: SelectOption[];
   register: UseFormRegister<any>;
-  errors?: FieldError;
-  required?: boolean;
+  errors?: FieldError | undefined;
   className?: string;
   tr_name?: string;
+  valueAsNumber?: boolean;
 }
 
 export const RegisterSelect: React.FC<SelectProps> = ({
@@ -25,9 +25,9 @@ export const RegisterSelect: React.FC<SelectProps> = ({
   options,
   register,
   errors,
-  required,
   className,
   tr_name='',
+  valueAsNumber = false,
   ...props
 }) => {
 
@@ -49,20 +49,20 @@ export const RegisterSelect: React.FC<SelectProps> = ({
             : "border-charcoal-gray",
           className
         )}
-        {...register(name, { required: required ? `${label || 'This field'} is required` : false })}
+        {...register(name, { valueAsNumber })}
         {...props}
       >
         <option value="">-- Select an option --</option>
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
-            {t(`${tr_name}.${opt.label}`)}
+            {tr_name ? t(`${tr_name}.${opt.label}`) : opt.label}
           </option>
         ))}
       </select>
       {errors && (
-        <>
-          <p className="mt-1 text-sm text-red-600">{t(`${tr_name}.${name}`)} {t(`errors.${errors[name]?.type}`)}</p>
-        </>
+        <p className="mt-1 text-sm text-red-600">
+          {errors.message || t(`errors.${errors.type || 'required'}`)}
+        </p>
       )}
     </div>
   );

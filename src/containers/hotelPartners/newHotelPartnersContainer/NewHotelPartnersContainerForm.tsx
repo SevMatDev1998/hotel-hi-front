@@ -95,9 +95,9 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     options={countryOptions}
                     register={register}
                     errors={errors.countryId}
-                    required
                     className='rounded-[5px]'
                     tr_name="registration_country_options"
+                    valueAsNumber
                   />
                 </div>
               </div>
@@ -134,8 +134,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                       name="legalEntityTypeId"
                       options={legalEntityOptions}
                       register={register}
-                      errors={errors}
-                      required
+                      errors={errors.legalEntityTypeId}
                       className='rounded-[5px]'
                       tr_name="legal_entity_type_options"
                     />
@@ -180,10 +179,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     name="phoneCode"
                     options={countryOptions}
                     register={register}
-                    // error={errors.courseId}
-                    required
                     tr_name="registration_country_options"
-
                   />
                   <RegisterInput
                     register={register}

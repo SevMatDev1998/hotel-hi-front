@@ -12,7 +12,6 @@ interface IRegisterInput {
   className?: string;
   labelClassName?: string;
   disabled?: boolean;
-  tr_name?: string;
 }
 
 const RegisterInput: FC<IRegisterInput> = ({
@@ -23,8 +22,7 @@ const RegisterInput: FC<IRegisterInput> = ({
   type = "text",
   className,
   labelClassName,
-  disabled = false,
-  tr_name=''
+  disabled = false
 }) => {
 
   const { t } = useTranslation();
@@ -50,7 +48,7 @@ const RegisterInput: FC<IRegisterInput> = ({
       />
       {errors?.[name] && (
         <p className="mt-1 ml-1 text-sm text-red-700">
-          {t(`${tr_name}.${name}`)} {t(`errors.${errors[name]?.type}`)} 
+          {errors[name]?.message || t(`errors.${errors[name]?.type || 'required'}`)} 
         </p>
       )}
     </div>

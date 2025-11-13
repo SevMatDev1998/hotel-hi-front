@@ -84,7 +84,6 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
                     options={countryOptions}
                     register={register}
                     errors={errors.registerCountryId}
-                    required
                     className='rounded-[5px]'
                     tr_name="countries"
                   />
@@ -93,7 +92,6 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
                   <RegisterInput
                     register={register}
                     errors={errors}
-                    label="City"
                     name="registerCity"
                     type="text"
                     className='rounded-[5px]'
