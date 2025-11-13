@@ -36,15 +36,23 @@ const HotelPartnersService = ApiInstance.injectEndpoints({
         body: data
       }),
       invalidatesTags: [ApiEnum.HOTEL_PARTNERS]
+    }),
 
+    editPartner: build.mutation<Partner, { data: Partial<Partner>, partnerId: string }>({
+      query: ({ data, partnerId }) => ({
+        url: `${ApiEnum.HOTEL_PARTNERS}/${partnerId}`,
+        method: "PUT",
+        body: data
+      }),
+      invalidatesTags: [ApiEnum.HOTEL_PARTNERS]
     })
   })
 })
 
 export const {
   useGetHotelPartnerQuery,
-  useGetHotelPartnerByTinQuery,
   useLazyGetHotelPartnerByTinQuery,
   useGetHotelPartnersQuery,
-  useAddHotelPartnerMutation
+  useAddHotelPartnerMutation,
+  useEditPartnerMutation,
 } = HotelPartnersService;

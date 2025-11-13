@@ -7,11 +7,9 @@ import { LegalEntityType } from "../../../types";
 const AcceptPartnerContainer = () => {
 
   const { partnerId } = useParams();
-  console.log(222, partnerId);
 
   const { data: partnerData } = useGetPartnerInformationQuery({ partnerId: partnerId! }, { refetchOnMountOrArgChange: true });
 
-  console.log(555, partnerData);
 
   const { data: countriesData } = useGetCountriesQuery();
 
