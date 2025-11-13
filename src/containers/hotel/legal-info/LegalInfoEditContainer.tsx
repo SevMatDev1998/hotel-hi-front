@@ -27,7 +27,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [updateHotelLegalInformation, {  isLoading }] = useUpdateHotelLegalInformationMutation()
+  const [updateHotelLegalInformation, { isLoading }] = useUpdateHotelLegalInformationMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<UpdateHotelLegalInfoFormData>({
     resolver: yupResolver(UpdateHotelLegalInfoSchema),
@@ -35,6 +35,8 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   });
 
   const onSubmit = async (data: UpdateHotelLegalInfoFormData) => {
+    console.log(data);
+    
     await updateHotelLegalInformation({ id: hotelId!, data }).unwrap();
     navigate(RouteEnum.ROOMS);
   };
@@ -43,7 +45,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   const countryOptions = countriesData?.map((country) => ({
     value: country.id,
     label: country.name,
-  })) || [];  
+  })) || [];
 
   return (
     <BlockContainer>
@@ -79,16 +81,16 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
               </div>
               <div className='grid grid-cols-2 mobile:grid-cols-1 gap-6'>
                 <div  >
+
                   <RegisterSelect
                     name="registerCountryId"
                     options={countryOptions}
                     register={register}
                     errors={errors.registerCountryId}
-                    className='rounded-[5px]'
-                    tr_name="countries"
                   />
+
                 </div>
-                <div className='' >
+                <div  >
                   <RegisterInput
                     register={register}
                     errors={errors}
@@ -129,7 +131,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
                 />
               </div>
             </div>
-            
+
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.phone_number")} *</span>

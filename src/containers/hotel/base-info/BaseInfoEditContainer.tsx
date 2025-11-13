@@ -18,7 +18,7 @@ interface BaseInfoEditnoContainerProps {
   hotelBaseInformationData?: Partial<Hotel> 
   countriesData?:Country[]
   currenciesData?: Currency[],
-  hotelId?:number
+  hotelId?:string
 }
 
 const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInformationData,countriesData,currenciesData, hotelId }) => {
@@ -28,15 +28,17 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
 
   const { hotelInfoType } = useAppSelector((state) => state.hotelSlice);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<UpdateHotelBaseInfoFormData>({
+  const { register, formState: { errors },handleSubmit } = useForm<UpdateHotelBaseInfoFormData>({
     resolver: yupResolver(UpdateHotelBaseInfoSchema),
     defaultValues: { ...hotelBaseInformationData }
   });
 
   const dispatch = useAppDispatch();
   
-  const onSubmit = async () => {
-    // await updateHotelBaseInformation({ id: hotelId!, data })
+  const onSubmit = async (data: UpdateHotelBaseInfoFormData) => {
+    console.log(data);
+    
+    await updateHotelBaseInformation({ id: hotelId!, data }).unwrap();
     dispatch(changeHotelInfoType("legal"));
   };
 
@@ -51,12 +53,13 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
     label: currency.name,
   })) || [];
 
-
+  console.log(countryOptions);
+  
   
 
   return (
     <BlockContainer>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className='text-14 text-charcoal-gray'>
           {hotelInfoType !== "base" && <div className='flex items-center justify-between mb-6'>
             <h3 >{t("hotel.hotel_base_info")}</h3>
@@ -96,9 +99,9 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                     name="countryId"
                     options={countryOptions}
                     register={register}
-                    // error={errors.courseId}
-                    required
+                    errors={errors.countryId}
                   />
+
                 </div>
                 <div className='' >
                   <RegisterInput
@@ -135,7 +138,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                   options={countryOptions}
                   register={register}
                   errors={errors.phoneCode}
-                  required
                 />
                 <RegisterInput
                   register={register}
@@ -148,7 +150,7 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
             </div>
             <div className="grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center">
               <div>
-                <span>{t("hotel.currency")} *</span>
+                <span>{t("hotel.curency")} *</span>
               </div>
               <div className="grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-6 items-center">
                 <div>
@@ -156,7 +158,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                     name="currencyId"
                     options={currencyOptions}
                     register={register}
-                    required
                     errors={errors.currencyId}
                   />
                 </div>

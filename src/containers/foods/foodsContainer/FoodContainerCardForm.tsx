@@ -1,16 +1,19 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { useAddHotelFoodMutation, useGetCuisineQuery, useGetFoodOfferTypesQuery } from '../../../services/foods';
-import {  FoodType, HotelFood } from '../../../types';
+import { useAddHotelFoodMutation } from '../../../services/foods';
+import { FoodType, HotelFood } from '../../../types';
 import { Button } from '../../../components/shared/Button';
 import CheckBox from '../../../components/shared/CheckBox';
 import useAppSelector from '../../../hooks/useAppSelector';
+import { useTranslation } from '../../../hooks/useTranslation';
 
 interface IFoodContainerCardFormProps {
   hotelFood?: HotelFood;
   selectedFoodType: FoodType;
+  setSelectedFoodType: (foodType: FoodType | null) => void;
+  foodOfferTypes?: any[];
+  cuisines?: any[];
 }
-
 interface FoodFormValues {
   foodOfferTypeIds: number[];
   cuisineIds: number[];
@@ -19,27 +22,33 @@ interface FoodFormValues {
   foodType?: string;
 }
 
-const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFood,selectedFoodType }) => {
-  const { data: foodOfferTypes = [] } = useGetFoodOfferTypesQuery();
-  const { data: cuisines = [] } = useGetCuisineQuery();
-  const [addHotelFood] = useAddHotelFoodMutation();
- const { user } = useAppSelector(state => state.auth);
+const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFood, selectedFoodType, setSelectedFoodType, foodOfferTypes = [], cuisines = [] }) => {
 
- console.log(hotelFood, 'hotelFood');
- 
+
+  const [addHotelFood] = useAddHotelFoodMutation();
+  const { user } = useAppSelector(state => state.auth);
+  const { t } = useTranslation()
+
 
   const { handleSubmit, control } = useForm<FoodFormValues>({
     mode: 'onChange',
     defaultValues: {
-      foodOfferTypeIds: hotelFood?.foodOfferTypeIds || [],
-      cuisineIds: hotelFood?.cuisineIds || [],
+      foodOfferTypeIds: hotelFood?.foodOfferTypeIds?.filter((id) => id !== null) || [],
+      cuisineIds: hotelFood?.cuisineIds?.filter((id) => id !== null) || [],
       startDate: hotelFood?.startDate || '',
-      endDate: hotelFood?.endDate ||  '',
+      endDate: hotelFood?.endDate || '',
     },
   });
 
   const onSubmit = (data: FoodFormValues) => {
-    addHotelFood({ body: { ...data, foodType: selectedFoodType }, hotelId: user?.hotelId });
+    const cleanedData = {
+      ...data,
+      foodOfferTypeIds: data.foodOfferTypeIds.filter((id) => id !== null),
+      cuisineIds: data.cuisineIds.filter((id) => id !== null),
+      foodType: selectedFoodType,
+    };
+    addHotelFood({ body: cleanedData, hotelId: user?.hotelId }).unwrap();
+    setSelectedFoodType(null);
   };
 
 
@@ -48,13 +57,11 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
       onSubmit={handleSubmit(onSubmit)}
       className=" space-y-6"
     >
-      {/* --- Time Range Section --- */}
-      <div >
+      <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center' >
         <div >
-          <h3>Ժամանակի միջակայք</h3>
+          <p >{t("foods.delivery_times")}</p>
         </div>
-        <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none ">
-            
+        <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none max-w-[min-content] ">
           <Controller
             name="startDate"
             control={control}
@@ -79,12 +86,10 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
           />
         </div>
       </div>
-
-      {/* --- Food Offer Types --- */}
-      <div className="space-y-3">
-        <h3 >
-          Սննդի տեսակ
-        </h3>
+      <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
+        <p >
+          {t("foods.delivery_methods")}
+        </p>
         <div className="flex flex-wrap gap-4">
           {foodOfferTypes.map((type) => (
             <Controller
@@ -109,10 +114,8 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
           ))}
         </div>
       </div>
-
-      {/* --- Cuisine Types --- */}
-      <div className="space-y-3">
-        <h3>Խոհանոց</h3>
+      <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 '>
+        <p>{t("foods.food_types")}</p>
         <div className="flex flex-wrap gap-4">
           {cuisines.map((cuisine) => (
             <Controller
@@ -138,10 +141,8 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
         </div>
       </div>
       <div className="flex justify-end">
-      <Button type="submit">Հաստատել  </Button>
-
+        <Button type="submit">{t("buttons.save")}</Button>
       </div>
-      {/* --- Submit Button --- */}
     </form>
   );
 };

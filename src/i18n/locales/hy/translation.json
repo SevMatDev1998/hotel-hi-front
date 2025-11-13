@@ -70,6 +70,19 @@
     "select_room_parts": "Ընտրել սենյակի մասերը",
     "area_unit": "(մ²)"
   },
+  "foods":{
+    "delivery_times":"Մատուցման ժամերը",
+    "delivery_methods":"Մատուցման եղանակը",
+    "food_types":"Սննդի տեսակը",
+    "Breakfast":"Նախաճաշ",
+    "Lunch":"Ճաշ",
+    "Supper":"Ընթրիք",
+    "food":"Սնունդ",
+    "hotel_meals":"հյուրանոցում տրամադրվող սնունդ"
+  },
+
+
+
   "user": {
     "hotel_name": "Ազգանուն",
     "email": "Էլ. փոստ"

@@ -30,12 +30,12 @@ const FoodsContainer = () => {
   return (
     <div>
       <div className="flex flex-col gap-6">
-        <h2>{t("rooms.rooms_types")}</h2>
+        <h2>{t("foods.food")}</h2>
         <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
-        <div className="grid grid-cols-2 mobile:grid-cols-1">
+        <div className="grid grid-cols-2 mobile:grid-cols-1 gap-2">
           <div>
-            <p>{t("rooms.type_of_rooms_in_the_hotel")}- {4}</p>
-            <p>{t("rooms.total_number_of_rooms")}-{4}</p>
+            <p>{t("foods.hotel_meals")}</p>
+            <p>{foodData?.length || 0}</p>
           </div>
           <div className="grid justify-items-end mobile:justify-items-start">
             <Button>{t("rooms.approved_hotel_number_of_rooms")} </Button>

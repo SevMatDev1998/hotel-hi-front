@@ -10,10 +10,9 @@ import { FC, useEffect } from "react";
 import { Button } from "../../../components/shared/Button";
 import { RegisterSelect } from "../../../components/shared/RegisterSelect";
 import { useNavigate } from "react-router-dom";
-import RouteEnum from "../../../enums/route.enum";
 
 interface RoomTypeDescriptionProps {
-  hotelId?: number
+  hotelId?: string
 }
 
 const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
@@ -29,7 +28,6 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
 
   const onSubmit = async (data: CreateHotelRoomFormData) => {
     await createRoom({ hotelId: hotelId!, data }).unwrap();
-    navigate(RouteEnum.ROOMS);
   };
 
 
@@ -69,8 +67,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
               name="roomClassId"
               options={roomClassesOptions}
               register={register}
-              // error={errors.courseId}
-              required
+              errors={errors.roomClassId}
               tr_name="room_class_options"
             />
           </div>
@@ -83,7 +80,6 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
               options={roomViewsOptions}
               register={register}
               // error={errors.courseId}
-              required
               tr_name="room_view_options"
             />
           </div>

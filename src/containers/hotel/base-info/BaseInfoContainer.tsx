@@ -39,7 +39,7 @@ const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ hotelBaseInformationDa
               <span >{t("hotel.hotel_address")} *</span>
             </div>
             <div >
-              <span >{hotelBaseInformationData?.hotelAddress}</span>
+              <span >{hotelBaseInformationData?.city}</span>
             </div>
           </div>
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
