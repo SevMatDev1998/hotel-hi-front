@@ -10,12 +10,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import { useGetRoomBedTypesQuery } from '../../../services/rooms';
 import { RegisterSelect } from '../../../components/shared/RegisterSelect';
-
+import { HotelAvailability } from '../../../types';
+ 
 interface IAddPricePolicyProps {
   hotelId?: string;
+  onSuccess?: (data: HotelAvailability) => void;
 }
 
-const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
+const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
   const { t } = useTranslation();
   const [addHotelAvailability, { isLoading }] = useAddHotelAvailabilityMutation();
 
@@ -33,19 +35,25 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
       hotelAgeAssignments: [],
     },
   });
-
+ 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "hotelAgeAssignments",
   });
 
   const onSubmit = async (data: CreateHotelAvailabilityFormData) => {
-    console.log("submit data", data);
-
-    addHotelAvailability({ body: data, hotelId }, { skip: !hotelId });
+    if (!hotelId) return;
+    
+    try {
+      const result = await addHotelAvailability({ body: data as unknown as HotelAvailability, hotelId }).unwrap();
+      if (onSuccess) {
+        onSuccess(result);
+      }
+    } catch (error) {
+      console.error('Failed to create hotel availability:', error);
+    }
   };
 
-  console.log(roomBedTypeOptions);
 
   return (
     <div>
@@ -55,7 +63,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
           <h3>{t("price_policy.price_offer_settings")}</h3>
           <InfoBlock text='Նշված ժամանակահատվածում վերապահումներ ստանալու հնարավորություն կունենաք։ Նաև գների կարգավորման միջոցով փոփոխություններ կատարել' />
 
-          {/* Գնային առաջարկի անուն */}
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div><span>{t("hotel_availability.price_offer_name")} *</span></div>
             <div>
@@ -71,7 +78,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
 
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center mt-4'>
             <div><span>{t("hotel_availability.arrival_and_departure_times")} *</span></div>
-            <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none">
+            <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none max-w-[min-content]">
               <Controller
                 name="checkInTime"
                 control={control}
@@ -86,9 +93,8 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
           </div>
 
           <div className='flex flex-col gap-3 mt-6'>
-            <h4 className="font-semibold mb-2">{t("hotel_availability.age_thresholds")}</h4>
 
-            {fields.map((item, index) => (
+            {fields.map((_, index) => (
               <div
                 key={index}
                 className='flex items-center'
@@ -140,8 +146,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId }) => {
                     name={`hotelAgeAssignments.${index}.bedType`}
                     options={roomBedTypeOptions}
                     register={register}
-                    // error={errors.courseId}
-                    required
                     className='border-none'
                   />
                 </div>

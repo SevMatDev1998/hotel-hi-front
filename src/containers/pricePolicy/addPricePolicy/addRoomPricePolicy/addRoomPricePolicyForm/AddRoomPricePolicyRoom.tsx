@@ -35,7 +35,7 @@ const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({
   };
 
   return (
-    <CardContainer className=''>
+    <CardContainer className='rounded-md p-4'>
       <h3 className="text-lg font-semibold mb-3">Ціна на номер</h3>
 
       <table className="min-w-full border text-center">

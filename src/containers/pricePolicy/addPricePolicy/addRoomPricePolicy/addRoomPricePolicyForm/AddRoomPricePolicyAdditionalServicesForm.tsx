@@ -86,7 +86,7 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
   };
 
   return (
-    <CardContainer>
+    <CardContainer className='rounded-md p-4'>
       <h3 className="text-lg font-semibold mb-3">Այլ ծառայություններ</h3>
 
       {services.map(service => {

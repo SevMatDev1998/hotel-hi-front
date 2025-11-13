@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react';
 import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../types';
 import AddRoomPricePolicyForm from './addRoomPricePolicyForm/AddRoomPricePolicyFormForm';
+import { Switch } from '../../../../components/shared/Switch';
+import { useTranslation } from '../../../../hooks/useTranslation';
 
 interface IAddRoomPricePolicyCardProps {
   room: HotelRoom
@@ -9,13 +11,19 @@ interface IAddRoomPricePolicyCardProps {
 }
 
 const AddRoomPricePolicyCard: FC<IAddRoomPricePolicyCardProps> = ({ room, hotelFoods, hotelAvailabilityAgeAssessments }) => {
+  const { t } = useTranslation();
 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <button onClick={() => setIsOpen(!isOpen)}>Toggle</button>
-      <h3 className="text-lg font-medium mb-2">Room: {room.name}</h3>
+    <div className='border border-ash-gray p-4 rounded-md'>
+      <div className='flex gap-3 mb-4'>
+        <Switch
+          checked={isOpen}
+          onCheckedChange={() => setIsOpen(!isOpen)}
+        />
+          <h3>{t(`room_class_options.${room.roomClass.name}`)},{t(`room_view_options.${room.roomView.name}`)}- {room.area}</h3>
+      </div>
       {isOpen && <AddRoomPricePolicyForm room={room} hotelFoods={hotelFoods} hotelAvailabilityAgeAssessments={hotelAvailabilityAgeAssessments} />}
     </div>
   );

@@ -91,7 +91,7 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
   };
 
   return (
-    <CardContainer>
+    <CardContainer className='rounded-md p-4'>
 
       <div style={{ display: "flex", gap: 20 }}>
         <button onClick={() => addServiceRow(arrivalService)}>

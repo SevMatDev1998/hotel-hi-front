@@ -9,36 +9,39 @@ import { useGetHotelAgeAssessmentByHotelAvailabilityIdQuery } from '../../../../
 
 interface IAddRoomPricePolicyProps {
   hotelId?: string;
+  hotelAvailabilityId: string;
 }
 
-const AddRoomPricePolicy: FC<IAddRoomPricePolicyProps> = ({ hotelId }) => {
+const AddRoomPricePolicy: FC<IAddRoomPricePolicyProps> = ({ hotelId, hotelAvailabilityId }) => {
   const { t } = useTranslation()
 
   const { data: roomsData } = useGetHotelRoomsByHotelIdQuery({ hotelId: hotelId! }, { skip: !hotelId });
 
   const { data: hotelFoods } = useGetHotelFoodsByHotelIdQuery({ hotelId: hotelId || '' }, { skip: !hotelId });
-  const { data: hotelAvailabilityAgeAssessments } = useGetHotelAgeAssessmentByHotelAvailabilityIdQuery({ hotelAvailabilityId: '7' }, { skip: !hotelId });
+  const { data: hotelAvailabilityAgeAssessments } = useGetHotelAgeAssessmentByHotelAvailabilityIdQuery({ hotelAvailabilityId }, { skip: !hotelAvailabilityId });
 
 
-  
+
 
   return (
     <BlockContainer shadow={false}>
       <h3>{t("price_policy.room_value_settings")}</h3>
+      <div className='flex flex-col gap-3'>
+        {
+          roomsData?.map(room => (
+            <div key={room.id} >
 
-      {
-        roomsData?.map(room => (
-          <div key={room.id}>
+              <AddRoomPricePolicyCard
+                room={room}
+                hotelFoods={hotelFoods}
+                hotelAvailabilityAgeAssessments={hotelAvailabilityAgeAssessments}
+              />
+            </div>
 
-            <AddRoomPricePolicyCard
-              room={room}
-              hotelFoods={hotelFoods}
-              hotelAvailabilityAgeAssessments={hotelAvailabilityAgeAssessments}
-            />
-          </div>
+          ))
+        }
+      </div>
 
-        ))
-      }
     </BlockContainer>
   );
 };

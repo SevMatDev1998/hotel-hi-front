@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       { path: RouteEnum.PRICE_POLICY, element: <PricePolicyPage /> },
       { path: RouteEnum.PRICE_POLICY_DATES, element: <PricePolicyDatesPage /> },
 
-      { path: `${RouteEnum.PRICE_POLICY_CREATE}`, element: <AddPricePolicyPage /> },
+      { path: `${RouteEnum.PRICE_POLICY_CREATE}/:hotelAvailabilityId?`, element: <AddPricePolicyPage /> },
 
       { path: RouteEnum.HOTEL_PARTNERS, element: <HotelPartnersPage /> },
       { path: `${RouteEnum.HOTEL_PARTNERS_CREATE}`, element: <NewHotelPartnerPage /> },

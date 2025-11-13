@@ -95,7 +95,7 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
   };
 
   return (
-    <CardContainer className=''>
+    <CardContainer className='rounded-md p-4'>
       <h3 className="font-semibold text-lg mb-2">Выберите тип питания</h3>
 
       <div className="flex flex-wrap gap-4 mb-4">
