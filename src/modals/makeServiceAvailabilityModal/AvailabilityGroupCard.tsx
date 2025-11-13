@@ -1,18 +1,22 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { UseFormReturn, useFieldArray } from "react-hook-form";
 import PeriodRow from "./PeriodRow";
 import CardContainer from "../../containers/public/CardContainer";
 import { HotelServiceHourlyAvailabilityType } from "../../types";
+import CheckBox from "../../components/shared/CheckBox";
+import { useTranslation } from "../../hooks/useTranslation";
+import { Button } from "../../components/shared/Button";
 
-interface Props {
+interface IAvailabilityGroupCardProps {
   methods: UseFormReturn<any>;
   groupIndex: 0 | 1;
   label: string;
 }
 
-const AvailabilityGroupCard: FC<Props> = ({ methods, groupIndex, label }) => {
-  const { register, watch } = methods;
+const AvailabilityGroupCard: FC<IAvailabilityGroupCardProps> = ({ methods, groupIndex, label }) => {
+  const { watch, setValue } = methods;
   const isActive = watch(`availabilities.${groupIndex}.isActive`);
+  const { t } = useTranslation();
 
   const fa = useFieldArray({
     control: methods.control,
@@ -21,11 +25,11 @@ const AvailabilityGroupCard: FC<Props> = ({ methods, groupIndex, label }) => {
 
   return (
     <CardContainer className="rounded-md flex flex-col gap-3">
-      <div className="flex items-center gap-2">
-        <input type="checkbox" {...register(`availabilities.${groupIndex}.isActive`)} />
-        <p>{label}</p>
-      </div>
-
+      <CheckBox
+        options={{ id: groupIndex, name: label }}
+        isChecked={isActive}
+        toggleValue={() => setValue(`availabilities.${groupIndex}.isActive`, !isActive)}
+      />
       {fa.fields.map((f, idx) => (
         <PeriodRow
           key={f.id}
@@ -36,23 +40,25 @@ const AvailabilityGroupCard: FC<Props> = ({ methods, groupIndex, label }) => {
           onRemove={() => fa.remove(idx)}
         />
       ))}
+      <div>
+        <Button
+          variant="textUnderline"
+          className="text-dusty-teal"
+          disabled={!isActive}
+          onClick={() =>
+            fa.append({
+              startMonth: "",
+              endMonth: "",
+              hourlyAvailabilityTypeId: HotelServiceHourlyAvailabilityType.AllDay,
+              startHour: null,
+              endHour: null,
+            })
+          }
+        >
+          {t('hotel_service.add_period')}
+        </  Button>
+      </div>
 
-      <button
-        type="button"
-        className="text-blue-600 underline"
-        disabled={!isActive}
-        onClick={() =>
-          fa.append({
-            startMonth: "",
-            endMonth: "",
-            hourlyAvailabilityTypeId: HotelServiceHourlyAvailabilityType.AllDay,
-            startHour: null,
-            endHour: null,
-          })
-        }
-      >
-        ➕ Ավելացնել ժամանակահատված
-      </button>
     </CardContainer>
   );
 };

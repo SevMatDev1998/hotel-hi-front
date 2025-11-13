@@ -16,7 +16,7 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
   const { data, isLoading } = useGetHotelServiceAvailabilityQuery({ hotelServiceId });
   const { t } = useTranslation();
 
-  if (isLoading) return null; // или loader, если захочешь
+  if (isLoading) return null;
 
   const availabilityData = data ?? {
     availabilities: [
@@ -52,7 +52,6 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
   return (
     <div className="p-5 flex flex-col space-y-5 w-[900px]">
       <h3>{t("hotel_service.set_availability")}</h3>
-
       <MakeServiceAvailabilityModalForm
         hotelServiceAvailabilities={availabilityData}
         hotelServiceId={hotelServiceId}

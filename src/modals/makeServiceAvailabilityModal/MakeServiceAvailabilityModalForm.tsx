@@ -82,7 +82,7 @@ const MakeServiceAvailabilityModalForm: FC<MakeServiceAvailabilityModalFormProps
       <AvailabilityGroupCard methods={methods} groupIndex={1} label="Անվճար" />
 
       <div className="flex justify-end gap-2">
-        <Button type="button" onClick={onCancel}>
+        <Button variant='text' type="button" onClick={onCancel}>
           {t("buttons.cancel")}
         </Button>
         <Button type="submit">

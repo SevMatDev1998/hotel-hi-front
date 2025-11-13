@@ -181,10 +181,11 @@
     "hotel_provided_services": "Հյուրանոցի կողմից տրամադրվող ծառայություններ",
     "set_availability": "Սահմանել հասանելիություն",
     "see_availability": "Տեսնել  հասանելիությունը",
-
+    "add_period": "Ավելացնել ժամանակահատված",
     "paid_service": "Վճարովի",
     "free_service": "Անվճար",
-    "accessibility_period": "Հասանելիության ժամանակահատված"
+    "accessibility_period": "Հասանելիության ժամանակահատված",
+    "remove_availability_period": "Հեռացնել"
 
   },
 

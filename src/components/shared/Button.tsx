@@ -4,7 +4,7 @@ import { cn } from '../../utils/cn';
 // Base button props interface
 interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: 'base' | 'outline' | 'checkButton' | 'textUnderline';
+  variant?: 'base' | 'outline' | 'checkButton' | 'textUnderline'|'text';
   isLoading?: boolean;
   disabled?: boolean;
   checked?: boolean; // new
@@ -15,7 +15,8 @@ const variantClasses = {
   base: 'p-[12px] bg-dusty-teal rounded-[8px] min-w-[164px] flex items-center justify-center text-xs text-white ',
   outline: 'p-[10px] border border-dusty-teal rounded-[8px] min-w-[164px] w-full flex items-center text-dusty-teal ',
   checkButton: 'w-[90px] h-[26px] items-center justify-center rounded-[5px] flex text-white border border-charcoal-gray text-charcoal-gray',
-  textUnderline: 'underline bg-transparent border-none p-0 text-xs cursor-pointer' 
+  textUnderline: 'underline bg-transparent border-none p-0 text-xs cursor-pointer',
+  text: 'text-16 text-red-500 font-semibold' 
 
 };
 export const Button: React.FC<BaseButtonProps> = ({

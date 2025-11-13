@@ -2,6 +2,8 @@ import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { HotelServiceHourlyAvailabilityType } from "../../types";
 import clsx from "clsx";
+import { useTranslation } from "../../hooks/useTranslation";
+import { Button } from "../../components/shared/Button";
 
 interface Props {
   methods: UseFormReturn<any>;
@@ -13,6 +15,7 @@ interface Props {
 
 const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onRemove }) => {
   const { register, control, watch, formState: { errors } } = methods;
+  const { t } = useTranslation();
 
   const isActive = watch(`availabilities.${groupIndex}.isActive`);
   const type = watch(`availabilities.${groupIndex}.periods.${periodIndex}.hourlyAvailabilityTypeId`);
@@ -20,13 +23,13 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
 
   const e = (errors?.availabilities as any)?.[groupIndex]?.periods?.[periodIndex];
   console.log(errors);
-  
+
 
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-2 w-full  text-12">
       <div className="flex flex-wrap items-center gap-3 w-full">
         <div className="flex flex-col">
-          <div className="flex border border-gray-300 rounded-md">
+          <div className="flex border  rounded-md">
             <input
               type="date"
               {...register(`availabilities.${groupIndex}.periods.${periodIndex}.startMonth`)}
@@ -41,8 +44,8 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             />
           </div>
           {(e?.startMonth || e?.endMonth) && (
-            <span className="text-red-500 text-sm mt-1 font-medium">
-              ⚠️ {e?.startMonth?.message || e?.endMonth?.message}
+            <span className="text-red-500  mt-1 font-medium">
+              {e?.startMonth?.message || e?.endMonth?.message}
             </span>
           )}
         </div>
@@ -70,7 +73,7 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             </label>
           </div>
           {e?.hourlyAvailabilityTypeId && (
-            <span className="text-red-500 text-sm mt-1">
+            <span className="text-red-500  mt-1">
               {e.hourlyAvailabilityTypeId.message}
             </span>
           )}
@@ -81,10 +84,10 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             name={`availabilities.${groupIndex}.periods.${periodIndex}.startHour`}
             control={control}
             render={({ field }) => (
-              <input 
-                type="time" 
-                step="60" 
-                {...field} 
+              <input
+                type="time"
+                step="60"
+                {...field}
                 value={field.value || ''}
                 disabled={!isActive || !isHours}
                 className={e?.startHour ? 'border-red-500' : ''}
@@ -92,7 +95,7 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             )}
           />
           {e?.startHour && (
-            <span className="text-red-500 text-sm mt-1">
+            <span className="text-red-500  mt-1">
               {e.startHour.message}
             </span>
           )}
@@ -103,9 +106,9 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             name={`availabilities.${groupIndex}.periods.${periodIndex}.endHour`}
             control={control}
             render={({ field }) => (
-              <input 
-                type="time" 
-                step="60" 
+              <input
+                type="time"
+                step="60"
                 {...field}
                 value={field.value || ''}
                 disabled={!isActive || !isHours}
@@ -114,16 +117,16 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             )}
           />
           {e?.endHour && (
-            <span className="text-red-500 text-sm mt-1">
+            <span className="text-red-500  mt-1">
               {e.endHour.message}
             </span>
           )}
         </div>
 
         {canRemove && (
-          <button type="button" className="text-red-600 underline" onClick={onRemove}>
-            Ջնջել
-          </button>
+          <Button variant="text" onClick={onRemove}>
+            {t('hotel_service.remove_availability_period')}
+          </Button>
         )}
       </div>
     </div>
