@@ -6,13 +6,22 @@ import RouteEnum from '../../enums/route.enum';
 import { useGetHotelAvailabilityQuery } from '../../services/hotelAvailability/hotelAvailability.service';
 import useAppSelector from '../../hooks/useAppSelector';
 import BlockContainer from '../public/BlockContainer';
+import ShowHotelAvailabilityModal from '../../modals/showHotelAvailabilityModal/ShowHotelAvailabilityModal';
+import useModal from '../../hooks/useModal';
 
 const PricePolicyContainer = () => {
   const { t } = useTranslation();
   const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.auth)
+  const open = useModal();
 
   const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId })
+
+  const handleOpenHotelAvailabilityModal = (availabilityId: string) => {
+    open(ShowHotelAvailabilityModal, { title: "", availabilityId,onSubmit: () =>{} ,  });
+  };
+
+
 
   return (
     <div>
@@ -30,7 +39,7 @@ const PricePolicyContainer = () => {
               <div>
                 {item.title}
               </div>
-              <div>
+              <div onClick={()=>{handleOpenHotelAvailabilityModal(item.id)}}>
                 {t("price_policy.price_list")}
               </div>
             </div>
