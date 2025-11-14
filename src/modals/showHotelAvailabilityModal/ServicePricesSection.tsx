@@ -19,11 +19,10 @@ interface ServicePrice {
 
 interface ServicePricesSectionProps {
   servicePrices: ServicePrice[];
-  currencySymbol: string;
   formatDate: (date: string) => string;
 }
 
-const ServicePricesSection = ({ servicePrices, currencySymbol, formatDate }: ServicePricesSectionProps) => {
+const ServicePricesSection = ({ servicePrices, formatDate }: ServicePricesSectionProps) => {
   const { t } = useTranslation();
 
   if (!servicePrices || servicePrices.length === 0) return null;
@@ -46,7 +45,7 @@ const ServicePricesSection = ({ servicePrices, currencySymbol, formatDate }: Ser
               </div>
               <div className="text-right">
                 <div className="text-lg font-bold text-purple-600">
-                  {Number(servicePrice.price).toFixed(2)} {currencySymbol}
+                  {Number(servicePrice.price).toFixed(2)} 
                 </div>
                 <div className="text-xs text-gray-500">
                   {formatDate(servicePrice.dateFrom)} - {formatDate(servicePrice.dateTo)}

@@ -18,11 +18,10 @@ interface AdditionalService {
 
 interface AdditionalServicesSectionProps {
   additionalServices: AdditionalService[];
-  currencySymbol: string;
   formatTime: (date: string) => string;
 }
 
-const AdditionalServicesSection = ({ additionalServices, currencySymbol, formatTime }: AdditionalServicesSectionProps) => {
+const AdditionalServicesSection = ({ additionalServices, formatTime }: AdditionalServicesSectionProps) => {
   const { t } = useTranslation();
 
   if (!additionalServices || additionalServices.length === 0) return null;
@@ -53,7 +52,7 @@ const AdditionalServicesSection = ({ additionalServices, currencySymbol, formatT
               <div className="text-right">
                 {additionalService.price && (
                   <div className="text-lg font-bold text-orange-600">
-                    {Number(additionalService.price).toFixed(2)} {currencySymbol}
+                    {Number(additionalService.price).toFixed(2)}
                   </div>
                 )}
                 {additionalService.percentage && (

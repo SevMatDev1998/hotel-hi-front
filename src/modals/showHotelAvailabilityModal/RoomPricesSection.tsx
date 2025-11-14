@@ -16,10 +16,9 @@ interface RoomPrice {
 
 interface RoomPricesSectionProps {
   roomPrices: RoomPrice[];
-  currencySymbol: string;
 }
 
-const RoomPricesSection = ({ roomPrices, currencySymbol }: RoomPricesSectionProps) => {
+const RoomPricesSection = ({ roomPrices }: RoomPricesSectionProps) => {
   const { t } = useTranslation();
 
   if (!roomPrices || roomPrices.length === 0) return null;
@@ -68,7 +67,7 @@ const RoomPricesSection = ({ roomPrices, currencySymbol }: RoomPricesSectionProp
                 </td>
                 <td className="py-3 px-4 text-right">
                   <div >
-                    {Number(roomPrice.price).toFixed(2)} {currencySymbol}
+                    {Number(roomPrice.price).toFixed(2)}
                   </div>
                 </td>
               </tr>

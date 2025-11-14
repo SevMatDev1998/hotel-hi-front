@@ -39,6 +39,9 @@ const ShowHotelAvailabilityModal: ModalFC<ISignOutModalProps> = ({availabilityId
     return new Date(date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
   };
 
+  console.log(444,availabilityDetail);
+  
+
   return (
     <div className="flex flex-col p-6 space-y-6 max-h-[80vh] overflow-y-auto">
       <div className="border-b pb-4">
@@ -62,10 +65,18 @@ const ShowHotelAvailabilityModal: ModalFC<ISignOutModalProps> = ({availabilityId
         </div>
       </div>
 
-      <RoomPricesSection 
-        roomPrices={availabilityDetail.hotelRoomPrices}
-        currencySymbol={availabilityDetail.hotel.currency.symbol}
+      {/* Данные по каждой комнате */}
+      {roomsData.map((roomData: any, index: number) => (
+        <RoomDataSection 
+          key={index}
+          roomData={roomData}
+          formatTime={formatTime}
       />
+      ))}
+
+      {/* Общие данные (не привязанные к комнатам) */}
+      <div className="border-t-4 border-gray-300 pt-6 space-y-4">
+        <h3 className="text-xl font-bold mb-4">Общие данные</h3>
 
       <FoodPricesSection 
         foodPrices={availabilityDetail.hotelFoodPrices}
@@ -73,15 +84,18 @@ const ShowHotelAvailabilityModal: ModalFC<ISignOutModalProps> = ({availabilityId
 
       <ServicePricesSection 
         servicePrices={availabilityDetail.hotelServicePrices}
-        currencySymbol={availabilityDetail.hotel.currency.symbol}
         formatDate={formatDate}
       />
 
-      {/* <AdditionalServicesSection 
-        additionalServices={availabilityDetail.hotelAdditionalServices}
-        currencySymbol={availabilityDetail.hotel.currency.symbol}
+        {/* Общие дополнительные услуги (без привязки к комнате) */}
+        {availabilityDetail.hotelAdditionalServices?.some((s: any) => !s.hotelRoomId) && (
+          <AdditionalServicesSection 
+            additionalServices={availabilityDetail.hotelAdditionalServices.filter((s: any) => !s.hotelRoomId)}
         formatTime={formatTime}
-      /> */}
+          />
+        )}
+      </div>
+      
     </div>
   );
 }
