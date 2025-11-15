@@ -19,6 +19,7 @@ import {
 import appToast from '../../../../../helpers/appToast';
 import { Button } from '../../../../../components/shared/Button';
 import { useTranslation } from '../../../../../hooks/useTranslation';
+import { useParams } from 'react-router-dom';
 
 interface IAddRoomPricePolicyFormProps {
   room: HotelRoom;
@@ -32,7 +33,8 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
   hotelAvailabilityAgeAssessments,
 }) => {
   const { user } = useAppSelector((state) => state.auth);
-  const hotelAvailabilityId = Number(user?.hotelId) || 0;
+  const { hotelAvailabilityId } = useParams<{ hotelAvailabilityId: string }>();
+
   const hotelRoomId = Number(room.id);
   const { t } = useTranslation();
   const [createRoomPricePolicy, { isLoading }] = useCreateRoomPricePolicyMutation();
@@ -97,14 +99,23 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
         hotelAvailabilityId,
       } : null;
 
+
+      const foodPricesDto: CreateHotelFoodPriceDto[] = foodPrices.map(service => ({
+        ...service,
+        hotelAvailabilityId,
+        hotelRoomId,
+      }));
+
+
       if (!roomPriceDto) {
         await appToast('error', 'Пожалуйста, введите цену на комнату');
         return;
       }
-
+      console.log(777,hotelAvailabilityId);
+      
       const payload: CreateRoomPricePolicyDto = {
         hotelAvailabilityId,
-        foodPrices,
+        foodPrices: foodPricesDto,
         roomPrice: roomPriceDto,
         arrivalDepartureServices,
         otherServices: additionalServices,
@@ -118,6 +129,7 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
 
     } catch (error: any) {
       console.error('Error creating price policy:', error);
+      
       await appToast('error', error?.data?.message || 'Ошибка при сохранении ценовой политики');
     }
   };

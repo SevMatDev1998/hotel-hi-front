@@ -64,15 +64,13 @@ const ShowHotelAvailabilityModal: ModalFC<ISignOutModalProps> = ({availabilityId
           <div className="">{formatTime(availabilityDetail.checkoutTime)}</div>
         </div>
       </div>
-
-      {/* Данные по каждой комнате */}
-      {roomsData.map((roomData: any, index: number) => (
+      {/* {roomsData.map((roomData: any, index: number) => (
         <RoomDataSection 
           key={index}
           roomData={roomData}
           formatTime={formatTime}
       />
-      ))}
+      ))} */}
 
       {/* Общие данные (не привязанные к комнатам) */}
       <div className="border-t-4 border-gray-300 pt-6 space-y-4">
