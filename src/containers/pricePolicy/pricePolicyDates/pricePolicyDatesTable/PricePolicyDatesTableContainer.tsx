@@ -55,6 +55,35 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
 
   console.log(hotelAvailabilityWithDates);
 
+  // Группируем комиссии по одинаковым значениям fee
+  const groupedAvailabilities = hotelAvailabilityWithDates.flatMap((availability) => {
+    if (!availability.hotelAvailabilityDateCommissions.length) return [];
+
+    // Группируем даты по одинаковым комиссиям
+    const commissionGroups = new Map<string, HotelAvailabilityDateCommission[]>();
+
+    availability.hotelAvailabilityDateCommissions.forEach((dateCommission) => {
+      const key = `${dateCommission.roomFee}-${dateCommission.foodFee}-${dateCommission.additionalFee}-${dateCommission.serviceFee}`;
+      
+      if (!commissionGroups.has(key)) {
+        commissionGroups.set(key, []);
+      }
+      commissionGroups.get(key)!.push(dateCommission);
+    });
+
+    // Создаем отдельную строку для каждой группы комиссий
+    return Array.from(commissionGroups.values()).map((dateCommissions) => ({
+      availability,
+      dateCommissions,
+      commission: {
+        roomFee: dateCommissions[0].roomFee,
+        foodFee: dateCommissions[0].foodFee,
+        additionalFee: dateCommissions[0].additionalFee,
+        serviceFee: dateCommissions[0].serviceFee,
+      }
+    }));
+  });
+
   return (
     <BlockContainer shadow={false} >
       <div className="grid grid-cols-[1fr_2fr_3fr_50px] ">
@@ -63,28 +92,16 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
         <h3>{t("price_policy_dates.commission")}</h3>
       </div>
       <div className="divide-y divide-gray-100">
-        {hotelAvailabilityWithDates.map((availability) => {
-          const commission =
-            availability.hotelAvailabilityDateCommissions[0] || {
-              roomFee: 0,
-              foodFee: 0,
-              additionalFee: 0,
-              serviceFee: 0,
-            };
-
-          if (!availability.hotelAvailabilityDateCommissions[0]) return
-
+        {groupedAvailabilities.map(({ availability, dateCommissions, commission }, index) => {
           return (
             <div
-              key={availability.id}
+              key={`${availability.id}-${index}`}
               className="grid grid-cols-[1fr_2fr_3fr_50px] items-center px-4 py-3"
             >
               <div >
-
-                {availability.hotelAvailabilityDateCommissions.map((dateCommission) => (
+                {dateCommissions.map((dateCommission) => (
                   <div key={dateCommission.id}>{dateCommission.date}</div>
                 ))}
-
               </div>
 
               <div className="flex items-center gap-2 ">
