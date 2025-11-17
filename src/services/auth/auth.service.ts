@@ -31,7 +31,21 @@ const AuthService = ApiInstance.injectEndpoints({
                 url: `${ApiEnum.VERIFY_REGISTRATION}/${token}`,
                 method: "GET",
             })
-        })
+        }),
+        resetPassword: build.mutation<void, { email: string }>({
+            query: (body) => ({
+                url: ApiEnum.RESET_PASSWORD,
+                method: "POST",
+                body
+            })
+        }),
+        setNewPassword: build.mutation<void, { token: string; newPassword: string }>({
+            query: ({ token, newPassword }) => ({
+                url: `${ApiEnum.SET_NEW_PASSWORD}/${token}`,
+                method: "POST",
+                body: { newPassword }
+            })
+        }),
     })
 })
 
@@ -39,6 +53,8 @@ export const {
     useGetInfoQuery,
     useLoginMutation,
     useSignUpMutation,
-    useVerifyRegistrationQuery
+    useVerifyRegistrationQuery,
+    useResetPasswordMutation,
+    useSetNewPasswordMutation
 } = AuthService;
 export const { endpoints: {getInfo, login } } = AuthService

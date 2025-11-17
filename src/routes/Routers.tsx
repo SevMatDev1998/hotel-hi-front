@@ -21,6 +21,8 @@ import PricePolicyDatesPage from "../pages/pricePolicy/PricePolicyDatesPage";
 import AcceptPartnerPage from "../pages/guest/AcceptPartnerPage";
 import HotelPartnerPage from "../pages/hotelPartners/HotelPartnerPage";
 import EditHotelPartnerPage from "../pages/hotelPartners/EditHotelPartnerPage";
+import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
+import NewPasswordPage from "../pages/auth/NewPasswordPage";
 
 
 const router = createBrowserRouter([
@@ -59,6 +61,13 @@ const router = createBrowserRouter([
       { path: RouteEnum.LOGIN, element: <LoginPage /> },
       { path: RouteEnum.SIGN_UP, element: <SignUpPage /> },
       { path: RouteEnum.VERIFY, element: <VerifyPage /> },
+
+
+      { path: RouteEnum.RESET_PASSWORD, element: <ResetPasswordPage /> },
+      { path: RouteEnum.NEW_PASSWORD, element: <NewPasswordPage /> },
+
+      
+
 
       { path: RouteEnum.GUEST_ACCEPT_PARTNER, element: <AcceptPartnerPage /> },
 

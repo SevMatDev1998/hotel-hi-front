@@ -1,10 +1,13 @@
 export enum RouteEnum {
   // Public
   LOGIN = "/login",
+  SIGN_UP = "/sign-up",
+
   RESET_PASSWORD = "/reset-password",
   NEW_PASSWORD = "/new-password/:token",
+
+
   CHECK_EMAIL_VERIFICATION = "/check-email-verification/:token",
-  SIGN_UP = "/sign-up",
   VERIFY = "/verify",
 
   // Private

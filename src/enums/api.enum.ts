@@ -1,11 +1,9 @@
 enum ApiEnum {
     AUTH_LOGIN = "auth/login",
     REGISTER = "auth/register",
-
     VERIFY_REGISTRATION = "auth/verify-registration",
+    RESET_PASSWORD = "auth/reset-password",
 
-    SEND_CONFIRAMTION_TO_EMAIL = "auth/send-confirmation-to-email",
-    VERIFY_EMAIL = "auth/verify-email",
     SET_NEW_PASSWORD = "auth/set-new-password",
 
 
