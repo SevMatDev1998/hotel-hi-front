@@ -5,15 +5,10 @@ import useModal from "../../../../hooks/useModal";
 import DeleteCommissionModal from "../../../../modals/DeleteCommisionModal";
 import BlockContainer from "../../../public/BlockContainer";
 import { useTranslation } from "../../../../hooks/useTranslation";
+import CommissionDateView from "../../../../components/shared/CommissionDateView";
+import { HotelAvailabilityDateCommission } from "../../../../types/hotelAvailabilityDateCommission";
 
-interface HotelAvailabilityDateCommission {
-  id: string;
-  date: string;
-  roomFee: string;
-  foodFee: string;
-  additionalFee: string;
-  serviceFee: string;
-}
+
 
 interface HotelAvailability {
   id: string;
@@ -53,7 +48,6 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
 
   };
 
-  console.log(hotelAvailabilityWithDates);
 
   // Группируем комиссии по одинаковым значениям fee
   const groupedAvailabilities = hotelAvailabilityWithDates.flatMap((availability) => {
@@ -98,11 +92,8 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
               key={`${availability.id}-${index}`}
               className="grid grid-cols-[1fr_2fr_3fr_50px] items-center px-4 py-3"
             >
-              <div >
-                {dateCommissions.map((dateCommission) => (
-                  <div key={dateCommission.id}>{dateCommission.date}</div>
-                ))}
-              </div>
+              <CommissionDateView dateCommissions={dateCommissions} />
+   
 
               <div className="flex items-center gap-2 ">
                 <span
