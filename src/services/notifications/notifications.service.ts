@@ -9,6 +9,7 @@ const notificationsService = ApiInstance.injectEndpoints({
         url: `${ApiEnum.NOTIFICATIONS}/${hotelId}`,
         method: "GET",
       }),
+      providesTags: [ApiEnum.NOTIFICATIONS],
     }),
 
     getPartnerCommissions: build.query<any, { hotelId: string; partnerId: string }>({
@@ -24,6 +25,18 @@ const notificationsService = ApiInstance.injectEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags:[ApiEnum.NOTIFICATIONS]
+    }),
+
+    sendPartnerNotification: build.mutation<
+     void,
+      { hotelId: string; partnerId: string }
+    >({
+      query: ({ hotelId, partnerId }) => ({
+        url: `${ApiEnum.NOTIFICATIONS}/send-notification/${hotelId}/${partnerId}`,
+        method: "POST",
+      }),
+      invalidatesTags:[ApiEnum.NOTIFICATIONS]
     }),
   }),
 });
@@ -33,6 +46,7 @@ export const {
   useGetPartnerCommissionsQuery,
   useLazyGetPartnerCommissionsQuery,
   useSavePartnerCommissionsMutation,
+  useSendPartnerNotificationMutation,
 } = notificationsService;
 
 

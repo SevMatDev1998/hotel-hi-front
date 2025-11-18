@@ -2,7 +2,12 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useLazyDebounce } from "../../../hooks/useDebounse";
 import { useCallback, useState } from "react";
-import { useGetAllNotificationsQuery, useLazyGetPartnerCommissionsQuery, useSavePartnerCommissionsMutation } from "../../../services/notifications/notifications.service";
+import {
+  useGetAllNotificationsQuery,
+  useLazyGetPartnerCommissionsQuery,
+  useSavePartnerCommissionsMutation,
+  useSendPartnerNotificationMutation
+} from "../../../services/notifications/notifications.service";
 import { DataTable } from "../../../components/shared/Table";
 import { getNotificationsColumns } from "./NotificationsColumns";
 import { Button } from "../../../components/shared/Button";
@@ -31,6 +36,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
     useLazyGetPartnerCommissionsQuery();
 
   const [saveCommissions] = useSavePartnerCommissionsMutation();
+  const [sendNotification, {isLoading:isNotificationSendLoading}] = useSendPartnerNotificationMutation();
 
   const onChangePage = (pageNumber: string) => {
     if (pageNumber !== page) {
@@ -65,8 +71,16 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
 
   const handleToggleNotification = useCallback((partnerId: number, enabled: boolean) => {
     console.log('Toggle notification for partner:', partnerId, 'enabled:', enabled);
-    // TODO: Implement toggle notification API
   }, []);
+
+  const handleSendNotification = useCallback(async (partnerId: string) => {
+    if (!hotelId) return;
+    sendNotification({
+      hotelId: hotelId,
+      partnerId
+    }).unwrap();
+
+  }, [hotelId, sendNotification]);
 
   const handleSaveCommissions = useCallback(async () => {
     if (!expandedPartnerId || !partnerCommissions) return;
@@ -82,7 +96,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
     setExpandedPartnerId(null);
   }, [expandedPartnerId, partnerCommissions, saveCommissions]);
   console.log(partnerCommissions);
-  
+
   // Prepare data with expandedContent
   const tableData = (notifications || []).map((partner: any) => ({
     ...partner,
@@ -108,7 +122,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
                 {partnerCommissions?.map((availability: any) => {
                   const commissions = availability.hotelAvailabilityDateCommissions;
                   const firstCommission = commissions[0];
-                  
+
                   return (
                     <tr key={availability.id} className="border-b">
                       <td className="py-3 px-4 align-top">
@@ -118,7 +132,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
                           </div>
                         ))}
                       </td>
-                      
+
                       {/* Second column - availability name with color (once) */}
                       <td className="py-3 px-4 align-top">
                         <div className="flex items-center gap-2">
@@ -129,7 +143,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
                           <span>{availability.title}</span>
                         </div>
                       </td>
-                      
+
                       {/* Third column - commission (once) */}
                       <td className="py-3 px-4 align-top">
                         {t("notifications.room")}: {firstCommission?.roomFee || 0}%,{' '}
@@ -171,10 +185,10 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
         data={tableData}
         columns={getNotificationsColumns(
           t,
-          navigate,
-          expandedRows,
+          handleSendNotification,
           handleToggleRow,
-          handleToggleNotification
+          handleToggleNotification,
+          isNotificationSendLoading,
         )}
         onChangePage={onChangePage}
         totalCount={notifications?.meta?.totalPages || 0}

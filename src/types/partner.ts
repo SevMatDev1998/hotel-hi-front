@@ -1,7 +1,7 @@
 import { PartnerStatus, LegalEntityType } from './enums';
 
 export interface Partner {
-  id: string;
+  id: number;
   email: string;
   tin: string;
   name: string;
@@ -12,6 +12,7 @@ export interface Partner {
   status: PartnerStatus;
   countryId: number;
   legalEntityTypeId: LegalEntityType;
+  isPartnerCommissionAccept: boolean;
   isSystem: boolean;
   createdAt: Date;
   updatedAt: Date;

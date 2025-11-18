@@ -1,13 +1,14 @@
 import { TFunction } from 'i18next';
 import { Partner } from '../../../types';
 import { Switch } from '../../../components/shared/Switch';
+import { Button } from '../../../components/shared/Button';
 
 export const getNotificationsColumns = (
   t: TFunction<"translation", undefined>,
-  _navigate?: (path: string) => void,
-  expandedRows?: Set<number>,
-  onToggleRow?: (id: number) => void,
-  onToggleNotification?: (partnerId: number, enabled: boolean) => void,
+  onSendNotification: (partnerId: string) => void,
+  onToggleRow: (id: number) => void,
+  onToggleNotification: (partnerId: number, enabled: boolean) => void,
+  isNotificationSendLoading: boolean,
 ) => [
     // {
     //   id: 'expander',
@@ -54,17 +55,19 @@ export const getNotificationsColumns = (
       cell: ({ row }: { row: { original: Partner } }) => (
         <div className="flex items-center gap-2">
           <span>{t("notifications.general")}</span>
-          <button
+          <Button
+          variant='text'
             onClick={(e) => {
               e.stopPropagation();
               if (onToggleRow) {
                 onToggleRow(row.original.id);
               }
             }}
-            className="text-dusty-teal"
+            className={row.original.isPartnerCommissionAccept ? "text-black" : "text-dusty-teal"}
+            disabled={row.original.isPartnerCommissionAccept}
           >
-            {t("notifications.edit")}
-          </button>
+            {row.original.isPartnerCommissionAccept ? t("notifications.accepted") : t("notifications.edit")}
+          </Button>
         </div>
       ),
     },
@@ -72,16 +75,17 @@ export const getNotificationsColumns = (
       id: 'notified',
       header: t("notifications.notified"),
       cell: ({ row }: { row: { original: Partner } }) => (
-        <button
+        <Button
+          variant='text'
           onClick={(e) => {
             e.stopPropagation();
-            // TODO: Implement notification logic
-            console.log('Notify partner:', row.original.id);
+            onSendNotification(row.original.id);
           }}
-          className="text-dusty-teal"
+            disabled={!row.original.isPartnerCommissionAccept ||isNotificationSendLoading}
+          className={row.original.isPartnerCommissionAccept ? "text-dusty-teal" : "text-black"}
         >
           {t("notifications.notify")}
-        </button>
+        </Button>
       ),
     }
   ];
