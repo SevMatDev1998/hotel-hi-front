@@ -32,7 +32,7 @@ export enum RouteEnum {
 
   //
   GUEST_ACCEPT_PARTNER = "/guest/accept-partner/:partnerId",
-
+  GUEST_OFFER_PRICES = "/guest/offer-prices",
 
   NOT_FOUND = "*",
 }

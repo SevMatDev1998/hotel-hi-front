@@ -1,4 +1,4 @@
-import AcceptPartnerContainer from "../../containers/guestContainers/AcceptPartnerContainer/AcceptPartnerContainer";
+import AcceptPartnerContainer from "../../containers/guestContainers/acceptPartnerContainer/AcceptPartnerContainer";
 
 const AcceptPartnerPage = () => {
   return <AcceptPartnerContainer />;

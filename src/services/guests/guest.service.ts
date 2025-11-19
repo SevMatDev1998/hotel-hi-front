@@ -1,6 +1,6 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { Partner } from "../../types";
+import { HotelAvailability, Partner } from "../../types";
 
 const GuestService = ApiInstance.injectEndpoints({
     endpoints: build => ({
@@ -15,11 +15,25 @@ const GuestService = ApiInstance.injectEndpoints({
                 method: "POST",
                 body: data
             })
-        })
+        }),
+        // ste petqa sned anenq hotelid u partner id 
+        // u stananq data 
+
+
+        getHotelAvailabilityWithDatesByPartnerid: build.query<HotelAvailability[], { hotelId: string, partnerId: string }>({
+            query: ({ hotelId, partnerId }) => ({
+                url: `${ApiEnum.GUESTS}/hotelAvailability/dates`,
+                params: { partnerId, hotelId }
+            }),
+        }),
     })
 })
 
+
+
 export const {
     useGetPartnerInformationQuery,
-    useAcceptPartnerShipMutation
+    useAcceptPartnerShipMutation,
+    useGetHotelAvailabilityWithDatesByPartneridQuery
 } = GuestService;
+

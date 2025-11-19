@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useGetPartnerInformationQuery } from "../../../services/guests/guest.service";
-import AcceptPartnerForm from "./AcceptPartnerForm";
 import { useGetCountriesQuery } from "../../../services/countries";
 import { LegalEntityType } from "../../../types";
+import AcceptPartnerForm from "./AcceptPartnerForm";
 
 const AcceptPartnerContainer = () => {
 
@@ -23,7 +23,7 @@ const AcceptPartnerContainer = () => {
     value,
   }));
 
-
+ 
   return (
     <div>
       {partnerData &&

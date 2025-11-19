@@ -23,6 +23,7 @@ import HotelPartnerPage from "../pages/hotelPartners/HotelPartnerPage";
 import EditHotelPartnerPage from "../pages/hotelPartners/EditHotelPartnerPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import NewPasswordPage from "../pages/auth/NewPasswordPage";
+import OfferPricePage from "../pages/guest/OfferPricePage";
 
 
 const router = createBrowserRouter([
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
 
 
       { path: RouteEnum.GUEST_ACCEPT_PARTNER, element: <AcceptPartnerPage /> },
+      { path: RouteEnum.GUEST_OFFER_PRICES, element: <OfferPricePage /> },
 
 
       { errorElement: <NotFound /> }
