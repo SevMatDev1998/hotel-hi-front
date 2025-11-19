@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
-import { FieldError, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 import { useTranslation } from '../../hooks/useTranslation';
 
 interface SelectOption {
@@ -13,10 +13,10 @@ interface SelectProps {
   name: string;
   options: SelectOption[];
   register: UseFormRegister<any>;
-  errors?: FieldError | undefined;
   className?: string;
   tr_name?: string;
   valueAsNumber?: boolean;
+  isError?: boolean;
 }
 
 export const RegisterSelect: React.FC<SelectProps> = ({
@@ -24,10 +24,11 @@ export const RegisterSelect: React.FC<SelectProps> = ({
   name,
   options,
   register,
-  errors,
   className,
   tr_name='',
   valueAsNumber = false,
+  isError = false,
+
   ...props
 }) => {
 
@@ -44,7 +45,7 @@ export const RegisterSelect: React.FC<SelectProps> = ({
         id={name}
         className={clsx( 
           "appearance-none block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
-           errors 
+           isError 
             ? "border-red-500 focus:border-red-500 focus:ring-red-500"
             : "border-charcoal-gray",
           className
@@ -59,11 +60,7 @@ export const RegisterSelect: React.FC<SelectProps> = ({
           </option>
         ))}
       </select>
-      {errors && (
-        <p className="mt-1 text-sm text-red-600">
-          {errors.message || t(`errors.${errors.type || 'required'}`)}
-        </p>
-      )}
+     
     </div>
   );
 };

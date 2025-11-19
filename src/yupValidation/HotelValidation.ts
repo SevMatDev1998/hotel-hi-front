@@ -1,41 +1,49 @@
 import * as yup from 'yup';
+import tv from '../helpers/tv';
 
 export const UpdateHotelBaseInfoSchema = yup.object({
+
+  name: yup
+    .string()
+    .required(tv('required'))
+    .min(2, tv('min', {min: 2}))
+    .max(100, tv('max', {max: 100})),
+
   contactPerson: yup
     .string()
-    .required('Contact person is required')
-    .min(2, 'Contact person must be at least 2 characters')
-    .max(100, 'Contact person must be less than 100 characters'),
+    .required(tv('required'))
+    .min(2, tv('min', {min: 2}) )
+    .max(100, tv('max', {max: 100})),
   
-  phoneCode: yup
-    .number()
-    .required('Phone code is required')
-    .positive('Phone code must be a positive number')
-    .min(1, 'Phone code must be at least 1 digit')
-    .max(9999, 'Phone code must be less than 5 digits'),
+  // phoneCode: yup
+  //   .number()
+  //   .required(tv('required'))
+  //   .positive()
+  //   .min(1 ,tv('min', {min: 1}))
+  //   .max(9999,tv('max', {max: 9999})),
   
   phoneNumber: yup
     .string()
-    .required('Phone number is required')
-    .matches(/^\d+$/, 'Phone number must contain only digits')
-    .min(6, 'Phone number must be at least 6 digits')
-    .max(15, 'Phone number must be less than 16 digits'),
+    .required(tv('required'))
+    .matches(/^\d+$/)
+    .min(6,tv('min', {min: 6}) )
+    .max(15, tv('max', {max: 15})),
   
   countryId: yup
     .number()
-    .required('Country is required')
-    .positive('Country ID must be a positive number'),
+    .required(tv('required'))
+    .positive(),
 
   city: yup
     .string()
-    .required('City is required')
-    .min(2, 'City must be at least 2 characters')
-    .max(50, 'City must be less than 50 characters'),
+    .required(tv('required'))
+    .min(2,tv('min', {min: 2}) )
+    .max(50, tv('max', {max: 50})),
   
   currencyId: yup
     .number()
-    .required('Currency is required')
-    .positive('Currency ID must be a positive number')
+    .required(tv('required'))
+    .positive()
 });
 
 
@@ -43,31 +51,31 @@ export const UpdateHotelLegalInfoSchema = yup.object({
   legalPerson: yup
     .string()
     .optional()
-    .min(2, 'Legal person must be at least 2 characters')
-    .max(100, 'Legal person must be less than 100 characters'),
+    .min(2)
+    .max(100),
 
   registerCountryId: yup
     .number()
     .optional()
-    .positive('Country ID must be a positive number'),
+    .positive(),
 
   registerCity: yup
     .string()
     .optional()
-    .min(2, 'City must be at least 2 characters')
-    .max(50, 'City must be less than 50 characters'),
+    .min(2)
+    .max(50),
 
   tinNumber: yup
     .string()
     .optional()
-    .min(5, 'TIN number must be at least 5 characters')
-    .max(50, 'TIN number must be less than 50 characters'),
+    .min(5)
+    .max(50),
 
   director: yup
     .string()
     .optional()
-    .min(2, 'Director must be at least 2 characters')
-    .max(100, 'Director must be less than 100 characters'),
+    .min(2)
+    .max(100),
 
     phoneNumber: yup
     .string()
@@ -76,7 +84,7 @@ export const UpdateHotelLegalInfoSchema = yup.object({
   priceSendEmail: yup
     .string()
     .optional()
-    .email('Price send email must be a valid email')
+    .email()
 });
 
 

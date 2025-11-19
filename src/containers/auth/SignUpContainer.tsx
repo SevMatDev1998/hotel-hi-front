@@ -9,6 +9,7 @@ import { useTranslation } from '../../hooks/useTranslation';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUpEffect } from '../../services/auth/auth.effects';
+import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
 
 const SignUpContainer = () => {
   const { t } = useTranslation();
@@ -33,38 +34,31 @@ const SignUpContainer = () => {
       <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(signUp)}>
         <div className='flex justify-between text-24'>
           <div>{t('auth.create_account')}</div>
-          <a href={RouteEnum.LOGIN} className='underline text-dusty-teal' >{t('auth.login')}</a>
+          <p onClick={() => { navigate(RouteEnum.LOGIN) }} className='underline text-dusty-teal cursor-pointer' >{t('auth.login')}</p>
         </div>
-        <div>
-          {/* <Label className="block" text={t('auth.hotel_name')} /> */}
+        <InputValidationLayout errors={errors} name="hotelName">
           <RegisterInput
             register={register}
             name="hotelName"
             type="text"
-            errors={errors}
             label={t('auth.hotelName')}
-            tr_name="auth"
           />
-        </div>
-        <div>
+        </InputValidationLayout>
+        <InputValidationLayout errors={errors} name="email">
           <RegisterInput
             register={register}
             name="email"
             type="email"
-            errors={errors}
             label={t('auth.email')}
-            tr_name="auth"
-          />
-        </div>
-        <div>
+          />      
+        </InputValidationLayout>
+        <InputValidationLayout errors={errors} name="password">
           <div className="relative">
             <RegisterInput
               register={register}
               name="password"
               type={showPassword ? "text" : "password"}
-              errors={errors}
               label={t('auth.password')}
-              tr_name="auth"
             />
             <button
               type="button"
@@ -77,17 +71,15 @@ const SignUpContainer = () => {
               />
             </button>
           </div>
-        </div>
-        <div>
+        </InputValidationLayout>
+        <InputValidationLayout errors={errors} name="confirmPassword">
           <div className="relative">
             <RegisterInput
               register={register}
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               className='rounded-none border !border-dusty-teal pr-10'
-              errors={errors}
-              label={t('auth.confirm_password')}
-              tr_name="auth"
+              label={t('auth.confirmPassword')}
             />
             <button
               type="button"
@@ -100,17 +92,17 @@ const SignUpContainer = () => {
               />
             </button>
           </div>
-        </div>
+        </InputValidationLayout>
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">
             {t('auth.login')}
           </Button>
         </div>
         <div className='flex flex-col text-dusty-teal text-18'>
-          <a href={RouteEnum.RESET_PASSWORD}>{t('auth.forgot_password')}</a>
+          <p onClick={() => { navigate(RouteEnum.RESET_PASSWORD) }} className='cursor-pointer' >{t('auth.forgotPassword')}</p>
           <div className='flex gap-1 '>
             <div className='text-18  text-charcoal-gray'>{t('auth.no_account')}:</div>
-            <a href={RouteEnum.SIGN_UP} className='font-semibold'>{t('auth.register')}</a>
+            <p onClick={() => { navigate(RouteEnum.LOGIN) }} className='font-semibold cursor-pointer' >{t('auth.register')}</p>
           </div>
         </div>
       </form>

@@ -6,9 +6,12 @@ import { useTranslation } from '../../hooks/useTranslation';
 import RouteEnum from '../../enums/route.enum';
 import { useResetPasswordMutation } from '../../services/auth';
 import { Button } from '../../components/shared/Button';
+import ErrorMessage from '../../components/shared/ErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPasswordContainer = () => {
 
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const { register, handleSubmit, formState: { errors } } = useForm<ResetPasswordRequestFormType>({
@@ -17,23 +20,26 @@ const ResetPasswordContainer = () => {
 
   const [resetPassword, {isLoading }] = useResetPasswordMutation()
 
-
-
   return (
     <div className='max-w-[400px]'>
       <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(resetPassword)}>
         <div className='flex justify-between text-24'>
-          <a href={RouteEnum.SIGN_UP} className='underline text-dusty-teal' >{t('auth.create_account')}</a>
-          <div>{t('auth.login')}</div>
+          <div>{t('auth.reset_password')}</div>
+          <p onClick={()=>{navigate(RouteEnum.SIGN_UP)}}  className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
         </div>
         <div>
           <RegisterInput
             register={register}
             errors={errors}
-            label="Email address"
+            label={t('auth.email')}
             name="email"
             type="email"
             className='rounded-none border !border-dusty-teal'
+          />
+          <ErrorMessage
+            fieldName="email"
+            error={errors.email}
+            translationName="auth"
           />
         </div>
         <div className='flex justify-center '>

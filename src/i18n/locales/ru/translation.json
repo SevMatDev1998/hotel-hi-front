@@ -24,7 +24,7 @@
     "password": "Пароль",
     "not_registered_system": "Не зарегистрирован в системе",
     "register": "Зарегистрироваться",
-    "forgot_password": "Забыли пароль"
+    "forgotPassword": "Забыли пароль"
   },
 
   "notifications": {

@@ -22,6 +22,8 @@ interface RoomPartState {
 const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomParts, onSubmit, onCancel }) => {
   const { t } = useTranslation();
   const { data: roomParts } = useGetRoomPartsQuery();
+
+
   const [parts, setParts] = useState<RoomPartState[]>([]);
   const [addHotelRoomParts] = useAddHotelRoomPartsMutation();
 
@@ -42,12 +44,13 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
         roomParts.map((p: any) => {
           const quantity = partQuantities[p.id] || 1;
           const selected = !!partQuantities[p.id];
-
+          const isBadRoom = p.name === "Bedroom";
+          
           return {
             id: p.id,
             name: p.name,
             quantity,
-            selected,
+            selected: isBadRoom || selected,
           };
         })
       );
@@ -55,10 +58,11 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
   }, [roomParts, hotelRoomParts]);
 
 
-  const toggleSelect = (id: string) => {
+  const toggleSelect = (part: RoomPartState) => {
+    if (part.name === "Bedroom") return; 
     setParts((prev) =>
       prev.map((p) =>
-        p.id === id ? { ...p, selected: !p.selected } : p
+        p.id === part.id ? { ...p, selected: !p.selected } : p
       )
     );
   };
@@ -87,7 +91,6 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
     addHotelRoomParts({ hotelRoomId, roomParts: payload.roomParts });
     if (onCancel) onCancel();
   };
-  console.log(333, hotelRoomParts);
 
 
   return (
@@ -106,7 +109,7 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
               <input
                 type="checkbox"
                 checked={part.selected}
-                onChange={() => toggleSelect(part.id)}
+                onChange={() => toggleSelect(part)}
                 className="w-4 h-4 accent-blue-600"
               />
               <span className="text-gray-700 text-sm">

@@ -9,6 +9,7 @@ import RouteEnum from '../../enums/route.enum';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useNavigate } from 'react-router-dom';
 import { loginEffect } from '../../services/auth/auth.effects';
+import ErrorMessage from '../../components/shared/ErrorMessage';
 
 const LoginContainer = () => {
 
@@ -29,18 +30,22 @@ const LoginContainer = () => {
     <div className='max-w-[400px]'>
       <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(login)}>
         <div className='flex justify-between text-24'>
-          <a href={RouteEnum.SIGN_UP} className='underline text-dusty-teal' >{t('auth.create_account')}</a>
           <div>{t('auth.login')}</div>
+          <p onClick={() => { navigate(RouteEnum.SIGN_UP) }} className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
         </div>
         <div>
           <RegisterInput
             register={register}
             errors={errors}
-            label="Email address"
+            label={`${t('auth.email')}*`}
             name="email"
             type="email"
             className='rounded-none border !border-dusty-teal'
-            tr_name="auth"
+          />
+          <ErrorMessage
+            fieldName="email"
+            error={errors.email}
+            translationName="auth"
           />
         </div>
         <div>
@@ -48,11 +53,15 @@ const LoginContainer = () => {
             <RegisterInput
               register={register}
               errors={errors}
-              label="password"
+              label={`${t('auth.password')}*`}
               name="password"
               className='rounded-none border !border-dusty-teal'
-              tr_name="auth"
               type={showPassword ? "text" : "password"}
+            />
+            <ErrorMessage
+              fieldName="password"
+              error={errors.password}
+              translationName="auth"
             />
             <button
               type="button"
@@ -72,10 +81,10 @@ const LoginContainer = () => {
           </Button>
         </div>
         <div className='flex flex-col text-dusty-teal text-18'>
-          <a href={RouteEnum.RESET_PASSWORD} className=''>{t('auth.forgot_password')}</a>
+          <p onClick={() => { navigate(RouteEnum.RESET_PASSWORD) }} className='cursor-pointer' >{t('auth.forgotPassword')}</p>
           <div className='flex gap-1 '>
             <div className='text-18 text-charcoal-gray'>{t('auth.no_account')}:</div>
-            <a href={RouteEnum.SIGN_UP} className='  font-semibold'>{t('auth.register')}</a>
+          <p onClick={() => { navigate(RouteEnum.SIGN_UP) }} className='cursor-pointer font-semibold' >{t('auth.register')}</p>
           </div>
         </div>
       </form>
