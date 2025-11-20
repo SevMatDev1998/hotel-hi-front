@@ -1,4 +1,3 @@
-import React from 'react';
 import PricePolicyDatesContainer from '../../containers/pricePolicy/pricePolicyDates/PricePolicyDatesContainer';
 
 const PricePolicyDatesPage = () => {

@@ -34,12 +34,19 @@ export interface CreateOtherServiceDto {
   isTimeLimited: boolean;
 }
 
+export interface CreateHotelAgeAssignmentPriceDto {
+  hotelRoomId: number;
+  hotelAgeAssignmentId: number;
+  price: number;
+}
+
 export interface CreateRoomPricePolicyDto {
   hotelAvailabilityId: number;
   foodPrices: CreateHotelFoodPriceDto[];
   roomPrice: CreateHotelRoomPriceDto;
   arrivalDepartureServices: CreateHotelAdditionalServiceDto[];
   otherServices: CreateOtherServiceDto[];
+  hotelAgeAssignmentPrices: CreateHotelAgeAssignmentPriceDto[];
 }
 
 export interface GetRoomPricePolicyResponse {
@@ -49,6 +56,7 @@ export interface GetRoomPricePolicyResponse {
     hotelRoomId: number;
     foodPrices: (CreateHotelFoodPriceDto & { id: number; createdAt: string; updatedAt: string })[];
     roomPrice: (CreateHotelRoomPriceDto & { id: number; createdAt: string; updatedAt: string }) | null;
+    ageAssignmentPrices: (CreateHotelAgeAssignmentPriceDto & { id: number; createdAt: string; updatedAt: string })[];
     arrivalDepartureServices: (CreateHotelAdditionalServiceDto & { id: number; createdAt: string; updatedAt: string })[];
     otherServices: (CreateOtherServiceDto & { id: number; createdAt: string; updatedAt: string })[];
   };

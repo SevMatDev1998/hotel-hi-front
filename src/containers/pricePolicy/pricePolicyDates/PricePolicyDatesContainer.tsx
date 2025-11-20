@@ -17,7 +17,7 @@ const PricePolicyDatesContainer = () => {
 
   const { data: hotelAvailabilityWithDates } = useGetHotelAvailabilityWithDatesQuery({ hotelId: user?.hotelId! }, { skip: !user?.hotelId })
 
-
+  
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("rooms.rooms_types")}</h2>

@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import AddRoomPricePolicyFoodForm from './AddRoomPricePolicyFoodForm';
 import AddRoomPricePolicyRoomForm from './AddRoomPricePolicyRoom';
+import AddRoomPricePolicyAgeAssignmentForm from './AddRoomPricePolicyAgeAssignmentForm';
 import useAppSelector from '../../../../../hooks/useAppSelector';
 import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../../types';
 import AddRoomPricePolicyArrivalDepartureForm from './AddRoomPricePolicyArrivalDepartureForm';
@@ -10,6 +11,7 @@ import {
   CreateHotelRoomPriceDto,
   CreateHotelAdditionalServiceDto,
   CreateOtherServiceDto,
+  CreateHotelAgeAssignmentPriceDto,
   CreateRoomPricePolicyDto
 } from '../../../../../types/pricePolicyDto';
 import {
@@ -47,6 +49,7 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
   // ---------- ОБЩИЙ СТЕЙТ ----------
   const [foodPrices, setFoodPrices] = useState<CreateHotelFoodPriceDto[]>([]);
   const [roomPrice, setRoomPrice] = useState<Omit<CreateHotelRoomPriceDto, 'hotelAvailabilityId'> | null>(null);
+  const [ageAssignmentPrices, setAgeAssignmentPrices] = useState<CreateHotelAgeAssignmentPriceDto[]>([]);
   const [arrivalDeparturePolicies, setArrivalDeparturePolicies] = useState<Omit<CreateHotelAdditionalServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]>([]);
   const [otherServices, setOtherServices] = useState<Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]>([]);
 
@@ -63,6 +66,10 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, createdAt, updatedAt, hotelAvailabilityId, ...roomPriceData } = data.roomPrice;
         setRoomPrice(roomPriceData);
+      }
+
+      if (data.ageAssignmentPrices?.length > 0) {
+        setAgeAssignmentPrices(data.ageAssignmentPrices);
       }
 
       if (data.arrivalDepartureServices?.length > 0) {
@@ -111,7 +118,6 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
         await appToast('error', 'Пожалуйста, введите цену на комнату');
         return;
       }
-      console.log(777,hotelAvailabilityId);
       
       const payload: CreateRoomPricePolicyDto = {
         hotelAvailabilityId,
@@ -119,9 +125,9 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
         roomPrice: roomPriceDto,
         arrivalDepartureServices,
         otherServices: additionalServices,
+        hotelAgeAssignmentPrices: ageAssignmentPrices,
       };
 
-      console.log("FINAL DATA TO SEND:", payload);
 
       await createRoomPricePolicy(payload).unwrap();
 
@@ -133,7 +139,7 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
       await appToast('error', error?.data?.message || 'Ошибка при сохранении ценовой политики');
     }
   };
-
+ 
   return (
     <div>
       <div className='flex flex-col gap-4 mb-6'>
@@ -153,6 +159,13 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
             hotelRoomId: existingData.data.roomPrice.hotelRoomId,
             price: Number(existingData.data.roomPrice.price)
           } : undefined}
+        />
+
+        <AddRoomPricePolicyAgeAssignmentForm
+          hotelRoomId={hotelRoomId}
+          hotelAvailabilityAgeAssessments={hotelAvailabilityAgeAssessments}
+          onChange={setAgeAssignmentPrices}
+          initialData={existingData?.data?.ageAssignmentPrices}
         />
 
         <AddRoomPricePolicyArrivalDepartureForm
