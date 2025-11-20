@@ -9,13 +9,28 @@ const AuthService = ApiInstance.injectEndpoints({
                 url: ApiEnum.GET_ME,
             })
         }),
+        getNavigationAccessStep: build.query<{ navigationAccessStep: number }, { hotelId: string }>({
+            query: ({ hotelId }) => ({
+                url: `${ApiEnum.NAVIGATION_ACCESS}/${hotelId}`,
+            }),
+            providesTags:[ApiEnum.NAVIGATION_ACCESS]
+        }),
+
+        setNavigationAccessStep: build.mutation<{ navigationAccessStep: number }, { hotelId: string, stepNumber: number }>({
+            query: ({ hotelId, stepNumber }) => ({
+                url: `${ApiEnum.NAVIGATION_ACCESS}/${hotelId}`,
+                method: "PATCH",
+                body: { stepNumber }
+            }),
+            invalidatesTags:[ApiEnum.NAVIGATION_ACCESS]
+        }),
         login: build.mutation<LoginResponse, LoginDTO>({
             query: (body) => ({
                 url: ApiEnum.AUTH_LOGIN,
                 method: "POST",
                 body
             }),
-            extraOptions:{
+            extraOptions: {
                 action: 'LOGIN'
             }
         }),
@@ -51,10 +66,14 @@ const AuthService = ApiInstance.injectEndpoints({
 
 export const {
     useGetInfoQuery,
+    useGetNavigationAccessStepQuery,
+    useSetNavigationAccessStepMutation,
     useLoginMutation,
     useSignUpMutation,
     useVerifyRegistrationQuery,
     useResetPasswordMutation,
     useSetNewPasswordMutation
 } = AuthService;
-export const { endpoints: {getInfo, login } } = AuthService
+export const { endpoints: { getInfo, login } } = AuthService
+
+// useSetNavigationAccessStepMutation.

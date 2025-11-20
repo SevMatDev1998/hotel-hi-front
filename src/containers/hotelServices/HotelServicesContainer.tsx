@@ -3,10 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/shared/Button';
 import { useGetSystemServiceGroupsQuery } from '../../services/hotelService';
 import HotelSericeGroups from './HotelSericeGroups';
+import { useSetNavigationAccessStepMutation } from '../../services/auth';
+import useAppSelector from '../../hooks/useAppSelector';
 
 const HotelServicesContainer = () => {
   const { t } = useTranslation();
   const { data: serviceGroups } = useGetSystemServiceGroupsQuery();
+  const { user } = useAppSelector(state => state.auth);
+  const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
 
   return (
     <div>
@@ -22,9 +26,12 @@ const HotelServicesContainer = () => {
             </div>
           </div>
 
-          <div className=" justify-items-end mobile:justify-items-start">
-            <Button>{t("hotel_service.approve_services")} </Button>
+          <div className="justify-items-end mobile:justify-items-start">
+            <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 5 })}>
+              {t("hotel_service.approve_services")}
+            </Button>
           </div>
+
         </div>
         <HotelSericeGroups serviceGroups={serviceGroups} />
       </div>

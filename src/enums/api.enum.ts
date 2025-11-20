@@ -6,6 +6,7 @@ enum ApiEnum {
 
     SET_NEW_PASSWORD = "auth/set-new-password",
 
+    NAVIGATION_ACCESS="auth/navigation-access-step",
 
 
 
@@ -40,6 +41,7 @@ enum ApiEnum {
     HOTEL_PARTNERS="hotel-partners",
     
     PRICE_POLICY="price-policy",
+
 
     //guest
     GUESTS="guests"

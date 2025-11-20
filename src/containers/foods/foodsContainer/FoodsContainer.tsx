@@ -4,12 +4,14 @@ import { Button } from '../../../components/shared/Button';
 import { useGetHotelFoodsByHotelIdQuery } from '../../../services/foods';
 import useAppSelector from '../../../hooks/useAppSelector';
 import FoodContainerCard from './FoodContainerCard';
+import { useSetNavigationAccessStepMutation } from '../../../services/auth';
 
 const FoodsContainer = () => {
   const { t } = useTranslation();
-  
+
   const { user } = useAppSelector(state => state.auth);
   const { data: foodData } = useGetHotelFoodsByHotelIdQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId });
+  const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
 
   const mainFoods = [{
     id: 1,
@@ -25,7 +27,7 @@ const FoodsContainer = () => {
   }
   ]
   console.log(foodData, 'foodData');
-  
+
 
   return (
     <div>
@@ -38,7 +40,9 @@ const FoodsContainer = () => {
             <p>{foodData?.length || 0}</p>
           </div>
           <div className="grid justify-items-end mobile:justify-items-start">
-            <Button>{t("rooms.approved_hotel_number_of_rooms")} </Button>
+            <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 4 })}>
+              {t("foods.approved_hotel_food")}
+            </Button>
           </div>
         </div>
         {

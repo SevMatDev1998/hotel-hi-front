@@ -6,14 +6,17 @@ import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDisaptch';
 import { toggleSidebar } from '../../store/slices/general.slice';
 import { NAVIGATION } from '../../constants/navigation';
+import { useGetNavigationAccessStepQuery } from '../../services/auth';
 
 export const Sidebar = () => {
 
   const { t } = useTranslation();
   const [expandedItems, setExpandedItems] = useState<{ [key: string]: boolean }>({});
-
+  const { user } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const { isSidebarOpen } = useAppSelector(state => state.general);
+
+  const { data } = useGetNavigationAccessStepQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId });
 
   const toggleExpand = (itemName: string) => {
     setExpandedItems(prev => ({
@@ -45,18 +48,20 @@ export const Sidebar = () => {
           <img src="/images/icons/secundary-logo.svg" alt="Logo" className="h-8" />
           <h1 className="text-xl font-bold ">Hotel Hive</h1>
         </div>
-        <p>name</p>
-
         <nav className="flex-1 space-y-1 ">
           {NAVIGATION.map((item) => {
             const Icon = item.icon;
+            const isDisabled = item.disabled || (item.step !== undefined && item.step > data?.navigationAccessStep);
 
             if (item.hasSubItems) {
               return (
                 <div key={item.name} className="space-y-1 cursor-pointer">
                   <div
-                    onClick={() => toggleExpand(item.name)}
-                    className="flex w-full items-center justify-between px-2 py-2 text-14 font-medium text-charcoal-gray hover:bg-cloud-gray  rounded-4md"
+                    onClick={() => !isDisabled && toggleExpand(item.name)}
+                    className={`flex w-full items-center justify-between px-2 py-2 text-14 font-medium rounded-4md ${isDisabled
+                        ? 'text-ash-gray cursor-not-allowed opacity-50'
+                        : 'text-charcoal-gray hover:bg-cloud-gray cursor-pointer'
+                      }`}
                   >
                     <div className="flex items-center">
                       <Icon className="mr-3 h-5 w-5" />
@@ -73,7 +78,17 @@ export const Sidebar = () => {
                     <div className="pl-6 space-y-1">
                       {item.subItems?.map((subItem) => {
                         const SubIcon = subItem.icon;
-                        return (
+                        const isSubDisabled = subItem.disabled || (subItem.step !== undefined && subItem.step > data?.navigationAccessStep);
+
+                        return isSubDisabled ? (
+                          <div
+                            key={subItem.name}
+                            className="flex items-center px-2 py-2 text-12 text-ash-gray cursor-not-allowed opacity-50"
+                          >
+                            <SubIcon className="mr-3 h-4 w-4" />
+                            {t(subItem.name)}
+                          </div>
+                        ) : (
                           <NavLink
                             key={subItem.name}
                             to={subItem.href}
@@ -92,7 +107,15 @@ export const Sidebar = () => {
                 </div>
               );
             } else {
-              return (
+              return isDisabled ? (
+                <div
+                  key={item.name}
+                  className="flex items-center px-2 py-2 text-sm font-medium rounded-md text-ash-gray cursor-not-allowed opacity-50"
+                >
+                  <Icon className="mr-3 h-5 w-5" />
+                  {t(item.name)}
+                </div>
+              ) : (
                 <NavLink
                   key={item.name}
                   to={item.href!}

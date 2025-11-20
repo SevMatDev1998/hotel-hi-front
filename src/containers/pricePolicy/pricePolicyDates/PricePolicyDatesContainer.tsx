@@ -7,9 +7,11 @@ import useAppSelector from "../../../hooks/useAppSelector";
 import PricePolicyDatesCalendarContainer from "./pricePolicyDatesCalendar/PricePolicyDatesCalendarContainer";
 import { useGetHotelAvailabilityWithDatesQuery } from "../../../services/hotelAvailability/hotelAvailability.service";
 import PricePolicyDatesTableContainer from "./pricePolicyDatesTable/PricePolicyDatesTableContainer";
+import { Button } from "../../../components/shared/Button";
+import { useSetNavigationAccessStepMutation } from "../../../services/auth";
 
 const PricePolicyDatesContainer = () => {
-
+  const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
   const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.auth)
 
@@ -24,6 +26,10 @@ const PricePolicyDatesContainer = () => {
         <PricePolicyDatesCalendarContainer hotelAvailabilityWithDates={hotelAvailabilityWithDates} hotelId={user?.hotelId!} />
       )}
       <PricePolicyDatesTableContainer hotelAvailabilityWithDates={hotelAvailabilityWithDates} />
+
+      <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 6 })}>
+        {t("price_policy.notify_to_partners")}
+      </Button>
     </div>
 
   );

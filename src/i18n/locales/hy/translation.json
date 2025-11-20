@@ -80,7 +80,8 @@
     "Lunch":"Ճաշ",
     "Supper":"Ընթրիք",
     "food":"Սնունդ",
-    "hotel_meals":"հյուրանոցում տրամադրվող սնունդ"
+    "hotel_meals":"հյուրանոցում տրամադրվող սնունդ",
+    "approved_hotel_food": "Հաստատված հյուրանոցի սնունդը"
   },
 
   "user": {
@@ -212,7 +213,8 @@
 
     "other_services":"Այլ ծառայություններ",
     "service_cost":"Ծառայության արժեքը",
-    "not_confirmed_value":"Ոչ հաստատված արժեք"
+    "not_confirmed_value":"Ոչ հաստատված արժեք",
+    "notify_to_partners":"Ծանուցել գնային քաղաքականություն գործընկերներին"
 
   },
   "price_policy_dates": {
@@ -242,7 +244,8 @@
     "email": "Էլ. հասցե",
     "phone_number": "Հեռախոսահամար",
     "account_number": "Հաշվեհամար",
-    "director": "Տնօրեն"
+    "director": "Տնօրեն",
+    "notify_partners": "Ծանուցել գործընկերներին"
   },
   "partners_status": {
     "Draft": "Սևագիր",

@@ -6,6 +6,7 @@ import RoomCard from "./RoomCard";
 import RouteEnum from "../../../enums/route.enum";
 import { useGetHotelRoomsByHotelIdQuery } from "../../../services/rooms";
 import useAppSelector from "../../../hooks/useAppSelector";
+import { useSetNavigationAccessStepMutation } from "../../../services/auth";
 
 const RoomsContainer = () => {
 
@@ -13,8 +14,8 @@ const RoomsContainer = () => {
   const { user } = useAppSelector(state => state.auth);
   const { t } = useTranslation();
   const { data: roomsData } = useGetHotelRoomsByHotelIdQuery({ hotelId: user?.hotelId });
-  console.log(roomsData);
-  
+  const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
+
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("rooms.rooms_types")}</h2>
@@ -25,7 +26,9 @@ const RoomsContainer = () => {
           <p>{t("rooms.total_number_of_rooms")}-{4}</p>
         </div>
         <div className="grid justify-items-end mobile:justify-items-start">
-          <Button>{t("rooms.approved_hotel_number_of_rooms")} </Button>
+          <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 3 })}>
+            {t("rooms.approved_hotel_number_of_rooms")}
+          </Button>
         </div>
       </div>
       <div className="flex flex-col gap-4">

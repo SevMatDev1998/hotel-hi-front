@@ -9,6 +9,7 @@ import InfoBlock from "../../../components/shared/InfoBlock";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../../components/shared/Button";
 import RouteEnum from "../../../enums/route.enum";
+import { useSetNavigationAccessStepMutation } from "../../../services/auth";
 
 const HotelPartnersContainer = () => {
 
@@ -16,12 +17,13 @@ const HotelPartnersContainer = () => {
   const navigate = useNavigate();
   const debounse = useLazyDebounce();
   const { t } = useTranslation();
+  const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
 
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<string>("1");
 
   const { data: hotelPartners } = useGetHotelPartnersQuery({ hotelId: user?.hotelId, page, search }, { skip: !user?.hotelId });
-  
+
   const onChangePage = (pageNumber: string) => {
     if (pageNumber !== page) {
       setPage(pageNumber);
@@ -48,6 +50,13 @@ const HotelPartnersContainer = () => {
         onSearch={handleChange}
         search={search}
       />
+      <div className="justify-end">
+
+      <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 7  })}>
+        {t("partners.notify_partners")}
+      </Button>
+      </div>
+
     </div>
   );
 };
