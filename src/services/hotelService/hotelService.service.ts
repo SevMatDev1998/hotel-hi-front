@@ -1,6 +1,14 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { SystemService, SystemServiceGroup, SystemServiceType } from "../../types";
+import { SystemService, SystemServiceGroup, SystemServiceType, PaidServiceGroup } from "../../types";
+
+interface CreateServicePriceDto {
+  hotelServiceId: number;
+  hotelAvailabilityId: number;
+  price: number;
+  dateFrom: string;
+  dateTo: string;
+}
 
 const HotelSericesService = ApiInstance.injectEndpoints({
   endpoints: build => ({
@@ -55,6 +63,23 @@ const HotelSericesService = ApiInstance.injectEndpoints({
       invalidatesTags: [ApiEnum.HOTEL_SERVICES]
 
     }),
+
+    getPaidServicesByHotel: build.query<PaidServiceGroup[], { hotelId: number; availabilityId: number }>({
+      query: ({ hotelId, availabilityId }) => ({
+        url: `${ApiEnum.HOTEL_SERVICES}/paid-grouped/${hotelId}`,
+        params: { availabilityId }
+      }),
+      providesTags: [ApiEnum.HOTEL_SERVICE_PRICES]
+    }),
+
+    createServicePrices: build.mutation<void, { prices: CreateServicePriceDto[] }>({
+      query: ({ prices }) => ({
+        url: `${ApiEnum.HOTEL_SERVICE_PRICES}/bulk`,
+        method: "POST",
+        body: { prices }
+      }),
+      invalidatesTags: [ApiEnum.HOTEL_SERVICE_PRICES]
+    }),
   }),
 
 })
@@ -66,6 +91,8 @@ export const {
   useGetAdditionalServicesQuery,
   useGetHotelServicesQuery,
   useAddHotelServiceMutation,
-  useDeleteHotelServiceMutation
+  useDeleteHotelServiceMutation,
+  useGetPaidServicesByHotelQuery,
+  useCreateServicePricesMutation
 } = HotelSericesService;
 

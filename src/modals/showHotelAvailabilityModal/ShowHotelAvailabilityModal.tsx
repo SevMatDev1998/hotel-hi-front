@@ -5,6 +5,7 @@ import AdditionalServicesSection from "./AdditionalServicesSection";
 import RoomInfoSection from "./RoomInfoSection";
 import AgeAssignmentPricesSection from "./AgeAssignmentPricesSection";
 import RoomFoodPricesSection from "./RoomFoodPricesSection";
+import MainServicesSection from "./MainServicesSection";
 import { useTranslation } from "../../hooks/useTranslation";
 
 interface ISignOutModalProps {
@@ -115,6 +116,11 @@ const ShowHotelAvailabilityModal: ModalFC<ISignOutModalProps> = ({availabilityId
       
       <div className="border-t-4 border-gray-300 pt-6 space-y-4">
         <h3 className="text-xl font-bold mb-4">{t("common.general_data")}</h3>
+
+      <MainServicesSection 
+        hotelId={availabilityDetail.hotelId}
+        availabilityId={Number(availabilityId)}
+      />
 
       <FoodPricesSection 
         foodPrices={availabilityDetail.hotelFoodPrices}

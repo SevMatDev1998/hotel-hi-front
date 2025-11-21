@@ -1,16 +1,16 @@
-import BlockContainer from '../../public/BlockContainer';
-import { useTranslation } from '../../../hooks/useTranslation';
-import InfoBlock from '../../../components/shared/InfoBlock';
-import RegisterInput from '../../../components/shared/RegisterInput';
+import BlockContainer from '../../../public/BlockContainer';
+import { useTranslation } from '../../../../hooks/useTranslation';
+import InfoBlock from '../../../../components/shared/InfoBlock';
+import RegisterInput from '../../../../components/shared/RegisterInput';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { CreateHotelAvailabilityFormData, CreateHotelAvailabilitySchema } from '../../../yupValidation/PriceValidation';
-import { useAddHotelAvailabilityMutation } from '../../../services/hotelAvailability/hotelAvailability.service';
-import { Button } from '../../../components/shared/Button';
+import { CreateHotelAvailabilityFormData, CreateHotelAvailabilitySchema } from '../../../../yupValidation/PriceValidation';
+import { useAddHotelAvailabilityMutation } from '../../../../services/hotelAvailability/hotelAvailability.service';
+import { Button } from '../../../../components/shared/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
-import { useGetRoomBedTypesQuery } from '../../../services/rooms';
-import { RegisterSelect } from '../../../components/shared/RegisterSelect';
-import { HotelAvailability } from '../../../types';
+import { useGetRoomBedTypesQuery } from '../../../../services/rooms';
+import { RegisterSelect } from '../../../../components/shared/RegisterSelect';
+import { HotelAvailability } from '../../../../types';
  
 interface IAddPricePolicyProps {
   hotelId?: string;

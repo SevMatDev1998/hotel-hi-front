@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAppSelector from '../../../hooks/useAppSelector';
-import AddPricePolicy from './AddPricePolicy';
+import AddPricePolicy from './addPricePolicy/AddPricePolicy';
 import AddRoomPricePolicy from './addRoomPricePolicy/AddRoomPricePolicy';
 import BlockContainer from '../../public/BlockContainer';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { HotelAvailability } from '../../../types';
 import RouteEnum from '../../../enums/route.enum';
 import { useGetHotelAvailabilityQuery } from '../../../services/hotelAvailability/hotelAvailability.service';
+import AddServicePricePolicy from './addServicePricePolicy/AddServicePricePolicy';
 
 const AddPricePolicyContainer = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -15,9 +16,9 @@ const AddPricePolicyContainer = () => {
   const navigate = useNavigate();
   const { hotelAvailabilityId } = useParams<{ hotelAvailabilityId?: string }>();
   const [isEditingFirstBlock, setIsEditingFirstBlock] = useState(!hotelAvailabilityId);
-  
+
   const { data: hotelAvailabilityList } = useGetHotelAvailabilityQuery(
-    { hotelId: user?.hotelId || '' }, 
+    { hotelId: user?.hotelId || '' },
     { skip: !user?.hotelId || !hotelAvailabilityId }
   );
 
@@ -42,8 +43,8 @@ const AddPricePolicyContainer = () => {
   return (
     <div className='flex flex-col gap-6'>
       {isEditingFirstBlock ? (
-        <AddPricePolicy 
-          hotelId={user?.hotelId} 
+        <AddPricePolicy
+          hotelId={user?.hotelId}
           onSuccess={handleAvailabilityCreated}
         />
       ) : (
@@ -53,10 +54,10 @@ const AddPricePolicyContainer = () => {
               <h3>{t("price_policy.price_offer_settings")}</h3>
               <p className='text-gray-500'>{hotelAvailability?.title}</p>
             </div>
-            <img 
-              src="/images/icons/edit-icon.svg" 
-              alt="edit" 
-              className="cursor-pointer" 
+            <img
+              src="/images/icons/edit-icon.svg"
+              alt="edit"
+              className="cursor-pointer"
               onClick={handleEdit}
             />
           </div>
@@ -64,11 +65,15 @@ const AddPricePolicyContainer = () => {
       )}
 
       {!isEditingFirstBlock && hotelAvailabilityId && (
-        <AddRoomPricePolicy 
-          hotelId={user?.hotelId} 
+        <AddRoomPricePolicy
+          hotelId={user?.hotelId}
           hotelAvailabilityId={hotelAvailabilityId}
         />
       )}
+      <AddServicePricePolicy
+        hotelId={user?.hotelId}
+        hotelAvailabilityId={hotelAvailabilityId}
+      />
     </div>
   );
 };

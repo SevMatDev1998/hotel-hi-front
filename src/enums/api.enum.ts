@@ -32,6 +32,7 @@ enum ApiEnum {
     SYSTEM_SERVICE_TYPES = "system-service-types",
     SYSTEM_SERVICES = "system-services",
     HOTEL_SERVICE_AVAILABILITY="hotel-service-availability",
+    HOTEL_SERVICE_PRICES="hotel-service-prices",
     NOTIFICATIONS="notifications",
     HOTEL_AVAILABILITY="hotel-availability",
     HOTEL_AGE_ASSIGNMENTS="hotel-age-assignments",

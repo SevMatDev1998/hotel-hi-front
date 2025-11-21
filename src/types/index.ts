@@ -64,3 +64,4 @@ export * from './hotelPartner';
 // System
 export * from './hotelState';
 export * from './systemStateSetting';
+export * from './paidServiceGroup';
