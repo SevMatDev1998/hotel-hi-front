@@ -3,22 +3,23 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { getJwtToken } from '../../utils/tokenUtil';
 import useAppSelector from '../../hooks/useAppSelector';
 
-// import { useGetInfoQuery } from '../../../services/auth/auth.service';
 import RouteEnum from '../../enums/route.enum';
 import PRIVATE_ROUTES from '../../constants/private-routes';
 import PUBLIC_ROUTES from '../../constants/publict-routes';
+import GUEST_ROUTES from '../../constants/guest-routes';
 import MainLayoutComponents from './MainLayoutComponents';
 import { useGetInfoQuery } from '../../services/auth';
 import AuthLayout from '../auth/AuthLayout';
+import GuestLayout from '../guest/GuestLayout';
 
 export const MainLayout: FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const jwtToken = getJwtToken();
   
-  // const isPrivate = PRIVATE_ROUTES.includes(pathname as RouteEnum);
   const isPrivate = PRIVATE_ROUTES.some(route => pathname.startsWith(route));
   const isPublic = PUBLIC_ROUTES.includes(pathname as RouteEnum);
+  const isGuest = GUEST_ROUTES.some(route => pathname.startsWith(route));
 
   const {isLoading, isFetching, isError } = useGetInfoQuery(undefined, {
     skip: !jwtToken,
@@ -44,7 +45,9 @@ export const MainLayout: FC = () => {
     }
   }, [navigate, pathname, isLogin, isLoading, isFetching, isError, isPrivate, isPublic, jwtToken]);
 
-  return isPrivate ? <MainLayoutComponents /> : <AuthLayout><Outlet /></AuthLayout>;
+  if (isPrivate) return <MainLayoutComponents />;
+  if (isGuest) return <GuestLayout />;
+  return <AuthLayout><Outlet /></AuthLayout>;
 };
 
 

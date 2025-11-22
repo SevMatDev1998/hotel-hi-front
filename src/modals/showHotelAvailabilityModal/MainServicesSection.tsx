@@ -14,7 +14,7 @@ const MainServicesSection = ({ hotelId, availabilityId }: IMainServicesSectionPr
     { hotelId, availabilityId },
     { skip: !hotelId || !availabilityId }
   );
-
+  
   if (isLoading) {
     return (
       <div className="bg-white p-4 rounded-lg border">
