@@ -1,6 +1,7 @@
 // yupValidation/HotelServiceValidation.ts
 import * as yup from "yup";
 import { HotelServiceHourlyAvailabilityType } from "../types"; // поправь путь при необходимости
+import tv from '../helpers/tv';
 
 const HHMM = /^\d{2}:\d{2}$/;
 
@@ -13,11 +14,11 @@ const toMinutes = (hhmm?: string | null) => {
 
 /** Период для активной группы (строгая валидация) */
 const PeriodActiveSchema = yup.object({
-  startMonth: yup.string().required("Պարտադիր է"),
+  startMonth: yup.string().required(tv("required")),
   endMonth: yup
     .string()
-    .required("Պարտադիր է")
-    .test("end>=start", "Վերջի օրը պետք է լինի ավելի ուշ կամ հավասար", function (end) {
+    .required(tv("required"))
+    .test("end>=start", tv("second_letter"), function (end) {
       const start = this.parent?.startMonth;
       if (!start || !end) return true;
       return new Date(end).getTime() >= new Date(start).getTime();
@@ -29,9 +30,9 @@ const PeriodActiveSchema = yup.object({
     .transform((v) => (v === "" || v == null ? undefined : v))
     .oneOf(
       [HotelServiceHourlyAvailabilityType.AllDay, HotelServiceHourlyAvailabilityType.Hours],
-      "Ընտրեք մեկ տարբերակ"
+      tv("required")
     )
-    .required("Պարտադիր է"),
+    .required(tv("required")),
 
   // Часы обязательны только при Hours
   startHour: yup
@@ -39,7 +40,7 @@ const PeriodActiveSchema = yup.object({
     .nullable()
     .when("hourlyAvailabilityTypeId", {
       is: HotelServiceHourlyAvailabilityType.Hours,
-      then: (s) => s.required("Պարտադիր է").matches(HHMM, "Ֆորմատը HH:mm է"),
+      then: (s) => s.required(tv("required")).matches(HHMM, "Ֆորմատը HH:mm է"),
       otherwise: (s) => s.notRequired().nullable(),
     }),
 
@@ -50,9 +51,9 @@ const PeriodActiveSchema = yup.object({
       is: HotelServiceHourlyAvailabilityType.Hours,
       then: (s) =>
         s
-          .required("Պարտադիր է")
+          .required(tv("required"))
           .matches(HHMM, "Ֆորմատը HH:mm է")
-          .test("endHour>startHour", "Ավարտի ժամը պետք է լինի ավելի ուշ", function (end) {
+          .test("endHour>startHour", tv("second_letter"), function (end) {
             const start = this.parent?.startHour as string | null | undefined;
             const mEnd = toMinutes(end);
             const mStart = toMinutes(start);
@@ -79,7 +80,7 @@ const PeriodInactiveSchema = yup.object({
 const AvailabilityGroupSchema = yup.object({
   isPaid: yup.boolean().optional(),
   isActive: yup.boolean().default(false),
-
+ 
   periods: yup.array().when('isActive', {
     is: true,
     // Если группа активна - строгая валидация

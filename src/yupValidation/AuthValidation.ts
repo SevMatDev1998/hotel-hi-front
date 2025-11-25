@@ -16,6 +16,7 @@ export const signUpSchema = yup.object().shape({
   email: yup
     .string()
     .email(tv('email'))
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, tv('email'))
     .required(tv('required')),
   password: yup
     .string()
@@ -36,7 +37,9 @@ export const signUpSchema = yup.object().shape({
 });
 
 export const resetPasswordSchema = yup.object().shape({
-  email: yup.string().email().required(),
+  email: yup.string().email()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, tv('email'))
+    .required(),
 });
 
 export const newPasswordSchema = yup.object().shape({

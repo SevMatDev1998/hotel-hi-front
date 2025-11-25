@@ -1,53 +1,52 @@
 // PartnerValidation.ts
 import * as yup from 'yup';
 import { LegalEntityType } from '../types';
-import { TFunction } from 'i18next';
+import tv from '../helpers/tv';
 
-export const PartnerSchema = (t: TFunction) =>
-  yup.object({
-
+export const PartnerSchema = yup.object({
     countryId: yup
       .number()
-      .typeError(t('errors.required'))
-      .required(t('errors.required')),
-    tin: yup.string().required(t('errors.required')),
-    name: yup.string().required(t('errors.required')),
-    ltd: yup.string().required(t('errors.required')),
+      .typeError(tv('required'))
+      .required(tv('required')),
+    tin: yup.number().typeError(tv('number')).required(tv('required')),
+    name: yup.string().required(tv('required')),
+    ltd: yup.string().required(tv('required')),
     legalEntityTypeId: yup
       .mixed<LegalEntityType>()
-      .oneOf(Object.values(LegalEntityType) as LegalEntityType[], t('errors.typeError'))
-      .required(t('errors.required')),
+      .oneOf(Object.values(LegalEntityType) as LegalEntityType[], tv('required'))
+      .required(tv('required')),
     email: yup
       .string()
-      .email(t('errors.typeError'))
-      .required(t('errors.required')),
-    phone: yup.number().typeError(t('errors.typeError')).required(t('errors.required')),
-    accountNumber: yup.string().required(t('errors.required')),
-    director: yup.string().required(t('errors.required')),
+      .email(tv('email'))
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, tv('email')) ,
+    phone: yup.number().typeError(tv('number')).required(tv('required')),
+    accountNumber: yup.string().required(tv('required')),
+    director: yup.string().required(tv('required')),
   });
 
-export type CreatePartnerFormData = yup.InferType<ReturnType<typeof PartnerSchema>>;
+export type CreatePartnerFormData = yup.InferType<typeof PartnerSchema>;
 
-export const EditPartnerSchema = (t: TFunction) =>
-  yup.object({
+
+export const EditPartnerSchema = yup.object({
     countryId: yup
       .number()
-      .typeError(t('errors.required'))
-      .required(t('errors.required')),
-    tin: yup.string().required(t('errors.required')),
-    name: yup.string().required(t('errors.required')),
-    ltd: yup.string().required(t('errors.required')),
+      .typeError(tv('required'))
+      .required(tv('required')),
+    tin: yup.string().required(tv('required')),
+    name: yup.string().required(tv('required')),
+    ltd: yup.string().required(tv('required')),
     legalEntityTypeId: yup
       .mixed<LegalEntityType>()
-      .oneOf(Object.values(LegalEntityType) as LegalEntityType[], t('errors.typeError'))
-      .required(t('errors.required')),
+      .oneOf(Object.values(LegalEntityType) as LegalEntityType[], tv('typeError'))
+      .required(tv('required')),
     email: yup
       .string()
-      .email(t('errors.typeError'))
-      .required(t('errors.required')),
-    phone: yup.number().typeError(t('errors.typeError')).required(t('errors.required')),
-    accountNumber: yup.string().required(t('errors.required')),
-    director: yup.string().required(t('errors.required')),
+      .email(tv('typeError'))
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, tv('email'))
+      .required(tv('required')),
+    phone: yup.number().typeError(tv('typeError')).required(tv('required')),
+    accountNumber: yup.string().required(tv('required')),
+    director: yup.string().required(tv('required')),
   });
 
-export type EditPartnerFormData = yup.InferType<ReturnType<typeof EditPartnerSchema>>;
+export type EditPartnerFormData = yup.InferType<typeof EditPartnerSchema>;

@@ -1,54 +1,57 @@
 import * as yup from 'yup';
+import tv from '../helpers/tv';
 
 export const CreateHotelRoomSchema = yup.object({
   roomClassId: yup
     .number()
-    .typeError('Room class ID must be a number')
-    .integer('Room class ID must be an integer')
-    .required('Room class ID is required'),
+    .typeError(tv('typeError'))
+    .integer(tv('integer'))
+    .required(tv('required')),
 
   roomViewId: yup
     .number()
-    .typeError('Room view ID must be a number')
-    .integer('Room view ID must be an integer')
+    .typeError(tv('typeError'))
+    .integer(tv('integer'))
     .optional(),
+
+  area: yup
+    .number()
+    .required(tv('required'))
+    .min(1, tv('min', { min: 1 }))
+    .typeError(tv('positive')),
 
   roomNumberQuantity: yup
     .number()
-    .required('Room numbers are required')
-    .min(1, 'Room numbers must be at least 1')
-    .typeError('Room numbers must be a number'),
-
-  area: yup
-    .string()
-    .trim()
-    .required('Area is required'),
+    .required(tv('required'))
+    .min(1, tv('min', { min: 1 }))
+    .typeError(tv('positive')),
 });
-
 
 export const EditHotelRoomSchema = yup.object({
   roomClassId: yup
     .number()
-    .typeError('Room class ID must be a number')
-    .integer('Room class ID must be an integer')
-    .optional(),
+    .typeError(tv('typeError'))
+    .integer(tv('integer'))
+    .required(tv('required')),
 
   roomViewId: yup
     .number()
-    .typeError('Room view ID must be a number')
-    .integer('Room view ID must be an integer')
-    .optional(),
-
-  roomNumberQuantity: yup
-    .number()
-    .min(1, 'Room numbers must be at least 1')
-    .typeError('Room numbers must be a number')
+    .typeError(tv('typeError'))
+    .integer(tv('integer'))
     .optional(),
 
   area: yup
-    .string()
-    .trim()
-    .optional(),
+    .number()
+    .required(tv('required'))
+    .min(1, tv('min', { min: 1 }))
+    .typeError(tv('positive')),
+
+  roomNumberQuantity: yup
+    .number()
+    .required(tv('required'))
+    .min(1, tv('min', { min: 1 }))
+    .typeError(tv('positive')),
+
 });
 
 

@@ -8,6 +8,7 @@ import { useResetPasswordMutation } from '../../services/auth';
 import { Button } from '../../components/shared/Button';
 import ErrorMessage from '../../components/shared/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
 
 const ResetPasswordContainer = () => {
 
@@ -27,10 +28,9 @@ const ResetPasswordContainer = () => {
           <div>{t('auth.reset_password')}</div>
           <p onClick={()=>{navigate(RouteEnum.SIGN_UP)}}  className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
         </div>
-        <div>
+        <InputValidationLayout errors={errors} name="email">
           <RegisterInput
             register={register}
-            errors={errors}
             label={t('auth.email')}
             name="email"
             type="email"
@@ -41,7 +41,7 @@ const ResetPasswordContainer = () => {
             error={errors.email}
             translationName="auth"
           />
-        </div>
+        </InputValidationLayout>
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">
             {t('auth.reset_password')}

@@ -10,6 +10,7 @@ import { FC, useEffect } from "react";
 import { Button } from "../../../components/shared/Button";
 import { RegisterSelect } from "../../../components/shared/RegisterSelect";
 import { useNavigate } from "react-router-dom";
+import InputValidationLayout from "../../../layouts/inputValidationLayout/InputValidationLayout";
 
 interface RoomTypeDescriptionProps {
   hotelId?: string
@@ -55,63 +56,59 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
   return (
     <BlockContainer shadow={false}>
       <div className="flex flex-col gap-6">
-      <h2>{t("rooms.room_type_description")}</h2>
-      <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
-          <div >
-            <span >{t("rooms.room_type")} *</span>
+        <h2>{t("rooms.room_type_description")}</h2>
+        <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
+            <div >
+              <span >{t("rooms.room_type")} *</span>
+            </div>
+            <InputValidationLayout errors={errors} name="roomClassId" >
+              <RegisterSelect
+                name="roomClassId"
+                options={roomClassesOptions}
+                register={register}
+                tr_name="room_class_options"
+              />
+            </InputValidationLayout>
+            <div >
+              <span >{t("rooms.room_view")} *</span>
+            </div>
+            <InputValidationLayout errors={errors} name="roomViewId" >
+              <RegisterSelect
+                name="roomViewId"
+                options={roomViewsOptions}
+                register={register}
+                tr_name="room_view_options"
+              />
+            </InputValidationLayout>
+            <div >
+              <span >{t("rooms.room_area_m2")} *</span>
+            </div>
+            <InputValidationLayout errors={errors} name="area" >
+              <RegisterInput
+                register={register}
+                name="area"
+                className='rounded-[5px]'
+              />
+            </InputValidationLayout>
+            <div >
+              <span >{t("rooms.room_numbers")} *</span>
+            </div>
+            <InputValidationLayout errors={errors} name="roomNumberQuantity" >
+              <RegisterInput
+                register={register}
+                name="roomNumberQuantity"
+                className='rounded-[5px]'
+              />
+            </InputValidationLayout>
           </div>
-          <div >
-            <RegisterSelect
-              name="roomClassId"
-              options={roomClassesOptions}
-              register={register}
-              errors={errors.roomClassId}
-              tr_name="room_class_options"
-            />
+          <div className="flex justify-end">
+            <Button type="submit" disabled={isLoading} className="mt-6">
+              {t("buttons.save")}
+            </Button>
           </div>
-          <div >
-            <span >{t("rooms.room_view")} *</span>
-          </div>
-          <div >
-            <RegisterSelect
-              name="roomViewId"
-              options={roomViewsOptions}
-              register={register}
-              // error={errors.courseId}
-              tr_name="room_view_options"
-            />
-          </div>
-          <div >
-            <span >{t("rooms.room_area_m2")} *</span>
-          </div>
-          <div >
-            <RegisterInput
-              register={register}
-              errors={errors}
-              name="area"
-              className='rounded-[5px]'
-            />
-          </div>
-          <div >
-            <span >{t("rooms.room_numbers")} *</span>
-          </div>
-          <div >
-            <RegisterInput
-              register={register}
-              errors={errors}
-              name="roomNumberQuantity"
-              className='rounded-[5px]'
-            />
-          </div>
-        </div>
-        <div className="flex justify-end">
-          <Button type="submit" disabled={isLoading} className="mt-6">
-            {t("buttons.save")}
-          </Button>
-        </div>
-      </form>
+        </form>
       </div>
     </BlockContainer>
   )

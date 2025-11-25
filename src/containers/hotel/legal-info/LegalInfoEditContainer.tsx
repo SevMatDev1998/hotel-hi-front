@@ -14,6 +14,7 @@ import useAppDispatch from '../../../hooks/useAppDisaptch';
 import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
 import { useNavigate } from 'react-router-dom';
 import RouteEnum from '../../../enums/route.enum';
+import InputValidationLayout from '../../../layouts/inputValidationLayout/InputValidationLayout';
 
 interface ILegalInfoEditContainerProps {
   hotelLegalInformationData?: Partial<Hotel>
@@ -36,7 +37,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
 
   const onSubmit = async (data: UpdateHotelLegalInfoFormData) => {
     console.log(data);
-    
+
     await updateHotelLegalInformation({ id: hotelId!, data }).unwrap();
     navigate(RouteEnum.ROOMS);
   };
@@ -65,73 +66,63 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
               <div >
                 <span >{t("hotel.legal_name")} *</span>
               </div>
-              <div >
+              <InputValidationLayout errors={errors} name="legalPerson">
                 <RegisterInput
                   register={register}
                   name="legalPerson"
                   type="text"
                   className='rounded-[5px]'
-                  errors={errors}
                 />
-              </div>
+              </InputValidationLayout>
             </div>
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.legal_address")} *</span>
               </div>
               <div className='grid grid-cols-2 mobile:grid-cols-1 gap-6'>
-                <div  >
-
+                <InputValidationLayout errors={errors} name="registerCountryId">
                   <RegisterSelect
                     name="registerCountryId"
                     options={countryOptions}
                     register={register}
-                    errors={errors.registerCountryId}
                   />
-
-                </div>
-                <div  >
+                </InputValidationLayout>
+                <InputValidationLayout errors={errors} name="registerCity">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="registerCity"
                     type="text"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
             </div>
-
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.tax_id")} *</span>
               </div>
-              <div >
+              <InputValidationLayout errors={errors} name="tinNumber">
                 <RegisterInput
                   register={register}
-                  errors={errors}
                   name="tinNumber"
                   type="text"
                   className='rounded-[5px]'
                 />
-              </div>
+              </InputValidationLayout>
             </div>
-
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.director")} *</span>
               </div>
-              <div >
+              <InputValidationLayout errors={errors} name="director">
                 <RegisterInput
                   register={register}
-                  errors={errors}
                   name="director"
                   type="text"
                   className='rounded-[5px]'
                 />
-              </div>
+              </InputValidationLayout>
             </div>
-
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.phone_number")} *</span>
@@ -148,30 +139,27 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
 
                   />
                 </div> */}
-                <div>
+                <InputValidationLayout errors={errors} name="phoneNumber">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="phoneNumber"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
             </div>
-
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.adress_to_get_emails")} *</span>
               </div>
-              <div >
+              <InputValidationLayout errors={errors} name="priceSendEmail">
                 <RegisterInput
                   register={register}
-                  errors={errors}
                   name="priceSendEmail"
                   type="text"
                   className='rounded-[5px]'
                 />
-              </div>
+              </InputValidationLayout>
             </div>
           </div>
         </div>

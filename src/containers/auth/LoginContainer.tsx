@@ -10,6 +10,7 @@ import { useTranslation } from '../../hooks/useTranslation';
 import { useNavigate } from 'react-router-dom';
 import { loginEffect } from '../../services/auth/auth.effects';
 import ErrorMessage from '../../components/shared/ErrorMessage';
+import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
 
 const LoginContainer = () => {
 
@@ -33,26 +34,21 @@ const LoginContainer = () => {
           <div>{t('auth.login')}</div>
           <p onClick={() => { navigate(RouteEnum.SIGN_UP) }} className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
         </div>
-        <div>
+
+        <InputValidationLayout errors={errors} name="email">
           <RegisterInput
             register={register}
-            errors={errors}
             label={`${t('auth.email')}*`}
             name="email"
             type="email"
             className='rounded-none border !border-dusty-teal'
           />
-          <ErrorMessage
-            fieldName="email"
-            error={errors.email}
-            translationName="auth"
-          />
-        </div>
-        <div>
+         
+        </InputValidationLayout>
+        <InputValidationLayout errors={errors} name="password">
           <div className="relative">
             <RegisterInput
               register={register}
-              errors={errors}
               label={`${t('auth.password')}*`}
               name="password"
               className='rounded-none border !border-dusty-teal'
@@ -74,7 +70,7 @@ const LoginContainer = () => {
               />
             </button>
           </div>
-        </div>
+        </InputValidationLayout>
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">
             {t('auth.login')}

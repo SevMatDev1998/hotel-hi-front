@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import ApiEnum from "../../../enums/api.enum";
 import { useLazyDebounce } from "../../../hooks/useDebounse";
 import { Partner } from "../../../types";
+import InputValidationLayout from "../../../layouts/inputValidationLayout/InputValidationLayout";
 
 
 interface NewHotelPartnersContainerFormProps {
@@ -23,18 +24,18 @@ interface NewHotelPartnersContainerFormProps {
   partner: Partner | null;
 }
 
-const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({ 
-  countryOptions, 
-  legalEntityOptions, 
+const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
+  countryOptions,
+  legalEntityOptions,
   hotelId,
-  onCheckPartnerByTin ,
+  onCheckPartnerByTin,
   partner
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors }, watch, reset } = useForm<CreatePartnerFormData>({
-    resolver: yupResolver(PartnerSchema(t)),
+    resolver: yupResolver(PartnerSchema),
   });
 
   const [addHotelPartner] = useAddHotelPartnerMutation();
@@ -89,31 +90,29 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                 <div >
                   <span >{t("partners.register_country")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="countryId">
                   <RegisterSelect
                     name="countryId"
                     options={countryOptions}
                     register={register}
-                    errors={errors.countryId}
                     className='rounded-[5px]'
                     tr_name="registration_country_options"
                     valueAsNumber
                   />
-                </div>
+                </InputValidationLayout>
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.tax_id")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="tin">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="tin"
                     className='rounded-[5px]'
 
                   />
-                </div>
+                </InputValidationLayout>
               </div>
 
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
@@ -121,107 +120,96 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                   <span >{t("partners.legal_person_name")} *</span>
                 </div>
                 <div className='grid grid-cols-[3fr_1fr] mobile:grid-cols-1 gap-6'>
-                  <div  >
+                  <InputValidationLayout errors={errors} name="ltd">
                     <RegisterInput
                       register={register}
-                      errors={errors}
                       name="ltd"
                       className='rounded-[5px]'
                     />
-                  </div>
-                  <div >
+                  </InputValidationLayout>
+                  <InputValidationLayout errors={errors} name="legalEntityTypeId">
                     <RegisterSelect
                       name="legalEntityTypeId"
                       options={legalEntityOptions}
                       register={register}
-                      errors={errors.legalEntityTypeId}
                       className='rounded-[5px]'
                       tr_name="legal_entity_type_options"
                     />
-                  </div>
+                  </InputValidationLayout>
                 </div>
               </div>
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.product_logo")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="name" >
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="name"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.email")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="email" >
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="email"
+                    type="email"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
-
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("hotel.phone_number")} *</span>
                 </div>
                 <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'>
-                  <RegisterSelect
-                    name="phoneCode"
-                    options={countryOptions}
-                    register={register}
-                    tr_name="registration_country_options"
-                  />
-                  <RegisterInput
-                    register={register}
-                    errors={errors}
-                    name="phone"
-                    type="text"
-                    className='rounded-[5px]'
-                  />
+                  <InputValidationLayout errors={errors} name="phoneCode" >
+                    <RegisterSelect
+                      name="phoneCode"
+                      options={countryOptions}
+                      register={register}
+                      tr_name="registration_country_options"
+                    />
+                  </InputValidationLayout>.
+                  <InputValidationLayout errors={errors} name="phone" >
+                    <RegisterInput
+                      register={register}
+                      name="phone"
+                      type="text"
+                      className='rounded-[5px]'
+                    />
+                  </InputValidationLayout>
                 </div>
               </div>
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.account_number")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="accountNumber" >
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="accountNumber"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
-
-
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.director")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="director" >
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="director"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
-
-
             </div>
           </div>
           <div className="flex justify-end mt-6">

@@ -1,13 +1,14 @@
 import { useForm } from 'react-hook-form';
 import RegisterInput from '../../components/shared/RegisterInput';
-import { NewPasswordFormType, newPasswordSchema, ResetPasswordRequestFormType, resetPasswordSchema } from '../../yupValidation/AuthValidation';
+import { NewPasswordFormType, newPasswordSchema,  } from '../../yupValidation/AuthValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from '../../hooks/useTranslation';
 import RouteEnum from '../../enums/route.enum';
-import { useResetPasswordMutation, useSetNewPasswordMutation } from '../../services/auth';
+import {  useSetNewPasswordMutation } from '../../services/auth';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button } from '../../components/shared/Button';
+import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
 
 const NewPasswordContainer = () => {
 
@@ -15,8 +16,8 @@ const NewPasswordContainer = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { token: rawToken  } = useParams();
-  
+  const { token: rawToken } = useParams();
+
   // Clean the token if it contains "token=" prefix
   const token = rawToken?.startsWith('token=') ? rawToken.substring(6) : rawToken;
 
@@ -24,27 +25,26 @@ const NewPasswordContainer = () => {
     resolver: yupResolver(newPasswordSchema),
   });
 
-  const [setNewPassword, {  isLoading }] = useSetNewPasswordMutation()
+  const [setNewPassword, { isLoading }] = useSetNewPasswordMutation()
 
-  const  handleNewPasswordSubmit = (data: NewPasswordFormType) => {
+  const handleNewPasswordSubmit = (data: NewPasswordFormType) => {
     if (!token) {
       console.error('Token is missing');
       return;
     }
-    setNewPassword({ token:rawToken, newPassword: data.password }).unwrap()
+    setNewPassword({ token: rawToken, newPassword: data.password }).unwrap()
     navigate(RouteEnum.LOGIN);
   }
 
   return (
     <div className='max-w-[400px]'>
       <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(handleNewPasswordSubmit)}>
-        <div>
+        <InputValidationLayout errors={errors} name="password">
           <div className="relative">
             <RegisterInput
               register={register}
               name="password"
               type={showPassword ? "text" : "password"}
-              errors={errors}
               label={t('auth.password')}
               tr_name="auth"
             />
@@ -59,15 +59,14 @@ const NewPasswordContainer = () => {
               />
             </button>
           </div>
-        </div>
-        <div>
+        </InputValidationLayout>
+        <InputValidationLayout errors={errors} name="confirmPassword">
           <div className="relative">
             <RegisterInput
               register={register}
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               className='rounded-none border !border-dusty-teal pr-10'
-              errors={errors}
               label={t('auth.confirm_password')}
               tr_name="auth"
             />
@@ -82,7 +81,7 @@ const NewPasswordContainer = () => {
               />
             </button>
           </div>
-        </div>
+        </InputValidationLayout>
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">
             {t('auth.set_new_password')}
