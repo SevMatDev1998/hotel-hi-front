@@ -16,6 +16,12 @@ const RoomsContainer = () => {
   const { data: roomsData } = useGetHotelRoomsByHotelIdQuery({ hotelId: user?.hotelId });
   const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
 
+
+  const handleSetNavigationAccessStep = () => {
+    setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 3 }).unwrap()
+    navigate(RouteEnum.FOODS);
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("rooms.rooms_types")}</h2>
@@ -26,7 +32,7 @@ const RoomsContainer = () => {
           <p>{t("rooms.total_number_of_rooms")}-{4}</p>
         </div>
         <div className="grid justify-items-end mobile:justify-items-start">
-          <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 3 })}>
+          <Button onClick={handleSetNavigationAccessStep}>
             {t("rooms.approved_hotel_number_of_rooms")}
           </Button>
         </div>

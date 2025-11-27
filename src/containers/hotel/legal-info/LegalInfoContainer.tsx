@@ -29,7 +29,7 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
           {/* Hotel Name */}
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
-              <span >{t("hotel.legal_name")} *</span>
+              <span>{t("hotel.legal_name")} *</span>
             </div>
             <div >
               <span >{hotelLegalInformationData?.legalPerson}</span>

@@ -5,10 +5,12 @@ import { useGetHotelFoodsByHotelIdQuery } from '../../../services/foods';
 import useAppSelector from '../../../hooks/useAppSelector';
 import FoodContainerCard from './FoodContainerCard';
 import { useSetNavigationAccessStepMutation } from '../../../services/auth';
+import { useNavigate } from 'react-router-dom';
+import { RouteEnum } from '../../../enums/route.enum';
 
 const FoodsContainer = () => {
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const { user } = useAppSelector(state => state.auth);
   const { data: foodData } = useGetHotelFoodsByHotelIdQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId });
   const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
@@ -26,8 +28,11 @@ const FoodsContainer = () => {
     type: 'Supper',
   }
   ]
-  console.log(foodData, 'foodData');
 
+  const handleSetNavigationAccessStep = () => {
+    setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 4 }).unwrap()
+    navigate(RouteEnum.HOTEL_SERVICES);
+  }
 
   return (
     <div>
@@ -40,7 +45,7 @@ const FoodsContainer = () => {
             <p>{foodData?.length || 0}</p>
           </div>
           <div className="grid justify-items-end mobile:justify-items-start">
-            <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 4 })}>
+            <Button onClick={handleSetNavigationAccessStep}>
               {t("foods.approved_hotel_food")}
             </Button>
           </div>

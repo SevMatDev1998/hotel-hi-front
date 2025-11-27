@@ -5,12 +5,21 @@ import { useGetSystemServiceGroupsQuery } from '../../services/hotelService';
 import HotelSericeGroups from './HotelSericeGroups';
 import { useSetNavigationAccessStepMutation } from '../../services/auth';
 import useAppSelector from '../../hooks/useAppSelector';
+import { useNavigate } from 'react-router-dom';
+import { RouteEnum } from '../../enums/route.enum';
 
 const HotelServicesContainer = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { data: serviceGroups } = useGetSystemServiceGroupsQuery();
   const { user } = useAppSelector(state => state.auth);
   const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
+
+    const handleSetNavigationAccessStep = () => {
+    setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 5 }).unwrap()
+    navigate(RouteEnum.PRICE_POLICY);
+  }
+
 
   return (
     <div>
@@ -27,7 +36,7 @@ const HotelServicesContainer = () => {
           </div>
 
           <div className="justify-items-end mobile:justify-items-start">
-            <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 5 })}>
+                <Button onClick={handleSetNavigationAccessStep}>
               {t("hotel_service.approve_services")}
             </Button>
           </div>

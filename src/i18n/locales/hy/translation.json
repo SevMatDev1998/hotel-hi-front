@@ -61,6 +61,7 @@
     "approved_hotel_number_of_rooms": "Հաստատված հյուրանոցի սենյակների քանակը",
     "add_new_room": "Ավելացնել նոր սենյակ",
     "count_main_guest": "Հիմնական հյուրերի քանակ",
+    "count_additional_guest": "Լրացուցիչ հյուրերի քանակ",
     "room_type_description": "Սենյակի տեսակի նկարագրություն",
     "room_type": "Սենյակի տեսակը",
     "room_view": "Սենյակի Տեսարանը",

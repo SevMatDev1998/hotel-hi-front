@@ -12,7 +12,7 @@ const HotelContainer = () => {
 
   return (
     <div>
-      <h1 className="mb-4">{t("hotel.name")}</h1>
+      <h1 className="mb-4">{t("hotel.name11")}</h1>
       <p className="mb-4">{t("user.email")} - {"sevak@gmail.com"}</p>
       <div className="flex gap-2">
         <img src="/images/icons/info-icon.svg" alt="hotel" />

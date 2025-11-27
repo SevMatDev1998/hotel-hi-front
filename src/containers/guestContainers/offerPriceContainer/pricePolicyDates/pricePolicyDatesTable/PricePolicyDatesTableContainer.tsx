@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { HotelAvailabilityDateCommission } from "../../../types/hotelAvailabilityDateCommission";
-import { useTranslation } from "../../../hooks/useTranslation";
-import BlockContainer from "../../public/BlockContainer";
-import CommissionDateView from "../../../components/shared/CommissionDateView";
+import BlockContainer from "../../../../public/BlockContainer";
+import CommissionDateView from "../../../../../components/shared/CommissionDateView";
+import { useTranslation } from "../../../../../hooks/useTranslation";
+import { HotelAvailabilityDateCommission } from "../../../../../types/hotelAvailabilityDateCommission";
 
 
 
@@ -10,14 +10,15 @@ interface HotelAvailability {
   id: string;
   title: string;
   color: string;
-  partnerCommissions: HotelAvailabilityDateCommission[];
+  hotelAvailabilityDateCommissions: HotelAvailabilityDateCommission[];
 }
 
 interface IPricePolicyDatesTableContainerProps {
   hotelAvailabilityWithDates?: HotelAvailability[];
+  // onDelete?: (id: number) => void;
 }
 
-const OfferPriceDatesTable: FC<IPricePolicyDatesTableContainerProps> = ({
+const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> = ({
   hotelAvailabilityWithDates = [],
 }) => {
   const { t } = useTranslation()
@@ -31,15 +32,14 @@ const OfferPriceDatesTable: FC<IPricePolicyDatesTableContainerProps> = ({
   }
 
 
-
   // Группируем комиссии по одинаковым значениям fee
   const groupedAvailabilities = hotelAvailabilityWithDates.flatMap((availability) => {
-    if (!availability.partnerCommissions.length) return [];
+    if (!availability.hotelAvailabilityDateCommissions.length) return [];
 
     // Группируем даты по одинаковым комиссиям
     const commissionGroups = new Map<string, HotelAvailabilityDateCommission[]>();
 
-    availability.partnerCommissions.forEach((dateCommission) => {
+    availability.hotelAvailabilityDateCommissions.forEach((dateCommission) => {
       const key = `${dateCommission.roomFee}-${dateCommission.foodFee}-${dateCommission.additionalFee}-${dateCommission.serviceFee}`;
       
       if (!commissionGroups.has(key)) {
@@ -66,41 +66,21 @@ const OfferPriceDatesTable: FC<IPricePolicyDatesTableContainerProps> = ({
       <div className="grid grid-cols-[1fr_2fr_3fr_50px] ">
         <h3>{t("price_policy_dates.price_offer")}</h3>
         <h3>{t("price_policy_dates.period")}</h3>
-        <h3>{t("price_policy_dates.commission")}</h3>
       </div>
       <div className="divide-y divide-gray-100">
-        {groupedAvailabilities.map(({ availability, dateCommissions, commission }, index) => {
+        {groupedAvailabilities.map(({ availability, dateCommissions }, index) => {
           return (
             <div
               key={`${availability.id}-${index}`}
               className="grid grid-cols-[1fr_2fr_3fr_50px] items-center px-4 py-3"
             >
               <CommissionDateView dateCommissions={dateCommissions} />
-   
-
               <div className="flex items-center gap-2 ">
                 <span
                   className="inline-block w-3 h-3 rounded-full"
                   style={{ backgroundColor: availability.color }}
                 ></span>
                 {availability.title}
-              </div>
-
-              <div >
-                 <p className="text-12">
-                  {t("price_policy_dates.room")} - {commission.roomFee}&nbsp;
-                  {t("price_policy_dates.food")} - {commission.foodFee}&nbsp;
-                  {t("price_policy_dates.additional")} - {commission.additionalFee}&nbsp;
-                  {t("price_policy_dates.other")} - {commission.serviceFee}
-                </p>
-              </div>
-
-              <div className="flex justify-center">
-                {/* <button
-                  onClick={() => open(<DeleteCommissionModal availabilityId={availability.id} />)}                  className=" hover:text-red-500 transition"
-                >
-                  <Trash2 size={18} />
-                </button> */}
               </div>
             </div>
           );
@@ -110,4 +90,4 @@ const OfferPriceDatesTable: FC<IPricePolicyDatesTableContainerProps> = ({
   );
 };
 
-export default OfferPriceDatesTable;
+export default PricePolicyDatesTableContainer;

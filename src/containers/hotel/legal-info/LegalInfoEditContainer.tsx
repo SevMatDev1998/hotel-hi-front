@@ -15,6 +15,7 @@ import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
 import { useNavigate } from 'react-router-dom';
 import RouteEnum from '../../../enums/route.enum';
 import InputValidationLayout from '../../../layouts/inputValidationLayout/InputValidationLayout';
+import { useSetNavigationAccessStepMutation } from '../../../services/auth';
 
 interface ILegalInfoEditContainerProps {
   hotelLegalInformationData?: Partial<Hotel>
@@ -28,6 +29,8 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+    const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
+  
   const [updateHotelLegalInformation, { isLoading }] = useUpdateHotelLegalInformationMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<UpdateHotelLegalInfoFormData>({
@@ -39,6 +42,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
     console.log(data);
 
     await updateHotelLegalInformation({ id: hotelId!, data }).unwrap();
+    setNavigationAccessStep({ hotelId: hotelId!, stepNumber: 2 })
     navigate(RouteEnum.ROOMS);
   };
 

@@ -98,7 +98,7 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
 
   return (
     <CardContainer className='rounded-md p-4'>
-      <p >{t('price_policy.included_food_in_room_price'  )}</p>
+      <p >{t('price_policy.included_food_in_room_price')}</p>
       <div className="flex flex-wrap gap-4 mb-4">
         {hotelFoods.map((food) => (
           <CheckBox

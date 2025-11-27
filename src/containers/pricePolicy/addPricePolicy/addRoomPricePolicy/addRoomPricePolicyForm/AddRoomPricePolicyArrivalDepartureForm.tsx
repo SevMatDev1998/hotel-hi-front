@@ -52,7 +52,8 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
       setRows(loadedRows);
     }
   }, [initialData, arrivalService, departureService]);
-
+  console.log(333,additionalServicesData);
+  
   useEffect(() => {
     const formatted: Omit<CreateHotelAdditionalServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[] = rows.map(r => {
       const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
@@ -99,16 +100,11 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
         <Button variant="outline" onClick={() => addServiceRow(arrivalService)}>
           {t('price_policy.add_early_arrival')}
         </Button>
-
-
         <Button variant="outline" onClick={() => addServiceRow(departureService)}>
           {t('price_policy.add_late_departure')}
         </Button>
-
       </div>
-
       <br />
-
       {rows.map(row => (
         <div key={row.id} className="flex w-full justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => { deleteRow(row.id) }}>

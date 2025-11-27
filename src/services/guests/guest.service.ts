@@ -20,10 +20,10 @@ const GuestService = ApiInstance.injectEndpoints({
         // u stananq data 
 
 
-        getHotelAvailabilityWithDatesByPartnerid: build.query<HotelAvailability[], { hotelId: string, partnerId: string }>({
-            query: ({ hotelId, partnerId }) => ({
+        getHotelAvailabilityWithDatesByPartnerid: build.query<HotelAvailability[], { hotelId: string }>({
+            query: ({ hotelId }) => ({
                 url: `${ApiEnum.GUESTS}/hotelAvailability/dates`,
-                params: { partnerId, hotelId }
+                params: {  hotelId }
             }),
         }),
     })

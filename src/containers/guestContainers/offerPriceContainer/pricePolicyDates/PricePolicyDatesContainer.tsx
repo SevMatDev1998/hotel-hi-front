@@ -9,24 +9,15 @@ import { useGetHotelAvailabilityWithDatesQuery } from "../../../services/hotelAv
 import PricePolicyDatesTableContainer from "./pricePolicyDatesTable/PricePolicyDatesTableContainer";
 import { Button } from "../../../components/shared/Button";
 import { useSetNavigationAccessStepMutation } from "../../../services/auth";
-import { RouteEnum } from "../../../enums/route.enum";
-import { useNavigate } from "react-router-dom";
 
 const PricePolicyDatesContainer = () => {
   const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
   const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.auth)
-  const navigate = useNavigate();
 
   const { data: hotelAvailabilityWithDates } = useGetHotelAvailabilityWithDatesQuery({ hotelId: user?.hotelId! }, { skip: !user?.hotelId })
 
-
-  const handleSetNavigationAccessStep = () => {
-    setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 6 }).unwrap()
-    navigate(RouteEnum.HOTEL_PARTNERS);
-  }
-
-
+  
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("rooms.rooms_types")}</h2>
@@ -36,7 +27,7 @@ const PricePolicyDatesContainer = () => {
       )}
       <PricePolicyDatesTableContainer hotelAvailabilityWithDates={hotelAvailabilityWithDates} />
 
-      <Button onClick={handleSetNavigationAccessStep}>
+      <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 6 })}>
         {t("price_policy.notify_to_partners")}
       </Button>
     </div>

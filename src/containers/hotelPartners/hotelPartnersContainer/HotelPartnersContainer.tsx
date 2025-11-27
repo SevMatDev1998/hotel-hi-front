@@ -36,9 +36,13 @@ const HotelPartnersContainer = () => {
     }, 500)
   }, [setSearch, debounse])
 
+  const handleSetNavigationAccessStep = () => {
+    setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 7 }).unwrap()
+    navigate(RouteEnum.NOTIFICATIONS);
+  }
 
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <h2>{t("partners.partners")}</h2>
       <InfoBlock text="Գործընկերների ցանկում ներառեք բոլոր այն կազմակերպություններին, որոնց ցանկանում եք տեղեկացնել հյուրանոցի կողմից գնային քաղականության փոփոխությունների մասին։ Կարող եք յուրաքանաչյուր գործընկերի համար սահմանել առանձին միջնորդավճարներ։" />
       <Button variant="outline" onClick={() => { navigate(`${RouteEnum.HOTEL_PARTNERS}/create`) }}>{t("partners.add_partner")}</Button>
@@ -51,10 +55,9 @@ const HotelPartnersContainer = () => {
         search={search}
       />
       <div className="justify-end">
-
-      <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 7  })}>
-        {t("partners.notify_partners")}
-      </Button>
+        <Button onClick={handleSetNavigationAccessStep}>
+          {t("partners.notify_partners")}
+        </Button>
       </div>
 
     </div>

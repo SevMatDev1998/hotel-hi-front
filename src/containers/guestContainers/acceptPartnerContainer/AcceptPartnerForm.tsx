@@ -9,10 +9,10 @@ import { CreatePartnerFormData, PartnerSchema } from "../../../yupValidation/Par
 import { RegisterSelect } from "../../../components/shared/RegisterSelect";
 import { Button } from "../../../components/shared/Button";
 import { useNavigate } from "react-router-dom";
-import ApiEnum from "../../../enums/api.enum";
 import { Partner } from "../../../types";
 import { useAcceptPartnerShipMutation } from "../../../services/guests/guest.service";
 import RouteEnum from "../../../enums/route.enum";
+import InputValidationLayout from "../../../layouts/inputValidationLayout/InputValidationLayout";
 
 
 interface AcceptPartnerFormProps {
@@ -26,7 +26,7 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm<CreatePartnerFormData>({
-    resolver: yupResolver(PartnerSchema(t)),
+    resolver: yupResolver(PartnerSchema),
     defaultValues:partnerData
   });
 
@@ -45,7 +45,6 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
       <InfoBlock text="Գործընկերների ցանկում ներառեք բոլոր այն կազմակերպություններին, որոնց ցանկանում եք տեղեկացնել հյուրանոցի կողմից գնային քաղականության փոփոխությունների մասին։ Կարող եք յուրաքանաչյուր գործընկերի համար սահմանել առանձին միջնորդավճարներ։" />
       <BlockContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-
           <div className="flex flex-col gap-4">
             <h3>{t("partners.add_partner")}</h3>
             <InfoBlock text="Լրացրեք տվյալները: Բոլոր *-ով դաշտերը պարտադիր են:" />
@@ -54,31 +53,27 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                 <div >
                   <span >{t("partners.register_country")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="countryId">
                   <RegisterSelect
                     name="countryId"
                     options={countryOptions}
                     register={register}
-                    errors={errors.countryId}
-                    required
                     className='rounded-[5px]'
                     tr_name="registration_country_options"
                   />
-                </div>
+                </InputValidationLayout>
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.tax_id")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="tin">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="tin"
                     className='rounded-[5px]'
-
                   />
-                </div>
+                </InputValidationLayout>
               </div>
 
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
@@ -86,25 +81,22 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                   <span >{t("partners.legal_person_name")} *</span>
                 </div>
                 <div className='grid grid-cols-[3fr_1fr] mobile:grid-cols-1 gap-6'>
-                  <div  >
+                <InputValidationLayout errors={errors} name="ltd">
                     <RegisterInput
                       register={register}
-                      errors={errors}
                       name="ltd"
                       className='rounded-[5px]'
                     />
-                  </div>
-                  <div >
+                  </InputValidationLayout>
+                <InputValidationLayout errors={errors} name="legalEntityTypeId">
                     <RegisterSelect
                       name="legalEntityTypeId"
                       options={legalEntityOptions}
                       register={register}
-                      errors={errors}
-                      required
                       className='rounded-[5px]'
                       tr_name="legal_entity_type_options"
                     />
-                  </div>
+                  </InputValidationLayout>
                 </div>
               </div>
 
@@ -112,51 +104,48 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                 <div >
                   <span >{t("partners.product_logo")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="name">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="name"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.email")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="email">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="email"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
-
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("hotel.phone_number")} *</span>
                 </div>
                 <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'>
+                <InputValidationLayout errors={errors} name="phoneCode">
                   <RegisterSelect
                     name="phoneCode"
                     options={countryOptions}
                     register={register}
-                    // error={errors.courseId}
-                    required
                     tr_name="registration_country_options"
-
                   />
+                </InputValidationLayout>
+                <InputValidationLayout errors={errors} name="phone">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="phone"
                     type="text"
                     className='rounded-[5px]'
                   />
+                </InputValidationLayout>
+                  
                 </div>
               </div>
 
@@ -164,14 +153,13 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                 <div >
                   <span >{t("partners.account_number")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="accountNumber">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="accountNumber"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
 
 
@@ -180,17 +168,14 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                 <div >
                   <span >{t("partners.director")} *</span>
                 </div>
-                <div >
+                <InputValidationLayout errors={errors} name="director">
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name="director"
                     className='rounded-[5px]'
                   />
-                </div>
+                </InputValidationLayout>
               </div>
-
-
             </div>
           </div>
           <div className="flex justify-end mt-6">

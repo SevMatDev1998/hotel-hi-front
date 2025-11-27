@@ -16,7 +16,6 @@ interface ILegalInfoProps {
 const LegalInfo: FC<ILegalInfoProps> = ({ user }) => {
   const { t } = useTranslation();
 
-  const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
   const { data: hotelLegalInformationData, error, isLoading } = useGetHotelLegalInformationQuery({ hotelId: user?.hotelId });
 
   const { data: countriesData } = useGetCountriesQuery();
@@ -37,12 +36,6 @@ const LegalInfo: FC<ILegalInfoProps> = ({ user }) => {
             hotelLegalInformationData={hotelLegalInformationData}
           />
       }
-      <div className="flex justify-end mt-6">
-        <Button onClick={() => setNavigationAccessStep({ hotelId: user?.hotelId, stepNumber: 2 })} >
-          {t("buttons.save")}
-        </Button>
-      </div>
-
     </div>)
 }
 

@@ -2,7 +2,6 @@ import { FC, useState, useEffect } from 'react';
 import AddRoomPricePolicyFoodForm from './AddRoomPricePolicyFoodForm';
 import AddRoomPricePolicyRoomForm from './AddRoomPricePolicyRoom';
 import AddRoomPricePolicyAgeAssignmentForm from './AddRoomPricePolicyAgeAssignmentForm';
-import useAppSelector from '../../../../../hooks/useAppSelector';
 import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../../types';
 import AddRoomPricePolicyArrivalDepartureForm from './AddRoomPricePolicyArrivalDepartureForm';
 import AddRoomPricePolicyAdditionalServicesForm from './AddRoomPricePolicyAdditionalServicesForm';
@@ -34,7 +33,6 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
   hotelFoods,
   hotelAvailabilityAgeAssessments,
 }) => {
-  const { user } = useAppSelector((state) => state.auth);
   const { hotelAvailabilityId } = useParams<{ hotelAvailabilityId: string }>();
 
   const hotelRoomId = Number(room.id);
@@ -46,7 +44,6 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
     { skip: !hotelAvailabilityId || !hotelRoomId }
   );
 
-  // ---------- ОБЩИЙ СТЕЙТ ----------
   const [foodPrices, setFoodPrices] = useState<CreateHotelFoodPriceDto[]>([]);
   const [roomPrice, setRoomPrice] = useState<Omit<CreateHotelRoomPriceDto, 'hotelAvailabilityId'> | null>(null);
   const [ageAssignmentPrices, setAgeAssignmentPrices] = useState<CreateHotelAgeAssignmentPriceDto[]>([]);

@@ -8,14 +8,14 @@ import useAppSelector from "../../hooks/useAppSelector";
 const NotificationsContainer = () => {
   const { t } = useTranslation();
   const {user} = useAppSelector(state => state.auth);
+  
   return (
-    <div>
+    <div className="flex flex-col gap-3"> 
       <h2>{t("notifications.notifications")}</h2>
       <InfoBlock text={t("You will have the opportunity to receive notifications during the mentioned period. Also to make changes through notification settings")} />
       <BlockContainer shadow={false} >
         <NotifiacationsTable hotelId={user?.hotelId} />
       </BlockContainer>
-  
     </div>
   );
 }

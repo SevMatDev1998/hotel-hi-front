@@ -30,7 +30,6 @@ const AddRoomPricePolicy: FC<IAddRoomPricePolicyProps> = ({ hotelId, hotelAvaila
         {
           roomsData?.map(room => (
             <div key={room.id} >
-
               <AddRoomPricePolicyCard
                 room={room}
                 hotelFoods={hotelFoods}
