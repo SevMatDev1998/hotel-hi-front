@@ -69,7 +69,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
               <input
                 type="time"
                 {...field}
-                step="60"
+                step="300"
               />
             )}
           />

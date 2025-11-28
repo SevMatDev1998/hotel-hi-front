@@ -53,12 +53,11 @@ export const Select: React.FC<SelectProps> = ({
         onChange={handleChange} // ✅ attach handler
         value={value ?? ''} // ✅ this is what was missing
         className={clsx(
-          "appearance-none block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
+          "appearance-none rounded-[4px] block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
           className
         )}
         {...props}
       >
-        <option value="">-- Select an option --</option>
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {tr_name ? t(`${tr_name}.${opt.label}`) : opt.label}

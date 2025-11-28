@@ -166,7 +166,7 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
             </div>
           </div>
         </div>
-        <div className='flex justify-end '>
+        <div className='flex justify-end mt-3 '>
           <Button type="submit" isLoading={isLoading}>{t("buttons.save")}</Button>
         </div>
       </form>

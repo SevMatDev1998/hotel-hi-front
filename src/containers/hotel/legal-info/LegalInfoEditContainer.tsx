@@ -53,7 +53,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   })) || [];
 
   return (
-    <BlockContainer>
+    <BlockContainer shadow={false}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='text-14 text-charcoal-gray'>
           <div className='flex items-center justify-between mb-6'>
@@ -143,10 +143,10 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
 
                   />
                 </div> */}
-                <InputValidationLayout errors={errors} name="phoneNumber">
+                <InputValidationLayout errors={errors} name="bankPhoneNumber">
                   <RegisterInput
                     register={register}
-                    name="phoneNumber"
+                    name="bankPhoneNumber"
                     className='rounded-[5px]'
                   />
                 </InputValidationLayout>
@@ -167,7 +167,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
             </div>
           </div>
         </div>
-        <div className='flex justify-end '>
+        <div className='flex justify-end mt-3 '>
           <Button type="submit" isLoading={isLoading}>{t("buttons.save")}</Button>
         </div>
       </form>

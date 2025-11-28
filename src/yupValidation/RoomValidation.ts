@@ -3,16 +3,12 @@ import tv from '../helpers/tv';
 
 export const CreateHotelRoomSchema = yup.object({
   roomClassId: yup
-    .number()
-    .typeError(tv('typeError'))
-    .integer(tv('integer'))
+    .string()
     .required(tv('required')),
 
   roomViewId: yup
-    .number()
-    .typeError(tv('typeError'))
-    .integer(tv('integer'))
-    .optional(),
+    .string()
+    .required(tv('required')),
 
   area: yup
     .number()
@@ -29,15 +25,11 @@ export const CreateHotelRoomSchema = yup.object({
 
 export const EditHotelRoomSchema = yup.object({
   roomClassId: yup
-    .number()
-    .typeError(tv('typeError'))
-    .integer(tv('integer'))
+    .string()
     .required(tv('required')),
 
   roomViewId: yup
-    .number()
-    .typeError(tv('typeError'))
-    .integer(tv('integer'))
+    .string()
     .optional(),
 
   area: yup

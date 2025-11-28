@@ -1,18 +1,17 @@
-import { Dispatch, FC, SetStateAction, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Button } from '../../../../components/shared/Button';
 import { useTranslation } from 'react-i18next';
 import { BedType, HotelRoomPartBed, RoomBedSize, RoomBedType } from '../../../../types';
 import { Select } from '../../../../components/shared/Select';
 import { useGetHotelRoomPartBedsByPartIdQuery, useGetRoomBedSizesQuery, useGetRoomBedTypesQuery } from '../../../../services/rooms';
 
-export type RoomPartBedWithRowIndex = Partial<HotelRoomPartBed> & { rowIndex: string };
 
 interface IRoomTypeInformationCardRowsProps {
 
-  roomPartBedsState: RoomPartBedWithRowIndex[];
-  setRoomPartBedsState: Dispatch<SetStateAction<RoomPartBedWithRowIndex[]>>;
+  roomPartBedsState: Partial<HotelRoomPartBed>[];
+  setRoomPartBedsState: Partial<HotelRoomPartBed>[];
   roomPartId?: string;
-  hendelAddHotelRoomPartBeds: (bed: RoomPartBedWithRowIndex) => void;
+  hendelAddHotelRoomPartBeds: (bed: Partial<HotelRoomPartBed>) => void;
   roomBedTypes?: RoomBedType[];
   roomBedSizes?: RoomBedSize[];
 }
@@ -44,7 +43,7 @@ useEffect(() => {
 }, [hotelRoomPartBeds, setRoomPartBedsState]);
 
   const hendleAddBed = (type: string) => {
-    const newBed: RoomPartBedWithRowIndex = {
+    const newBed: Partial<HotelRoomPartBed> = {
       rowIndex: Date.now().toString(),
       bedType: type as BedType,
     };
@@ -90,17 +89,19 @@ useEffect(() => {
         {
           roomPartBedsState.map((bed) => {
             return (
-              <div key={bed.rowIndex} className="flex  items-center justify-between mobile:justify-start gap-4">
-                <div className='cursor-pointer' onClick={() => hendleBedSizeRowDelete(bed.rowIndex)}>x</div>
+              <div key={bed.rowIndex} className="grid grid-cols-4 mobile:justify-start gap-4">
+                <div className='cursor-pointer' onClick={() => hendleBedSizeRowDelete(bed.rowIndex)}>
+                <img src="/images/icons/remove-button-icon.svg" alt="delete icon" className="w-4 h-4" />
+
+                </div>
                 <div className='flex gap-3'>
                   <p>{t(`room_bed_types.${bed.bedType}`)}</p>
                 </div>
-
                 <Select
                   name={`bed-${bed.id}-type`}
                   options={roomBedTypes?.map(type => ({ value: type.id, label: type.name })) || []}
                   tr_name="room_bed_types_names_options"
-                  onSelect={(e)=>{handleBedTypeChange(bed.rowIndex!, e, )}}
+                  onSelect={(e)=>{handleBedTypeChange(bed.rowIndex!, e)}}
                   value={bed.roomBedTypeId?.toString()}
                 />
                 <Select

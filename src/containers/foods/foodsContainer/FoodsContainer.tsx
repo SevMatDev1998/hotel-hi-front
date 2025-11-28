@@ -15,18 +15,10 @@ const FoodsContainer = () => {
   const { data: foodData } = useGetHotelFoodsByHotelIdQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId });
   const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
 
-  const mainFoods = [{
-    id: 1,
-    type: 'Breakfast',
-  },
-  {
-    id: 2,
-    type: 'Lunch',
-  },
-  {
-    id: 3,
-    type: 'Supper',
-  }
+  const mainFoods = [
+    { id: 1, type: 'Breakfast' },
+    { id: 2, type: 'Lunch', },
+    { id: 3, type: 'Supper', }
   ]
 
   const handleSetNavigationAccessStep = () => {
@@ -42,7 +34,6 @@ const FoodsContainer = () => {
         <div className="grid grid-cols-2 mobile:grid-cols-1 gap-2">
           <div>
             <p>{t("foods.hotel_meals")}</p>
-            <p>{foodData?.length || 0}</p>
           </div>
           <div className="grid justify-items-end mobile:justify-items-start">
             <Button onClick={handleSetNavigationAccessStep}>

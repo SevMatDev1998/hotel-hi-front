@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PricePolicyDatesCalendar from "./PricePolicyDatesCalendar";
-import { 
+import {
   useUpdateHotelAvailabilitesWithDatesMutation,
   useDeleteHotelAvailabilityDateMutation,
   useDeleteHotelAvailabilityDatesBatchMutation
@@ -8,7 +8,6 @@ import {
 import BlockContainer from "../../../public/BlockContainer";
 import { Button } from "../../../../components/shared/Button";
 import { useTranslation } from "../../../../hooks/useTranslation";
-import { Select } from "../../../../components/shared/Select";
 import AddCommissionModal from "../../../../modals/AddCommisionModal";
 import useModal from "../../../../hooks/useModal";
 
@@ -53,6 +52,7 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
   const [availabilities, setAvailabilities] = useState<IAvailability[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState<ISelectedAvailability | null>(null);
   const [modifiedAvailability, setModifiedAvailability] = useState<IAvailability | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [updateHotelAvailabilitesWithDates] = useUpdateHotelAvailabilitesWithDatesMutation();
   const [deleteHotelAvailabilityDate] = useDeleteHotelAvailabilityDateMutation();
   const [deleteHotelAvailabilityDatesBatch] = useDeleteHotelAvailabilityDatesBatchMutation();
@@ -60,7 +60,7 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
 
   const handleCalendarChange = (updatedData: IAvailability[]) => {
     setAvailabilities(updatedData);
-    
+
     // Сохраняем измененный availability (тот который был активен)
     if (selectedAvailability?.id) {
       const modified = updatedData.find((a) => a.id === selectedAvailability.id);
@@ -71,8 +71,8 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
   };
 
 
-  
-const handleModalSubmit = async (commissionDate: any) => {
+
+  const handleModalSubmit = async (commissionDate: any) => {
     // Проверяем что есть измененный availability
     if (!modifiedAvailability) {
       console.error('No modified availability to save');
@@ -89,14 +89,13 @@ const handleModalSubmit = async (commissionDate: any) => {
       hotelId,
       body: payload,
     });
-};
+  };
 
 
   const handleSubmit = async () => {
     open(AddCommissionModal, { title: "", onSubmit: (data) => handleModalSubmit(data) });
   };
 
-  // 🗑️ Обработчики удаления
   const handleDeleteDate = async (calendarId: string) => {
     try {
       await deleteHotelAvailabilityDate({ calendarId }).unwrap();
@@ -107,7 +106,6 @@ const handleModalSubmit = async (commissionDate: any) => {
   };
 
   const handleDeleteMonth = async (monthIndex: number) => {
-    // Собираем все calendarId для месяца
     const monthDates: string[] = [];
     availabilities.forEach(a => {
       a.hotelAvailabilityDateCommissions.forEach(d => {
@@ -118,7 +116,6 @@ const handleModalSubmit = async (commissionDate: any) => {
       });
     });
 
-    // Удаляем все даты ОДНИМ запросом
     if (monthDates.length > 0) {
       try {
         const result = await deleteHotelAvailabilityDatesBatch({ calendarIds: monthDates }).unwrap();
@@ -130,7 +127,6 @@ const handleModalSubmit = async (commissionDate: any) => {
   };
 
   const handleDeleteWeekday = async (weekdayIndex: number) => {
-    // Собираем все calendarId для дня недели
     const weekdayDates: string[] = [];
     availabilities.forEach(a => {
       a.hotelAvailabilityDateCommissions.forEach(d => {
@@ -141,7 +137,6 @@ const handleModalSubmit = async (commissionDate: any) => {
       });
     });
 
-    // Удаляем все даты ОДНИМ запросом
     if (weekdayDates.length > 0) {
       try {
         const result = await deleteHotelAvailabilityDatesBatch({ calendarIds: weekdayDates }).unwrap();
@@ -155,27 +150,48 @@ const handleModalSubmit = async (commissionDate: any) => {
   return (
     <BlockContainer  >
       <div className="flex justify-end gap-4 mb-4">
-     
-        <Select
-          name="hotelAvailability"
-          options={
-            hotelAvailabilityWithDates?.map((a) => ({
-              value: a.id,
-              label: `ID ${a.id} (${a.color})`,
-            })) || []
-          }
-          onSelect={(value) => {
-            const id = Number(value);
-            const found = hotelAvailabilityWithDates?.find((a) => a.id === id);
-            if (found) {
-              setSelectedAvailability({
-                id: found.id,
-                color: found.color,
-              });
-            }
-          }}
-          value={selectedAvailability?.id || ""}
-        />
+        <div className="flex items-center gap-2 relative">
+          <div
+            className="appearance-none px-3 py-2 border border-charcoal-gray text-charcoal-gray focus:outline-none bg-white cursor-pointer min-w-[200px] flex items-center gap-2"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {selectedAvailability ? (
+              <>
+                <div
+                  className="h-4 w-4 rounded-full"
+                  style={{ backgroundColor: hotelAvailabilityWithDates?.find((a) => a.id === selectedAvailability.id)?.color }}
+                />
+                <span>{hotelAvailabilityWithDates?.find((a) => a.id === selectedAvailability.id)?.title}</span>
+              </>
+            ) : (
+              <span>Select availability</span>
+            )}
+          </div>
+
+          {isDropdownOpen && (
+            <div className="absolute top-full left-0 mt-1 w-full bg-white border border-charcoal-gray shadow-lg z-10 max-h-60 overflow-y-auto">
+              {hotelAvailabilityWithDates?.map((a) => (
+                <div
+                  key={a.id}
+                  className="px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                  onClick={() => {
+                    setSelectedAvailability({
+                      id: a.id,
+                      color: a.color,
+                    });
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  <div
+                    className="h-4 w-4 rounded-full"
+                    style={{ backgroundColor: a.color }}
+                  />
+                  <span>{a.title}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <Button onClick={handleSubmit}>
           {t("buttons.save")}
         </Button>

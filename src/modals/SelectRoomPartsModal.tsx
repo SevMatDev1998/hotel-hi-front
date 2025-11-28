@@ -4,11 +4,11 @@ import { useTranslation } from "../hooks/useTranslation";
 import { useAddHotelRoomPartsMutation, useGetRoomPartsQuery } from "../services/rooms";
 import InfoBlock from "../components/shared/InfoBlock";
 import { HotelRoomPart } from "../types";
+import CheckBox from "../components/shared/CheckBox";
 
 interface IModalProps {
   hotelRoomId: string;
   hotelRoomParts?: HotelRoomPart[];
-  onSubmit: (payload: any) => void;
   onCancel?: () => void;
 }
 
@@ -19,7 +19,7 @@ interface RoomPartState {
   selected: boolean;
 }
 
-const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomParts, onSubmit, onCancel }) => {
+const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomParts, onCancel }) => {
   const { t } = useTranslation();
   const { data: roomParts } = useGetRoomPartsQuery();
 
@@ -45,7 +45,7 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
           const quantity = partQuantities[p.id] || 1;
           const selected = !!partQuantities[p.id];
           const isBadRoom = p.name === "Bedroom";
-          
+
           return {
             id: p.id,
             name: p.name,
@@ -59,7 +59,7 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
 
 
   const toggleSelect = (part: RoomPartState) => {
-    if (part.name === "Bedroom") return; 
+    if (part.name === "Bedroom") return;
     setParts((prev) =>
       prev.map((p) =>
         p.id === part.id ? { ...p, selected: !p.selected } : p
@@ -106,17 +106,13 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
             className="flex items-center justify-between border border-gray-200 rounded-md px-3 py-2 hover:bg-gray-50 cursor-pointer"
           >
             <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={part.selected}
-                onChange={() => toggleSelect(part)}
-                className="w-4 h-4 accent-blue-600"
+              <CheckBox
+                options={part}
+                isChecked={part.selected}
+                toggleValue={() => toggleSelect(part)}
+                tr_name='room_parts_options'
               />
-              <span className="text-gray-700 text-sm">
-                {t(`room_parts_options.${part.name}`)}
-              </span>
             </div>
-
             {part.selected && (
               <div className="flex items-center gap-1">
                 <button

@@ -6,10 +6,11 @@ const FoodsService = ApiInstance.injectEndpoints({
   endpoints: build => ({
 
     // get hotel foods by hotel id
-    getHotelFoodsByHotelId: build.query<HotelFood[], { hotelId: string }>({
+    getHotelFoodsByHotelId: build.query<HotelFood[], { hotelId?: string }>({
       query: ({ hotelId }) => ({
         url: `${ApiEnum.HOTEL_FOODS}/hotel/${hotelId}`,
-      })
+      }),
+      providesTags: [ApiEnum.CUISNESSE]
     }),
 
     getFoodOfferTypes: build.query<FoodOfferType[], void>({
@@ -20,7 +21,7 @@ const FoodsService = ApiInstance.injectEndpoints({
     getCuisine: build.query<Cuisine[], void>({
       query: () => ({
         url: ApiEnum.CUISNESSE,
-      })
+      }),
     }),
     addHotelFood: build.mutation<void, { body: AddHotelFoodDto, hotelId: string }>({
       query: ({ body, hotelId }) => ({
@@ -28,6 +29,7 @@ const FoodsService = ApiInstance.injectEndpoints({
         method: 'PUT',
         body,
       }),
+      invalidatesTags:[ApiEnum.CUISNESSE]
     }),
 
   }),

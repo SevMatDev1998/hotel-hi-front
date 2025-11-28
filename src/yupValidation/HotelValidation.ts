@@ -77,7 +77,7 @@ export const UpdateHotelLegalInfoSchema = yup.object({
     .min(2)
     .max(100),
 
-    phoneNumber: yup
+    bankPhoneNumber: yup
     .string()
     .optional(),
 

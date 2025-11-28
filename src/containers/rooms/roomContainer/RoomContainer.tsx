@@ -3,31 +3,23 @@ import { useNavigate, useParams } from 'react-router-dom';
 import BlockContainer from '../../public/BlockContainer';
 import InfoBlock from '../../../components/shared/InfoBlock';
 import { useTranslation } from 'react-i18next';
-import useAppSelector from '../../../hooks/useAppSelector';
 import RoomTypeInformation from '../newRoomContainer/RoomTypeInformation/RoomTypeInformation';
-import { Button } from '../../../components/shared/Button';
-import RouteEnum from '../../../enums/route.enum';
 
 const RoomContainer = () => {
   const { roomId } = useParams();
-  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { user } = useAppSelector((state) => state.auth);
-
+  const navigate = useNavigate();
   const { data: room, isLoading, isError } = useGetHotelRoomByRoomIdQuery({ roomId: roomId! }, { refetchOnMountOrArgChange: !!roomId })
 
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading room</div>
 
-
-  console.log(room);
-  
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("rooms.rooms_types")}</h2>
       <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
 
-      <BlockContainer  shadow={false}>
+      <BlockContainer shadow={false}>
         <div className='flex flex-col gap-6'>
 
           <div className='flex justify-between'>
@@ -41,17 +33,10 @@ const RoomContainer = () => {
             <p>{t(`room_class_options.${room?.roomClass.name}`)},{t(`room_view_options.${room?.roomView.name}`)}- {room?.area} {t("rooms.area_unit")}</p>
             <p className='text-end mobile:text-start'>{room?.roomNumberQuantity}&nbsp;{t("rooms.room")}</p>
           </div>
-
           <p className='text-11'>Համատեղում է հյուրանոցի հարմարավետությունը ճամբարային փորձի հետ: Շքեղ վրաններ՝ համապատասխան անկողնային պարագաներով և հարմարություններով։ Հաճախ տեղակայված է գեղատեսիլ բացօթյա պարամետրերում:</p>
         </div>
-
       </BlockContainer>
       <RoomTypeInformation roomId={roomId} />
-      <div className='flex justify-end'>
-        <Button onClick={()=>{navigate(RouteEnum.ROOMS)}}> 
-          {t("rooms.save_room_types")}
-        </Button>
-      </div>
     </div>
   );
 };

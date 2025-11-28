@@ -9,14 +9,14 @@ const AuthService = ApiInstance.injectEndpoints({
                 url: ApiEnum.GET_ME,
             })
         }),
-        getNavigationAccessStep: build.query<{ navigationAccessStep: number }, { hotelId: string }>({
+        getNavigationAccessStep: build.query<{ navigationAccessStep: number }, { hotelId?: string }>({
             query: ({ hotelId }) => ({
                 url: `${ApiEnum.NAVIGATION_ACCESS}/${hotelId}`,
             }),
             providesTags:[ApiEnum.NAVIGATION_ACCESS]
         }),
 
-        setNavigationAccessStep: build.mutation<{ navigationAccessStep: number }, { hotelId: string, stepNumber: number }>({
+        setNavigationAccessStep: build.mutation<{ navigationAccessStep: number }, { hotelId?: string, stepNumber: number }>({
             query: ({ hotelId, stepNumber }) => ({
                 url: `${ApiEnum.NAVIGATION_ACCESS}/${hotelId}`,
                 method: "PATCH",

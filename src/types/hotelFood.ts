@@ -5,6 +5,7 @@ export interface HotelFood {
   hotelId: number;
   name: string;
   description?: string;
+  isFoodAvailable: boolean;
   foodType: FoodType;
   statusId: CompletenessStatus;
   startDate: Date;

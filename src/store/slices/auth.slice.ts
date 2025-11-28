@@ -24,11 +24,11 @@ const authSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addMatcher(login.matchFulfilled, (state, { payload }) => {
-            const { accessToken, refreshToken } = payload
+            const { accessToken, refreshToken,user } = payload
             setJwtToken(accessToken);
             setRefreshToken(refreshToken);
-            state.isLogin = true
-
+            state.isLogin = true;
+            state.user = user;
         })
         builder.addMatcher(
             getInfo.matchFulfilled,

@@ -12,15 +12,22 @@ import { useForm } from 'react-hook-form';
 import { HotelRoom } from '../../../types';
 import { useNavigate } from 'react-router-dom';
 import RouteEnum from '../../../enums/route.enum';
+import InputValidationLayout from "../../../layouts/inputValidationLayout/InputValidationLayout";
 
 interface IEditRoomFormProps {
-  room: HotelRoom,
-  roomClassesOptions:Record<string, any>[],
-  roomViewsOptions:Record<string, any>[]
+  room: Partial<HotelRoom>,
+ roomClassesOptions: {
+    value: number;
+    label: string;
+}[]
+  roomViewsOptions: {
+    value: number;
+    label: string;
+}[]
 }
 
 const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomViewsOptions }) => {
-
+  
   const { t } = useTranslation();
   const navigate = useNavigate();
   
@@ -28,14 +35,14 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
 
   const { register, handleSubmit, formState: { errors } } = useForm<EditHotelRoomFormData>({
     resolver: yupResolver(EditHotelRoomSchema),
-    defaultValues: room ?? {}
+    defaultValues: room 
   });
 
 
   const onSubmit = async (data: EditHotelRoomFormData) => {
     await editRoom({ roomId: room.id!, data }).unwrap();
     navigate(`${RouteEnum.ROOMS}/${room.id}`);
-  };
+  }; 
 
   return (
     <BlockContainer>
@@ -47,51 +54,45 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
             <div >
               <span >{t("rooms.room_type")} *</span>
             </div>
-            <div >
+            <InputValidationLayout errors={errors} name="roomClassId" >
               <RegisterSelect
                 name="roomClassId"
                 options={roomClassesOptions}
                 register={register}
-                // error={errors.courseId}
-                required
                 tr_name="room_class_options"
               />
-            </div>
+            </InputValidationLayout>
             <div >
               <span >{t("rooms.room_view")} *</span>
             </div>
-            <div >
+            <InputValidationLayout errors={errors} name="roomViewId" >
               <RegisterSelect
                 name="roomViewId"
                 options={roomViewsOptions}
                 register={register}
-                // error={errors.courseId}
-                required
                 tr_name="room_view_options"
               />
-            </div>
+            </InputValidationLayout>
             <div >
               <span >{t("rooms.room_area_m2")} *</span>
             </div>
-            <div >
+            <InputValidationLayout errors={errors} name="area" >
               <RegisterInput
                 register={register}
-                errors={errors}
                 name="area"
                 className='rounded-[5px]'
               />
-            </div>
+            </InputValidationLayout>
             <div >
               <span >{t("rooms.room_numbers")} *</span>
             </div>
-            <div >
+            <InputValidationLayout errors={errors} name="roomNumberQuantity" >
               <RegisterInput
                 register={register}
-                errors={errors}
                 name="roomNumberQuantity"
                 className='rounded-[5px]'
               />
-            </div>
+            </InputValidationLayout>
           </div>
           <div className="flex justify-end">
             <Button type="submit" disabled={isLoading} className="mt-6">

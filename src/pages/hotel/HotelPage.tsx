@@ -1,10 +1,7 @@
 import HotelContainer from '../../containers/hotel/HotelContainer';
 
 const HotelPage = () => {
-
-  return (
-      <HotelContainer/>
-  );
+  return <HotelContainer/>
 };
 
 export default HotelPage;
