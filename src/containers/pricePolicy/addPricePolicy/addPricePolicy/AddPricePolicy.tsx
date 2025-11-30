@@ -54,7 +54,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
       console.error('Failed to create hotel availability:', error);
     }
   };
-  console.log(errors);
   
 
   return (
@@ -65,30 +64,35 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
           <InfoBlock text='Նշված ժամանակահատվածում վերապահումներ ստանալու հնարավորություն կունենաք։ Նաև գների կարգավորման միջոցով փոփոխություններ կատարել' />
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div><span>{t("hotel_availability.price_offer_name")} *</span></div>
-            <div>
+            <InputValidationLayout errors={errors} name="title">
               <RegisterInput
                 register={register}
-                errors={errors}
                 name="title"
                 type="text"
                 className='rounded-[5px]'
               />
-            </div>
+            </InputValidationLayout>
           </div>
-
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center mt-4'>
             <div><span>{t("hotel_availability.arrival_and_departure_times")} *</span></div>
-            <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none max-w-[min-content]">
-              <Controller
-                name="checkInTime"
-                control={control}
-                render={({ field }) => <input type="time" {...field} />}
-              />
-              <Controller
-                name="checkoutTime"
-                control={control}
-                render={({ field }) => <input type="time" step="60" {...field} />}
-              />
+            <div className="flex flex-col">
+              <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none max-w-[min-content]">
+                <Controller
+                  name="checkInTime"
+                  control={control}
+                  render={({ field }) => <input type="time" {...field} />}
+                />
+                <Controller
+                  name="checkoutTime"
+                  control={control}
+                  render={({ field }) => <input type="time" step="60" {...field} />}
+                />
+              </div>
+              {(errors.checkInTime || errors.checkoutTime) && (
+                <span className="text-red-700 mt-1 font-medium">
+                  {errors.checkInTime?.message || errors.checkoutTime?.message}
+                </span>
+              )}
             </div>
           </div>
 
