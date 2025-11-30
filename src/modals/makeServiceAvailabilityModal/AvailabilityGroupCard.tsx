@@ -17,6 +17,8 @@ const AvailabilityGroupCard: FC<IAvailabilityGroupCardProps> = ({ methods, group
   const { watch, setValue } = methods;
   const isActive = watch(`availabilities.${groupIndex}.isActive`);
   const { t } = useTranslation();
+  
+  const isPaid = groupIndex === 0;
 
   const fa = useFieldArray({
     control: methods.control,
@@ -28,7 +30,10 @@ const AvailabilityGroupCard: FC<IAvailabilityGroupCardProps> = ({ methods, group
       <CheckBox
         options={{ id: groupIndex, name: label }}
         isChecked={isActive}
-        toggleValue={() => setValue(`availabilities.${groupIndex}.isActive`, !isActive)}
+        toggleValue={() => {
+          setValue(`availabilities.${groupIndex}.isActive`, !isActive);
+          setValue(`availabilities.${groupIndex}.isPaid`, isPaid);
+        }}
       />
       {fa.fields.map((f, idx) => (
         <PeriodRow

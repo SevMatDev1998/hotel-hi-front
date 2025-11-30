@@ -1,6 +1,6 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { PaidServiceGroup,SystemService, SystemServiceGroup, SystemServiceType } from "../../types";
+import { PaidServiceGroup, SystemService, SystemServiceGroup, SystemServiceType } from "../../types";
 
 interface CreateServicePriceDto {
   hotelServiceId: number;
@@ -39,6 +39,13 @@ const HotelSericesService = ApiInstance.injectEndpoints({
         url: `${ApiEnum.HOTEL_SERVICES}/hotels/${hotelId}`,
         params: { serviceTypeId }
 
+      }),
+      providesTags: [ApiEnum.HOTEL_SERVICES]
+    }),
+
+    getHotelServicesCounts: build.query<{ paidCount: number; freeCount: number }, { hotelId: number }>({
+      query: ({ hotelId }) => ({
+        url: `${ApiEnum.HOTEL_SERVICES}/hotels/${hotelId}/counts`,
       }),
       providesTags: [ApiEnum.HOTEL_SERVICES]
     }),
@@ -90,6 +97,7 @@ export const {
   useGetSystemServicesByTypeIdQuery,
   useGetAdditionalServicesQuery,
   useGetHotelServicesQuery,
+  useGetHotelServicesCountsQuery,
   useAddHotelServiceMutation,
   useDeleteHotelServiceMutation,
   useGetPaidServicesByHotelQuery,

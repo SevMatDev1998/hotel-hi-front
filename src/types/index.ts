@@ -65,3 +65,6 @@ export * from './userHotel';
 export * from './hotelState';
 export * from './paidServiceGroup';
 export * from './systemStateSetting';
+
+// DTOs
+export * from './createAvailabilityDto';

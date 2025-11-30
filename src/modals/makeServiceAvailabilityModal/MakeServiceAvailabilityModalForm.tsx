@@ -63,14 +63,14 @@ const MakeServiceAvailabilityModalForm: FC<MakeServiceAvailabilityModalFormProps
     },
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, formState } = methods;
 
   const onSubmit = ({ availabilities }: FormValues) => {
-   
+    const activeAvailabilities = availabilities.filter(g => g.isActive);
     addHotelServiceAvailability({
       hotelServiceId,
       data: {
-        availabilities: availabilities.filter(g => g.isActive),
+        availabilities: activeAvailabilities,
       },
     });
     onCancel();

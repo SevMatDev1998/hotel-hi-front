@@ -52,14 +52,7 @@ const PeriodActiveSchema = yup.object({
       then: (s) =>
         s
           .required(tv("required"))
-          .matches(HHMM, "Ֆորմատը HH:mm է")
-          .test("endHour>startHour", tv("second_letter"), function (end) {
-            const start = this.parent?.startHour as string | null | undefined;
-            const mEnd = toMinutes(end);
-            const mStart = toMinutes(start);
-            if (mEnd == null || mStart == null) return true;
-            return mEnd > mStart;
-          }),
+          .matches(HHMM, "Ֆորմատը HH:mm է"),
       otherwise: (s) => s.notRequired().nullable(),
     }),
 });
@@ -80,7 +73,7 @@ const PeriodInactiveSchema = yup.object({
 const AvailabilityGroupSchema = yup.object({
   isPaid: yup.boolean().optional(),
   isActive: yup.boolean().default(false),
- 
+
   periods: yup.array().when('isActive', {
     is: true,
     // Если группа активна - строгая валидация
@@ -106,7 +99,7 @@ const AvailabilityGroupSchema = yup.object({
     .sort((a, b) => a.start - b.start);
 
   for (let i = 1; i < list.length; i++) {
-    if (list[i].start <= list[i - 1].end) {
+    if (list[i].start < list[i - 1].end) {
       return this.createError({
         path: `periods.${i}.startMonth`,
         message: "Ժամանակահատվածները չեն կարող հատվել",
@@ -124,33 +117,82 @@ export const CreateHotelServiceAvailabilitySchema = yup
   .test("no-overlap-between-groups", "Ժամանակահատվածները չեն կարող հատվել", function (data) {
     if (!data?.availabilities) return true;
 
-    // Собираем все периоды из всех активных групп
-    const allPeriods: Array<{ start: number; end: number; groupIndex: number; periodIndex: number }> = [];
+    // Собираем все периоды из всех активных групп с полной информацией
+    const allPeriods: Array<{
+      dateStart: number;
+      dateEnd: number;
+      hourlyType: HotelServiceHourlyAvailabilityType;
+      timeStart: number | null;
+      timeEnd: number | null;
+      groupIndex: number;
+      periodIndex: number;
+    }> = [];
 
     data.availabilities.forEach((group, groupIndex) => {
       if (!group?.isActive || !Array.isArray(group.periods)) return;
 
       group.periods.forEach((period, periodIndex) => {
-        const start = period?.startMonth ? new Date(period.startMonth).getTime() : NaN;
-        const end = period?.endMonth ? new Date(period.endMonth).getTime() : NaN;
+        const dateStart = period?.startMonth ? new Date(period.startMonth).getTime() : NaN;
+        const dateEnd = period?.endMonth ? new Date(period.endMonth).getTime() : NaN;
 
-        if (!Number.isNaN(start) && !Number.isNaN(end)) {
-          allPeriods.push({ start, end, groupIndex, periodIndex });
+        if (!Number.isNaN(dateStart) && !Number.isNaN(dateEnd)) {
+          allPeriods.push({
+            dateStart,
+            dateEnd,
+            hourlyType: period.hourlyAvailabilityTypeId as HotelServiceHourlyAvailabilityType,
+            timeStart: toMinutes(period.startHour),
+            timeEnd: toMinutes(period.endHour),
+            groupIndex,
+            periodIndex,
+          });
         }
       });
     });
 
-    // Сортируем по дате начала
-    allPeriods.sort((a, b) => a.start - b.start);
-
     // Проверяем пересечения между всеми периодами
-    for (let i = 1; i < allPeriods.length; i++) {
-      if (allPeriods[i].start <= allPeriods[i - 1].end) {
-        // Пересечение найдено
-        return this.createError({
-          path: `availabilities.${allPeriods[i].groupIndex}.periods.${allPeriods[i].periodIndex}.startMonth`,
-          message: "Ժամանակահատվածները չեն կարող հատվել",
-        });
+    for (let i = 0; i < allPeriods.length; i++) {
+      for (let j = i + 1; j < allPeriods.length; j++) {
+        const p1 = allPeriods[i];
+        const p2 = allPeriods[j];
+
+        // Проверяем, пересекаются ли даты
+        const datesOverlap = p1.dateStart <= p2.dateEnd && p2.dateStart <= p1.dateEnd;
+
+        if (datesOverlap) {
+          // Даты пересекаются - проверяем часы
+
+          // Если хотя бы один период AllDay - ошибка
+          if (
+            p1.hourlyType === HotelServiceHourlyAvailabilityType.AllDay ||
+            p2.hourlyType === HotelServiceHourlyAvailabilityType.AllDay
+          ) {
+            return this.createError({
+              path: `availabilities.${p2.groupIndex}.periods.${p2.periodIndex}.startMonth`,
+              message: "Ժամանակահատվածները չեն կարող հատվել (24 часа конфликт)",
+            });
+          }
+
+          // Оба периода Hours - проверяем пересечение времени
+          if (
+            p1.hourlyType === HotelServiceHourlyAvailabilityType.Hours &&
+            p2.hourlyType === HotelServiceHourlyAvailabilityType.Hours &&
+            p1.timeStart !== null &&
+            p1.timeEnd !== null &&
+            p2.timeStart !== null &&
+            p2.timeEnd !== null
+          ) {
+            // Проверяем пересечение временных интервалов
+            // Периоды НЕ пересекаются только если один заканчивается до или в момент начала другого
+            const timesOverlap = !(p1.timeEnd <= p2.timeStart || p2.timeEnd <= p1.timeStart);
+
+            if (timesOverlap) {
+              return this.createError({
+                path: `availabilities.${p2.groupIndex}.periods.${p2.periodIndex}.startHour`,
+                message: "Ժամանակահատվածները չեն կարող հատվել (время конфликт)",
+              });
+            }
+          }
+        }
       }
     }
 
