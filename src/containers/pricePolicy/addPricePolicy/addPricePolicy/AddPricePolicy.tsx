@@ -11,7 +11,8 @@ import { FC } from 'react';
 import { useGetRoomBedTypesQuery } from '../../../../services/rooms';
 import { RegisterSelect } from '../../../../components/shared/RegisterSelect';
 import { HotelAvailability } from '../../../../types';
- 
+import InputValidationLayout from '../../../../layouts/inputValidationLayout/InputValidationLayout';
+
 interface IAddPricePolicyProps {
   hotelId?: string;
   onSuccess?: (data: HotelAvailability) => void;
@@ -35,7 +36,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
       hotelAgeAssignments: [],
     },
   });
- 
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "hotelAgeAssignments",
@@ -43,7 +44,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
 
   const onSubmit = async (data: CreateHotelAvailabilityFormData) => {
     if (!hotelId) return;
-    
+
     try {
       const result = await addHotelAvailability({ body: data as unknown as HotelAvailability, hotelId }).unwrap();
       if (onSuccess) {
@@ -53,16 +54,15 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
       console.error('Failed to create hotel availability:', error);
     }
   };
-
+  console.log(errors);
+  
 
   return (
     <div>
       <BlockContainer shadow={false}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-
+        <form className='flex flex-col gap-3' onSubmit={handleSubmit(onSubmit)}>
           <h3>{t("price_policy.price_offer_settings")}</h3>
           <InfoBlock text='Նշված ժամանակահատվածում վերապահումներ ստանալու հնարավորություն կունենաք։ Նաև գների կարգավորման միջոցով փոփոխություններ կատարել' />
-
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div><span>{t("hotel_availability.price_offer_name")} *</span></div>
             <div>
@@ -93,7 +93,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
           </div>
 
           <div className='flex flex-col gap-3 mt-6'>
-
             {fields.map((_, index) => (
               <div
                 key={index}
@@ -107,53 +106,50 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
                     className="cursor-pointer"
                   />
                 </div>
-                <div>
-                  <p className='text-12'>{t("price_policy.defined_intervals")}</p>
+                <p className='text-12'>{t("price_policy.defined_intervals")}</p>
+                <InputValidationLayout errors={errors} name={`hotelAgeAssignments.${index}.name`}>
                   <RegisterInput
                     register={register}
-                    errors={errors}
                     name={`hotelAgeAssignments.${index}.name`}
                     type="text"
                     className='border-none'
                   />
-                </div>
-
+                </InputValidationLayout>
                 <div>
                   <p className='text-12'>{t("price_policy.from_age")}</p>
-                  <RegisterInput
-                    register={register}
-                    errors={errors}
-                    name={`hotelAgeAssignments.${index}.fromAge`}
-                    type="number"
-                    className='border-none'
-                  />
+                  <InputValidationLayout errors={errors} name={`hotelAgeAssignments.${index}.fromAge`}>
+                    <RegisterInput
+                      register={register}
+                      name={`hotelAgeAssignments.${index}.fromAge`}
+                      type="number"
+                      className='border-none'
+                    />
+                  </InputValidationLayout>
                 </div>
-
                 <div>
                   <p className='text-12'>{t("price_policy.to_age")}</p>
-                  <RegisterInput
-                    register={register}
-                    errors={errors}
-                    name={`hotelAgeAssignments.${index}.toAge`}
-                    type="number"
-                    className='border-none'
-                  />
+                  <InputValidationLayout errors={errors} name={`hotelAgeAssignments`}>
+                    <RegisterInput
+                      register={register}
+                      name={`hotelAgeAssignments.${index}.toAge`}
+                      type="number"
+                      className='border-none'
+                    />
+                  </InputValidationLayout>
                 </div>
-
                 <div>
                   <p className='text-12'>{t("price_policy.available_beds")}</p>
-                  <RegisterSelect
-                    name={`hotelAgeAssignments.${index}.bedType`}
-                    options={roomBedTypeOptions}
-                    register={register}
-                    className='border-none'
-                  />
+                  <InputValidationLayout errors={errors} name={`hotelAgeAssignments.${index}.bedType`}>
+                    <RegisterSelect
+                      name={`hotelAgeAssignments.${index}.bedType`}
+                      options={roomBedTypeOptions}
+                      register={register}
+                      className='border-none'
+                    />
+                  </InputValidationLayout>
                 </div>
-
-
               </div>
             ))}
-
             <Button
               variant='outline'
               onClick={() =>
@@ -163,8 +159,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
               {t("hotel_availability.add_age_range")}
             </Button>
           </div>
-
-
           <div className='flex justify-end mt-4'>
             <Button type="submit" isLoading={isLoading}>{t("buttons.save")}</Button>
           </div>

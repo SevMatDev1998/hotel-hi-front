@@ -22,7 +22,7 @@ const AvailabilityGroupCard: FC<IAvailabilityGroupCardProps> = ({ methods, group
     control: methods.control,
     name: `availabilities.${groupIndex}.periods`,
   });
-
+  
   return (
     <CardContainer className="rounded-md flex flex-col gap-3">
       <CheckBox

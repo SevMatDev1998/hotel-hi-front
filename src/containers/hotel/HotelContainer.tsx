@@ -7,13 +7,13 @@ const HotelContainer = () => {
   const { t } = useTranslation();
 
   const { user } = useAppSelector(state => state.auth);
-  
+    console.log(user);
+    
   if (!user) return <div>{t("loading")}</div>;
 
   return (
     <div>
-      <h1 className="mb-4">{t("hotel.name11")}</h1>
-      <p className="mb-4">{t("user.email")} - {"sevak@gmail.com"}</p>
+      <p className="mb-4">{t("user.email")} - {user.email}</p>
       <div className="flex gap-2">
         <img src="/images/icons/info-icon.svg" alt="hotel" />
         <p className="text-12">You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation</p>

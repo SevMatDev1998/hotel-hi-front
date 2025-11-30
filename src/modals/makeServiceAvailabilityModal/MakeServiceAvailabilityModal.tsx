@@ -22,7 +22,7 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
     availabilities: [
       {
         isPaid: true,
-        isActive: false,
+        isActive: true,
         periods: [
           {
             startMonth: "",
