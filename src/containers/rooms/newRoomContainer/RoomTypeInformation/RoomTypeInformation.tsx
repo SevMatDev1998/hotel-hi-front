@@ -28,10 +28,8 @@ const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ roomId }) => {
     });
   };
 
-  // Early returns после хуков
   if (!hotelRoomParts) return null;
 
-  console.log(hotelRoomParts);
 
   return (
     <div>

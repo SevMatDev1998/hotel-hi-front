@@ -9,7 +9,7 @@ import { BedType, HotelRoomPartBed, RoomBedSize, RoomBedType } from '../../../..
 interface IRoomTypeInformationCardRowsProps {
 
   roomPartBedsState: Partial<HotelRoomPartBed>[];
-  setRoomPartBedsState: Partial<HotelRoomPartBed>[];
+  setRoomPartBedsState: React.Dispatch<React.SetStateAction<Partial<HotelRoomPartBed>[]>>;
   roomPartId?: string;
   hendelAddHotelRoomPartBeds: (bed: Partial<HotelRoomPartBed>) => void;
   roomBedTypes?: RoomBedType[];
@@ -28,19 +28,19 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
   const { t } = useTranslation();
   const { data: hotelRoomPartBeds } = useGetHotelRoomPartBedsByPartIdQuery({ roomPartId: roomPartId! }, { skip: !roomPartId });
 
-      const { data: roomBedTypes } = useGetRoomBedTypesQuery();
+  const { data: roomBedTypes } = useGetRoomBedTypesQuery();
   const { data: roomBedSizes } = useGetRoomBedSizesQuery();
 
 
-useEffect(() => {
-  if (hotelRoomPartBeds) {
-    const bedsWithRowIndex = hotelRoomPartBeds.map(bed => ({
-      ...bed,
-      rowIndex: bed.rowIndex ?? bed.id ?? Date.now().toString() + Math.random()
-    }));
-    setRoomPartBedsState(bedsWithRowIndex);
-  }
-}, [hotelRoomPartBeds, setRoomPartBedsState]);
+  useEffect(() => {
+    if (hotelRoomPartBeds) {
+      const bedsWithRowIndex = hotelRoomPartBeds.map(bed => ({
+        ...bed,
+        rowIndex: bed.rowIndex ?? bed.id ?? Date.now().toString() + Math.random()
+      }));
+      setRoomPartBedsState(bedsWithRowIndex);
+    }
+  }, [hotelRoomPartBeds, setRoomPartBedsState]);
 
   const hendleAddBed = (type: string) => {
     const newBed: Partial<HotelRoomPartBed> = {
@@ -51,19 +51,19 @@ useEffect(() => {
     hendelAddHotelRoomPartBeds(newBed);
   }
 
-  const handleBedTypeChange = (bedId: string, newType: string) => {
-    
+  const handleBedTypeChange = (bedId: string, newType: any) => {
+
     const updatedBeds = roomPartBedsState.map(bed => {
       if (bed.rowIndex === bedId) {
         return { ...bed, roomBedTypeId: newType };
       }
       return bed;
     });
-    
+
     setRoomPartBedsState(updatedBeds);
   }
 
-  const handleBedSizeChange = (bedId: string, newSize: string) => {
+  const handleBedSizeChange = (bedId: string, newSize: any) => {
     const updatedBeds = roomPartBedsState.map(bed => {
       if (bed.rowIndex === bedId) {
         return { ...bed, roomBedSizeId: newSize };
@@ -71,13 +71,13 @@ useEffect(() => {
       return bed;
     });
     setRoomPartBedsState(updatedBeds);
-  } 
+  }
 
   const hendleBedSizeRowDelete = (bedId: string) => {
 
     setRoomPartBedsState(prev => prev.filter(bed => bed.rowIndex !== bedId));
   }
-  
+
   return (
     <div >
       <div className="flex gap-4">
@@ -90,9 +90,8 @@ useEffect(() => {
           roomPartBedsState.map((bed) => {
             return (
               <div key={bed.rowIndex} className="grid grid-cols-4 mobile:justify-start gap-4">
-                <div className='cursor-pointer' onClick={() => hendleBedSizeRowDelete(bed.rowIndex)}>
-                <img src="/images/icons/remove-button-icon.svg" alt="delete icon" className="w-4 h-4" />
-
+                <div className='cursor-pointer' onClick={() => hendleBedSizeRowDelete(bed.rowIndex!)}>
+                  <img src="/images/icons/remove-button-icon.svg" alt="delete icon" className="w-4 h-4" />
                 </div>
                 <div className='flex gap-3'>
                   <p>{t(`room_bed_types.${bed.bedType}`)}</p>
@@ -101,14 +100,13 @@ useEffect(() => {
                   name={`bed-${bed.id}-type`}
                   options={roomBedTypes?.map(type => ({ value: type.id, label: type.name })) || []}
                   tr_name="room_bed_types_names_options"
-                  onSelect={(e)=>{handleBedTypeChange(bed.rowIndex!, e)}}
+                  onSelect={(e) => { handleBedTypeChange(bed.rowIndex!, e) }}
                   value={bed.roomBedTypeId?.toString()}
                 />
                 <Select
                   name={`bed-${bed.id}-size`}
                   options={roomBedSizes?.map(size => ({ value: size.id, label: size.size })) || []}
-                  tr_name=""
-                  onSelect={(e)=>{handleBedSizeChange(bed.rowIndex!, e)}}
+                  onSelect={(e) => { handleBedSizeChange(bed.rowIndex!, e) }}
                   value={bed.roomBedSizeId?.toString()}
                 />
               </div>

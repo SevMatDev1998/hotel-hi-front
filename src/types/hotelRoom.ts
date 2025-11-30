@@ -21,5 +21,5 @@ export interface HotelRoom {
   deletedAt?: Date;
   roomClass?: RoomClass;
   roomView?: RoomView;
-  roomParts?: RoomPart[]; 
+  hotelRoomParts?: RoomPart[];
 }

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../components/shared/Button';
+import SegmentedControlButton from '../../../components/shared/SegmaentedControllButton';
 import BlockContainer from '../../public/BlockContainer';
 import FoodContainerCardForm from './FoodContainerCardForm';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -34,14 +34,19 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
             endDate: '',
             cuisineIds: [],
             foodOfferTypeIds: [],
+            isFoodAvailable: false,
           },
           hotelId: user?.hotelId,
         }).unwrap();
     setSelectedFoodType(null);
   };
 
+  console.log(hotelFood);
+
+  const isInactive = !hotelFood 
+  
   return (
-    <BlockContainer shadow={false}>
+    <BlockContainer shadow={false} className={isInactive ? 'border-2 border-red-300' : ''}>
       <div className='flex flex-col gap-4'>
         <div className='flex justify-between items-center'>
           <div className='flex flex-col w-full gap-3'>
@@ -69,18 +74,22 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
             </div>
           </div>
           <div>
-            {hotelFood && !hotelFood.isFoodAvailable ? 
+            {hotelFood && hotelFood.isFoodAvailable && !selectedFoodType ? 
               <span onClick={() => setSelectedFoodType(hotelFood.foodType ? hotelFood.foodType : null)}>
                 <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
               </span>
               :
               <div className="flex items-center justify-center mobile:justify-start gap-2">
-                <Button variant="checkButton" checked={selectedFoodType === mainFood.id} onClick={() => setSelectedFoodType(mainFood.type)}>
-                  {t("buttons.yes")}
-                </Button>
-                <Button variant="checkButton" checked={selectedFoodType !== mainFood.id} onClick={handleNoClick}>
-                  {t("buttons.no")}
-                </Button>
+                <SegmentedControlButton
+                  label={t("buttons.yes")}
+                  isActive={selectedFoodType === mainFood.type}
+                  onClick={() => setSelectedFoodType(mainFood.type)}
+                />
+                <SegmentedControlButton
+                  label={t("buttons.no")}
+                  isActive={hotelFood && !hotelFood.isFoodAvailable && !selectedFoodType}
+                  onClick={handleNoClick}
+                />
               </div>
             }
           </div>
