@@ -34,7 +34,6 @@ const LoginContainer = () => {
           <div>{t('auth.login')}</div>
           <p onClick={() => { navigate(RouteEnum.SIGN_UP) }} className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
         </div>
-
         <InputValidationLayout errors={errors} name="email">
           <RegisterInput
             register={register}
@@ -43,7 +42,6 @@ const LoginContainer = () => {
             type="email"
             className='rounded-none border !border-dusty-teal'
           />
-         
         </InputValidationLayout>
         <InputValidationLayout errors={errors} name="password">
           <div className="relative">

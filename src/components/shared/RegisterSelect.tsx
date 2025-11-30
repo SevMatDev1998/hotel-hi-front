@@ -44,7 +44,7 @@ export const RegisterSelect: React.FC<SelectProps> = ({
       <select
         id={name}
         className={clsx( 
-          "appearance-none block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
+          "appearance-none rounded-md block w-full px-3 py-2 border border-charcoal-gray placeholder-charcoal-gray text-charcoal-gray focus:outline-none bg-none",
            isError 
             ? "border-red-500 focus:border-red-500 focus:ring-red-500"
             : "border-charcoal-gray",
@@ -53,7 +53,7 @@ export const RegisterSelect: React.FC<SelectProps> = ({
         {...register(name, { valueAsNumber })}
         {...props}
       >
-        <option value="">-- Select an option --</option>
+        <option value=""></option>
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {tr_name ? t(`${tr_name}.${opt.label}`) : opt.label}

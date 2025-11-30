@@ -1,10 +1,12 @@
 import React, { FC, ReactNode } from 'react';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface IAuthLayoutProps {
   children: ReactNode
 }
 
 const AuthLayout: FC<IAuthLayoutProps> = ({ children }) => {
+  const {t} = useTranslation()
   return (
     <div className="min-h-screen flex bg-dusty-teal ">
       {/* Left side - Green background with text and logo */}
@@ -22,16 +24,16 @@ const AuthLayout: FC<IAuthLayoutProps> = ({ children }) => {
         {/* Armenian text content */}
         <div className="text-start max-w-md space-y-4 ">
           <p className="text-16 ">
-            Բարի գալուստ Hotel Hive - հյուրանոցի կառավրման հարթակ: Մեր հարթակի միջոցով հյուրանոցները կարող են հավաքել և կառավարել իրենց գնային քաղաքականությունը և կիսվել այս տեղեկատվությունը զբոսաշրջային ընկերությունների հետ՝ առանց որևէ ծախսերի: Մեր հեշտ օգտագործման ինտերֆեյսը հյուրանոցներին թույլ է տալիս իրական ժամանակում ստեղծել և թարմացնել իրենց գնային քաղաքականությունը՝ ապահովելով, որ իրենց տեղեկատվությունը միշտ ճշգրիտ և արդիական է: Եվ զբոսաշրջային ընկերությունների իրենց ցուցակը կառավարելու ունակությամբ հյուրանոցները կարող են ապահովել, որ իրենք միայն իրենց գնային տեղեկությունները կիսում են վստահելի գործընկերների հետ:
+            {t("auth.info.welcome")}
           </p>
           <p className="text-16 ">
-            Ամենալավ մասը. 
+            {t("auth.info.best_part")}
           </p>
           <p className="text-18 ">
-            Այս ամենը հասանելի է ձեզ բոլորովին անվճար:
+            {t("auth.info.free")}
           </p>
           <p className="text-16 ">
-          Միացեք Hotel Hive-ին այսօր և սկսեք պարզեցնել ձեր հյուրանոցի գնային քաղաքականությունը և տեղեկություններ փոխանակել զբոսաշրջային ընկերությունների հետ՝ բոլորն անվճար: Մեր նվիրված աջակցության թիմը միշտ այստեղ է օգնելու
+            {t("auth.info.join_today")}
           </p>
         </div>
       </div>

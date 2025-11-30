@@ -3,12 +3,8 @@ enum ApiEnum {
     REGISTER = "auth/register",
     VERIFY_REGISTRATION = "auth/verify-registration",
     RESET_PASSWORD = "auth/reset-password",
-
     SET_NEW_PASSWORD = "auth/set-new-password",
-
     NAVIGATION_ACCESS="auth/navigation-access-step",
-
-
 
     GET_ME = "auth/me",
     HOTEL = "hotels",

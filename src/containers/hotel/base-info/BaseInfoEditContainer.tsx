@@ -82,7 +82,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
               <InputValidationLayout errors={errors} name="name">
                 <RegisterInput
                   register={register}
-                  label="Hotel Name"
                   name="name"
                   type="text"
                   className='rounded-[5px]'
@@ -128,14 +127,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
               <div >
                 <span >{t("hotel.phone_number")} *</span>
               </div>
-              {/* <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'> */}
-                {/* <InputValidationLayout errors={errors} name="phoneCode">
-                  <RegisterSelect
-                    name="phoneCode"
-                    options={countryOptions}
-                    register={register}
-                  />
-                </InputValidationLayout> */}
                 <InputValidationLayout errors={errors} name="phoneNumber">
                   <RegisterInput
                     register={register}
@@ -144,8 +135,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                     className='rounded-[5px]'
                   />
                 </InputValidationLayout>
-
-              {/* </div> */}
             </div>
             <div className="grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center">
               <div>
@@ -160,7 +149,7 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
                   />
                 </InputValidationLayout>
                 <div>
-                  <p>Համակարգը կընդունի ձեր գնային քաղաքականությունը տվյալ արժույթով:</p>
+                  <p>{t("hotel.selected_currency")}</p>
                 </div>
               </div>
             </div>

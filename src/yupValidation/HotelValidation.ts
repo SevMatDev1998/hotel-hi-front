@@ -6,85 +6,89 @@ export const UpdateHotelBaseInfoSchema = yup.object({
   name: yup
     .string()
     .required(tv('required'))
-    .min(2, tv('min', {min: 2}))
-    .max(100, tv('max', {max: 100})),
+    .min(2, tv('min', { min: 2 }))
+    .max(100, tv('max', { max: 100 })),
 
   contactPerson: yup
     .string()
     .required(tv('required'))
-    .min(2, tv('min', {min: 2}) )
-    .max(100, tv('max', {max: 100})),
-  
+    .min(2, tv('min', { min: 2 }))
+    .max(100, tv('max', { max: 100 })),
+
   // phoneCode: yup
   //   .number()
   //   .required(tv('required'))
   //   .positive()
   //   .min(1 ,tv('min', {min: 1}))
   //   .max(9999,tv('max', {max: 9999})),
-  
+
   phoneNumber: yup
     .string()
     .required(tv('required'))
-    .matches(/^\d+$/)
-    .min(6,tv('min', {min: 6}) )
-    .max(15, tv('max', {max: 15})),
-  
+    .matches(/^\+\d{11}$/, tv('phone_number'))
+    .min(6, tv('min', { min: 6 }))
+    .max(15, tv('max', { max: 15 })),
+
   countryId: yup
     .number()
-    .required(tv('required'))
-    .positive(),
+    .typeError(tv('required'))
+    .required(tv('required')),
 
   city: yup
     .string()
     .required(tv('required'))
-    .min(2,tv('min', {min: 2}) )
-    .max(50, tv('max', {max: 50})),
-  
+    .min(2, tv('min', { min: 2 }))
+    .max(50, tv('max', { max: 50 })),
+
   currencyId: yup
     .number()
-    .required(tv('required'))
-    .positive()
+    .typeError(tv('required'))
+    .required(tv('required')),
 });
 
 
 export const UpdateHotelLegalInfoSchema = yup.object({
   legalPerson: yup
     .string()
-    .optional()
-    .min(2)
-    .max(100),
+    .required(tv('required'))
+    .min(2, tv('min', { min: 2 }))
+    .max(100, tv('max', { max: 100 })),
 
   registerCountryId: yup
     .number()
-    .optional()
-    .positive(),
+    .typeError(tv('required'))
+    .required(tv('required')),
 
   registerCity: yup
     .string()
-    .optional()
-    .min(2)
-    .max(50),
+    .required(tv('required'))
+    .min(2, tv('min', { min: 2 }))
+    .max(100, tv('max', { max: 100 })),
 
   tinNumber: yup
-    .string()
-    .optional()
-    .min(5)
-    .max(50),
+    .number()
+    .typeError(tv('number'))
+    .required(tv('required'))
+    .test('len', tv('exact_length', { length: 8 }), val => val?.toString().length === 8),
 
   director: yup
-    .string()
-    .optional()
-    .min(2)
-    .max(100),
+   .string()
+    .required(tv('required'))
+    .min(2, tv('min', { min: 2 }))
+    .max(100, tv('max', { max: 100 })),
 
-    bankPhoneNumber: yup
-    .string()
-    .optional(),
+  bankPhoneNumber: yup
+      .string()
+    .required(tv('required'))
+    .matches(/^\+\d{11}$/, tv('phone_number'))
+    .min(6, tv('min', { min: 6 }))
+    .max(15, tv('max', { max: 15 })),
 
+    
   priceSendEmail: yup
     .string()
-    .optional()
-    .email()
+    .required(tv('required'))
+    .email(tv('email')),
 });
 
 

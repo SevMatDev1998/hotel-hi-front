@@ -31,17 +31,11 @@ export const Header = () => {
 
   return (
     <header className="">
-      <div className="flex h-16 items-center justify-between px-4">
+      <div className="flex h-14 items-center justify-between px-4">
         <div className="flex items-center">
-          <img
-            src="/icons/logo.svg"
-            alt="Logo"
-            className="h-10 w-10"
-          />
         </div>
         <div className="flex items-center space-x-4">
           <LanguageSwitcher />
-        
           <button
             onClick={() => { handleLogOut() }}
             className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"

@@ -45,7 +45,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
     setNavigationAccessStep({ hotelId: hotelId!, stepNumber: 2 })
     navigate(RouteEnum.ROOMS);
   };
-
+ z
 
   const countryOptions = countriesData?.map((country) => ({
     value: country.id,

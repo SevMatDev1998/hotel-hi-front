@@ -6,7 +6,6 @@ import { useTranslation } from '../../hooks/useTranslation';
 import RouteEnum from '../../enums/route.enum';
 import { useResetPasswordMutation } from '../../services/auth';
 import { Button } from '../../components/shared/Button';
-import ErrorMessage from '../../components/shared/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
 import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
 
@@ -36,11 +35,7 @@ const ResetPasswordContainer = () => {
             type="email"
             className='rounded-none border !border-dusty-teal'
           />
-          <ErrorMessage
-            fieldName="email"
-            error={errors.email}
-            translationName="auth"
-          />
+         
         </InputValidationLayout>
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">
