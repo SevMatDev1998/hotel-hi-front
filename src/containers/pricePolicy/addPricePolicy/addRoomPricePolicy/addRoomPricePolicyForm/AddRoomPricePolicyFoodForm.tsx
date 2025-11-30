@@ -1,9 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useEffect,useMemo, useState } from 'react';
+import CheckBox from '../../../../../components/shared/CheckBox';
+import CardContainer from '../../../../public/CardContainer';
+import { useTranslation } from '../../../../../hooks/useTranslation';
 import { HotelAgeAssignment, HotelFood } from '../../../../../types';
 import { CreateHotelFoodPriceDto } from '../../../../../types/pricePolicyDto';
-import CardContainer from '../../../../public/CardContainer';
-import CheckBox from '../../../../../components/shared/CheckBox';
-import { useTranslation } from '../../../../../hooks/useTranslation';
 
 interface IAddRoomPricePolicyFoodProps {
   hotelFoods?: HotelFood[];

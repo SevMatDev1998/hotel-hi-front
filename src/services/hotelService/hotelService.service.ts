@@ -1,6 +1,6 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { SystemService, SystemServiceGroup, SystemServiceType, PaidServiceGroup } from "../../types";
+import { PaidServiceGroup,SystemService, SystemServiceGroup, SystemServiceType } from "../../types";
 
 interface CreateServicePriceDto {
   hotelServiceId: number;

@@ -1,7 +1,7 @@
-import { SystemServiceGroup } from '../../types';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/shared/Accordion';
-import SystemServiceTypes from './SystemServiceTypes';
 import BlockContainer from '../public/BlockContainer';
+import SystemServiceTypes from './SystemServiceTypes';
+import { SystemServiceGroup } from '../../types';
 
 interface HotelSericeGroupsProps {
   serviceGroups?: SystemServiceGroup[];

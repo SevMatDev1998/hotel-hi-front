@@ -1,9 +1,9 @@
-import BlockContainer from '../../public/BlockContainer';
-import { useTranslation } from '../../../hooks/useTranslation';
 import { FC } from 'react';
-import { Hotel } from '../../../types';
-import useAppDispatch from '../../../hooks/useAppDisaptch';
 import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
+import BlockContainer from '../../public/BlockContainer';
+import useAppDispatch from '../../../hooks/useAppDisaptch';
+import { useTranslation } from '../../../hooks/useTranslation';
+import { Hotel } from '../../../types';
 
 interface IBaseInfoContainerProps {
   hotelBaseInformationData: Partial<Hotel> | undefined;

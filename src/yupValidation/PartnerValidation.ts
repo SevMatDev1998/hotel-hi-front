@@ -1,7 +1,7 @@
 // PartnerValidation.ts
 import * as yup from 'yup';
-import { LegalEntityType } from '../types';
 import tv from '../helpers/tv';
+import { LegalEntityType } from '../types';
 
 export const PartnerSchema = yup.object({
     countryId: yup

@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import { Button } from "../components/shared/Button";
 import RegisterInput from "../components/shared/RegisterInput";
 import BlockContainer from "../containers/public/BlockContainer";
-import { useForm } from "react-hook-form";
-import { CommissionFormType, commissionSchema } from "../yupValidation/CommissionValidation";
 import { useUpdateHotelAvailabilityDateCommissionsMutation } from "../services/hotelAvailability/hotelAvailability.service";
+import { CommissionFormType, commissionSchema } from "../yupValidation/CommissionValidation";
 
 interface ICommissionModalProps {
   commission: CommissionFormType;

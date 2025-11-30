@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { UseFormReturn, useFieldArray } from "react-hook-form";
-import PeriodRow from "./PeriodRow";
-import CardContainer from "../../containers/public/CardContainer";
-import { HotelServiceHourlyAvailabilityType } from "../../types";
-import CheckBox from "../../components/shared/CheckBox";
-import { useTranslation } from "../../hooks/useTranslation";
+import { useFieldArray,UseFormReturn } from "react-hook-form";
 import { Button } from "../../components/shared/Button";
+import CheckBox from "../../components/shared/CheckBox";
+import CardContainer from "../../containers/public/CardContainer";
+import PeriodRow from "./PeriodRow";
+import { useTranslation } from "../../hooks/useTranslation";
+import { HotelServiceHourlyAvailabilityType } from "../../types";
 
 interface IAvailabilityGroupCardProps {
   methods: UseFormReturn<any>;

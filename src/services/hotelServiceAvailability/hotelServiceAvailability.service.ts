@@ -1,6 +1,6 @@
 import ApiInstance from "../../api/api";
 import ApiEnum from "../../enums/api.enum";
-import { HotelServiceAvailability, CreateAvailabilityDto } from "../../types";
+import { CreateAvailabilityDto,HotelServiceAvailability } from "../../types";
 
 const hotelServiceAvailability = ApiInstance.injectEndpoints({
   endpoints: (build) => ({

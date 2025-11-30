@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import AvailabilityGroupCard from './AvailabilityGroupCard';
+import { useForm } from 'react-hook-form';
 import { Button } from '../../components/shared/Button';
-import { FormValues } from './types';
-import { useAddHotelServiceAvailabilityMutation } from '../../services/hotelServiceAvailability';
+import AvailabilityGroupCard from './AvailabilityGroupCard';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useAddHotelServiceAvailabilityMutation } from '../../services/hotelServiceAvailability';
 import { CreateHotelServiceAvailabilitySchema } from '../../yupValidation/HoterServiceValidation';
+import { FormValues } from './types';
 
 
 interface MakeServiceAvailabilityModalFormProps {

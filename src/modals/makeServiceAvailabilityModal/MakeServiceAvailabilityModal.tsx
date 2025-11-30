@@ -1,6 +1,6 @@
+import MakeServiceAvailabilityModalForm from "./MakeServiceAvailabilityModalForm";
 import { useTranslation } from "../../hooks/useTranslation";
 import { useGetHotelServiceAvailabilityQuery } from "../../services/hotelServiceAvailability";
-import MakeServiceAvailabilityModalForm from "./MakeServiceAvailabilityModalForm";
 
 interface IMakeServiceAvailabilityModalProps {
   hotelServiceId: string;

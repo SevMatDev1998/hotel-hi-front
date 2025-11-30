@@ -1,13 +1,11 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import LegalInfoContainer from "./LegalInfoContainer";
 import LegalInfoEditContainer from "./LegalInfoEditContainer";
+import useAppSelector from "../../../hooks/useAppSelector";
+import { useGetCountriesQuery } from "../../../services/countries";
 import { useGetHotelLegalInformationQuery } from "../../../services/hotel";
 import { User } from "../../../types";
-import { useGetCountriesQuery } from "../../../services/countries";
-import useAppSelector from "../../../hooks/useAppSelector";
-import { Button } from "../../../components/shared/Button";
-import { useSetNavigationAccessStepMutation } from "../../../services/auth";
-import { useTranslation } from "react-i18next";
 
 interface ILegalInfoProps {
   user: Partial<User>;

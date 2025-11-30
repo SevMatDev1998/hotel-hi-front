@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import BlockContainer from '../../public/BlockContainer';
-import { Partner, PartnerStatus } from '../../../types';
-import { useTranslation } from '../../../hooks/useTranslation';
-import { Button } from '../../../components/shared/Button';
 import { generatePath, useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/shared/Button';
+import BlockContainer from '../../public/BlockContainer';
+import { useTranslation } from '../../../hooks/useTranslation';
 import RouteEnum from '../../../enums/route.enum';
+import { Partner, PartnerStatus } from '../../../types';
 
 interface IHotelPartnerContainerBlockProps {
   partner: Partner

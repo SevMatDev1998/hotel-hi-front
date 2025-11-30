@@ -1,13 +1,13 @@
-import { useTranslation } from '../../hooks/useTranslation';
-import InfoBlock from '../../components/shared/InfoBlock';
-import { Button } from '../../components/shared/Button';
 import { useNavigate } from 'react-router-dom';
-import RouteEnum from '../../enums/route.enum';
-import { useGetHotelAvailabilityQuery } from '../../services/hotelAvailability/hotelAvailability.service';
-import useAppSelector from '../../hooks/useAppSelector';
-import BlockContainer from '../public/BlockContainer';
+import { Button } from '../../components/shared/Button';
+import InfoBlock from '../../components/shared/InfoBlock';
 import ShowHotelAvailabilityModal from '../../modals/showHotelAvailabilityModal/ShowHotelAvailabilityModal';
+import BlockContainer from '../public/BlockContainer';
+import useAppSelector from '../../hooks/useAppSelector';
 import useModal from '../../hooks/useModal';
+import { useTranslation } from '../../hooks/useTranslation';
+import { useGetHotelAvailabilityQuery } from '../../services/hotelAvailability/hotelAvailability.service';
+import RouteEnum from '../../enums/route.enum';
 
 const PricePolicyContainer = () => {
   const { t } = useTranslation();

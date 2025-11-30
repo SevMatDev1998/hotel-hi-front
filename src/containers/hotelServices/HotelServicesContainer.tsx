@@ -1,11 +1,11 @@
-import InfoBlock from '../../components/shared/InfoBlock';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../components/shared/Button';
-import { useGetSystemServiceGroupsQuery } from '../../services/hotelService';
-import HotelSericeGroups from './HotelSericeGroups';
-import { useSetNavigationAccessStepMutation } from '../../services/auth';
-import useAppSelector from '../../hooks/useAppSelector';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/shared/Button';
+import InfoBlock from '../../components/shared/InfoBlock';
+import HotelSericeGroups from './HotelSericeGroups';
+import useAppSelector from '../../hooks/useAppSelector';
+import { useSetNavigationAccessStepMutation } from '../../services/auth';
+import { useGetSystemServiceGroupsQuery } from '../../services/hotelService';
 import { RouteEnum } from '../../enums/route.enum';
 
 const HotelServicesContainer = () => {

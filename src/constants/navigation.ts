@@ -1,13 +1,12 @@
 import {
-  Users,
-  Hotel,
-  FileText,
-  Calendar,
+  BarChart3,
   Bed,
+  Calendar,
   Coffee,
   CreditCard,
-  BarChart3
-} from 'lucide-react';
+  FileText,
+  Hotel,
+  Users} from 'lucide-react';
 
 interface NavigationSubItem {
   name: string;

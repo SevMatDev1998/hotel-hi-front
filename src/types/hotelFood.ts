@@ -1,4 +1,4 @@
-import { FoodType, CompletenessStatus } from './enums';
+import { CompletenessStatus,FoodType } from './enums';
 
 export interface HotelFood {
   id: number;

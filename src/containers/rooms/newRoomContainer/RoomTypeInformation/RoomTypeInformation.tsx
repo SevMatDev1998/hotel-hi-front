@@ -1,14 +1,13 @@
 import { FC } from "react";
-import BlockContainer from "../../../public/BlockContainer";
-import { useTranslation } from "../../../../hooks/useTranslation";
-import InfoBlock from "../../../../components/shared/InfoBlock";
-import { Button } from "../../../../components/shared/Button";
-import useModal from "../../../../hooks/useModal";
-import SelectRoomPartsModal from "../../../../modals/SelectRoomPartsModal";
-import { useGetHotelRoomPartsQuery } from "../../../../services/rooms";
-
-import RoomTypeInformationCards from "./RoomTypeInformationCards";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../../../components/shared/Button";
+import InfoBlock from "../../../../components/shared/InfoBlock";
+import SelectRoomPartsModal from "../../../../modals/SelectRoomPartsModal";
+import BlockContainer from "../../../public/BlockContainer";
+import RoomTypeInformationCards from "./RoomTypeInformationCards";
+import useModal from "../../../../hooks/useModal";
+import { useTranslation } from "../../../../hooks/useTranslation";
+import { useGetHotelRoomPartsQuery } from "../../../../services/rooms";
 import RouteEnum from "../../../../enums/route.enum";
 
 interface RoomTypeInformationProps {

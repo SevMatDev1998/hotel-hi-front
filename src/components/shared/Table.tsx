@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  useReactTable,
-  getCoreRowModel,
   flexRender,
+  getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   type SortingState,
+  useReactTable,
 } from '@tanstack/react-table';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useQueryParameter } from '../../hooks/usePageQuery';
-import { divideAndRoundUp } from '../../utils/utils';
 import TableSearch from '../../containers/public/TableSearch';
+import { divideAndRoundUp } from '../../utils/utils';
+import { useQueryParameter } from '../../hooks/usePageQuery';
 
 interface DataTableProps<T> {
   showPagination?: boolean,

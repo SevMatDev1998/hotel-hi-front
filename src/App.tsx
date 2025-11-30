@@ -1,11 +1,10 @@
 import React from 'react';
-import {  RouterProvider } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import ModalProvider from './providers/ModalProvider';
 import { Provider } from 'react-redux';
-import store from './store/store';
-import router from './routes/Routers';
+import {  RouterProvider } from 'react-router-dom';
 import ToastContainer from './containers/public/ToastContainer';
+import ModalProvider from './providers/ModalProvider';
+import router from './routes/Routers';
+import store from './store/store';
 
 
 

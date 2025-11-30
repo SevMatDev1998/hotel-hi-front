@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import InfoBlock from '../../../components/shared/InfoBlock';
-import { Button } from '../../../components/shared/Button';
-import { useGetHotelFoodsByHotelIdQuery } from '../../../services/foods';
-import useAppSelector from '../../../hooks/useAppSelector';
-import FoodContainerCard from './FoodContainerCard';
-import { useSetNavigationAccessStepMutation } from '../../../services/auth';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/shared/Button';
+import InfoBlock from '../../../components/shared/InfoBlock';
+import FoodContainerCard from './FoodContainerCard';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { useSetNavigationAccessStepMutation } from '../../../services/auth';
+import { useGetHotelFoodsByHotelIdQuery } from '../../../services/foods';
 import { RouteEnum } from '../../../enums/route.enum';
 
 const FoodsContainer = () => {

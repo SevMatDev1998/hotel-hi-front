@@ -1,12 +1,12 @@
-import { useGetHotelAvailabilityDetailQuery } from "../../services/hotelAvailability/hotelAvailability.service";
-import FoodPricesSection from "./FoodPricesSection";
-import ServicePricesSection from "./ServicePricesSection";
 import AdditionalServicesSection from "./AdditionalServicesSection";
-import RoomInfoSection from "./RoomInfoSection";
 import AgeAssignmentPricesSection from "./AgeAssignmentPricesSection";
-import RoomFoodPricesSection from "./RoomFoodPricesSection";
+import FoodPricesSection from "./FoodPricesSection";
 import MainServicesSection from "./MainServicesSection";
+import RoomFoodPricesSection from "./RoomFoodPricesSection";
+import RoomInfoSection from "./RoomInfoSection";
+import ServicePricesSection from "./ServicePricesSection";
 import { useTranslation } from "../../hooks/useTranslation";
+import { useGetHotelAvailabilityDetailQuery } from "../../services/hotelAvailability/hotelAvailability.service";
 
 interface ISignOutModalProps {
   availabilityId: string;

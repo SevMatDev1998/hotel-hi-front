@@ -1,15 +1,15 @@
-import { useForm } from 'react-hook-form';
-import { SignUpFormType, signUpSchema } from '../../yupValidation/AuthValidation';
-import { useSignUpMutation } from '../../services/auth/auth.service';
-import RegisterInput from '../../components/shared/RegisterInput';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '../../components/shared/Button';
-import RouteEnum from '../../enums/route.enum';
-import { useTranslation } from '../../hooks/useTranslation';
 import { useEffect, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { signUpEffect } from '../../services/auth/auth.effects';
+import { Button } from '../../components/shared/Button';
+import RegisterInput from '../../components/shared/RegisterInput';
 import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
+import { useTranslation } from '../../hooks/useTranslation';
+import { signUpEffect } from '../../services/auth/auth.effects';
+import { useSignUpMutation } from '../../services/auth/auth.service';
+import { SignUpFormType, signUpSchema } from '../../yupValidation/AuthValidation';
+import RouteEnum from '../../enums/route.enum';
 
 const SignUpContainer = () => {
   const { t } = useTranslation();

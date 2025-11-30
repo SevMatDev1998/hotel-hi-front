@@ -1,26 +1,26 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useEffect,useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Button } from '../../../../../components/shared/Button';
+import appToast from '../../../../../helpers/appToast';
+import AddRoomPricePolicyAdditionalServicesForm from './AddRoomPricePolicyAdditionalServicesForm';
+import AddRoomPricePolicyAgeAssignmentForm from './AddRoomPricePolicyAgeAssignmentForm';
+import AddRoomPricePolicyArrivalDepartureForm from './AddRoomPricePolicyArrivalDepartureForm';
 import AddRoomPricePolicyFoodForm from './AddRoomPricePolicyFoodForm';
 import AddRoomPricePolicyRoomForm from './AddRoomPricePolicyRoom';
-import AddRoomPricePolicyAgeAssignmentForm from './AddRoomPricePolicyAgeAssignmentForm';
-import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../../types';
-import AddRoomPricePolicyArrivalDepartureForm from './AddRoomPricePolicyArrivalDepartureForm';
-import AddRoomPricePolicyAdditionalServicesForm from './AddRoomPricePolicyAdditionalServicesForm';
-import {
-  CreateHotelFoodPriceDto,
-  CreateHotelRoomPriceDto,
-  CreateHotelAdditionalServiceDto,
-  CreateOtherServiceDto,
-  CreateHotelAgeAssignmentPriceDto,
-  CreateRoomPricePolicyDto
-} from '../../../../../types/pricePolicyDto';
+import { useTranslation } from '../../../../../hooks/useTranslation';
 import {
   useCreateRoomPricePolicyMutation,
   useGetRoomPricePolicyQuery
 } from '../../../../../services/pricePolicy/pricePolicy.service';
-import appToast from '../../../../../helpers/appToast';
-import { Button } from '../../../../../components/shared/Button';
-import { useTranslation } from '../../../../../hooks/useTranslation';
-import { useParams } from 'react-router-dom';
+import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../../types';
+import {
+  CreateHotelAdditionalServiceDto,
+  CreateHotelAgeAssignmentPriceDto,
+  CreateHotelFoodPriceDto,
+  CreateHotelRoomPriceDto,
+  CreateOtherServiceDto,
+  CreateRoomPricePolicyDto
+} from '../../../../../types/pricePolicyDto';
 
 interface IAddRoomPricePolicyFormProps {
   room: HotelRoom;
@@ -60,7 +60,7 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
       }
 
       if (data.roomPrice) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const { id, createdAt, updatedAt, hotelAvailabilityId, ...roomPriceData } = data.roomPrice;
         setRoomPrice(roomPriceData);
       }
@@ -70,13 +70,13 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
       }
 
       if (data.arrivalDepartureServices?.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const services = data.arrivalDepartureServices.map(({ id, createdAt, updatedAt, hotelAvailabilityId, hotelRoomId, ...rest }) => rest);
         setArrivalDeparturePolicies(services);
       }
 
       if (data.otherServices?.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         const services = data.otherServices.map(({ id, createdAt, updatedAt, hotelAvailabilityId, hotelRoomId, ...rest }) => rest);
         setOtherServices(services);
       }

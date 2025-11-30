@@ -1,4 +1,4 @@
-import { BaseQueryFn, createApi, fetchBaseQuery, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
 import { clearTokens, getJwtToken, getRefreshToken, setJwtToken, setRefreshToken } from "../utils/tokenUtil.ts";
 import ApiEnum from '../enums/api.enum.ts';

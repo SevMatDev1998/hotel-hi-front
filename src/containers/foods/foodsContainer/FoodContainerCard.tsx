@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '../../../components/shared/Button';
 import BlockContainer from '../../public/BlockContainer';
 import FoodContainerCardForm from './FoodContainerCardForm';
-import { Button } from '../../../components/shared/Button';
-import { useTranslation } from 'react-i18next';
-import { FoodType, HotelFood } from '../../../types';
-import { useAddHotelFoodMutation, useGetCuisineQuery, useGetFoodOfferTypesQuery } from '../../../services/foods';
 import useAppSelector from '../../../hooks/useAppSelector';
+import { useAddHotelFoodMutation, useGetCuisineQuery, useGetFoodOfferTypesQuery } from '../../../services/foods';
+import { FoodType, HotelFood } from '../../../types';
 
 interface IFoodContainerCardProps {
   mainFood: any;

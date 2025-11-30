@@ -1,18 +1,18 @@
 import { FC } from "react";
-import { useTranslation } from "react-i18next";
-import InfoBlock from "../../../components/shared/InfoBlock";
-import BlockContainer from "../../public/BlockContainer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import RegisterInput from "../../../components/shared/RegisterInput";
-import { CreatePartnerFormData, PartnerSchema } from "../../../yupValidation/PartnerValidation";
-import { RegisterSelect } from "../../../components/shared/RegisterSelect";
-import { Button } from "../../../components/shared/Button";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Partner } from "../../../types";
-import { useAcceptPartnerShipMutation } from "../../../services/guests/guest.service";
-import RouteEnum from "../../../enums/route.enum";
+import { Button } from "../../../components/shared/Button";
+import InfoBlock from "../../../components/shared/InfoBlock";
+import RegisterInput from "../../../components/shared/RegisterInput";
+import { RegisterSelect } from "../../../components/shared/RegisterSelect";
+import BlockContainer from "../../public/BlockContainer";
 import InputValidationLayout from "../../../layouts/inputValidationLayout/InputValidationLayout";
+import { useAcceptPartnerShipMutation } from "../../../services/guests/guest.service";
+import { CreatePartnerFormData, PartnerSchema } from "../../../yupValidation/PartnerValidation";
+import RouteEnum from "../../../enums/route.enum";
+import { Partner } from "../../../types";
 
 
 interface AcceptPartnerFormProps {

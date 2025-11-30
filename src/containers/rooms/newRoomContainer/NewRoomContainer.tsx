@@ -1,6 +1,6 @@
+import RoomTypeDescription from "./RoomTypeDescription";
 import useAppSelector from "../../../hooks/useAppSelector";
 import { useTranslation } from "../../../hooks/useTranslation";
-import RoomTypeDescription from "./RoomTypeDescription";
 
 const NewRoomContainer = () => {
   const { t } = useTranslation();

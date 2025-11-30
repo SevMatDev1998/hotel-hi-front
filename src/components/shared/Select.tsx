@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import clsx from 'clsx';
 import { FieldError } from 'react-hook-form';
 import { useTranslation } from '../../hooks/useTranslation';
 

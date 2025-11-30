@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback,useState } from 'react';
 
 export const useLazyFetch = <T>(fetchFunction: () => Promise<T>, dependencies: T[] = []) => {
   const [data, setData] = useState<T | null>(null);

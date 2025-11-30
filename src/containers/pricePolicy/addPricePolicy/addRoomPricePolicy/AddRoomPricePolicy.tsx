@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { useGetHotelRoomsByHotelIdQuery } from '../../../../services/rooms';
-import BlockContainer from '../../../public/BlockContainer';
 import { useTranslation } from 'react-i18next';
+import BlockContainer from '../../../public/BlockContainer';
 import AddRoomPricePolicyCard from './AddRoomPricePolicyCard';
 import { useGetHotelFoodsByHotelIdQuery } from '../../../../services/foods';
 import { useGetHotelAgeAssessmentByHotelAvailabilityIdQuery } from '../../../../services/hotelAvailability/hotelAvailability.service';
+import { useGetHotelRoomsByHotelIdQuery } from '../../../../services/rooms';
 
 
 interface IAddRoomPricePolicyProps {
@@ -19,8 +19,6 @@ const AddRoomPricePolicy: FC<IAddRoomPricePolicyProps> = ({ hotelId, hotelAvaila
 
   const { data: hotelFoods } = useGetHotelFoodsByHotelIdQuery({ hotelId: hotelId || '' }, { skip: !hotelId });
   const { data: hotelAvailabilityAgeAssessments } = useGetHotelAgeAssessmentByHotelAvailabilityIdQuery({ hotelAvailabilityId }, { skip: !hotelAvailabilityId });
-
-
 
 
   return (

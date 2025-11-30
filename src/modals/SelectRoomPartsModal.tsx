@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button } from "../components/shared/Button";
+import CheckBox from "../components/shared/CheckBox";
+import InfoBlock from "../components/shared/InfoBlock";
 import { useTranslation } from "../hooks/useTranslation";
 import { useAddHotelRoomPartsMutation, useGetRoomPartsQuery } from "../services/rooms";
-import InfoBlock from "../components/shared/InfoBlock";
 import { HotelRoomPart } from "../types";
-import CheckBox from "../components/shared/CheckBox";
 
 interface IModalProps {
   hotelRoomId: string;

@@ -1,6 +1,6 @@
 import ApiInstance from "../../api/api";
-import ApiEnum from "../../enums/api.enum";
 import { LoginDTO, LoginResponse, SignUpDTO } from "./auth.types";
+import ApiEnum from "../../enums/api.enum";
 
 const AuthService = ApiInstance.injectEndpoints({
     endpoints: build => ({

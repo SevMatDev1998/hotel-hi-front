@@ -1,10 +1,10 @@
 import BaseInfoContainer from './BaseInfoContainer';
 import BaseInfoEditContainer from './BaseInfoEditContainer';
-import { useGetHotelBaseInformationQuery } from '../../../services/hotel/hotel.service';
-import { User } from '../../../types';
+import useAppSelector from '../../../hooks/useAppSelector';
 import { useGetCountriesQuery } from '../../../services/countries/countries.service';
 import { useGetCurrenciesQuery } from '../../../services/currencies/currencies.service';
-import useAppSelector from '../../../hooks/useAppSelector';
+import { useGetHotelBaseInformationQuery } from '../../../services/hotel/hotel.service';
+import { User } from '../../../types';
 
 interface IBaseInfoProps {
   user: Partial<User>;

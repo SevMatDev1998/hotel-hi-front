@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC,useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Language {
   code: string;

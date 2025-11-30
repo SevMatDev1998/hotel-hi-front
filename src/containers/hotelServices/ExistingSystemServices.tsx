@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { SystemService } from "../../types";
-import { useDeleteHotelServiceMutation } from "../../services/hotelService";
+import { Button } from "../../components/shared/Button";
 import MakeServiceAvailabilityModal from "../../modals/makeServiceAvailabilityModal/MakeServiceAvailabilityModal";
 import useModal from "../../hooks/useModal";
-import { Button } from "../../components/shared/Button";
 import { useTranslation } from "../../hooks/useTranslation";
+import { useDeleteHotelServiceMutation } from "../../services/hotelService";
+import { SystemService } from "../../types";
 
 interface IExistingSystemServicesProps {
   existingSystemServices: SystemService[]

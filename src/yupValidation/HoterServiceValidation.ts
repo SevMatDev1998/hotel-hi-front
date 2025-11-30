@@ -1,7 +1,7 @@
 // yupValidation/HotelServiceValidation.ts
 import * as yup from "yup";
-import { HotelServiceHourlyAvailabilityType } from "../types"; // поправь путь при необходимости
 import tv from '../helpers/tv';
+import { HotelServiceHourlyAvailabilityType } from "../types"; // поправь путь при необходимости
 
 const HHMM = /^\d{2}:\d{2}$/;
 

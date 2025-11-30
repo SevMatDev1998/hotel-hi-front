@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { HotelAgeAssignment } from '../../../../../types';
-import { CreateHotelAgeAssignmentPriceDto } from '../../../../../types/pricePolicyDto';
+import React, { useEffect,useState } from 'react';
 import CardContainer from '../../../../public/CardContainer';
 import { useTranslation } from '../../../../../hooks/useTranslation';
+import { HotelAgeAssignment } from '../../../../../types';
+import { CreateHotelAgeAssignmentPriceDto } from '../../../../../types/pricePolicyDto';
 
 interface IAddRoomPricePolicyAgeAssignmentProps {
   hotelRoomId: number;

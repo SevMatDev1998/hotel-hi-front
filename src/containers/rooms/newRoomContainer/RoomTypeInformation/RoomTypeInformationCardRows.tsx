@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react';
-import { Button } from '../../../../components/shared/Button';
 import { useTranslation } from 'react-i18next';
-import { BedType, HotelRoomPartBed, RoomBedSize, RoomBedType } from '../../../../types';
+import { Button } from '../../../../components/shared/Button';
 import { Select } from '../../../../components/shared/Select';
 import { useGetHotelRoomPartBedsByPartIdQuery, useGetRoomBedSizesQuery, useGetRoomBedTypesQuery } from '../../../../services/rooms';
+import { BedType, HotelRoomPartBed, RoomBedSize, RoomBedType } from '../../../../types';
 
 
 interface IRoomTypeInformationCardRowsProps {

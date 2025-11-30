@@ -1,4 +1,4 @@
-import { ServiceTypeAvailabilityBy, HotelServiceHourlyAvailabilityType, ServicePayMethod } from './enums';
+import { HotelServiceHourlyAvailabilityType, ServicePayMethod,ServiceTypeAvailabilityBy } from './enums';
 
 export interface HotelServiceAvailability {
   id: number;

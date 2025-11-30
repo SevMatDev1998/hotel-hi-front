@@ -1,29 +1,29 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import NotFound from "../pages/404/NotFound";
-import RouteEnum from "../enums/route.enum";
-import HotelPage from "../pages/hotel/HotelPage";
-import { MainLayout } from "../layouts/mainLayout/MainLayout";
 import LoginPage from "../pages/auth/LoginPage";
+import NewPasswordPage from "../pages/auth/NewPasswordPage";
+import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import SignUpPage from "../pages/auth/SignUpPage";
-import RoomsPage from "../pages/rooms/RoomsPage";
-import NewRoomPage from "../pages/rooms/NewRoomPage";
-import RoomPage from "../pages/rooms/RoomPage";
-import EditRoomPage from "../pages/rooms/EditRoomPage";
+import VerifyPage from "../pages/auth/VerifyPage";
 import FoodsPage from "../pages/foods/FoodsPage";
-import HotelServicesPage from "../pages/hotelServices/HotelServicesPage";
-import PricePolicyPage from "../pages/pricePolicy/PricePolicyPage";
-import AddPricePolicyPage from "../pages/pricePolicy/AddPricePolicyPage";
+import AcceptPartnerPage from "../pages/guest/AcceptPartnerPage";
+import OfferPricePage from "../pages/guest/OfferPricePage";
+import HotelPage from "../pages/hotel/HotelPage";
+import EditHotelPartnerPage from "../pages/hotelPartners/EditHotelPartnerPage";
+import HotelPartnerPage from "../pages/hotelPartners/HotelPartnerPage";
 import HotelPartnersPage from "../pages/hotelPartners/HotelPartnersPage";
 import NewHotelPartnerPage from "../pages/hotelPartners/NewHotelPartnerPage";
+import HotelServicesPage from "../pages/hotelServices/HotelServicesPage";
 import NotificationsPage from "../pages/notifications/NotificationsPage";
-import VerifyPage from "../pages/auth/VerifyPage";
+import AddPricePolicyPage from "../pages/pricePolicy/AddPricePolicyPage";
 import PricePolicyDatesPage from "../pages/pricePolicy/PricePolicyDatesPage";
-import AcceptPartnerPage from "../pages/guest/AcceptPartnerPage";
-import HotelPartnerPage from "../pages/hotelPartners/HotelPartnerPage";
-import EditHotelPartnerPage from "../pages/hotelPartners/EditHotelPartnerPage";
-import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
-import NewPasswordPage from "../pages/auth/NewPasswordPage";
-import OfferPricePage from "../pages/guest/OfferPricePage";
+import PricePolicyPage from "../pages/pricePolicy/PricePolicyPage";
+import EditRoomPage from "../pages/rooms/EditRoomPage";
+import NewRoomPage from "../pages/rooms/NewRoomPage";
+import RoomPage from "../pages/rooms/RoomPage";
+import RoomsPage from "../pages/rooms/RoomsPage";
+import { MainLayout } from "../layouts/mainLayout/MainLayout";
+import RouteEnum from "../enums/route.enum";
 
 
 const router = createBrowserRouter([

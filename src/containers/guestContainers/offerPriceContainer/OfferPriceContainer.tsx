@@ -1,7 +1,7 @@
-import useQueryParam from '../../../hooks/useQueryParam';
-import { useGetHotelAvailabilityWithDatesByPartneridQuery } from '../../../services/guests/guest.service';
 import PricePolicyDatesCalendarContainer from './pricePolicyDates/pricePolicyDatesCalendar/PricePolicyDatesCalendarContainer';
 import PricePolicyDatesTableContainer from './pricePolicyDates/pricePolicyDatesTable/PricePolicyDatesTableContainer';
+import useQueryParam from '../../../hooks/useQueryParam';
+import { useGetHotelAvailabilityWithDatesByPartneridQuery } from '../../../services/guests/guest.service';
 
 const OfferPriceContainer = () => {
   const hotelId = useQueryParam('hotelId');

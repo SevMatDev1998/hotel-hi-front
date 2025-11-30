@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import BlockContainer from "../../public/BlockContainer";
 import { useTranslation } from "../../../hooks/useTranslation";
 import { HotelRoom } from "../../../types";
-import BlockContainer from "../../public/BlockContainer";
 
 
 interface IRoomCardProps {

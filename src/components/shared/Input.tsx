@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { FC } from "react";
+import clsx from "clsx";
 
 interface IInput {
   label: string;

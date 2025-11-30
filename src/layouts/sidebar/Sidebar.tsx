@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useTranslation } from '../../hooks/useTranslation';
-import useAppSelector from '../../hooks/useAppSelector';
-import useAppDispatch from '../../hooks/useAppDisaptch';
-import { toggleSidebar } from '../../store/slices/general.slice';
+import { NavLink } from 'react-router-dom';
 import { NAVIGATION } from '../../constants/navigation';
+import { toggleSidebar } from '../../store/slices/general.slice';
+import useAppDispatch from '../../hooks/useAppDisaptch';
+import useAppSelector from '../../hooks/useAppSelector';
+import { useTranslation } from '../../hooks/useTranslation';
 import { useGetNavigationAccessStepQuery } from '../../services/auth';
 
 export const Sidebar = () => {

@@ -1,16 +1,15 @@
 import { FC, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { getJwtToken } from '../../utils/tokenUtil';
-import useAppSelector from '../../hooks/useAppSelector';
-
-import RouteEnum from '../../enums/route.enum';
+import GUEST_ROUTES from '../../constants/guest-routes';
 import PRIVATE_ROUTES from '../../constants/private-routes';
 import PUBLIC_ROUTES from '../../constants/publict-routes';
-import GUEST_ROUTES from '../../constants/guest-routes';
-import MainLayoutComponents from './MainLayoutComponents';
-import { useGetInfoQuery } from '../../services/auth';
+import { getJwtToken } from '../../utils/tokenUtil';
 import AuthLayout from '../auth/AuthLayout';
 import GuestLayout from '../guest/GuestLayout';
+import MainLayoutComponents from './MainLayoutComponents';
+import useAppSelector from '../../hooks/useAppSelector';
+import { useGetInfoQuery } from '../../services/auth';
+import RouteEnum from '../../enums/route.enum';
 
 export const MainLayout: FC = () => {
   const navigate = useNavigate();

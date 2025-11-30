@@ -1,9 +1,9 @@
-import { useGetHotelRoomByRoomIdQuery } from '../../../services/rooms';
-import { useNavigate, useParams } from 'react-router-dom';
-import BlockContainer from '../../public/BlockContainer';
-import InfoBlock from '../../../components/shared/InfoBlock';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
+import InfoBlock from '../../../components/shared/InfoBlock';
+import BlockContainer from '../../public/BlockContainer';
 import RoomTypeInformation from '../newRoomContainer/RoomTypeInformation/RoomTypeInformation';
+import { useGetHotelRoomByRoomIdQuery } from '../../../services/rooms';
 
 const RoomContainer = () => {
   const { roomId } = useParams();

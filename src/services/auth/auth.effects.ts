@@ -1,7 +1,7 @@
-import { NavigateFunction } from "react-router-dom";
-import RouteEnum from "../../enums/route.enum";
-import appToast from "../../helpers/appToast";
 import { TFunction } from "i18next";
+import { NavigateFunction } from "react-router-dom";
+import appToast from "../../helpers/appToast";
+import RouteEnum from "../../enums/route.enum";
 
 export const loginEffect = (isSuccess:boolean, isError:boolean, navigate:NavigateFunction,t:TFunction<"translation", undefined>
 ) => {

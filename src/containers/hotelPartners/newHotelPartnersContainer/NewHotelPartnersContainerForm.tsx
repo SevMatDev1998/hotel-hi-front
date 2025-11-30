@@ -1,19 +1,19 @@
 import { FC, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import InfoBlock from "../../../components/shared/InfoBlock";
-import BlockContainer from "../../public/BlockContainer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import RegisterInput from "../../../components/shared/RegisterInput";
-import { CreatePartnerFormData, PartnerSchema } from "../../../yupValidation/PartnerValidation";
-import { RegisterSelect } from "../../../components/shared/RegisterSelect";
-import { Button } from "../../../components/shared/Button";
-import { useAddHotelPartnerMutation } from "../../../services/partners";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import ApiEnum from "../../../enums/api.enum";
-import { useLazyDebounce } from "../../../hooks/useDebounse";
-import { Partner } from "../../../types";
+import { Button } from "../../../components/shared/Button";
+import InfoBlock from "../../../components/shared/InfoBlock";
+import RegisterInput from "../../../components/shared/RegisterInput";
+import { RegisterSelect } from "../../../components/shared/RegisterSelect";
+import BlockContainer from "../../public/BlockContainer";
 import InputValidationLayout from "../../../layouts/inputValidationLayout/InputValidationLayout";
+import { useLazyDebounce } from "../../../hooks/useDebounse";
+import { useAddHotelPartnerMutation } from "../../../services/partners";
+import { CreatePartnerFormData, PartnerSchema } from "../../../yupValidation/PartnerValidation";
+import ApiEnum from "../../../enums/api.enum";
+import { Partner } from "../../../types";
 
 
 interface NewHotelPartnersContainerFormProps {

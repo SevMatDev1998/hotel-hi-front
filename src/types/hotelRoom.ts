@@ -1,4 +1,4 @@
-import { HotelRoomStatus, CompletenessStatus } from './enums';
+import { CompletenessStatus,HotelRoomStatus } from './enums';
 import { RoomClass } from './roomClass';
 import { RoomPart } from './roomPart';
 import { RoomView } from './roomView';

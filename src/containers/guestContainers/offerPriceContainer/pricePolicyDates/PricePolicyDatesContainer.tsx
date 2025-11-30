@@ -1,14 +1,14 @@
 import { useTranslation } from "react-i18next";
+import { Button } from "../../../components/shared/Button";
 import InfoBlock from "../../../components/shared/InfoBlock";
-import useAppSelector from "../../../hooks/useAppSelector";
 // import { useGetHotelAvailabilityQuery } from "../../../services/hotelAvailability/hotelAvailability.service";
 // import { Select } from "../../../components/shared/Select";
 // import { useState } from "react";
 import PricePolicyDatesCalendarContainer from "./pricePolicyDatesCalendar/PricePolicyDatesCalendarContainer";
-import { useGetHotelAvailabilityWithDatesQuery } from "../../../services/hotelAvailability/hotelAvailability.service";
 import PricePolicyDatesTableContainer from "./pricePolicyDatesTable/PricePolicyDatesTableContainer";
-import { Button } from "../../../components/shared/Button";
+import useAppSelector from "../../../hooks/useAppSelector";
 import { useSetNavigationAccessStepMutation } from "../../../services/auth";
+import { useGetHotelAvailabilityWithDatesQuery } from "../../../services/hotelAvailability/hotelAvailability.service";
 
 const PricePolicyDatesContainer = () => {
   const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()

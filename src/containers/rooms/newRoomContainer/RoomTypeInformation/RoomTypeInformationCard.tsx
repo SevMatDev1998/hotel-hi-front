@@ -1,9 +1,9 @@
 import { FC, useState } from "react"
-import { HotelRoomPart, HotelRoomPartBed } from "../../../../types"
-import { useTranslation } from "../../../../hooks/useTranslation";
 import { Button } from "../../../../components/shared/Button";
 import RoomTypeInformationCardRows  from "./RoomTypeInformationCardRows";
+import { useTranslation } from "../../../../hooks/useTranslation";
 import { useEditHotelRoomPartBedsMutation } from "../../../../services/rooms";
+import { HotelRoomPart, HotelRoomPartBed } from "../../../../types"
 
 interface RoomTypeInformationCardProps {
   hotelRoomPart: HotelRoomPart,

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { useAddHotelFoodMutation } from '../../../services/foods';
-import { FoodType, HotelFood } from '../../../types';
+import { Controller,useForm } from 'react-hook-form';
 import { Button } from '../../../components/shared/Button';
 import CheckBox from '../../../components/shared/CheckBox';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { useAddHotelFoodMutation } from '../../../services/foods';
+import { FoodType, HotelFood } from '../../../types';
 
 interface IFoodContainerCardFormProps {
   hotelFood?: HotelFood;

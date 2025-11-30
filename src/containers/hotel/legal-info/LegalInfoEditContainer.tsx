@@ -1,21 +1,21 @@
-import BlockContainer from '../../public/BlockContainer';
-import { Button } from '../../../components/shared/Button';
-import InfoBlock from '../../../components/shared/InfoBlock';
 import { FC } from 'react';
-import { UpdateHotelLegalInfoFormData, UpdateHotelLegalInfoSchema } from '../../../yupValidation/HotelValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from '../../../hooks/useTranslation';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/shared/Button';
+import InfoBlock from '../../../components/shared/InfoBlock';
 import RegisterInput from '../../../components/shared/RegisterInput';
 import { RegisterSelect } from '../../../components/shared/RegisterSelect';
-import { Country, Hotel } from '../../../types';
-import { useUpdateHotelLegalInformationMutation } from '../../../services/hotel';
-import useAppDispatch from '../../../hooks/useAppDisaptch';
 import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
-import { useNavigate } from 'react-router-dom';
-import RouteEnum from '../../../enums/route.enum';
+import BlockContainer from '../../public/BlockContainer';
 import InputValidationLayout from '../../../layouts/inputValidationLayout/InputValidationLayout';
+import useAppDispatch from '../../../hooks/useAppDisaptch';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { useSetNavigationAccessStepMutation } from '../../../services/auth';
+import { useUpdateHotelLegalInformationMutation } from '../../../services/hotel';
+import { UpdateHotelLegalInfoFormData, UpdateHotelLegalInfoSchema } from '../../../yupValidation/HotelValidation';
+import RouteEnum from '../../../enums/route.enum';
+import { Country, Hotel } from '../../../types';
 
 interface ILegalInfoEditContainerProps {
   hotelLegalInformationData?: Partial<Hotel>
@@ -45,7 +45,7 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
     setNavigationAccessStep({ hotelId: hotelId!, stepNumber: 2 })
     navigate(RouteEnum.ROOMS);
   };
- z
+
 
   const countryOptions = countriesData?.map((country) => ({
     value: country.id,

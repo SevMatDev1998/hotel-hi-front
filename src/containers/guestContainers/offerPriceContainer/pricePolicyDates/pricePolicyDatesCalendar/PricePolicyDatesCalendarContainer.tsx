@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import PricePolicyDatesCalendar from "./PricePolicyDatesCalendar";
 import BlockContainer from "../../../../public/BlockContainer";
+import PricePolicyDatesCalendar from "./PricePolicyDatesCalendar";
 
 interface IAvailabilityDate {
   id: string;
