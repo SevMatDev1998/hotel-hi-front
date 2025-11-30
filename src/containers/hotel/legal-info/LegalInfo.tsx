@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useTranslation } from "react-i18next";
 import LegalInfoContainer from "./LegalInfoContainer";
 import LegalInfoEditContainer from "./LegalInfoEditContainer";
 import useAppSelector from "../../../hooks/useAppSelector";
@@ -12,7 +11,6 @@ interface ILegalInfoProps {
 }
 
 const LegalInfo: FC<ILegalInfoProps> = ({ user }) => {
-  const { t } = useTranslation();
 
   const { data: hotelLegalInformationData, error, isLoading } = useGetHotelLegalInformationQuery({ hotelId: user?.hotelId });
 

@@ -94,8 +94,11 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
               />
             </InputValidationLayout>
           </div>
-          <div className="flex justify-end">
-            <Button type="submit" disabled={isLoading} className="mt-6">
+          <div className="flex items-center gap-3 justify-end mt-4">
+            <Button variant='text' onClick={() =>navigate(`${RouteEnum.ROOMS}/${room.id}`)}>
+              {t("buttons.cancel")}
+            </Button>
+            <Button type="submit" disabled={isLoading} >
               {t("buttons.save")}
             </Button>
           </div>
