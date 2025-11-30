@@ -7,9 +7,10 @@ interface InputValidationLayoutProps<D extends object> extends PropsWithChildren
 }
 
 const InputValidationLayout = <D extends object>({ children, errors, name }: InputValidationLayoutProps<D>) => {
-
+  
   const errorMessage = errors?.[name]?.message as string;
-
+  console.log(errors);
+  
   return (
     <div>
       {cloneElement(children as React.ReactElement, { isError: !!errorMessage })}

@@ -3,8 +3,19 @@ import tv from '../helpers/tv';
 
 
 export const loginSchema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().min(6).required(),
+  email: yup
+    .string()
+    .email(tv('email'))
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, tv('email'))
+    .required(tv('required')),
+  password: yup
+    .string()
+    .min(8,tv('min', {min: 8}))
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+      tv('password_including')
+    )
+    .required(tv('required')),
 });
 
 export const signUpSchema = yup.object().shape({

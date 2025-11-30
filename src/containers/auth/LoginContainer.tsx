@@ -54,11 +54,6 @@ const LoginContainer = () => {
               className='rounded-none border !border-dusty-teal'
               type={showPassword ? "text" : "password"}
             />
-            <ErrorMessage
-              fieldName="password"
-              error={errors.password}
-              translationName="auth"
-            />
             <button
               type="button"
               className="absolute bottom-2 right-0 pr-3 "
