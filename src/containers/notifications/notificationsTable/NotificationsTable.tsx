@@ -10,6 +10,7 @@ import {
   useSavePartnerCommissionsMutation,
   useSendPartnerNotificationMutation
 } from "../../../services/notifications/notifications.service";
+import CommissionDateView from "../../../components/shared/CommissionDateView";
 
 interface INotificationsTableProps {
   hotelId?: string;
@@ -124,13 +125,8 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
                   return (
                     <tr key={availability.id} className="border-b">
                       <td className="py-3 px-4 align-top">
-                        {commissions.map((commission: any, index: number) => (
-                          <div key={commission.id} className={index > 0 ? 'mt-1' : ''}>
-                            {commission.date}
-                          </div>
-                        ))}
+                        <CommissionDateView dateCommissions={commissions} />
                       </td>
-
                       {/* Second column - availability name with color (once) */}
                       <td className="py-3 px-4 align-top">
                         <div className="flex items-center gap-2">
