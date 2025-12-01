@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import InfoBlock from '../../../components/shared/InfoBlock';
-import { Button } from '../../../components/shared/Button';
-import { useGetHotelFoodsByHotelIdQuery } from '../../../services/foods';
-import useAppSelector from '../../../hooks/useAppSelector';
-import FoodContainerCard from './FoodContainerCard';
-import { useSetNavigationAccessStepMutation } from '../../../services/auth';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/shared/Button';
+import InfoBlock from '../../../components/shared/InfoBlock';
+import FoodContainerCard from './FoodContainerCard';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { useSetNavigationAccessStepMutation } from '../../../services/auth';
+import { useGetHotelFoodsByHotelIdQuery } from '../../../services/foods';
 import { RouteEnum } from '../../../enums/route.enum';
 
 const FoodsContainer = () => {
@@ -26,6 +26,11 @@ const FoodsContainer = () => {
     navigate(RouteEnum.HOTEL_SERVICES);
   }
 
+  const allFoodsActive = mainFoods.every(food => {
+    const hotelFood = foodData?.find(item => item.foodType === food.type);
+    return hotelFood
+  });
+
   return (
     <div>
       <div className="flex flex-col gap-6">
@@ -36,7 +41,7 @@ const FoodsContainer = () => {
             <p>{t("foods.hotel_meals")}</p>
           </div>
           <div className="grid justify-items-end mobile:justify-items-start">
-            <Button onClick={handleSetNavigationAccessStep}>
+            <Button onClick={handleSetNavigationAccessStep} disabled={!allFoodsActive}>
               {t("foods.approved_hotel_food")}
             </Button>
           </div>

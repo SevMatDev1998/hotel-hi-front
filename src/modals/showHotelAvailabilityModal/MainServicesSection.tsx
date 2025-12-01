@@ -1,5 +1,5 @@
-import { useGetPaidServicesByHotelQuery } from "../../services/hotelService/hotelService.service";
 import { useTranslation } from "../../hooks/useTranslation";
+import { useGetPaidServicesByHotelQuery } from "../../services/hotelService/hotelService.service";
 import { PaidServiceItem } from "../../types";
 
 interface IMainServicesSectionProps {

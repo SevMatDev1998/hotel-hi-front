@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { useGetHotelRoomByRoomIdQuery, useGetRoomClassesQuery, useGetRoomViewsQuery } from '../../../services/rooms';
 import EditRoomForm from './EditRoomForm';
+import { useGetHotelRoomByRoomIdQuery, useGetRoomClassesQuery, useGetRoomViewsQuery } from '../../../services/rooms';
 
 const EditRoomContainer = () => {
 

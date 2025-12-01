@@ -1,6 +1,6 @@
 import { Children, createContext, FC, PropsWithChildren, useMemo, useState } from "react";
-import cls from "../utils/cls";
 import ModalLayout from "../modals/modalLayout/ModalLayout";
+import cls from "../utils/cls";
 
 
 interface IModalContext {

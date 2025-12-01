@@ -1,18 +1,18 @@
-import BlockContainer from '../../public/BlockContainer';
-import InfoBlock from '../../../components/shared/InfoBlock';
-import { RegisterSelect } from '../../../components/shared/RegisterSelect';
-import RegisterInput from '../../../components/shared/RegisterInput';
-import { Button } from '../../../components/shared/Button';
-import { EditHotelRoomFormData, EditHotelRoomSchema } from '../../../yupValidation/RoomValidation';
-import { useEditRoomMutation } from '../../../services/rooms';
-import { useTranslation } from '../../../hooks/useTranslation';
 import { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { HotelRoom } from '../../../types';
 import { useNavigate } from 'react-router-dom';
-import RouteEnum from '../../../enums/route.enum';
+import { Button } from '../../../components/shared/Button';
+import InfoBlock from '../../../components/shared/InfoBlock';
+import RegisterInput from '../../../components/shared/RegisterInput';
+import { RegisterSelect } from '../../../components/shared/RegisterSelect';
+import BlockContainer from '../../public/BlockContainer';
 import InputValidationLayout from "../../../layouts/inputValidationLayout/InputValidationLayout";
+import { useTranslation } from '../../../hooks/useTranslation';
+import { useEditRoomMutation } from '../../../services/rooms';
+import { EditHotelRoomFormData, EditHotelRoomSchema } from '../../../yupValidation/RoomValidation';
+import RouteEnum from '../../../enums/route.enum';
+import { HotelRoom } from '../../../types';
 
 interface IEditRoomFormProps {
   room: Partial<HotelRoom>,
@@ -94,8 +94,11 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
               />
             </InputValidationLayout>
           </div>
-          <div className="flex justify-end">
-            <Button type="submit" disabled={isLoading} className="mt-6">
+          <div className="flex items-center gap-3 justify-end mt-4">
+            <Button variant='text' onClick={() =>navigate(`${RouteEnum.ROOMS}/${room.id}`)}>
+              {t("buttons.cancel")}
+            </Button>
+            <Button type="submit" disabled={isLoading} >
               {t("buttons.save")}
             </Button>
           </div>

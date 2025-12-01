@@ -1,7 +1,7 @@
 import { TFunction } from 'i18next';
-import { Partner } from '../../../types';
-import { Switch } from '../../../components/shared/Switch';
 import { Button } from '../../../components/shared/Button';
+import { Switch } from '../../../components/shared/Switch';
+import { Partner } from '../../../types';
 
 export const getNotificationsColumns = (
   t: TFunction<"translation", undefined>,

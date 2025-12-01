@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useGetPartnerInformationQuery } from "../../../services/guests/guest.service";
-import { useGetCountriesQuery } from "../../../services/countries";
-import { LegalEntityType } from "../../../types";
 import AcceptPartnerForm from "./AcceptPartnerForm";
+import { useGetCountriesQuery } from "../../../services/countries";
+import { useGetPartnerInformationQuery } from "../../../services/guests/guest.service";
+import { LegalEntityType } from "../../../types";
 
 const AcceptPartnerContainer = () => {
 

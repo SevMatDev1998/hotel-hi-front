@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import { DataTable } from "../../../components/shared/Table";
-import useAppSelector from "../../../hooks/useAppSelector";
-import { useGetHotelPartnersQuery } from "../../../services/partners";
-import { getHotelPartnersColumns } from "./HotelPartnersColumns";
 import { useCallback, useState } from "react";
-import { useLazyDebounce } from "../../../hooks/useDebounse";
-import InfoBlock from "../../../components/shared/InfoBlock";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/shared/Button";
-import RouteEnum from "../../../enums/route.enum";
+import InfoBlock from "../../../components/shared/InfoBlock";
+import { DataTable } from "../../../components/shared/Table";
+import { getHotelPartnersColumns } from "./HotelPartnersColumns";
+import useAppSelector from "../../../hooks/useAppSelector";
+import { useLazyDebounce } from "../../../hooks/useDebounse";
 import { useSetNavigationAccessStepMutation } from "../../../services/auth";
+import { useGetHotelPartnersQuery } from "../../../services/partners";
+import RouteEnum from "../../../enums/route.enum";
 
 const HotelPartnersContainer = () => {
 

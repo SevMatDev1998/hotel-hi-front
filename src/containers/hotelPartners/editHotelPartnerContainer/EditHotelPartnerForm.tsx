@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
-import InfoBlock from '../../../components/shared/InfoBlock';
-import BlockContainer from '../../public/BlockContainer';
-import { RegisterSelect } from '../../../components/shared/RegisterSelect';
-import RegisterInput from '../../../components/shared/RegisterInput';
-import { useTranslation } from '../../../hooks/useTranslation';
-import { Button } from '../../../components/shared/Button';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup.js';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { EditPartnerFormData, EditPartnerSchema } from '../../../yupValidation/PartnerValidation';
-import { Partner } from '../../../types';
-import { useEditPartnerMutation } from '../../../services/partners';
-import ApiEnum from '../../../enums/api.enum';
+import { Button } from '../../../components/shared/Button';
+import InfoBlock from '../../../components/shared/InfoBlock';
+import RegisterInput from '../../../components/shared/RegisterInput';
+import { RegisterSelect } from '../../../components/shared/RegisterSelect';
+import BlockContainer from '../../public/BlockContainer';
 import InputValidationLayout from '../../../layouts/inputValidationLayout/InputValidationLayout';
+import { useTranslation } from '../../../hooks/useTranslation';
+import { useEditPartnerMutation } from '../../../services/partners';
+import { EditPartnerFormData, EditPartnerSchema } from '../../../yupValidation/PartnerValidation';
+import ApiEnum from '../../../enums/api.enum';
+import { Partner } from '../../../types';
 
 interface IEditHotelPartnerFormProps {
   countryOptions: any[];
@@ -21,7 +21,6 @@ interface IEditHotelPartnerFormProps {
 }
 
 const EditHotelPartnerForm: FC<IEditHotelPartnerFormProps> = ({ countryOptions, legalEntityOptions, partnerData }) => {
-
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -123,7 +122,6 @@ const EditHotelPartnerForm: FC<IEditHotelPartnerFormProps> = ({ countryOptions, 
                   />
                 </InputValidationLayout>
               </div>
-
 
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >

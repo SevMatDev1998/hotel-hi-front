@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { HotelRoom } from '../../../../../types';
-import { CreateHotelRoomPriceDto } from '../../../../../types/pricePolicyDto';
+import React, { useEffect,useState } from 'react';
 import CardContainer from '../../../../public/CardContainer';
 import { useTranslation } from '../../../../../hooks/useTranslation';
+import { HotelRoom } from '../../../../../types';
+import { CreateHotelRoomPriceDto } from '../../../../../types/pricePolicyDto';
 
 interface IAddRoomPricePolicyRoomProps {
   room: HotelRoom;

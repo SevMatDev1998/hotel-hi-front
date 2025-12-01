@@ -1,8 +1,8 @@
 import  { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useVerifyRegistrationQuery } from '../../services/auth';
 import appToast from '../../helpers/appToast';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useVerifyRegistrationQuery } from '../../services/auth';
 import RouteEnum from '../../enums/route.enum';
 
 const VerifyContainer = () => {

@@ -1,14 +1,14 @@
-import { useForm } from 'react-hook-form';
-import RegisterInput from '../../components/shared/RegisterInput';
-import { NewPasswordFormType, newPasswordSchema,  } from '../../yupValidation/AuthValidation';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useTranslation } from '../../hooks/useTranslation';
-import RouteEnum from '../../enums/route.enum';
-import {  useSetNewPasswordMutation } from '../../services/auth';
 import { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 import { Button } from '../../components/shared/Button';
+import RegisterInput from '../../components/shared/RegisterInput';
 import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
+import { useTranslation } from '../../hooks/useTranslation';
+import {  useSetNewPasswordMutation } from '../../services/auth';
+import { NewPasswordFormType, newPasswordSchema,  } from '../../yupValidation/AuthValidation';
+import RouteEnum from '../../enums/route.enum';
 
 const NewPasswordContainer = () => {
 

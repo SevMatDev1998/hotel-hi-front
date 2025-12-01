@@ -1,16 +1,15 @@
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { useLazyDebounce } from "../../../hooks/useDebounse";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Button } from "../../../components/shared/Button";
+import { DataTable } from "../../../components/shared/Table";
+import { getNotificationsColumns } from "./NotificationsColumns";
+import { useLazyDebounce } from "../../../hooks/useDebounse";
 import {
   useGetAllNotificationsQuery,
   useLazyGetPartnerCommissionsQuery,
   useSavePartnerCommissionsMutation,
   useSendPartnerNotificationMutation
 } from "../../../services/notifications/notifications.service";
-import { DataTable } from "../../../components/shared/Table";
-import { getNotificationsColumns } from "./NotificationsColumns";
-import { Button } from "../../../components/shared/Button";
 
 interface INotificationsTableProps {
   hotelId?: string;
@@ -18,7 +17,6 @@ interface INotificationsTableProps {
 
 const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
 
-  const navigate = useNavigate();
   const debounse = useLazyDebounce();
   const { t } = useTranslation();
 

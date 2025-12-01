@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useAppSelector from '../../../hooks/useAppSelector';
+import BlockContainer from '../../public/BlockContainer';
 import AddPricePolicy from './addPricePolicy/AddPricePolicy';
 import AddRoomPricePolicy from './addRoomPricePolicy/AddRoomPricePolicy';
-import BlockContainer from '../../public/BlockContainer';
-import { useTranslation } from '../../../hooks/useTranslation';
-import { HotelAvailability } from '../../../types';
-import RouteEnum from '../../../enums/route.enum';
-import { useGetHotelAvailabilityQuery } from '../../../services/hotelAvailability/hotelAvailability.service';
 import AddServicePricePolicy from './addServicePricePolicy/AddServicePricePolicy';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { useTranslation } from '../../../hooks/useTranslation';
+import { useGetHotelAvailabilityQuery } from '../../../services/hotelAvailability/hotelAvailability.service';
+import RouteEnum from '../../../enums/route.enum';
+import { HotelAvailability } from '../../../types';
 
 const AddPricePolicyContainer = () => {
   const { user } = useAppSelector((state) => state.auth);

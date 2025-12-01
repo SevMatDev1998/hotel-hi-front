@@ -1,8 +1,8 @@
-import { useGetCountriesQuery } from '../../../services/countries';
-import { LegalEntityType } from '../../../types';
-import EditHotelPartnerForm from './EditHotelPartnerForm';
-import { useGetHotelPartnerQuery } from '../../../services/partners';
 import { useParams } from 'react-router-dom';
+import EditHotelPartnerForm from './EditHotelPartnerForm';
+import { useGetCountriesQuery } from '../../../services/countries';
+import { useGetHotelPartnerQuery } from '../../../services/partners';
+import { LegalEntityType } from '../../../types';
 
 const EditHotelPartnerContainer = () => {
 

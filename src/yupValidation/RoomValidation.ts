@@ -3,47 +3,52 @@ import tv from '../helpers/tv';
 
 export const CreateHotelRoomSchema = yup.object({
   roomClassId: yup
-    .string()
+   .number()
+    .typeError(tv('required'))
     .required(tv('required')),
 
   roomViewId: yup
-    .string()
+   .number()
+    .typeError(tv('required'))
     .required(tv('required')),
 
-  area: yup
+  area: yup 
     .number()
     .required(tv('required'))
     .min(1, tv('min', { min: 1 }))
     .typeError(tv('positive')),
-
+ 
   roomNumberQuantity: yup
     .number()
     .required(tv('required'))
     .min(1, tv('min', { min: 1 }))
+    .integer(tv('integer'))
     .typeError(tv('positive')),
 });
 
 export const EditHotelRoomSchema = yup.object({
-  roomClassId: yup
-    .string()
+   roomClassId: yup
+   .number()
+    .typeError(tv('required'))
     .required(tv('required')),
 
   roomViewId: yup
-    .string()
-    .optional(),
+   .number()
+    .typeError(tv('required'))
+    .required(tv('required')),
 
-  area: yup
+  area: yup 
     .number()
     .required(tv('required'))
     .min(1, tv('min', { min: 1 }))
     .typeError(tv('positive')),
-
+ 
   roomNumberQuantity: yup
     .number()
     .required(tv('required'))
     .min(1, tv('min', { min: 1 }))
+    .integer(tv('integer'))
     .typeError(tv('positive')),
-
 });
 
 

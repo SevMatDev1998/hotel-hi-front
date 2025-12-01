@@ -1,6 +1,6 @@
 import { FC } from "react";
-import BlockContainer from "../../../../public/BlockContainer";
 import CommissionDateView from "../../../../../components/shared/CommissionDateView";
+import BlockContainer from "../../../../public/BlockContainer";
 import { useTranslation } from "../../../../../hooks/useTranslation";
 import { HotelAvailabilityDateCommission } from "../../../../../types/hotelAvailabilityDateCommission";
 

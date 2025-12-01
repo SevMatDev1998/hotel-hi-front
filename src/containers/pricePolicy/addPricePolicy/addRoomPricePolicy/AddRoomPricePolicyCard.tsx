@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../types';
-import AddRoomPricePolicyForm from './addRoomPricePolicyForm/AddRoomPricePolicyFormForm';
 import { Switch } from '../../../../components/shared/Switch';
+import AddRoomPricePolicyForm from './addRoomPricePolicyForm/AddRoomPricePolicyFormForm';
 import { useTranslation } from '../../../../hooks/useTranslation';
+import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../types';
 
 interface IAddRoomPricePolicyCardProps {
   room: HotelRoom

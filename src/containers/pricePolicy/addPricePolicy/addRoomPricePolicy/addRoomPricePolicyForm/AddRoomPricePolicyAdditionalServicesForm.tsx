@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
+import CheckBox from "../../../../../components/shared/CheckBox";
+import { Switch } from "../../../../../components/shared/Switch";
 import CardContainer from "../../../../public/CardContainer";
+import { useTranslation } from "../../../../../hooks/useTranslation";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
 import { CreateOtherServiceDto } from "../../../../../types/pricePolicyDto";
-import { useTranslation } from "../../../../../hooks/useTranslation";
-import { Switch } from "../../../../../components/shared/Switch";
-import CheckBox from "../../../../../components/shared/CheckBox";
 
 interface IAddRoomPricePolicyAdditionalServicesFormProps {
   onChange: (data: Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]) => void;

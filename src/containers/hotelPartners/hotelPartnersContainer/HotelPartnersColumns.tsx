@@ -1,7 +1,7 @@
-import { ArrowBigRight } from 'lucide-react';
-import {  Partner, PartnerStatus, User } from '../../../types';
 import { TFunction } from 'i18next';
+import { ArrowBigRight } from 'lucide-react';
 import RouteEnum from '../../../enums/route.enum';
+import {  Partner, PartnerStatus, User } from '../../../types';
 
 export const getHotelPartnersColumns = (
   t: TFunction<"translation", undefined>,

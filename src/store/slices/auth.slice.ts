@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getInfo, login } from "../../services/auth/auth.service";
 import { clearTokens, setJwtToken, setRefreshToken } from "../../utils/tokenUtil";
+import { getInfo, login } from "../../services/auth/auth.service";
 import {User } from "../../types";
 
 interface IAuthState {

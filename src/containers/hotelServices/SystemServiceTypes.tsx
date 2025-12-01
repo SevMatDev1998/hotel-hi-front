@@ -1,6 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/shared/Accordion';
-import { useGetSystemServiceTypesByGroupIdQuery } from "../../services/hotelService";
 import SystemServices from "./SystemServices";
+import { useGetSystemServiceTypesByGroupIdQuery } from "../../services/hotelService";
 
 interface Props {
   groupId: number;

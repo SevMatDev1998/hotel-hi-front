@@ -1,6 +1,6 @@
+import MakeServiceAvailabilityModalForm from "./MakeServiceAvailabilityModalForm";
 import { useTranslation } from "../../hooks/useTranslation";
 import { useGetHotelServiceAvailabilityQuery } from "../../services/hotelServiceAvailability";
-import MakeServiceAvailabilityModalForm from "./MakeServiceAvailabilityModalForm";
 
 interface IMakeServiceAvailabilityModalProps {
   hotelServiceId: string;
@@ -13,38 +13,41 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
   onCancel,
 }) => {
 
-  const { data, isLoading } = useGetHotelServiceAvailabilityQuery({ hotelServiceId });
+  const { data, isLoading } = useGetHotelServiceAvailabilityQuery(
+    { hotelServiceId },
+    { refetchOnMountOrArgChange: true }
+  );
   const { t } = useTranslation();
 
   if (isLoading) return null;
 
-  const availabilityData = data ?? {
+  const defaultPeriod = (isPaid: boolean) => ({
+    startMonth: "",
+    endMonth: "",
+    hourlyAvailabilityTypeId: isPaid ? "AllDay" : "Hours",
+    startHour: isPaid ? undefined : "",
+    endHour: isPaid ? undefined : "",
+  });
+
+  const availabilityData = data ? {
+    availabilities: data.availabilities.map((group, index) => ({
+      ...group,
+      isPaid: index === 0, // Явно устанавливаем isPaid в зависимости от индекса
+      periods: group.periods && group.periods.length > 0 
+        ? group.periods 
+        : [defaultPeriod(index === 0)]
+    }))
+  } : {
     availabilities: [
       {
         isPaid: true,
         isActive: true,
-        periods: [
-          {
-            startMonth: "",
-            endMonth: "",
-            hourlyAvailabilityTypeId: "AllDay",
-            startHour: undefined,
-            endHour: undefined,
-          },
-        ],
+        periods: [defaultPeriod(true)],
       },
       {
         isPaid: false,
         isActive: false,
-        periods: [
-          {
-            startMonth: "",
-            endMonth: "",
-            hourlyAvailabilityTypeId: "Hours",
-            startHour: "",
-            endHour: "",
-          },
-        ],
+        periods: [defaultPeriod(false)],
       },
     ],
   };

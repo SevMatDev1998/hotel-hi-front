@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import clsx from 'clsx';
 import { FieldError } from 'react-hook-form';
 import { useTranslation } from '../../hooks/useTranslation';
 
@@ -9,7 +9,6 @@ interface SelectOption {
 }
 
 interface SelectProps {
-  label?: string;
   name: string;
   options: SelectOption[];
   error?: FieldError;
@@ -21,7 +20,6 @@ interface SelectProps {
 }
 
 export const Select: React.FC<SelectProps> = ({
-  label,
   name,
   options,
   error,
@@ -42,12 +40,6 @@ export const Select: React.FC<SelectProps> = ({
 
   return (
     <div>
-      {label && (
-        <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-          {label}
-        </label>
-      )}
-
       <select
         id={name}
         onChange={handleChange} // ✅ attach handler
@@ -58,6 +50,7 @@ export const Select: React.FC<SelectProps> = ({
         )}
         {...props}
       >
+        <option value="" disabled/>
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {tr_name ? t(`${tr_name}.${opt.label}`) : opt.label}

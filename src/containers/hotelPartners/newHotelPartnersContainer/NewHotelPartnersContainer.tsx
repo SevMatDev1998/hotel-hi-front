@@ -1,9 +1,9 @@
+import { useCallback, useState } from "react";
+import NewHotelPartnersContainerForm from "./NewHotelPartnersContainerForm";
 import useAppSelector from "../../../hooks/useAppSelector";
 import { useGetCountriesQuery } from "../../../services/countries";
-import { LegalEntityType, Partner } from "../../../types";
-import NewHotelPartnersContainerForm from "./NewHotelPartnersContainerForm";
 import { useLazyGetHotelPartnerByTinQuery } from "../../../services/partners";
-import { useCallback, useState } from "react";
+import { LegalEntityType, Partner } from "../../../types";
 
 const NewHotelPartnersContainer = () => {
 
@@ -18,7 +18,7 @@ const NewHotelPartnersContainer = () => {
   })) || [];
 
   const legalEntityOptions = Object.values(LegalEntityType).map((value) => ({
-    label: value,
+    label: value, 
     value,
   }));
 

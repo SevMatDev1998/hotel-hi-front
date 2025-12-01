@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import PricePolicyDatesCalendar from "./PricePolicyDatesCalendar";
-import {
-  useUpdateHotelAvailabilitesWithDatesMutation,
-  useDeleteHotelAvailabilityDateMutation,
-  useDeleteHotelAvailabilityDatesBatchMutation
-} from "../../../../services/hotelAvailability/hotelAvailability.service";
-import BlockContainer from "../../../public/BlockContainer";
 import { Button } from "../../../../components/shared/Button";
-import { useTranslation } from "../../../../hooks/useTranslation";
 import AddCommissionModal from "../../../../modals/AddCommisionModal";
+import BlockContainer from "../../../public/BlockContainer";
+import PricePolicyDatesCalendar from "./PricePolicyDatesCalendar";
 import useModal from "../../../../hooks/useModal";
+import { useTranslation } from "../../../../hooks/useTranslation";
+import {
+  useDeleteHotelAvailabilityDateMutation,
+  useDeleteHotelAvailabilityDatesBatchMutation,
+  useUpdateHotelAvailabilitesWithDatesMutation} from "../../../../services/hotelAvailability/hotelAvailability.service";
 
 interface IAvailabilityDate {
   id: string;

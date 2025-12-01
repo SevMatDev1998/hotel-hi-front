@@ -1,20 +1,14 @@
+import { changeHotelInfoType } from "../../../store/slices/hotel.slice";
+import BlockContainer from "../../public/BlockContainer";
 import useAppDispatch from "../../../hooks/useAppDisaptch";
 import { useTranslation } from "../../../hooks/useTranslation";
-import { changeHotelInfoType } from "../../../store/slices/hotel.slice";
 import { Hotel } from "../../../types";
-import BlockContainer from "../../public/BlockContainer";
-
-
 interface ILegalInfoContainerProps {
   hotelLegalInformationData?: Partial<Hotel>
 }
-
 const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerProps) => {
-
   const dispatch = useAppDispatch();
-  
   const { t } = useTranslation();
-
   return (
     <BlockContainer shadow={false}>
       <div className='text-14 text-charcoal-gray'>
@@ -24,13 +18,14 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
             <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
           </span>
         </div>
-
         <div className="space-y-10">
           {/* Hotel Name */}
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
               <span>{t("hotel.legal_name")} *</span>
             </div>
+
+
             <div >
               <span >{hotelLegalInformationData?.legalPerson}</span>
             </div>
@@ -51,7 +46,6 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
               <span >{hotelLegalInformationData?.tinNumber}</span>
             </div>
           </div>
-
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
               <span >{t("hotel.account_number")} *</span>
@@ -60,8 +54,6 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
               <span >{hotelLegalInformationData?.tinNumber}</span>
             </div>
           </div>
-
-
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
               <span >{t("hotel.director")} *</span>
@@ -70,8 +62,6 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
               <span >{hotelLegalInformationData?.director}</span>
             </div>
           </div>
-
-
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
               <span >{t("hotel.adress_to_get_emails")} *</span>
@@ -81,10 +71,8 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
             </div>
           </div>
         </div>
-
       </div>
     </BlockContainer>
   )
 }
-
 export default LegalInfoContainer

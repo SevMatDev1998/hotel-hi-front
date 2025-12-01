@@ -1,4 +1,4 @@
-import { PropsWithChildren, cloneElement } from "react";
+import { cloneElement,PropsWithChildren } from "react";
 import { FieldErrors } from "react-hook-form";
 
 interface InputValidationLayoutProps<D extends object> extends PropsWithChildren {
@@ -9,7 +9,6 @@ interface InputValidationLayoutProps<D extends object> extends PropsWithChildren
 const InputValidationLayout = <D extends object>({ children, errors, name }: InputValidationLayoutProps<D>) => {
   
   const errorMessage = errors?.[name]?.message as string;
-  console.log(errors);
   
   return (
     <div>

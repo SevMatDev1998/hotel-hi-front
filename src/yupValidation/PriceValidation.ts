@@ -1,40 +1,34 @@
 import * as yup from 'yup';
+import tv from '../helpers/tv';
 
 export const CreateHotelAvailabilitySchema = yup.object({
   title: yup
     .string()
-    .required('Availability title is required'),
+    .required(tv('required')),
 
   checkInTime: yup
     .string()
-    .required('Start date of availability period is required'),
-
+    .required(tv('required')),
   checkoutTime: yup
     .string()
-    .required('End date of availability period is required'),
+    .required(tv('required')),
 
   hotelAgeAssignments: yup.array().of(
     yup.object({
-      name: yup
-        .string()
-        .required('Age threshold title is required'),
-
       fromAge: yup
         .number()
-        .typeError('Minimum age must be a number')
-        .min(0, 'Minimum age cannot be negative')
-        .required('Minimum age is required'),
-
+        .typeError(tv('integer'))
+        .min(2, tv('min', { min: 2 }))
+        .required(tv('required')),
       toAge: yup
         .number()
-        .typeError('Maximum age must be a number')
-        .moreThan(yup.ref('fromAge'), 'Maximum age must be greater than minimum age')
-        .required('Maximum age is required'),
-
-bedType: yup
-  .mixed()
-  .required('Bed type is required'),
-
+        .typeError(tv('integer'))
+        .moreThan(yup.ref('fromAge'), tv('max_greater_than_min'))
+        .required(tv('required')),
+      bedType: yup
+        .number()
+        .typeError(tv('required'))
+        .required(tv('required')),
       // isActive: yup
       //   .boolean()
       //   .required('Active status is required'),

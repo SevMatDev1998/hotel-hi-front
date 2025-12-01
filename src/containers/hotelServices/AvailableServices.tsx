@@ -1,6 +1,6 @@
-import { SystemService } from '../../types';
-import { useAddHotelServiceMutation } from '../../services/hotelService';
 import { FC } from 'react';
+import { useAddHotelServiceMutation } from '../../services/hotelService';
+import { SystemService } from '../../types';
 
 
 interface IAvailableServicesProps {

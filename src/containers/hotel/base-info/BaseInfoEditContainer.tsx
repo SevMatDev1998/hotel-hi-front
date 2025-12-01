@@ -1,19 +1,19 @@
-import BlockContainer from '../../public/BlockContainer';
-import { useTranslation } from '../../../hooks/useTranslation';
 import { FC } from 'react';
-import RegisterInput from '../../../components/shared/RegisterInput';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { RegisterSelect } from '../../../components/shared/RegisterSelect';
+import { useForm } from 'react-hook-form';
 import { Button } from '../../../components/shared/Button';
 import InfoBlock from '../../../components/shared/InfoBlock';
-import { UpdateHotelBaseInfoFormData, UpdateHotelBaseInfoSchema } from '../../../yupValidation/HotelValidation';
-import { Country, Currency, Hotel } from '../../../types';
-import { useUpdateHotelBaseInformationMutation } from '../../../services/hotel/hotel.service';
+import RegisterInput from '../../../components/shared/RegisterInput';
+import { RegisterSelect } from '../../../components/shared/RegisterSelect';
 import { changeHotelInfoType } from '../../../store/slices/hotel.slice';
+import BlockContainer from '../../public/BlockContainer';
+import InputValidationLayout from '../../../layouts/inputValidationLayout/InputValidationLayout';
 import useAppDispatch from '../../../hooks/useAppDisaptch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import InputValidationLayout from '../../../layouts/inputValidationLayout/InputValidationLayout';
+import { useTranslation } from '../../../hooks/useTranslation';
+import { useUpdateHotelBaseInformationMutation } from '../../../services/hotel/hotel.service';
+import { UpdateHotelBaseInfoFormData, UpdateHotelBaseInfoSchema } from '../../../yupValidation/HotelValidation';
+import { Country, Currency, Hotel } from '../../../types';
 
 interface BaseInfoEditnoContainerProps {
   hotelBaseInformationData?: Partial<Hotel>

@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Controller, UseFormReturn } from "react-hook-form";
-import { HotelServiceHourlyAvailabilityType } from "../../types";
 import clsx from "clsx";
-import { useTranslation } from "../../hooks/useTranslation";
+import { Controller, UseFormReturn } from "react-hook-form";
 import { Button } from "../../components/shared/Button";
+import { useTranslation } from "../../hooks/useTranslation";
+import { HotelServiceHourlyAvailabilityType } from "../../types";
 
 interface Props {
   methods: UseFormReturn<any>;

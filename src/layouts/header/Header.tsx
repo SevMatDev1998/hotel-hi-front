@@ -1,16 +1,16 @@
 import { LogOut, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import useModal from '../../hooks/useModal';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
+import SignOutModal from '../../modals/SignOutModal';
+import { logOut } from '../../store/slices/auth.slice';
+import { toggleSidebar } from '../../store/slices/general.slice';
 // import { logOut } from '../store/slices/auth.slice';
 // import { useGetUnreadNotificationsCountQuery } from '../../services/notifications/notifications';
 // import NotificationsModal from '../../modals/NotificationsModal';
 // import RouteEnum from '../../enums/route.enum';
 import useAppDispatch from '../../hooks/useAppDisaptch';
-import { toggleSidebar } from '../../store/slices/general.slice';
 import useAppSelector from '../../hooks/useAppSelector';
-import { logOut } from '../../store/slices/auth.slice';
-import SignOutModal from '../../modals/SignOutModal';
+import useModal from '../../hooks/useModal';
 
 export const Header = () => {
   const navigate = useNavigate();

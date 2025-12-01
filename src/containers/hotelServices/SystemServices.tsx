@@ -1,10 +1,10 @@
+import AvailableServices from "./AvailableServices";
+import ExistingSystemServices from "./ExistingSystemServices";
 import useAppSelector from "../../hooks/useAppSelector";
 import {
   useGetHotelServicesQuery,
   useGetSystemServicesByTypeIdQuery,
 } from "../../services/hotelService";
-import AvailableServices from "./AvailableServices";
-import ExistingSystemServices from "./ExistingSystemServices";
 
 interface Props {
   typeId: number;

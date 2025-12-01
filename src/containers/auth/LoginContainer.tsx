@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { LoginFormType, loginSchema } from '../../yupValidation/AuthValidation';
-import { useLoginMutation } from '../../services/auth/auth.service';
-import RegisterInput from '../../components/shared/RegisterInput';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '../../components/shared/Button';
-import RouteEnum from '../../enums/route.enum';
-import { useTranslation } from '../../hooks/useTranslation';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { loginEffect } from '../../services/auth/auth.effects';
-import ErrorMessage from '../../components/shared/ErrorMessage';
+import { Button } from '../../components/shared/Button';
+import RegisterInput from '../../components/shared/RegisterInput';
 import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
+import { useTranslation } from '../../hooks/useTranslation';
+import { loginEffect } from '../../services/auth/auth.effects';
+import { useLoginMutation } from '../../services/auth/auth.service';
+import { LoginFormType, loginSchema } from '../../yupValidation/AuthValidation';
+import RouteEnum from '../../enums/route.enum';
 
 const LoginContainer = () => {
 

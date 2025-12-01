@@ -1,9 +1,9 @@
 import { FC, useState } from "react"
-import { HotelRoomPart, HotelRoomPartBed } from "../../../../types"
-import { useTranslation } from "../../../../hooks/useTranslation";
 import { Button } from "../../../../components/shared/Button";
 import RoomTypeInformationCardRows  from "./RoomTypeInformationCardRows";
+import { useTranslation } from "../../../../hooks/useTranslation";
 import { useEditHotelRoomPartBedsMutation } from "../../../../services/rooms";
+import { HotelRoomPart, HotelRoomPartBed } from "../../../../types"
 
 interface RoomTypeInformationCardProps {
   hotelRoomPart: HotelRoomPart,
@@ -16,11 +16,11 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
   const [isBadAvailable, setIsBadAvailable] = useState(false);
   const [roomPartBedsState, setRoomPartBedsState] = useState<Partial<HotelRoomPartBed>[]>([]);
 
-  const [editHotelRoomPartBedsMutation] = useEditHotelRoomPartBedsMutation();
+  const [editHotelRoomPartBeds] = useEditHotelRoomPartBedsMutation();
 
   const isRoomHasBeds = hotelRoomPart?.hotelRoomPartBeds && hotelRoomPart?.hotelRoomPartBeds.length > 0;
 
-  const addHotelRoomPartBeds = (roomPartBed: Partial<HotelRoomPartBed>[]) => {
+  const addHotelRoomPartBeds = (roomPartBed: Partial<HotelRoomPartBed>) => {
     setRoomPartBedsState((prev) => [
       ...prev,
       roomPartBed
@@ -29,7 +29,7 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
 
   const handleRoomBadChange = () => {
     setIsBadAvailable(false);
-    editHotelRoomPartBedsMutation({ hotelRoomPartId: hotelRoomPart?.id, bedConfigurations: roomPartBedsState });
+    editHotelRoomPartBeds({ hotelRoomPartId: hotelRoomPart?.id, bedConfigurations: roomPartBedsState });
   }
 
   return (

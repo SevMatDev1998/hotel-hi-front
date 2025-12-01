@@ -1,7 +1,6 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-
-import styles from "./styles.module.css";
 import cls from "../../utils/cls";
+import styles from "./styles.module.css";
 
 interface IModalLayoutProps extends PropsWithChildren {
   title?: string;

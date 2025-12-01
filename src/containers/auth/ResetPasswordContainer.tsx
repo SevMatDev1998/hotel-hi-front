@@ -1,13 +1,13 @@
-import { useForm } from 'react-hook-form';
-import RegisterInput from '../../components/shared/RegisterInput';
-import { ResetPasswordRequestFormType, resetPasswordSchema } from '../../yupValidation/AuthValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useTranslation } from '../../hooks/useTranslation';
-import RouteEnum from '../../enums/route.enum';
-import { useResetPasswordMutation } from '../../services/auth';
-import { Button } from '../../components/shared/Button';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/shared/Button';
+import RegisterInput from '../../components/shared/RegisterInput';
 import InputValidationLayout from '../../layouts/inputValidationLayout/InputValidationLayout';
+import { useTranslation } from '../../hooks/useTranslation';
+import { useResetPasswordMutation } from '../../services/auth';
+import { ResetPasswordRequestFormType, resetPasswordSchema } from '../../yupValidation/AuthValidation';
+import RouteEnum from '../../enums/route.enum';
 
 const ResetPasswordContainer = () => {
 

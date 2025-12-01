@@ -6,12 +6,12 @@ const RoomsService = ApiInstance.injectEndpoints({
   endpoints: build => ({
 
     // get hotel rooms by hotel id
-    getHotelRoomsByHotelId: build.query<HotelRoom[], { hotelId: string }>({
+    getHotelRoomsByHotelId: build.query<HotelRoom[], { hotelId?: string }>({
       query: ({ hotelId }) => ({
         url: `${ApiEnum.HOTEL_ROOMS}/hotel/${hotelId}`,
       }),
       providesTags: [ApiEnum.HOTEL_ROOMS]
-      
+
     }),
 
     // get hotel room by room id
@@ -77,18 +77,15 @@ const RoomsService = ApiInstance.injectEndpoints({
         url: `${ApiEnum.HOTEL_ROOM_PART_BEDS}/${roomPartId}`,
       }),
       providesTags: [ApiEnum.HOTEL_ROOM_PART_BEDS],
-
     }),
 
     editHotelRoomPartBeds: build.mutation<HotelRoomPartBed, HotelRoomPartBedMutation>({
-      query: ( body ) => ({
+      query: (body) => ({
         url: `${ApiEnum.HOTEL_ROOM_PART_BEDS}/edit`,
         method: 'PUT',
         body
       }),
-        invalidatesTags: [ApiEnum.HOTEL_ROOM_PART_BEDS],
-
-
+      invalidatesTags: [ApiEnum.HOTEL_ROOM_PART_BEDS],
     }),
 
     getRoomBedTypes: build.query<RoomBedType[], void>({

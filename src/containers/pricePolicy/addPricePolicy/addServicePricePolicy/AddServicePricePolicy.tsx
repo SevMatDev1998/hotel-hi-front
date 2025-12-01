@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useGetPaidServicesByHotelQuery, useCreateServicePricesMutation } from '../../../../services/hotelService/hotelService.service';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../../../components/shared/Accordion';
-import BlockContainer from '../../../public/BlockContainer';
 import { Button } from '../../../../components/shared/Button';
+import BlockContainer from '../../../public/BlockContainer';
 import { useTranslation } from '../../../../hooks/useTranslation';
+import { useCreateServicePricesMutation,useGetPaidServicesByHotelQuery } from '../../../../services/hotelService/hotelService.service';
 import { PaidServiceItem } from '../../../../types';
 
 interface ServicePriceFormData {

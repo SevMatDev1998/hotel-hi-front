@@ -1,7 +1,7 @@
-import useAppSelector from "../../hooks/useAppSelector";
-import { useTranslation } from "../../hooks/useTranslation";
 import BaseInfo from "./base-info/BaseInfo";
 import LegalInfo from "./legal-info/LegalInfo";
+import useAppSelector from "../../hooks/useAppSelector";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const HotelContainer = () => {
   const { t } = useTranslation();
