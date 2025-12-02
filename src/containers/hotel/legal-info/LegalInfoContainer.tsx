@@ -18,7 +18,7 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
             <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
           </span>
         </div>
-        <div className="space-y-10">
+        <div className="space-y-8">
           {/* Hotel Name */}
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
