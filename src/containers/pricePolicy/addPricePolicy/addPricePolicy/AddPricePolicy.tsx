@@ -33,7 +33,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
   const { register, handleSubmit, control, formState: { errors } } = useForm<CreateHotelAvailabilityFormData>({
     resolver: yupResolver(CreateHotelAvailabilitySchema),
     defaultValues: {
-      hotelAgeAssignments: [],
+      hotelAgeAssignments: [{ fromAge: 0, toAge: 0, bedType: "0" }],
     },
   });
 
@@ -103,61 +103,63 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
                 className='flex items-center'
               >
 
-                <div onClick={() => { remove(index) }}>
+                <div onClick={() => { if (fields.length > 1) remove(index) }}>
                   <img
                     src="/images/icons/remove-button-icon.svg"
                     alt="add icon"
-                    className="cursor-pointer"
+                    className={fields.length > 1 ? "cursor-pointer" : "cursor-not-allowed opacity-50"}
                   />
                 </div>
                 <p className='text-12'>{t("price_policy.defined_intervals")}</p>
-                <InputValidationLayout errors={errors} name={`hotelAgeAssignments.${index}.name`}>
-                  <RegisterInput
-                    register={register}
-                    name={`hotelAgeAssignments.${index}.name`}
-                    type="text"
-                    className='border-none'
-                  />
-                </InputValidationLayout>
+             
                 <div>
                   <p className='text-12'>{t("price_policy.from_age")}</p>
-                  <InputValidationLayout errors={errors} name={`hotelAgeAssignments.${index}.fromAge`}>
-                    <RegisterInput
-                      register={register}
-                      name={`hotelAgeAssignments.${index}.fromAge`}
-                      type="number"
-                      className='border-none'
-                    />
-                  </InputValidationLayout>
+                  <RegisterInput
+                    register={register}
+                    name={`hotelAgeAssignments.${index}.fromAge`}
+                    type="number"
+                    className='border-none'
+                  />
+                  {errors.hotelAgeAssignments?.[index]?.fromAge && (
+                    <p className="text-[10px] text-red-700">
+                      {errors.hotelAgeAssignments[index]?.fromAge?.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <p className='text-12'>{t("price_policy.to_age")}</p>
-                  <InputValidationLayout errors={errors} name={`hotelAgeAssignments`}>
-                    <RegisterInput
-                      register={register}
-                      name={`hotelAgeAssignments.${index}.toAge`}
-                      type="number"
-                      className='border-none'
-                    />
-                  </InputValidationLayout>
+                  <RegisterInput
+                    register={register}
+                    name={`hotelAgeAssignments.${index}.toAge`}
+                    type="number"
+                    className='border-none'
+                  />
+                  {errors.hotelAgeAssignments?.[index]?.toAge && (
+                    <p className="text-[10px] text-red-700">
+                      {errors.hotelAgeAssignments[index]?.toAge?.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <p className='text-12'>{t("price_policy.available_beds")}</p>
-                  <InputValidationLayout errors={errors} name={`hotelAgeAssignments.${index}.bedType`}>
-                    <RegisterSelect
-                      name={`hotelAgeAssignments.${index}.bedType`}
-                      options={roomBedTypeOptions}
-                      register={register}
-                      className='border-none'
-                    />
-                  </InputValidationLayout>
+                  <RegisterSelect
+                    name={`hotelAgeAssignments.${index}.bedType`}
+                    options={roomBedTypeOptions}
+                    register={register}
+                    className='border-none'
+                  />
+                  {errors.hotelAgeAssignments?.[index]?.bedType && (
+                    <p className="text-[10px] text-red-700">
+                      {errors.hotelAgeAssignments[index]?.bedType?.message}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
             <Button
               variant='outline'
               onClick={() =>
-                append({ name: '', fromAge: 0, toAge: 0, bedType: '' })
+                append({ fromAge: 0, toAge: 0, bedType:"0" })
               }
             >
               {t("hotel_availability.add_age_range")}

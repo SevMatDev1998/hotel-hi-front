@@ -229,7 +229,8 @@
     "room": "Սենյակ",
     "food": "Սնունդ",
     "additional": "Հավելյալ",
-    "other": "Այլ"
+    "other": "Այլ",
+    "set_commission": "Սահմանել միջնորդավճար"
   },
   "hotel_availability": {
     "price_offer_name": "Գնային առաջարկի անվանում",

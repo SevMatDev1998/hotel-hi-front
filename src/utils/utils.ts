@@ -6,6 +6,6 @@ export const divideAndRoundUp = (num: number): number => {
 
 export const calculateTotalNumberOfRooms = (roomData?: HotelRoom[]): number => {
   return roomData?.reduce((total, room) => {
-    return total + (room.hotelRoomParts?.length || 0);
+    return total + (room.roomNumberQuantity || 0);
   }, 0) || 0;
 }

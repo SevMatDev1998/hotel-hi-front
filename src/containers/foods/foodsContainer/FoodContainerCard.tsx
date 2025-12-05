@@ -41,19 +41,20 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
     setSelectedFoodType(null);
   };
 
-  console.log(hotelFood);
 
   const isInactive = !hotelFood 
-  
+  const isBlockOpend = selectedFoodType === mainFood.type
+    
   return (
-    <BlockContainer shadow={false} className={isInactive ? 'border-2 border-red-300' : ''}>
+    <BlockContainer shadow={false} className={!isInactive ? 'border-2 border-white' : 'border-2 border-red-300 '}>
       <div className='flex flex-col gap-4'>
-        <div className='flex justify-between items-center'>
-          <div className='flex flex-col w-full gap-3'>
+        <div className='flex justify-end items-start'>
+          <div className={`flex flex-col w-full gap-3`}>
             <div className='grid grid-cols-2'>
               <h3>{t(`foods.${mainFood.type}`)}</h3>
-              <p>{hotelFood?.startDate} - {hotelFood?.endDate}</p>
+             {!isBlockOpend && <p>{hotelFood?.startDate} - {hotelFood?.endDate}</p>} 
             </div>
+            <span className={!isBlockOpend ? 'block' : 'hidden'}>
             <div className='grid grid-cols-2'>
               <p>{t("foods.food_types")}</p>
               <div className='flex gap-3'>
@@ -72,8 +73,10 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
                 })}
               </div>
             </div>
+            </span>
+
           </div>
-          <div>
+          <div >
             {hotelFood && hotelFood.isFoodAvailable && !selectedFoodType ? 
               <span onClick={() => setSelectedFoodType(hotelFood.foodType ? hotelFood.foodType : null)}>
                 <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />

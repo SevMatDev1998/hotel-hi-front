@@ -92,7 +92,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
             />
           </div>
           {(errors.startDate || errors.endDate) && (
-            <p className="text-red-500 text-sm">
+            <p className="text-red-500 text-[12px]">
               {errors.startDate?.message || errors.endDate?.message}
             </p>
           )}
@@ -103,7 +103,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
           {t("foods.delivery_methods")}
         </p>
         <div className="flex flex-col gap-1">
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-3 mobile:grid-cols-2 gap-1">
             {foodOfferTypes.map((type) => (
               <Controller
                 key={type.id}
@@ -127,14 +127,14 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
             ))}
           </div>
           {errors.foodOfferTypeIds && (
-            <p className="text-red-500 text-sm">{errors.foodOfferTypeIds.message}</p>
+            <p className="text-red-500 text-[12px]">{errors.foodOfferTypeIds.message}</p>
           )}
         </div>
       </div>
       <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 '>
         <p>{t("foods.food_types")}</p>
         <div className="flex flex-col gap-1">
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-3 mobile:grid-cols-2 gap-1">
             {cuisines.map((cuisine) => (
               <Controller
                 key={cuisine.id}
@@ -158,7 +158,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
             ))}
           </div>
           {errors.cuisineIds && (
-            <p className="text-red-500 text-sm">{errors.cuisineIds.message}</p>
+            <p className="text-red-500 text-[12px]">{errors.cuisineIds.message}</p>
           )}
         </div>
       </div>
