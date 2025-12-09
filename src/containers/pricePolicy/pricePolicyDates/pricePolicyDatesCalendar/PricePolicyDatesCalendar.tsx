@@ -138,41 +138,83 @@ const PricePolicyDatesCalendar = ({
 
   const toggleMonth = useCallback(
     (monthIndex: number) => {
+      if (!activeAvailability) return;
+
       const daysInMonth = getDaysInMonth(monthIndex);
-      const cells: Day[] = [];
+      const freeDays: Day[] = [];
+      const myDays: Day[] = [];
+
       for (let i = 1; i <= daysInMonth; i++) {
         const calendarId = `m${monthIndex + 1}-d${i}`;
-        cells.push({
-          id: `${Date.now()}-${calendarId}`,
-          date: new Date(year, monthIndex, i),
-          calendarId,
-        });
+        const color = colorMap[calendarId];
+
+        if (!color) {
+          // День свободен
+          freeDays.push({
+            id: `${Date.now()}-${calendarId}`,
+            date: new Date(year, monthIndex, i),
+            calendarId,
+          });
+        } else if (color === activeAvailability.color) {
+          // День принадлежит текущему availability
+          myDays.push({
+            id: `${Date.now()}-${calendarId}`,
+            date: new Date(year, monthIndex, i),
+            calendarId,
+          });
+        }
       }
-      updateAvailabilities(cells);
+
+      // Если есть свои дни - удаляем их, иначе добавляем свободные
+      const cellsToToggle = myDays.length > 0 ? myDays : freeDays;
+      if (cellsToToggle.length > 0) {
+        updateAvailabilities(cellsToToggle);
+      }
     },
-    [year, updateAvailabilities, getDaysInMonth]
+    [year, updateAvailabilities, getDaysInMonth, colorMap, activeAvailability]
   );
 
   const toggleWeekday = useCallback(
     (weekdayIndex: number) => {
-      const cells: Day[] = [];
+      if (!activeAvailability) return;
+
+      const freeDays: Day[] = [];
+      const myDays: Day[] = [];
+
       months.forEach((_, mIndex) => {
         const daysInMonth = getDaysInMonth(mIndex);
         for (let d = 1; d <= daysInMonth; d++) {
           const date = new Date(year, mIndex, d);
           if (date.getDay() === weekdayIndex) {
             const calendarId = `m${mIndex + 1}-d${d}`;
-            cells.push({
-              id: `${Date.now()}-${calendarId}`,
-              date,
-              calendarId,
-            });
+            const color = colorMap[calendarId];
+
+            if (!color) {
+              // День свободен
+              freeDays.push({
+                id: `${Date.now()}-${calendarId}`,
+                date,
+                calendarId,
+              });
+            } else if (color === activeAvailability.color) {
+              // День принадлежит текущему availability
+              myDays.push({
+                id: `${Date.now()}-${calendarId}`,
+                date,
+                calendarId,
+              });
+            }
           }
         }
       });
-      updateAvailabilities(cells);
+
+      // Если есть свои дни - удаляем их, иначе добавляем свободные
+      const cellsToToggle = myDays.length > 0 ? myDays : freeDays;
+      if (cellsToToggle.length > 0) {
+        updateAvailabilities(cellsToToggle);
+      }
     },
-    [year, updateAvailabilities, getDaysInMonth]
+    [year, updateAvailabilities, getDaysInMonth, colorMap, activeAvailability]
   );
 
   // 🗑️ Обработчики удаления
@@ -204,8 +246,8 @@ const PricePolicyDatesCalendar = ({
   const canDelete = !activeAvailability;
   
   return (
-    <div className=" overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
+    <div>
+      <table className="w-full border-collapse text-sm table-fixed">
         <thead>
           <tr>
             <th className="bg-teal-700 text-white px-2 py-1 rounded-l-md w-24">
@@ -275,7 +317,7 @@ const PricePolicyDatesCalendar = ({
                   onClick={() => toggleDay(mIndex, d)}
                   onMouseEnter={() => setHoveredCell(calendarId)}
                   onMouseLeave={() => setHoveredCell(null)}
-                  className={`border text-center cursor-pointer p-1 min-w-[30px] rounded transition-all relative ${
+                  className={`border text-center cursor-pointer p-1 rounded transition-all ${
                     isSelected
                       ? "text-white font-semibold"
                       : "bg-white hover:bg-blue-100 text-gray-800"

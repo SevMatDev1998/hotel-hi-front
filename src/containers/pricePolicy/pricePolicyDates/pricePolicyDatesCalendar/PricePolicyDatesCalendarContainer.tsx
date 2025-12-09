@@ -8,7 +8,8 @@ import { useTranslation } from "../../../../hooks/useTranslation";
 import {
   useDeleteHotelAvailabilityDateMutation,
   useDeleteHotelAvailabilityDatesBatchMutation,
-  useUpdateHotelAvailabilitesWithDatesMutation} from "../../../../services/hotelAvailability/hotelAvailability.service";
+  useUpdateHotelAvailabilitesWithDatesMutation
+} from "../../../../services/hotelAvailability/hotelAvailability.service";
 
 interface IAvailabilityDate {
   id: string;
@@ -72,27 +73,26 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
 
 
   const handleModalSubmit = async (commissionDate: any) => {
-    // Проверяем что есть измененный availability
     if (!modifiedAvailability) {
       console.error('No modified availability to save');
       return;
     }
 
     const payload = {
-      availability: modifiedAvailability,  // ТОЛЬКО измененный availability
-      commissionDate,  // объект комиссий
+      availability: modifiedAvailability,
+      commissionDate,
     };
 
-    // Отправляем запрос
     await updateHotelAvailabilitesWithDates({
       hotelId,
       body: payload,
-    });
+    }).unwrap();
+    setSelectedAvailability(null);
   };
 
 
   const handleSubmit = async () => {
-    open(AddCommissionModal, { title: "", onSubmit: (data) => handleModalSubmit(data) });
+    open(AddCommissionModal, { title: "", onSubmit: (data) => handleModalSubmit(data), className: "max-w-[90%] w-full" });
   };
 
   const handleDeleteDate = async (calendarId: string) => {
@@ -146,13 +146,48 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
     }
   };
 
+  const isSaveDisabled = () => {
+    if (!selectedAvailability || !modifiedAvailability) {
+      return true;
+    }
+
+    const originalAvailability = hotelAvailabilityWithDates?.find((a) => a.id === selectedAvailability.id);
+    if (!originalAvailability) {
+      return true;
+    }
+
+    const originalDateIds = new Set(
+      originalAvailability.hotelAvailabilityDateCommissions.map((d) => d.calendarId)
+    );
+    const modifiedDateIds = new Set(
+      modifiedAvailability.hotelAvailabilityDateCommissions.map((d) => d.calendarId)
+    );
+
+    if (originalDateIds.size !== modifiedDateIds.size) {
+      return false;
+    }
+
+    for (const id of modifiedDateIds) {
+      if (!originalDateIds.has(id)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   return (
     <BlockContainer  >
       <div className="flex justify-end gap-4 mb-4">
         <div className="flex items-center gap-2 relative">
           <div
             className="appearance-none px-3 py-2 border border-charcoal-gray text-charcoal-gray focus:outline-none bg-white cursor-pointer min-w-[200px] flex items-center gap-2"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            onClick={() => {
+              if (isSaveDisabled()) {
+                setIsDropdownOpen(!isDropdownOpen)
+              }
+            }
+            }
           >
             {selectedAvailability ? (
               <>
@@ -191,13 +226,10 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
             </div>
           )}
         </div>
-        <Button onClick={handleSubmit}>
+        <Button onClick={handleSubmit} disabled={isSaveDisabled()}>
           {t("buttons.save")}
         </Button>
-
       </div>
-
-
       <PricePolicyDatesCalendar
         year={2025}
         initialSelectedDays={availabilities}

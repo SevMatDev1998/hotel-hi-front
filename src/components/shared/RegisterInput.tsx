@@ -11,6 +11,7 @@ interface IRegisterInput {
   labelClassName?: string;
   disabled?: boolean;
   isError?: boolean;
+  hideSpinner?: boolean;
 }
 
 const RegisterInput: FC<IRegisterInput> = ({
@@ -22,14 +23,15 @@ const RegisterInput: FC<IRegisterInput> = ({
   labelClassName,
   disabled = false,
   isError = false,
+  hideSpinner = false,
 }) => {
 
 
   return (
     <div>
-      <label className={clsx("block mb-1", labelClassName)}>
-        {label}
-      </label>
+      {
+        label && <label className={clsx("block mb-1 text-sm font-medium text-charcoal-gray", labelClassName)}>{label}</label>
+      }
       <input
         {...register(name)}
         type={type}
@@ -39,6 +41,7 @@ const RegisterInput: FC<IRegisterInput> = ({
           isError
             ? "border-red-500 focus:border-red-500 focus:ring-red-500"
             : "border-charcoal-gray",
+          hideSpinner && "[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]",
           className
         )}
         disabled={disabled}

@@ -100,8 +100,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
                 ></span>
                 {availability.title}
               </div>
-
-              <div onClick={() => { handleEditSubmit(commission, availability.id) }} >
+              <div className="cursor-pointer"  onClick={() => { handleEditSubmit(commission, availability.id) }} >
                 <p className="text-12">
                   {t("price_policy_dates.room")} - {commission.roomFee}&nbsp;
                   {t("price_policy_dates.food")} - {commission.foodFee}&nbsp;
