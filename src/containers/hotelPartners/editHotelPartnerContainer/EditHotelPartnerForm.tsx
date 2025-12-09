@@ -35,6 +35,7 @@ const EditHotelPartnerForm: FC<IEditHotelPartnerFormProps> = ({ countryOptions, 
     navigate(`/${ApiEnum.HOTEL_PARTNERS}`);
   };
 
+  
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("partners.partners")}</h2>

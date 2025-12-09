@@ -8,10 +8,20 @@ export const CreateHotelAvailabilitySchema = yup.object({
 
   checkInTime: yup
     .string()
-    .required(tv('required')),
+    .required(tv('required'))
+    .test('before-checkout', tv("min_greater_than_max"), function (value) {
+      const { checkoutTime } = this.parent;
+      if (!value || !checkoutTime) return true;
+      return value > checkoutTime;
+    }),
   checkoutTime: yup
     .string()
-    .required(tv('required')),
+    .required(tv('required'))
+    .test('after-checkin', tv("min_greater_than_max"), function (value) {
+      const { checkInTime } = this.parent;
+      if (!value || !checkInTime) return true;
+      return value < checkInTime;
+    }),
 
   hotelAgeAssignments: yup.array().of(
     yup.object({
@@ -50,22 +60,6 @@ export const CreateHotelAvailabilitySchema = yup.object({
             return this.createError({
               path: `hotelAgeAssignments[${i}].fromAge`,
               message: `Должен начинаться с ${prevToAge} (предыдущий диапазон заканчивается на ${prevToAge})`
-            });
-          }
-        }
-      }
-      return true;
-    })
-    .test('no-gaps-overlaps', 'Между диапазонами не должно быть пропусков или пересечений', function (value) {
-      if (value && value.length > 1) {
-        for (let i = 1; i < value.length; i++) {
-          const prevToAge = value[i - 1].toAge;
-          const currentFromAge = value[i].fromAge;
-          // Проверяем что текущий fromAge = предыдущий toAge + 1
-          if (currentFromAge !== prevToAge + 1) {
-            return this.createError({
-              path: `hotelAgeAssignments[${i}].fromAge`,
-              message: `Должен быть ${prevToAge + 1} (предыдущий диапазон заканчивается на ${prevToAge})`
             });
           }
         }

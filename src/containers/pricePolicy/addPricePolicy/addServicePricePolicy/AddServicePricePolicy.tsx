@@ -29,8 +29,6 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
     { skip: !hotelId || !hotelAvailabilityId }
   );
   
-  console.log(3333,paidServices);
-  
   
   const [createServicePrices, { isLoading: isSaving }] = useCreateServicePricesMutation();
   

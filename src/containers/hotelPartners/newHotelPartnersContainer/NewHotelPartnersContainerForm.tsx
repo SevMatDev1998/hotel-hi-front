@@ -44,14 +44,13 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
   const tinValue = watch("tin");
 
   useEffect(() => {
-    if (!tinValue) return;
-
     setLazyValue(async () => {
-      await onCheckPartnerByTin(tinValue);
+    if (!tinValue) { reset(); return; }
+      await onCheckPartnerByTin(String(tinValue));
     }, 1000);
   }, [tinValue, onCheckPartnerByTin, setLazyValue]);
 
-  useEffect(() => {
+  useEffect(() => {    
     if (partner) {
       reset({
         tin: partner.tin,
@@ -72,8 +71,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
     navigate(`/${ApiEnum.HOTEL_PARTNERS}`);
   };
 
-  console.log(errors);
-
+  const isPartnerExisting = !!partner;
 
   return (
     <div className="flex flex-col gap-6">
@@ -81,7 +79,6 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
       <InfoBlock text="Գործընկերների ցանկում ներառեք բոլոր այն կազմակերպություններին, որոնց ցանկանում եք տեղեկացնել հյուրանոցի կողմից գնային քաղականության փոփոխությունների մասին։ Կարող եք յուրաքանաչյուր գործընկերի համար սահմանել առանձին միջնորդավճարներ։" />
       <BlockContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-
           <div className="flex flex-col gap-4">
             <h3>{t("partners.add_partner")}</h3>
             <InfoBlock text="Լրացրեք տվյալները: Բոլոր *-ով դաշտերը պարտադիր են:" />
@@ -98,6 +95,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     className='rounded-[5px]'
                     tr_name="registration_country_options"
                     valueAsNumber
+                    disabled={isPartnerExisting}
                   />
                 </InputValidationLayout>
               </div>
@@ -110,7 +108,6 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     register={register}
                     name="tin"
                     className='rounded-[5px]'
-
                   />
                 </InputValidationLayout>
               </div>
@@ -125,6 +122,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                       register={register}
                       name="ltd"
                       className='rounded-[5px]'
+                      disabled={isPartnerExisting}
                     />
                   </InputValidationLayout>
                   <InputValidationLayout errors={errors} name="legalEntityTypeId">
@@ -134,6 +132,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                       register={register}
                       className='rounded-[5px]'
                       tr_name="legal_entity_type_options"
+                      disabled={isPartnerExisting}
                     />
                   </InputValidationLayout>
                 </div>
@@ -147,6 +146,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     register={register}
                     name="name"
                     className='rounded-[5px]'
+                    disabled={isPartnerExisting}
                   />
                 </InputValidationLayout>
               </div>
@@ -160,6 +160,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     name="email"
                     type="email"
                     className='rounded-[5px]'
+                    disabled={isPartnerExisting}
                   />
                 </InputValidationLayout>
               </div>
@@ -167,24 +168,15 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                 <div >
                   <span >{t("hotel.phone_number")} *</span>
                 </div>
-                <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'>
-                  <InputValidationLayout errors={errors} name="phoneCode" >
-                    <RegisterSelect
-                      name="phoneCode"
-                      options={countryOptions}
-                      register={register}
-                      tr_name="registration_country_options"
-                    />
-                  </InputValidationLayout>.
-                  <InputValidationLayout errors={errors} name="phone" >
-                    <RegisterInput
-                      register={register}
-                      name="phone"
-                      type="text"
-                      className='rounded-[5px]'
-                    />
-                  </InputValidationLayout>
-                </div>
+                <InputValidationLayout errors={errors} name="phone" >
+                  <RegisterInput
+                    register={register}
+                    name="phone"
+                    type="text"
+                    className='rounded-[5px]'
+                    disabled={isPartnerExisting}
+                  />
+                </InputValidationLayout>
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
@@ -195,6 +187,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     register={register}
                     name="accountNumber"
                     className='rounded-[5px]'
+                    disabled={isPartnerExisting}
                   />
                 </InputValidationLayout>
               </div>
@@ -207,6 +200,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                     register={register}
                     name="director"
                     className='rounded-[5px]'
+                    disabled={isPartnerExisting}
                   />
                 </InputValidationLayout>
               </div>
@@ -214,7 +208,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
           </div>
           <div className="flex justify-end mt-6">
             <Button>
-              {t("buttons.save")}
+              {isPartnerExisting? t("buttons.save") : t("buttons.add")}
             </Button>
           </div>
         </form>

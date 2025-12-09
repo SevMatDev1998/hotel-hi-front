@@ -39,7 +39,7 @@ const NewHotelPartnersContainer = () => {
       legalEntityOptions={legalEntityOptions}
       hotelId={user?.hotelId}
       onCheckPartnerByTin={handleCheckPartnerByTin}
-      partner={partner}
+      partner={partner} 
     />
   );
 };

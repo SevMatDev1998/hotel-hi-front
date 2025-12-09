@@ -33,18 +33,36 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
   const { register, handleSubmit, control, formState: { errors } } = useForm<CreateHotelAvailabilityFormData>({
     resolver: yupResolver(CreateHotelAvailabilitySchema),
     defaultValues: {
-      hotelAgeAssignments: [{ fromAge: 0, toAge: 0, bedType: "0" }],
+      hotelAgeAssignments: [{ fromAge: 0, toAge: 180, bedType: "Cradle" }],
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, remove, update, insert } = useFieldArray({
     control,
     name: "hotelAgeAssignments",
   });
 
+  const handleAddAgeRange = () => {
+    const lastIndex = fields.length - 1;
+    // Все существующие (кроме последнего) становятся 0-0
+    fields.forEach((field, index) => {
+      if (index !== lastIndex) {
+        update(index, {
+          fromAge: 0,
+          toAge: 0,
+          bedType: field.bedType,
+        });
+      }
+    });
+
+    // Вставляем новую строку 0-0 ПЕРЕД последней (которая остаётся 0-180)
+    insert(lastIndex, { fromAge: 0, toAge: 0, bedType: "Cradle" });
+  };
+
   const onSubmit = async (data: CreateHotelAvailabilityFormData) => {
     if (!hotelId) return;
-
+    console.log(data);
+    
     try {
       const result = await addHotelAvailability({ body: data as unknown as HotelAvailability, hotelId }).unwrap();
       if (onSuccess) {
@@ -54,6 +72,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
       console.error('Failed to create hotel availability:', error);
     }
   };
+  
   
 
   return (
@@ -97,9 +116,9 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
           </div>
 
           <div className='flex flex-col gap-3 mt-6'>
-            {fields.map((_, index) => (
+            {fields.map((field, index) => (
               <div
-                key={index}
+                key={field.id}
                 className='flex items-center'
               >
 
@@ -158,9 +177,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
             ))}
             <Button
               variant='outline'
-              onClick={() =>
-                append({ fromAge: 0, toAge: 0, bedType:"0" })
-              }
+              onClick={handleAddAgeRange}
             >
               {t("hotel_availability.add_age_range")}
             </Button>
