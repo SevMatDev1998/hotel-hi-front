@@ -53,9 +53,13 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
   const [selectedAvailability, setSelectedAvailability] = useState<ISelectedAvailability | null>(null);
   const [modifiedAvailability, setModifiedAvailability] = useState<IAvailability | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
   const [updateHotelAvailabilitesWithDates] = useUpdateHotelAvailabilitesWithDatesMutation();
   const [deleteHotelAvailabilityDate] = useDeleteHotelAvailabilityDateMutation();
   const [deleteHotelAvailabilityDatesBatch] = useDeleteHotelAvailabilityDatesBatchMutation();
+
+  const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i);
 
 
   const handleCalendarChange = (updatedData: IAvailability[]) => {
@@ -181,6 +185,32 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
       <div className="flex justify-end gap-4 mb-4">
         <div className="flex items-center gap-2 relative">
           <div
+            className="appearance-none px-3 py-2 border border-charcoal-gray text-charcoal-gray focus:outline-none bg-white cursor-pointer min-w-[120px] flex items-center justify-center"
+            onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
+          >
+            <span>{selectedYear}</span>
+          </div>
+
+          {isYearDropdownOpen && (
+            <div className="absolute top-full left-0 mt-1 w-full bg-white border border-charcoal-gray shadow-lg z-10 max-h-60 overflow-y-auto">
+              {years.map((year) => (
+                <div
+                  key={year}
+                  className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-center"
+                  onClick={() => {
+                    setSelectedYear(year);
+                    setIsYearDropdownOpen(false);
+                  }}
+                >
+                  <span>{year}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 relative">
+          <div
             className="appearance-none px-3 py-2 border border-charcoal-gray text-charcoal-gray focus:outline-none bg-white cursor-pointer min-w-[200px] flex items-center gap-2"
             onClick={() => {
               if (isSaveDisabled()) {
@@ -231,8 +261,14 @@ const PricePolicyDatesCalendarContainer = ({ hotelAvailabilityWithDates, hotelId
         </Button>
       </div>
       <PricePolicyDatesCalendar
-        year={2025}
-        initialSelectedDays={availabilities}
+        year={selectedYear}
+        initialSelectedDays={availabilities.map(a => ({
+          ...a,
+          hotelAvailabilityDateCommissions: a.hotelAvailabilityDateCommissions.filter(d => {
+            const dateYear = new Date(d.date).getFullYear();
+            return dateYear === selectedYear;
+          })
+        }))}
         activeAvailability={selectedAvailability || undefined}
         onChange={handleCalendarChange}
         onDeleteDate={handleDeleteDate}
