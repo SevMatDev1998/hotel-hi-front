@@ -2,6 +2,7 @@ import { FC } from "react";
 import clsx from "clsx";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { Button } from "../../components/shared/Button";
+import TimeInput from "../../components/shared/TimeInput";
 import { useTranslation } from "../../hooks/useTranslation";
 import { HotelServiceHourlyAvailabilityType } from "../../types";
 
@@ -84,11 +85,9 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             name={`availabilities.${groupIndex}.periods.${periodIndex}.startHour`}
             control={control}
             render={({ field }) => (
-              <input
-                type="time"
-                step="60"
-                {...field}
+              <TimeInput
                 value={field.value || ''}
+                onChange={field.onChange}
                 disabled={!isActive || !isHours}
                 className={e?.startHour ? 'border-red-500' : ''}
               />
@@ -106,11 +105,9 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
             name={`availabilities.${groupIndex}.periods.${periodIndex}.endHour`}
             control={control}
             render={({ field }) => (
-              <input
-                type="time"
-                step="60"
-                {...field}
+              <TimeInput
                 value={field.value || ''}
+                onChange={field.onChange}
                 disabled={!isActive || !isHours}
                 className={e?.endHour ? 'border-red-500' : ''}
               />

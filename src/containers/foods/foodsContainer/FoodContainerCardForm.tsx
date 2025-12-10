@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller,useForm } from 'react-hook-form';
 import { Button } from '../../../components/shared/Button';
 import CheckBox from '../../../components/shared/CheckBox';
+import TimeInput from '../../../components/shared/TimeInput';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { useAddHotelFoodMutation } from '../../../services/foods';
@@ -72,10 +73,9 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
               name="startDate"
               control={control}
               render={({ field }) => (
-                <input
-                  type="time"
-                  {...field}
-                  step="300"
+                <TimeInput
+                  value={field.value || ''}
+                  onChange={field.onChange}
                 />
               )}
             />
@@ -83,10 +83,9 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
               name="endDate"
               control={control}
               render={({ field }) => (
-                <input
-                  type="time"
-                  {...field}
-                  step="60"
+                <TimeInput
+                  value={field.value || ''}
+                  onChange={field.onChange}
                 />
               )}
             />

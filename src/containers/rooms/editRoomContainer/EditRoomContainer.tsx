@@ -4,13 +4,14 @@ import { useGetHotelRoomByRoomIdQuery, useGetRoomClassesQuery, useGetRoomViewsQu
 
 const EditRoomContainer = () => {
 
-    const { roomId } = useParams();
+  const { roomId } = useParams();
+  const { data: roomClassesData, isLoading: isRoomClassesLoading } = useGetRoomClassesQuery();
+  const { data: roomViewsData, isLoading: isRoomViewsLoading } = useGetRoomViewsQuery();
+
+
 
   const { data: room, isLoading, isError } = useGetHotelRoomByRoomIdQuery({ roomId: roomId! }, { refetchOnMountOrArgChange: !!roomId })
 
-
-  const { data: roomClassesData } = useGetRoomClassesQuery();
-  const { data: roomViewsData } = useGetRoomViewsQuery();
 
 
   const roomClassesOptions = roomClassesData?.map((roomClass) => ({
@@ -24,7 +25,7 @@ const EditRoomContainer = () => {
     label: roomView.name
   })) || [];
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading || isRoomClassesLoading || isRoomViewsLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading room</div>
   return <EditRoomForm room={room} roomClassesOptions={roomClassesOptions} roomViewsOptions={roomViewsOptions} />;  
 

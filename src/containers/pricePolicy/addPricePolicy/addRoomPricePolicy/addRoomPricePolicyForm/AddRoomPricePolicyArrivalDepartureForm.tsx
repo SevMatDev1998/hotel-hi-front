@@ -1,5 +1,6 @@
 import React, { useEffect,useState } from "react";
 import { Button } from "../../../../../components/shared/Button";
+import TimeInput from "../../../../../components/shared/TimeInput";
 import CardContainer from "../../../../public/CardContainer";
 import { useTranslation } from "../../../../../hooks/useTranslation";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
@@ -115,10 +116,9 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
             />
             <span>{t(`price_policy.${row.name}`)}</span>
           </div>
-          <input
-            type="time"
+          <TimeInput
             value={row.time}
-            onChange={e => updateRow(row.id, "time", e.target.value)}
+            onChange={(value) => updateRow(row.id, "time", value)}
           />
           <input
             type="number"

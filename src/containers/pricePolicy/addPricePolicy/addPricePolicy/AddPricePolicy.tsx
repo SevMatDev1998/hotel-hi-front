@@ -5,6 +5,7 @@ import { Button } from '../../../../components/shared/Button';
 import InfoBlock from '../../../../components/shared/InfoBlock';
 import RegisterInput from '../../../../components/shared/RegisterInput';
 import { RegisterSelect } from '../../../../components/shared/RegisterSelect';
+import TimeInput from '../../../../components/shared/TimeInput';
 import BlockContainer from '../../../public/BlockContainer';
 import InputValidationLayout from '../../../../layouts/inputValidationLayout/InputValidationLayout';
 import { useTranslation } from '../../../../hooks/useTranslation';
@@ -99,12 +100,12 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
                 <Controller
                   name="checkInTime"
                   control={control}
-                  render={({ field }) => <input type="time" {...field} />}
+                  render={({ field }) => <TimeInput value={field.value || ''} onChange={field.onChange} />}
                 />
                 <Controller
                   name="checkoutTime"
                   control={control}
-                  render={({ field }) => <input type="time" step="60" {...field} />}
+                  render={({ field }) => <TimeInput value={field.value || ''} onChange={field.onChange} />}
                 />
               </div>
               {(errors.checkInTime || errors.checkoutTime) && (
