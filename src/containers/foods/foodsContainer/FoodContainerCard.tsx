@@ -42,11 +42,11 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
   };
 
 
-  const isInactive = !hotelFood 
+  const isInactive = hotelFood === undefined
   const isBlockOpend = selectedFoodType === mainFood.type
     
   return (
-    <BlockContainer shadow={false} className={!isInactive ? 'border-2 border-white' : 'border-2 border-red-300 '}>
+    <BlockContainer shadow={false} className={`border-2 ${!hotelFood && !isInactive ? 'border-red-300' : 'border-white'}`}>
       <div className='flex flex-col gap-4'>
         <div className='flex justify-end items-start'>
           <div className={`flex flex-col w-full gap-3`}>
