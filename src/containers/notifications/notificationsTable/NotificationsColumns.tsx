@@ -64,7 +64,7 @@ export const getNotificationsColumns = (
               }
             }}
             className={row.original.isPartnerCommissionAccept ? "text-black" : "text-dusty-teal"}
-            disabled={row.original.isPartnerCommissionAccept}
+            // disabled={row.original.isPartnerCommissionAccept}
           >
             {row.original.isPartnerCommissionAccept ? t("notifications.accepted") : t("notifications.edit")}
           </Button>

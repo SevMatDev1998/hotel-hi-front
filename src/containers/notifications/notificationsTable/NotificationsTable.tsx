@@ -8,9 +8,12 @@ import {
   useGetAllNotificationsQuery,
   useLazyGetPartnerCommissionsQuery,
   useSavePartnerCommissionsMutation,
-  useSendPartnerNotificationMutation
+  useSendPartnerNotificationMutation,
+  useUpdatePartnerCommissionMutation
 } from "../../../services/notifications/notifications.service";
 import CommissionDateView from "../../../components/shared/CommissionDateView";
+import EditCommissionModal from "../../../modals/EditCommisionModal";
+import useModal from "../../../hooks/useModal";
 
 interface INotificationsTableProps {
   hotelId?: string;
@@ -20,6 +23,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
 
   const debounse = useLazyDebounce();
   const { t } = useTranslation();
+  const open = useModal();
 
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<string>("1");
@@ -35,7 +39,8 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
     useLazyGetPartnerCommissionsQuery();
 
   const [saveCommissions] = useSavePartnerCommissionsMutation();
-  const [sendNotification, {isLoading:isNotificationSendLoading}] = useSendPartnerNotificationMutation();
+  const [sendNotification, { isLoading: isNotificationSendLoading }] = useSendPartnerNotificationMutation();
+  const [updatePartnerCommission] = useUpdatePartnerCommissionMutation();
 
   const onChangePage = (pageNumber: string) => {
     if (pageNumber !== page) {
@@ -94,7 +99,16 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
     setExpandedRows(new Set());
     setExpandedPartnerId(null);
   }, [expandedPartnerId, partnerCommissions, saveCommissions]);
-  console.log(partnerCommissions);
+
+  const handleEditSubmit = async (commission: any, availabilityId: string, partnerId: number) => {
+    open(EditCommissionModal, { 
+      commission, 
+      availabilityId, 
+      partnerId,
+      updateHotelAvailabilityDateCommissions: updatePartnerCommission 
+    });
+  };
+
 
   // Prepare data with expandedContent
   const tableData = (notifications || []).map((partner: any) => ({
@@ -137,14 +151,14 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
                           <span>{availability.title}</span>
                         </div>
                       </td>
-
-                      {/* Third column - commission (once) */}
-                      <td className="py-3 px-4 align-top">
-                        {t("notifications.room")}: {firstCommission?.roomFee || 0}%,{' '}
-                        {t("notifications.food")}: {firstCommission?.foodFee || 0}%,{' '}
-                        {t("notifications.additional")}: {firstCommission?.additionalFee || 0}%,{' '}
-                        {t("notifications.other")}: {firstCommission?.serviceFee || 0}%
-                      </td>
+                      <div className="cursor-pointer" onClick={() => { handleEditSubmit(firstCommission, availability.id, expandedPartnerId!) }} >
+                        <td className="py-3 px-4 align-top">
+                          {t("notifications.room")}: {firstCommission?.roomFee || 0}%,{' '}
+                          {t("notifications.food")}: {firstCommission?.foodFee || 0}%,{' '}
+                          {t("notifications.additional")}: {firstCommission?.additionalFee || 0}%,{' '}
+                          {t("notifications.other")}: {firstCommission?.serviceFee || 0}%
+                        </td>
+                      </div>
                     </tr>
                   );
                 })}
@@ -189,6 +203,8 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
         onSearch={handleChange}
         search={search}
       />
+
+      eee
     </div>
   );
 }

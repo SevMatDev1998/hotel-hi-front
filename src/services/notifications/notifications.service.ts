@@ -17,6 +17,7 @@ const notificationsService = ApiInstance.injectEndpoints({
         url: `${ApiEnum.NOTIFICATIONS}/${hotelId}/${partnerId}/commissions`,
         method: "GET",
       }),
+      providesTags: ["getPartnerCommissions"],
     }),
 
     savePartnerCommissions: build.mutation<any, { partnerId: number; availabilityIds: number[] }>({
@@ -38,6 +39,25 @@ const notificationsService = ApiInstance.injectEndpoints({
       }),
       invalidatesTags:[ApiEnum.NOTIFICATIONS]
     }),
+
+    updatePartnerCommission: build.mutation<
+      any,
+      {
+        partnerId: number;
+        hotelAvailabilityId: number;
+        roomFee: number;
+        foodFee: number;
+        additionalFee: number;
+        serviceFee: number;
+      }
+    >({
+      query: (body) => ({
+        url: `${ApiEnum.NOTIFICATIONS}/update-partner-commission`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["getPartnerCommissions"],
+    }),
   }),
 });
 
@@ -47,6 +67,7 @@ export const {
   useLazyGetPartnerCommissionsQuery,
   useSavePartnerCommissionsMutation,
   useSendPartnerNotificationMutation,
+  useUpdatePartnerCommissionMutation,
 } = notificationsService;
 
 

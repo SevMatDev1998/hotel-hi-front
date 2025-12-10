@@ -7,6 +7,7 @@ import BlockContainer from "../../../public/BlockContainer";
 import useModal from "../../../../hooks/useModal";
 import { useTranslation } from "../../../../hooks/useTranslation";
 import { HotelAvailabilityDateCommission } from "../../../../types/hotelAvailabilityDateCommission";
+import { useUpdateHotelAvailabilityDateCommissionsMutation } from "../../../../services/hotelAvailability/hotelAvailability.service";
 
 
 
@@ -29,6 +30,8 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
   const open = useModal();
   const { t } = useTranslation()
 
+    const [updateHotelAvailabilityDateCommissions] = useUpdateHotelAvailabilityDateCommissionsMutation();
+  
   if (!hotelAvailabilityWithDates.length) {
     return (
       <div className="p-4 text-center text-gray-500">
@@ -39,7 +42,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
 
 
   const handleEditSubmit = async (commission: any, availabilityId: string) => {
-    open(EditCommissionModal, { commission, availabilityId });
+    open(EditCommissionModal, { commission, availabilityId,updateHotelAvailabilityDateCommissions });
   };
 
 

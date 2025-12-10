@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { Button } from "../components/shared/Button";
 import RegisterInput from "../components/shared/RegisterInput";
 import BlockContainer from "../containers/public/BlockContainer";
-import { useUpdateHotelAvailabilityDateCommissionsMutation } from "../services/hotelAvailability/hotelAvailability.service";
 import { CommissionFormType, commissionSchema } from "../yupValidation/CommissionValidation";
 import InputValidationLayout from "../layouts/inputValidationLayout/InputValidationLayout";
 import { useTranslation } from "react-i18next";
@@ -11,9 +10,11 @@ import { useTranslation } from "react-i18next";
 interface ICommissionModalProps {
   commission: CommissionFormType;
   availabilityId: string;
+  partnerId?: number;
+  updateHotelAvailabilityDateCommissions: any;
   onCancel: () => void;
 }
-const EditCommissionModal: ModalFC<ICommissionModalProps> = ({ commission, availabilityId,  onCancel }) => {
+const EditCommissionModal: ModalFC<ICommissionModalProps> = ({ commission, availabilityId, partnerId, updateHotelAvailabilityDateCommissions, onCancel }) => {
   const {
     register,
     handleSubmit,
@@ -25,11 +26,18 @@ const EditCommissionModal: ModalFC<ICommissionModalProps> = ({ commission, avail
 
     const { t } = useTranslation();
   
-  const [updateHotelAvailabilityDateCommissions] = useUpdateHotelAvailabilityDateCommissionsMutation();
-
-  
   const handleFormSubmit = (data: CommissionFormType) => {
-    updateHotelAvailabilityDateCommissions({ hotelAvailabilityId: availabilityId, body: data }).unwrap()
+    if (partnerId) {
+      // Update partner commission
+      updateHotelAvailabilityDateCommissions({ 
+        partnerId, 
+        hotelAvailabilityId: Number(availabilityId), 
+        ...data 
+      }).unwrap()
+    } else {
+      // Update hotel availability date commissions
+      updateHotelAvailabilityDateCommissions({ hotelAvailabilityId: availabilityId, body: data }).unwrap()
+    }
     onCancel()
   }
 
