@@ -8,9 +8,10 @@ export const CreateHotelRoomSchema = yup.object({
     .required(tv('required')),
 
   roomViewId: yup
-   .number()
-    .typeError(tv('required'))
-    .required(tv('required')),
+    .number()
+    .nullable()
+    .transform((value, originalValue) => originalValue === '' || originalValue === null ? null : value)
+    .optional(),
 
   area: yup 
     .number()
@@ -33,9 +34,10 @@ export const EditHotelRoomSchema = yup.object({
     .required(tv('required')),
 
   roomViewId: yup
-   .number()
-    .typeError(tv('required'))
-    .required(tv('required')),
+    .number()
+    .nullable()
+    .transform((value, originalValue) => originalValue === '' || originalValue === null ? null : value)
+    .optional(),
 
   area: yup 
     .number()

@@ -63,7 +63,7 @@ const EditRoomForm: FC<IEditRoomFormProps> = ({ room, roomClassesOptions, roomVi
               />
             </InputValidationLayout>
             <div >
-              <span >{t("rooms.room_view")} *</span>
+              <span >{t("rooms.room_view")}</span>
             </div>
             <InputValidationLayout errors={errors} name="roomViewId" >
               <RegisterSelect

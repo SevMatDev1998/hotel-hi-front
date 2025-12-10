@@ -25,7 +25,8 @@ const RoomTypeInformation: FC<RoomTypeInformationProps> = ({ roomId }) => {
     open(SelectRoomPartsModal, {
       hotelRoomParts: hotelRoomParts,
       hotelRoomId: roomId ?? "0",
-    });
+      className: "w-full h-full max-w-md"
+    },);
   };
 
   if (!hotelRoomParts) return null;

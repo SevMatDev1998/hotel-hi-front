@@ -6,9 +6,9 @@ interface IInfoBlockProps {
 
 const InfoBlock:FC<IInfoBlockProps> = ({ text }) => {
   return (
-    <div className='p-3 bg-light-blue rounded-[10px] flex items-center gap-1'>
-      <img src="/images/icons/info-blue-icon.svg" alt="info icon" className="inline-block mr-2" />
-      <p className='text-aqua-sky'> {text}</p>
+    <div className='p-3 rounded-[10px] flex items-center gap-1'>
+      <img src="/images/icons/info-icon.svg" alt="info icon" className="inline-block mr-2" />
+      <p className=''> {text}</p>
     </div>
   );
 };

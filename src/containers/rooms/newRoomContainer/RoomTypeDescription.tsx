@@ -73,7 +73,7 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
               />
             </InputValidationLayout>
             <div >
-              <span >{t("rooms.room_view")} *</span>
+              <span >{t("rooms.room_view")}</span>
             </div>
             <InputValidationLayout errors={errors} name="roomViewId" >
               <RegisterSelect

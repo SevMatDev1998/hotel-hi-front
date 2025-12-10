@@ -20,9 +20,14 @@ const ResetPasswordContainer = () => {
 
   const [resetPassword, {isLoading }] = useResetPasswordMutation()
 
+  const handleResetPassword = (data: ResetPasswordRequestFormType)=>{
+    resetPassword(data).unwrap()
+    navigate(RouteEnum.LOGIN);
+  }
+
   return (
     <div className='max-w-[400px]'>
-      <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(resetPassword)}>
+      <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(handleResetPassword)}>
         <div className='flex justify-between text-24'>
           <div>{t('auth.reset_password')}</div>
           <p onClick={()=>{navigate(RouteEnum.SIGN_UP)}}  className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
