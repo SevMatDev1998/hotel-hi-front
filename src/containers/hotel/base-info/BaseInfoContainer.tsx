@@ -28,7 +28,7 @@ const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ hotelBaseInformationDa
           {/* Hotel Name */}
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
-              <span >{t("hotel.hotel_name")} *</span>
+              <span >{t("hotel.hotel_name")}</span>
             </div>
             <div >
               <span >{hotelBaseInformationData?.name}</span>
@@ -36,7 +36,7 @@ const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ hotelBaseInformationDa
           </div>
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
-              <span >{t("hotel.hotel_address")} *</span>
+              <span >{t("hotel.hotel_address")}</span>
             </div>
             <div >
               <span >{hotelBaseInformationData?.city}</span>
@@ -44,7 +44,7 @@ const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ hotelBaseInformationDa
           </div>
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
-              <span >{t("hotel.contact_person")} *</span>
+              <span >{t("hotel.contact_person")}</span>
             </div>
             <div >
               <span >{hotelBaseInformationData?.contactPerson}</span>
@@ -52,10 +52,10 @@ const BaseInfoContainer: FC<IBaseInfoContainerProps> = ({ hotelBaseInformationDa
           </div>
            <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div >
-              <span >{t("hotel.phone_number")} *</span>
+              <span >{t("hotel.phone_number")}</span>
             </div>
             <div >
-              <span >{hotelBaseInformationData?.phoneNumber}</span>
+              <span>+374 {hotelBaseInformationData?.phoneNumber}</span>
             </div>
           </div>
         </div>

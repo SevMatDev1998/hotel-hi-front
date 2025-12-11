@@ -45,10 +45,23 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
 
   useEffect(() => {
     setLazyValue(async () => {
-    if (!tinValue) { reset(); return; }
+      if (!tinValue) { 
+        reset({
+          tin: undefined,
+          name: '',
+          email: '',
+          phone: '',
+          director: '',
+          ltd: '',
+          accountNumber: '',
+          countryId: null,
+          legalEntityTypeId: null,
+        }); 
+        return; 
+      }
       await onCheckPartnerByTin(String(tinValue));
     }, 1000);
-  }, [tinValue, onCheckPartnerByTin, setLazyValue]);
+  }, [tinValue, onCheckPartnerByTin, setLazyValue, reset]);
 
   useEffect(() => {    
     if (partner) {
@@ -63,8 +76,22 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
         countryId: partner.countryId,
         legalEntityTypeId: partner.legalEntityTypeId,
       });
+    } else {
+      // Если партнёр не найден, очищаем все поля кроме tin
+      const currentTin = watch("tin");
+      reset({
+        tin: currentTin,
+        name: '',
+        email: '',
+        phone: '',
+        director: '',
+        ltd: '',
+        accountNumber: '',
+        countryId: null,
+        legalEntityTypeId: null,
+      });
     }
-  }, [partner, reset]);
+  }, [partner, reset, watch]);
 
   const onSubmit = async (data: CreatePartnerFormData) => {
     addHotelPartner({ data: data, hotelId: hotelId! }).unwrap();
@@ -111,10 +138,9 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                   />
                 </InputValidationLayout>
               </div>
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
-                <div >
-                  <span >{t("partners.legal_person_name")} *</span>
+                <div>
+                  <span>{t("partners.legal_person_name")} *</span>
                 </div>
                 <div className='grid grid-cols-[3fr_1fr] mobile:grid-cols-1 gap-6'>
                   <InputValidationLayout errors={errors} name="ltd">
