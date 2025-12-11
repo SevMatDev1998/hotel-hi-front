@@ -8,6 +8,8 @@ import { useTranslation } from '../../hooks/useTranslation';
 import { useResetPasswordMutation } from '../../services/auth';
 import { ResetPasswordRequestFormType, resetPasswordSchema } from '../../yupValidation/AuthValidation';
 import RouteEnum from '../../enums/route.enum';
+import { useEffect } from 'react';
+import { resetPasswordEffect } from '../../services/auth/auth.effects';
 
 const ResetPasswordContainer = () => {
 
@@ -18,19 +20,19 @@ const ResetPasswordContainer = () => {
     resolver: yupResolver(resetPasswordSchema),
   });
 
-  const [resetPassword, {isLoading }] = useResetPasswordMutation()
+  const [resetPassword, { error, isLoading, isSuccess }] = useResetPasswordMutation()
 
-  const handleResetPassword = (data: ResetPasswordRequestFormType)=>{
-    resetPassword(data).unwrap()
-    navigate(RouteEnum.LOGIN);
-  }
+  useEffect(() => {
+    resetPasswordEffect(isSuccess, error, navigate, t)
+  }, [t, navigate, error, isSuccess]);
+
 
   return (
     <div className='max-w-[400px]'>
-      <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(handleResetPassword)}>
+      <form className="w-[100%] flex flex-col gap-5" onSubmit={handleSubmit(resetPassword)}>
         <div className='flex justify-between text-24'>
           <div>{t('auth.reset_password')}</div>
-          <p onClick={()=>{navigate(RouteEnum.SIGN_UP)}}  className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
+          <p onClick={() => { navigate(RouteEnum.SIGN_UP) }} className='underline text-dusty-teal cursor-pointer' >{t('auth.create_account')}</p>
         </div>
         <InputValidationLayout errors={errors} name="email">
           <RegisterInput
@@ -40,7 +42,7 @@ const ResetPasswordContainer = () => {
             type="email"
             className='rounded-none border !border-dusty-teal'
           />
-         
+
         </InputValidationLayout>
         <div className='flex justify-center '>
           <Button className='justify-center w-full' isLoading={isLoading} type="submit">

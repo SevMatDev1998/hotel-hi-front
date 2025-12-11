@@ -18,15 +18,15 @@ const SignUpContainer = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [signUp, { isSuccess, isError, isLoading }] = useSignUpMutation()
+  const [signUp, { isSuccess, error, isLoading }] = useSignUpMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpFormType>({
     resolver: yupResolver(signUpSchema),
   });
 
   useEffect(() => {
-    signUpEffect(isSuccess, isError, navigate, t)
-  }, [t, navigate, isError, isSuccess]);
+    signUpEffect(isSuccess, error, navigate, t)
+  }, [t, navigate, error, isSuccess]);
 
 
   return (

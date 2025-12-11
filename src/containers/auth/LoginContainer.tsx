@@ -16,15 +16,15 @@ const LoginContainer = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [login, { isSuccess, isError, isLoading }] = useLoginMutation()
+  const [login, { isSuccess, error, isLoading }] = useLoginMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormType>({
     resolver: yupResolver(loginSchema),
   });
 
   useEffect(() => {
-    loginEffect(isSuccess, isError, navigate, t)
-  }, [t, navigate, isError, isSuccess]);
+    loginEffect(isSuccess, error, navigate, t)
+  }, [t, navigate, error, isSuccess]);
 
   return (
     <div className='max-w-[400px]'>

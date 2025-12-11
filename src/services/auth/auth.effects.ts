@@ -3,26 +3,38 @@ import { NavigateFunction } from "react-router-dom";
 import appToast from "../../helpers/appToast";
 import RouteEnum from "../../enums/route.enum";
 
-export const loginEffect = (isSuccess:boolean, isError:boolean, navigate:NavigateFunction,t:TFunction<"translation", undefined>
+export const loginEffect = (isSuccess:boolean, error:any, navigate:NavigateFunction,t:TFunction<"translation", undefined>
 ) => {
   if (isSuccess) {
-    appToast('success', t('auth.messages.login_success'), { duration: 4000 });
     navigate(RouteEnum.HOTEL);
   }
 
-  if (isError) {
-    appToast('error', t('auth.messages.login_error'), { duration: 4000 });
+  if (error) {
+    appToast('error', t(`api_errors.${error.data.message}`), { duration: 4000 });
   }
 }
 
-export const signUpEffect = (isSuccess:boolean, isError:boolean, navigate:NavigateFunction,t:TFunction<"translation", undefined>
+export const signUpEffect = (isSuccess:boolean, error:any, navigate:NavigateFunction,t:TFunction<"translation", undefined>
 ) => {
   if (isSuccess) {
-    appToast('success', t('auth.messages.register_success'), { duration: 4000 });
+    appToast('success', t('api_success.REGISTRATION_SUCCESS'), { duration: 4000 });
     navigate(RouteEnum.HOTEL);
   }
 
-  if (isError) {
-    appToast('error', t('auth.messages.register_error'), { duration: 4000 });
+  if (error) {
+    appToast('error', t(`api_errors.${error.data.message}`), { duration: 4000 });
+  }
+}
+
+export const resetPasswordEffect = (isSuccess:boolean, error:any, navigate:NavigateFunction,t:TFunction<"translation", undefined>
+) => {
+
+  if (isSuccess) {
+    appToast('success', t(`api_success.CONFIRMATION_EMAIL_SENT`), { duration: 4000 });
+    navigate(RouteEnum.LOGIN);
+  }
+
+  if (error) {
+    appToast('error', t(`api_errors.${error.data.message}`), { duration: 4000 });
   }
 }
