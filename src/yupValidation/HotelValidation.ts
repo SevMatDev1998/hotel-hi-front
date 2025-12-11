@@ -66,10 +66,10 @@ export const UpdateHotelLegalInfoSchema = yup.object({
     .max(100, tv('max', { max: 100 })),
 
   tinNumber: yup
-    .number()
-    .typeError(tv('number'))
+    .string()
     .required(tv('required'))
-    .test('len', tv('exact_length', { length: 8 }), val => val?.toString().length === 8),
+    .matches(/^\d{8}$/, tv('exact_length', { length: 8 }))
+    .length(8, tv('exact_length', { length: 8 })),
 
   director: yup
    .string()

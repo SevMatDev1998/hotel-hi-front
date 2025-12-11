@@ -10,10 +10,11 @@ export const PartnerSchema = yup.object({
     .required(tv('required')),
 
   tin: yup
-    .number()
-    .typeError(tv('number'))
+    .string()
     .required(tv('required'))
-    .test('len', tv('exact_length', { length: 8 }), val => val?.toString().length === 8),
+    .matches(/^\d{8}$/, tv('exact_length', { length: 8 }))
+    .length(8, tv('exact_length', { length: 8 })),
+
   name: yup.string().required(tv('required')),
   ltd: yup.string().required(tv('required')),
   legalEntityTypeId: yup
@@ -45,10 +46,12 @@ export const EditPartnerSchema = yup.object({
     .required(tv('required')),
 
   tin: yup
-    .number()
-    .typeError(tv('number'))
+    .string()
     .required(tv('required'))
-    .test('len', tv('exact_length', { length: 8 }), val => val?.toString().length === 8),
+    .matches(/^\d{8}$/, tv('exact_length', { length: 8 }))
+    .length(8, tv('exact_length', { length: 8 })),
+
+    
   name: yup.string().required(tv('required')),
   ltd: yup.string().required(tv('required')),
   legalEntityTypeId: yup

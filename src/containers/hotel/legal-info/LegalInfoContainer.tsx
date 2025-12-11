@@ -24,8 +24,6 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
             <div >
               <span>{t("hotel.legal_name")} *</span>
             </div>
-
-
             <div >
               <span >{hotelLegalInformationData?.legalPerson}</span>
             </div>
