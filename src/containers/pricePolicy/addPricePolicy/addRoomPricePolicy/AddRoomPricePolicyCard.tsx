@@ -22,7 +22,7 @@ const AddRoomPricePolicyCard: FC<IAddRoomPricePolicyCardProps> = ({ room, hotelF
           checked={isOpen}
           onCheckedChange={() => setIsOpen(!isOpen)}
         />
-          <h3>{t(`room_class_options.${room.roomClass.name}`)},{t(`room_view_options.${room.roomView.name}`)}- {room.area}</h3>
+          <h3>{t(`room_class_options.${room.roomClass.name}`)},{room.roomView.name && t(`room_view_options.${room.roomView.name}`)}- {room.area}</h3>
       </div>
       {isOpen && <AddRoomPricePolicyForm room={room} hotelFoods={hotelFoods} hotelAvailabilityAgeAssessments={hotelAvailabilityAgeAssessments} />}
     </div>

@@ -24,7 +24,8 @@ const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSyst
   const handleLogOut = (hotelServiceId: string) => {
     // You must provide a valid hotelRoomId (replace 0 with the actual id if available)
     open(MakeServiceAvailabilityModal, {
-      hotelServiceId: hotelServiceId
+      hotelServiceId: hotelServiceId,
+      className:"bg-white"
     });
   };
 

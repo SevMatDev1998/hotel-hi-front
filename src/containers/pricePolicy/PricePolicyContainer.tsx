@@ -18,7 +18,7 @@ const PricePolicyContainer = () => {
   const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId })
 
   const handleOpenHotelAvailabilityModal = (availabilityId: string) => {
-    open(ShowHotelAvailabilityModal, { title: "", availabilityId,onSubmit: () =>{} ,  });
+    open(ShowHotelAvailabilityModal, { title: "", availabilityId,onSubmit: () =>{} , className:"bg-white" });
   };
 
 

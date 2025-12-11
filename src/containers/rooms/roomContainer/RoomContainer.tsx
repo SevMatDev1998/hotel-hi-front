@@ -30,7 +30,7 @@ const RoomContainer = () => {
           </div>
 
           <div className='grid grid-cols-2 mobile:grid-cols-1 text-16 gap-4'>
-            <p>{t(`room_class_options.${room?.roomClass?.name}`)},{t(`room_view_options.${room?.roomView?.name}`)}- {room?.area} {t("rooms.area_unit")}</p>
+            <p>{t(`room_class_options.${room?.roomClass?.name}`)}{room?.roomView?.name && t(`,room_view_options.${room?.roomView?.name}`)}- {room?.area} {t("rooms.area_unit")}</p>
             <p className='text-end mobile:text-start'>{room?.roomNumberQuantity}&nbsp;{t("rooms.room")}</p>
           </div>
           <p className='text-11'>Համատեղում է հյուրանոցի հարմարավետությունը ճամբարային փորձի հետ: Շքեղ վրաններ՝ համապատասխան անկողնային պարագաներով և հարմարություններով։ Հաճախ տեղակայված է գեղատեսիլ բացօթյա պարամետրերում:</p>

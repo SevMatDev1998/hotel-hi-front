@@ -47,7 +47,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
 
 
   const handleDeleteSubmit = async (availabilityId: string) => {
-    open(DeleteCommissionModal, { availabilityId });
+    open(DeleteCommissionModal, { availabilityId, className:"bg-white" });
 
   };
 
