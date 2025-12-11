@@ -257,7 +257,10 @@
     "phone_number": "Հեռախոսահամար",
     "account_number": "Հաշվեհամար",
     "director": "Տնօրեն",
-    "notify_partners": "Ծանուցել գործընկերներին"
+    "notify_partners": "Ծանուցել գործընկերներին",
+    "thank_you": "Շնորհակալություն!",
+    "partner_accepted": "Դուք հաջողությամբ ընդունեցիք գործընկերությունը",
+    "confirmation_received": "Ձեր հաստատումը ստացվել է: Այժմ կարող եք փակել այս էջը:"
   },
   "partners_status": {
     "Draft": "Սևագիր",

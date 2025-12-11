@@ -34,10 +34,8 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
 
   const onSubmit = async (data: CreatePartnerFormData) => {
     acceptPartnerShip({ data, partnerId: partnerData.id }).unwrap();
-    navigate(`/${RouteEnum.HOTEL_PARTNERS}`);
+    navigate(`${RouteEnum.GUEST_ACCEPT_PARTNER_ACCEPTED}`);
   };
-
-
 
   return (
     <div className="flex flex-col gap-6">
@@ -129,14 +127,6 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                   <span >{t("hotel.phone_number")} *</span>
                 </div>
                 <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'>
-                <InputValidationLayout errors={errors} name="phoneCode">
-                  <RegisterSelect
-                    name="phoneCode"
-                    options={countryOptions}
-                    register={register}
-                    tr_name="registration_country_options"
-                  />
-                </InputValidationLayout>
                 <InputValidationLayout errors={errors} name="phone">
                   <RegisterInput
                     register={register}
@@ -145,10 +135,8 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                     className='rounded-[5px]'
                   />
                 </InputValidationLayout>
-                  
                 </div>
               </div>
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.account_number")} *</span>
@@ -161,9 +149,6 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                   />
                 </InputValidationLayout>
               </div>
-
-
-
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >
                   <span >{t("partners.director")} *</span>

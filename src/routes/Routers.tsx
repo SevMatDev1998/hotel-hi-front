@@ -24,6 +24,7 @@ import RoomPage from "../pages/rooms/RoomPage";
 import RoomsPage from "../pages/rooms/RoomsPage";
 import { MainLayout } from "../layouts/mainLayout/MainLayout";
 import RouteEnum from "../enums/route.enum";
+import AcceptPartnerAcceptedPage from "../pages/guest/AcceptPartnerAcceptedPage";
 
 
 const router = createBrowserRouter([
@@ -67,10 +68,8 @@ const router = createBrowserRouter([
       { path: RouteEnum.RESET_PASSWORD, element: <ResetPasswordPage /> },
       { path: RouteEnum.NEW_PASSWORD, element: <NewPasswordPage /> },
 
-      
-
-
       { path: RouteEnum.GUEST_ACCEPT_PARTNER, element: <AcceptPartnerPage /> },
+      { path: RouteEnum.GUEST_ACCEPT_PARTNER_ACCEPTED, element: <AcceptPartnerAcceptedPage /> },
       { path: RouteEnum.GUEST_OFFER_PRICES, element: <OfferPricePage /> },
 
 
