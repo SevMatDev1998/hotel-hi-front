@@ -18,7 +18,7 @@ export const signUpEffect = (isSuccess:boolean, error:any, navigate:NavigateFunc
 ) => {
   if (isSuccess) {
     appToast('success', t('api_success.REGISTRATION_SUCCESS'), { duration: 4000 });
-    navigate(RouteEnum.HOTEL);
+    navigate(RouteEnum.LOGIN);
   }
 
   if (error) {

@@ -92,6 +92,21 @@
     "hotel_meals": "Питание, предоставляемое отелем",
     "approved_hotel_food": "Утверждённое питание отеля"
   },
+  "food_offer_types": {
+    "Swedish": "Шведский стол",
+    "PersonalDelivery": "Персональная доставка",
+    "DeliveryRoom": "Доставка в номер"
+  },
+  "cuisines": {
+    "General": "Общее",
+    "Vegetarians": "Вегетарианское",
+    "Diet": "Диетическое",
+    "PreparedOnSite": "Приготовлено на месте",
+    "Armenian": "Армянская",
+    "English": "Английская",
+    "French": "Французская",
+    "Other": "Другое"
+  },
   "user": {
     "hotel_name": "Фамилия",
     "email": "Эл. почта"

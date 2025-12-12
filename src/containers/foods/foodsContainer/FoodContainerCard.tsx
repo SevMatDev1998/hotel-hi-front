@@ -45,6 +45,7 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
   const isInactive = hotelFood === undefined
   const isBlockOpend = selectedFoodType === mainFood.type
     
+  
   return (
     <BlockContainer shadow={false} className={`border-2 ${!hotelFood && !isInactive ? 'border-red-300' : 'border-white'}`}>
       <div className='flex flex-col gap-4'>
@@ -60,7 +61,7 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
               <div className='flex gap-3'>
                 {hotelFood?.cuisineIds && hotelFood.cuisineIds.map((id: number) => {
                   const cuisine = cuisines.find((c: any) => c.id === id);
-                  return cuisine ? <span key={id}>{cuisine.name}</span> : null;
+                  return cuisine ? <span key={id}>{t(`cuisines.${cuisine.name}`)}</span> : null;
                 })}
               </div>
             </div>
@@ -69,7 +70,7 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
               <div className='flex gap-3'>
                 {hotelFood?.foodOfferTypeIds && hotelFood.foodOfferTypeIds.map((id: number) => {
                   const foodType = foodOfferTypes.find((f: any) => f.id === id);
-                  return foodType ? <span key={id}>{foodType.name}</span> : null;
+                  return foodType ? <span key={id}>{t(`food_offer_types.${foodType.name}`)}</span> : null;
                 })}
               </div>
             </div>

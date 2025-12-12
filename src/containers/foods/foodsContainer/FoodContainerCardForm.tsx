@@ -119,6 +119,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
                       options={type}
                       isChecked={isChecked}
                       toggleValue={toggleValue}
+                      tr_name="food_offer_types"
                     />
                   );
                 }}
@@ -150,6 +151,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
                       options={cuisine}
                       isChecked={isChecked}
                       toggleValue={toggleValue}
+                      tr_name="cuisines"
                     />
                   );
                 }}

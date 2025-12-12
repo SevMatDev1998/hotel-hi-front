@@ -17,11 +17,11 @@ const VerifyContainer = () => {
   useEffect(() => {
     if (isSuccess) {
       navigate(RouteEnum.LOGIN);
-      appToast('success', t('auth.messages.login_success'), { duration: 4000 });
+      appToast('success', t('api_success.EMAIL_CONFIRMED'), { duration: 4000 });
     }
-    
+     
     if (error) {
-      appToast('error', t('auth.messages.login_error'), { duration: 4000 });
+      appToast('error', t('api_error.REGISTRATION_FAILED'), { duration: 4000 });
       navigate(RouteEnum.LOGIN);
     }
   }, [data, isLoading, error]);
