@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useAddHotelServiceMutation } from '../../services/hotelService';
 import { SystemService } from '../../types';
+import { useTranslation } from '../../hooks/useTranslation';
 
 
 interface IAvailableServicesProps {
@@ -11,6 +12,7 @@ interface IAvailableServicesProps {
 const AvailableServices: FC<IAvailableServicesProps> = ({ availableServices, hotelId }) => {
 
   const [addHotelService] = useAddHotelServiceMutation({})
+  const { t } = useTranslation();
 
   const hendleAddHotelSevice = (serviceId: string) => {
     addHotelService({ hotelId: hotelId!, hotelServiceId: serviceId })
@@ -25,7 +27,7 @@ const AvailableServices: FC<IAvailableServicesProps> = ({ availableServices, hot
             alt="add icon"
             className="cursor-pointer"
           />
-          <div>{service.name}</div>
+          <div>{t(`services_t.system_services.${service.name}`)}</div>
         </div>
       ))}
     </div>

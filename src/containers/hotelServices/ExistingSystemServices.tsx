@@ -25,7 +25,7 @@ const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSyst
     // You must provide a valid hotelRoomId (replace 0 with the actual id if available)
     open(MakeServiceAvailabilityModal, {
       hotelServiceId: hotelServiceId,
-      className:"bg-white"
+      className: "bg-white"
     });
   };
 
@@ -41,9 +41,8 @@ const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSyst
               alt="add icon"
               className="cursor-pointer"
             />
-            {systemService.service.name}
+            <div>{t(`services_t.system_services.${systemService.service.name}`)}</div>
           </div>
-
           <div>
             <Button
               variant="textUnderline"
