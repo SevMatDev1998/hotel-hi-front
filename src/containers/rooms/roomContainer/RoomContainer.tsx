@@ -18,7 +18,6 @@ const RoomContainer = () => {
     <div className="flex flex-col gap-6">
       <h2>{t("rooms.rooms_types")}</h2>
       <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
-
       <BlockContainer shadow={false}>
         <div className='flex flex-col gap-6'>
           <div className='flex justify-between'>

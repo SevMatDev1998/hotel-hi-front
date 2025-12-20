@@ -14,7 +14,7 @@ const RoomsContainer = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector(state => state.auth);
   const { t } = useTranslation();
-  const { data: roomsData } = useGetHotelRoomsByHotelIdQuery({ hotelId: user?.hotelId });
+  const { data: roomsData } = useGetHotelRoomsByHotelIdQuery({ hotelId: user?.hotelId },{refetchOnMountOrArgChange: true});
   const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
 
 

@@ -43,7 +43,7 @@ const RoomsService = ApiInstance.injectEndpoints({
       query: ({ hotelRoomId }) => ({
         url: `${ApiEnum.HOTEL_ROOM_PARTS}/${hotelRoomId}`,
       }),
-      providesTags: [ApiEnum.HOTEL_ROOM_PARTS]
+      providesTags: [ApiEnum.HOTEL_ROOM_PARTS, ApiEnum.HOTEL_ROOM_PART_BEDS]
     }),
 
     addHotelRoomParts: build.mutation<void, { hotelRoomId: string; roomParts: { roomPartId: number; quantity: number }[] }>({
