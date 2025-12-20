@@ -62,7 +62,8 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
     <BlockContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='text-14 text-charcoal-gray'>
-          {hotelInfoType !== "base" && <div className='flex items-center justify-between mb-6'>
+          {hotelInfoType !== "base" && 
+          <div className='flex items-center justify-between mb-6'>
             <h3 >{t("hotel.hotel_base_info")}</h3>
             <span onClick={() => dispatch(changeHotelInfoType("base"))}>
               <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />

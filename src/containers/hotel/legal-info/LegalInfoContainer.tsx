@@ -14,7 +14,7 @@ const LegalInfoContainer = ({ hotelLegalInformationData }: ILegalInfoContainerPr
       <div className='text-14 text-charcoal-gray'>
         <div className='flex items-center justify-between mb-5'>
           <h3 className="">{t("hotel.hotel_legal_info")}</h3>
-          <span onClick={() => dispatch(changeHotelInfoType("none"))}>
+          <span onClick={() => dispatch(changeHotelInfoType("legal"))}>
             <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
           </span>
         </div>

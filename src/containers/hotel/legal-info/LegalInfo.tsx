@@ -17,7 +17,6 @@ const LegalInfo: FC<ILegalInfoProps> = ({ user }) => {
   const { data: countriesData } = useGetCountriesQuery();
 
   const { hotelInfoType } = useAppSelector((state) => state.hotelSlice);
-
   return (
     <div className='mt-6'>
       {

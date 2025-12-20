@@ -29,8 +29,8 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-    const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
-  
+  const [setNavigationAccessStep] = useSetNavigationAccessStepMutation()
+
   const [updateHotelLegalInformation, { isLoading }] = useUpdateHotelLegalInformationMutation()
 
   const { register, handleSubmit, formState: { errors } } = useForm<UpdateHotelLegalInfoFormData>({
@@ -39,13 +39,16 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
   });
 
   const onSubmit = async (data: UpdateHotelLegalInfoFormData) => {
-    console.log(data);
-
     await updateHotelLegalInformation({ id: hotelId!, data }).unwrap();
     setNavigationAccessStep({ hotelId: hotelId!, stepNumber: 2 })
+    dispatch(changeHotelInfoType("none"))
     navigate(RouteEnum.ROOMS);
   };
 
+  const skipUpdate = () => {
+    setNavigationAccessStep({ hotelId: hotelId!, stepNumber: 2 })
+    navigate(RouteEnum.ROOMS);
+  }
 
   const countryOptions = countriesData?.map((country) => ({
     value: country.id,
@@ -58,9 +61,6 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
         <div className='text-14 text-charcoal-gray'>
           <div className='flex items-center justify-between mb-6'>
             <h3 className="">{t("hotel.hotel_legal_info")}</h3>
-            <span onClick={() => dispatch(changeHotelInfoType("none"))}>
-              <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
-            </span>
           </div>
           <div className='mb-6'>
             <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
@@ -167,7 +167,8 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
             </div>
           </div>
         </div>
-        <div className='flex justify-end mt-3 '>
+        <div className='flex justify-end mt-3 gap-3 '>
+          <Button variant='text' isLoading={isLoading} onClick={skipUpdate}>{t("buttons.skip")}</Button>
           <Button type="submit" isLoading={isLoading}>{t("buttons.save")}</Button>
         </div>
       </form>
