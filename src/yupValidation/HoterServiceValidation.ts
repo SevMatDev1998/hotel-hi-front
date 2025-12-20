@@ -52,7 +52,15 @@ const PeriodActiveSchema = yup.object({
       then: (s) =>
         s
           .required(tv("required"))
-          .matches(HHMM, "Ֆորմատը HH:mm է"),
+          .matches(HHMM, "Ֆորմատը HH:mm է")
+          .test("end>start", "Ավարտի ժամը պետք է ավելի ուշ լինի", function (endHour) {
+            const startHour = this.parent?.startHour;
+            if (!startHour || !endHour) return true;
+            const startMinutes = toMinutes(startHour);
+            const endMinutes = toMinutes(endHour);
+            if (startMinutes === null || endMinutes === null) return true;
+            return endMinutes > startMinutes;
+          }),
       otherwise: (s) => s.notRequired().nullable(),
     }),
 });
