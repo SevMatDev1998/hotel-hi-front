@@ -254,6 +254,7 @@
   },
   "partners": {
     "partners": "Партнёры",
+    "partner_information": "Информация о партнёре",
     "add_partner": "Добавить партнёра",
     "edit_partner": "Редактировать данные партнёра",
     "register_country": "Страна регистрации",
@@ -266,7 +267,8 @@
     "phone_number": "Номер телефона",
     "account_number": "Номер счёта",
     "director": "Директор",
-    "notify_partners": "Уведомить партнёров"
+    "notify_partners": "Уведомить партнёров",
+    "approve_information": "Подтвердить информацию"
   },
   "partners_status": {
     "Draft": "Черновик",

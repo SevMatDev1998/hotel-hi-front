@@ -35,7 +35,7 @@ const EditHotelPartnerForm: FC<IEditHotelPartnerFormProps> = ({ countryOptions, 
     navigate(`/${ApiEnum.HOTEL_PARTNERS}`);
   };
 
-  
+
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("partners.partners")}</h2>
@@ -128,24 +128,17 @@ const EditHotelPartnerForm: FC<IEditHotelPartnerFormProps> = ({ countryOptions, 
                 <div >
                   <span >{t("hotel.phone_number")} *</span>
                 </div>
-                <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'>
-                  <InputValidationLayout errors={errors} name="phoneCode">
-                    <RegisterSelect
-                      name="phoneCode"
-                      options={countryOptions}
-                      register={register}
-                      tr_name="registration_country_options"
-                    />
-                  </InputValidationLayout>
-                  <InputValidationLayout errors={errors} name="phone">
+                <InputValidationLayout className='relative' errors={errors} name="phone">
+                  <span>
                     <RegisterInput
                       register={register}
                       name="phone"
                       type="text"
-                      className='rounded-[5px]'
+                      className='rounded-[5px] pl-[50px]'
                     />
-                  </InputValidationLayout>
-                </div>
+                    <p className='absolute top-[10px] left-3 text-14'>+374</p>
+                  </span>
+                </InputValidationLayout>
               </div>
 
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>

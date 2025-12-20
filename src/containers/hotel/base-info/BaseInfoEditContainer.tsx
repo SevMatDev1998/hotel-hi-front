@@ -62,13 +62,13 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
     <BlockContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='text-14 text-charcoal-gray'>
-          {hotelInfoType !== "base" && 
-          <div className='flex items-center justify-between mb-6'>
-            <h3 >{t("hotel.hotel_base_info")}</h3>
-            <span onClick={() => dispatch(changeHotelInfoType("base"))}>
-              <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
-            </span>
-          </div>}
+          {hotelInfoType !== "base" &&
+            <div className='flex items-center justify-between mb-6'>
+              <h3 >{t("hotel.hotel_base_info")}</h3>
+              <span onClick={() => dispatch(changeHotelInfoType("base"))}>
+                <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
+              </span>
+            </div>}
           <div className='mb-6'>
 
             <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
@@ -128,14 +128,17 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
               <div >
                 <span >{t("hotel.phone_number")} *</span>
               </div>
-                <InputValidationLayout errors={errors} name="phoneNumber">
+              <InputValidationLayout className='relative' errors={errors} name="phoneNumber">
+                <span>
                   <RegisterInput
                     register={register}
                     name="phoneNumber"
                     type="text"
-                    className='rounded-[5px]'
+                    className='rounded-[5px] pl-[50px]'
                   />
-                </InputValidationLayout>
+                  <p className='absolute top-[10px] left-3 text-14'>+374</p>
+                </span>
+              </InputValidationLayout>
             </div>
             <div className="grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center">
               <div>

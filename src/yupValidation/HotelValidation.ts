@@ -25,9 +25,7 @@ export const UpdateHotelBaseInfoSchema = yup.object({
   phoneNumber: yup
     .string()
     .required(tv('required'))
-    .matches(/^\+\d{11}$/, tv('phone_number'))
-    .min(6, tv('min', { min: 6 }))
-    .max(15, tv('max', { max: 15 })),
+    .matches(/^\d{8}$/, tv('exact_length', { length: 8 })),
 
   countryId: yup
     .number()
@@ -72,19 +70,19 @@ export const UpdateHotelLegalInfoSchema = yup.object({
     .length(8, tv('exact_length', { length: 8 })),
 
   director: yup
-   .string()
+    .string()
     .required(tv('required'))
     .min(2, tv('min', { min: 2 }))
     .max(100, tv('max', { max: 100 })),
 
   bankPhoneNumber: yup
-      .string()
+    .string()
     .required(tv('required'))
     .matches(/^\+\d{11}$/, tv('phone_number'))
     .min(6, tv('min', { min: 6 }))
     .max(15, tv('max', { max: 15 })),
 
-    
+
   priceSendEmail: yup
     .string()
     .required(tv('required'))

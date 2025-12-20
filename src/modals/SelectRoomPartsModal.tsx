@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/shared/Button";
 import CheckBox from "../components/shared/CheckBox";
 import InfoBlock from "../components/shared/InfoBlock";
+import BlockContainer from "../containers/public/BlockContainer";
 import { useTranslation } from "../hooks/useTranslation";
 import { useAddHotelRoomPartsMutation, useGetRoomPartsQuery } from "../services/rooms";
 import { HotelRoomPart } from "../types";
-import BlockContainer from "../containers/public/BlockContainer";
 
 interface IModalProps {
   hotelRoomId: string;
@@ -101,7 +101,7 @@ const SelectRoomPartsModal: ModalFC<IModalProps> = ({ hotelRoomId, hotelRoomPart
         {t("rooms.select_room_parts")}
       </h3>
       <InfoBlock text="You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation." />
-      <div className="flex flex-col gap-2 overflow-y-auto max-h-[400px] h-full mb-4">
+      <div className="flex flex-col gap-2 overflow-y-auto max-h-full h-full mb-4">
         {parts.map((part) => (
           <label
             key={part.id}

@@ -44,7 +44,7 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
       <BlockContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-4">
-            <h3>{t("partners.add_partner")}</h3>
+            <h3>{t("partners.approve_information")}</h3>
             <InfoBlock text="Լրացրեք տվյալները: Բոլոր *-ով դաշտերը պարտադիր են:" />
             <div className="space-y-4 ml-5">
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
@@ -126,16 +126,17 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                 <div >
                   <span >{t("hotel.phone_number")} *</span>
                 </div>
-                <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-4'>
-                <InputValidationLayout errors={errors} name="phone">
-                  <RegisterInput
-                    register={register}
-                    name="phone"
-                    type="text"
-                    className='rounded-[5px]'
-                  />
+                 <InputValidationLayout className='relative' errors={errors} name="phone">
+                  <span>
+                    <RegisterInput
+                      register={register}
+                      name="phone"
+                      type="text"
+                      className='rounded-[5px] pl-[50px]'
+                    />
+                    <p className='absolute top-[10px] left-3 text-14'>+374</p>
+                  </span>
                 </InputValidationLayout>
-                </div>
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
                 <div >

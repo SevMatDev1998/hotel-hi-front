@@ -28,9 +28,8 @@ export const PartnerSchema = yup.object({
   phone: yup
     .string()
     .required(tv('required'))
-    .matches(/^\+\d{11}$/, tv('phone_number'))
-    .min(6, tv('min', { min: 6 }))
-    .max(15, tv('max', { max: 15 })),
+    .matches(/^\d{8}$/, tv('exact_length', { length: 8 })),
+
 
   accountNumber: yup.string().required(tv('required')),
   director: yup.string().required(tv('required')),
@@ -51,7 +50,7 @@ export const EditPartnerSchema = yup.object({
     .matches(/^\d{8}$/, tv('exact_length', { length: 8 }))
     .length(8, tv('exact_length', { length: 8 })),
 
-    
+
   name: yup.string().required(tv('required')),
   ltd: yup.string().required(tv('required')),
   legalEntityTypeId: yup
@@ -62,12 +61,11 @@ export const EditPartnerSchema = yup.object({
     .string()
     .email(tv('email'))
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, tv('email')),
+
   phone: yup
     .string()
     .required(tv('required'))
-    .matches(/^\+\d{11}$/, tv('phone_number'))
-    .min(6, tv('min', { min: 6 }))
-    .max(15, tv('max', { max: 15 })),
+    .matches(/^\d{8}$/, tv('exact_length', { length: 8 })),
 
   accountNumber: yup.string().required(tv('required')),
   director: yup.string().required(tv('required')),

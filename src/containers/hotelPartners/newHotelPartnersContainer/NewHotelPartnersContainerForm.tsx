@@ -45,7 +45,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
 
   useEffect(() => {
     setLazyValue(async () => {
-      if (!tinValue) { 
+      if (!tinValue) {
         reset({
           tin: undefined,
           name: '',
@@ -56,14 +56,14 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
           accountNumber: '',
           countryId: null,
           legalEntityTypeId: null,
-        }); 
-        return; 
+        });
+        return;
       }
       await onCheckPartnerByTin(String(tinValue));
     }, 1000);
   }, [tinValue, onCheckPartnerByTin, setLazyValue, reset]);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (partner) {
       reset({
         tin: partner.tin,
@@ -194,14 +194,16 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
                 <div >
                   <span >{t("hotel.phone_number")} *</span>
                 </div>
-                <InputValidationLayout errors={errors} name="phone" >
-                  <RegisterInput
-                    register={register}
-                    name="phone"
-                    type="text"
-                    className='rounded-[5px]'
-                    disabled={isPartnerExisting}
-                  />
+                <InputValidationLayout className='relative' errors={errors} name="phone">
+                  <span>
+                    <RegisterInput
+                      register={register}
+                      name="phone"
+                      type="text"
+                      className='rounded-[5px] pl-[50px]'
+                    />
+                    <p className='absolute top-[10px] left-3 text-14'>+374</p>
+                  </span>
                 </InputValidationLayout>
               </div>
               <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
@@ -234,7 +236,7 @@ const NewHotelPartnersContainerForm: FC<NewHotelPartnersContainerFormProps> = ({
           </div>
           <div className="flex justify-end mt-6">
             <Button>
-              {isPartnerExisting? t("buttons.save") : t("buttons.add")}
+              {isPartnerExisting ? t("buttons.save") : t("buttons.add")}
             </Button>
           </div>
         </form>
