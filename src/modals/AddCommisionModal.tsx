@@ -10,6 +10,7 @@ import InfoBlock from "../components/shared/InfoBlock";
 
 interface ICommissionModalProps {
   onSubmit: (data: CommissionFormType) => void
+  onCancel: () => void
 }
 const AddCommissionModal: ModalFC<ICommissionModalProps> = ({ onSubmit, onCancel }) => {
   const {
@@ -35,14 +36,14 @@ const AddCommissionModal: ModalFC<ICommissionModalProps> = ({ onSubmit, onCancel
           className="w-full flex flex-col gap-5"
           onSubmit={handleSubmit(handleOnSubmit)}
         >
-          <InputValidationLayout errors={errors} name="roomFee" errorClassName="text-[11px]">
+          <InputValidationLayout  errors={errors} name="roomFee" errorClassName="text-[11px]">
             <div className="grid grid-cols-10 gap-1 mobile:grid-cols-1 items-center">
               <p className="col-span-2 mobile:col-span-1 text-11 text-end mobile:text-start" >{t("price_policy_dates.from_room")}</p>
               <RegisterInput
                 register={register}
                 name="roomFee"
                 type="number"
-                className="w-[40px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
+                className="w-[35px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
                 hideSpinner={true}
               />
               <p className="col-span-7 mobile:col-span-1 text-11">{t("price_policy_dates.from_room_condition")}</p>
@@ -55,10 +56,10 @@ const AddCommissionModal: ModalFC<ICommissionModalProps> = ({ onSubmit, onCancel
                 register={register}
                 name="foodFee"
                 type="number"
-                className="w-[40px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
+                className="w-[35px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
                 hideSpinner={true}
            />
-              <p className="col-span-7 mobile:col-span-1 text-11">{t("price_policy_dates.from_food_condition")}</p>
+              <p className="col-span-7 mobile:col-span-1 text-11">{t("price_pol icy_dates.from_food_condition")}</p>
             </div>
           </InputValidationLayout>
           <InputValidationLayout errors={errors} name="additionalFee" errorClassName="text-[11px]">
@@ -68,7 +69,7 @@ const AddCommissionModal: ModalFC<ICommissionModalProps> = ({ onSubmit, onCancel
                 register={register}
                 name="additionalFee"
                 type="number"
-                className="w-[40px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
+                className="w-[35px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
                 hideSpinner={true}
             />
               <p className="col-span-7 mobile:col-span-1 text-11">{t("price_policy_dates.from_additional_condition")}</p>
@@ -81,7 +82,7 @@ const AddCommissionModal: ModalFC<ICommissionModalProps> = ({ onSubmit, onCancel
                 register={register}
                 name="serviceFee"
                 type="number"
-                className="w-[40px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
+                className="w-[35px] mobile:w-[60px] px-[1px] text-11 py-[2px] rounded-md col-span-1 mobile:col-span-1"
                 hideSpinner={true}
                 />
               <p className="col-span-7 mobile:col-span-1 text-11">{t("price_policy_dates.from_service_condition")}</p>

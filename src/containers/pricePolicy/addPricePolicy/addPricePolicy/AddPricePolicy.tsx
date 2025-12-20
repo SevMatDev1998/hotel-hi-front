@@ -10,7 +10,6 @@ import BlockContainer from '../../../public/BlockContainer';
 import InputValidationLayout from '../../../../layouts/inputValidationLayout/InputValidationLayout';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { useAddHotelAvailabilityMutation } from '../../../../services/hotelAvailability/hotelAvailability.service';
-import { useGetRoomBedTypesQuery } from '../../../../services/rooms';
 import { CreateHotelAvailabilityFormData, CreateHotelAvailabilitySchema } from '../../../../yupValidation/PriceValidation';
 import { HotelAvailability } from '../../../../types';
 
@@ -23,12 +22,15 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
   const { t } = useTranslation();
   const [addHotelAvailability, { isLoading }] = useAddHotelAvailabilityMutation();
 
-  const { data: roomBedTypes } = useGetRoomBedTypesQuery();
 
-  const roomBedTypeOptions = roomBedTypes?.map((bedType) => ({
-    value: bedType.name,
-    label: bedType.name,
-  })) || [];
+  // Используем значения из enum BedType, чтобы соответствовать валидации и бэкенду
+  const roomBedTypeOptions = [
+    { value: 'Main', label: 'Main' },
+    { value: 'Cradle', label: 'Cradle' },
+    { value: 'Additional', label: 'Additional' },
+  ];
+
+  
 
 
   const { register, handleSubmit, control, formState: { errors } } = useForm<CreateHotelAvailabilityFormData>({
@@ -73,7 +75,8 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
       console.error('Failed to create hotel availability:', error);
     }
   };
-  
+    console.log(errors);
+     
   
 
   return (
