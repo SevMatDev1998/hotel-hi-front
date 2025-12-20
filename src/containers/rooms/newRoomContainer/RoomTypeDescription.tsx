@@ -34,7 +34,6 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
     await createRoom({ hotelId: hotelId!, data }).unwrap();
   };
 
-
   useEffect(() => {
     if (data?.id) {
       navigate(`/rooms/${data.id}`);
@@ -56,11 +55,8 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
     label: roomView.name
   })) || [];
 
-
   const selectedRoomClass = roomClassesData?.find(rc => rc.id === Number(selectedRoomClassId));
   const selectedRoomClassDescription = selectedRoomClass ? t(`room_class_descriptions.${selectedRoomClass.name}`) : '';
-
-  console.log(selectedRoomClass);
 
   return (
     <BlockContainer shadow={false}>
@@ -68,11 +64,8 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
         <h2>{t("rooms.room_type_description")}</h2>
         <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
         <form onSubmit={handleSubmit(onSubmit)}>
-
           <div className="grid grid-cols-[2fr_1fr] mobile:grid-cols-1 gap-6">
-
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
-
               <div >
                 <span >{t("rooms.room_type")} *</span>
               </div>
@@ -95,8 +88,8 @@ const RoomTypeDescription: FC<RoomTypeDescriptionProps> = ({ hotelId }) => {
                   tr_name="room_view_options"
                 />
               </InputValidationLayout>
-              <div >
-                <span >{t("rooms.room_area_m2")} *</span>
+              <div>
+                <span>{t("rooms.room_area_m2")} *</span>
               </div>
               <InputValidationLayout errors={errors} name="area" >
                 <RegisterInput

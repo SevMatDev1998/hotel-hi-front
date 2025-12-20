@@ -27,7 +27,7 @@ const EditRoomContainer = () => {
 
   if (isLoading || isRoomClassesLoading || isRoomViewsLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading room</div>
-  return <EditRoomForm room={room} roomClassesOptions={roomClassesOptions} roomViewsOptions={roomViewsOptions} />;  
+  return <EditRoomForm room={room} roomClassesOptions={roomClassesOptions} roomViewsOptions={roomViewsOptions} roomClassesData={roomClassesData} />;  
 
 };
 

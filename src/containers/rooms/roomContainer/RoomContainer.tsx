@@ -13,7 +13,7 @@ const RoomContainer = () => {
 
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error loading room</div>
-
+  
   return (
     <div className="flex flex-col gap-6">
       <h2>{t("rooms.rooms_types")}</h2>
@@ -24,15 +24,15 @@ const RoomContainer = () => {
           <div className='flex justify-between'>
             <h3>{t("rooms.room_type_description")}</h3>
             <div onClick={() => navigate(`/rooms/${room?.id}/edit`)}>
-              <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
+              <img src="/images/icons/edit-icon.svg" aslt="edit icon" className="cursor-pointer" />
             </div>
           </div>
           <div className='grid grid-cols-2 mobile:grid-cols-1 text-16 gap-4'>
             <p>{t(`room_class_options.${room?.roomClass?.name}`)},{room?.roomView?.name && t(`room_view_options.${room?.roomView?.name}`)}- {room?.area} {t("rooms.area_unit")}</p>
             <p className='text-end mobile:text-start'>{room?.roomNumberQuantity}&nbsp;{t("rooms.room")}</p>
           </div>
-          <p className='text-11'>Համատեղում է հյուրանոցի հարմարավետությունը ճամբարային փորձի հետ: Շքեղ վրաններ՝ համապատասխան անկողնային պարագաներով և հարմարություններով։ Հաճախ տեղակայված է գեղատեսիլ բացօթյա պարամետրերում:</p>
-        </div>
+          <p className='text-11'> {t(`room_class_descriptions.${room?.roomClass.name}`)}</p>
+          </div>
       </BlockContainer>
       <RoomTypeInformation roomId={roomId} />
     </div>
