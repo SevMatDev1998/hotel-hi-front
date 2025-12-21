@@ -243,7 +243,11 @@
     "other_services": "Այլ ծառայություններ",
     "service_cost": "Ծառայության արժեքը",
     "not_confirmed_value": "Ոչ հաստատված արժեք",
-    "notify_to_partners": "Ծանուցել գնային քաղաքականություն գործընկերներին"
+    "notify_to_partners": "Ծանուցել գնային քաղաքականություն գործընկերներին",
+    "please_enter_room_price": "Խնդրում ենք մուտքագրել սենյակի գինը",
+    "price_policy_saved_success": "Գնային քաղաքականությունը հաջողությամբ պահպանվեց",
+    "error_saving_price_policy": "Սխալ գնային քաղաքականությունը պահպանելիս",
+    "age_ranges_cannot_be_edited": "Տարիքային միջակայքները չեն կարող խմբագրվել"
   },
   "price_policy_dates": {
     "set_commission": "Սահմանել միջնորդավճար",
@@ -358,7 +362,17 @@
     "end_time_after_start": "Ավարտի ժամանակը պետք է լինի ավելի ուշ, քան սկզբի ժամանակը",
     "min_one_selection": "Անհրաժեշտ է ընտրել առնվազն մեկ տարբերակ",
     "max_greater_than_min": "Երկրորդը  պետք է մեծ լինի, քան Առաջինը",
-    "min_greater_than_max": "Առաջինը պետք է մեծ լինի, քան Երկրորդը"
+    "min_greater_than_max": "Առաջինը պետք է մեծ լինի, քան Երկրորդը",
+    "time_format_hhmm": "Ֆորմատը HH:mm է",
+    "end_hour_after_start": "Ավարտի ժամը պետք է ավելի ուշ լինի",
+    "add_min_one_period": "Ավելացրեք առնվազն 1 ժամանակահատված",
+    "periods_cannot_overlap": "Ժամանակահատվածները չեն կարող հատվել",
+    "periods_overlap_24h": "Ժամանակահատվածները չեն կարող հատվել (24 ժամ)",
+    "periods_overlap_time": "Ժամանակահատվածները չեն կարող հատվել (ժամեր)",
+    "first_element_start_zero": "Առաջինը պետք է սկսվի 0-ից",
+    "last_element_end_180": "Վերջինը պետք է վերջանա 180-ով",
+    "age_ranges_continuous": "Տարիքային միջակայքերը պետք է անընդհատ լինեն",
+    "must_start_from": "Պետք է սկսվի {{value}}-ից"
   },
   "api_errors": {
     "USER_ALREADY_EXISTS": "Այս էլ. փոստով օգտատեր արդեն գոյություն ունի",

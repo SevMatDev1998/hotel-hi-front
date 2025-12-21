@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../../../components/shared/Accordion';
 import { Button } from '../../../../components/shared/Button';
 import BlockContainer from '../../../public/BlockContainer';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { useCreateServicePricesMutation,useGetPaidServicesByHotelQuery } from '../../../../services/hotelService/hotelService.service';
+import RouteEnum from '../../../../enums/route.enum';
 import { PaidServiceItem } from '../../../../types';
 
 interface ServicePriceFormData {
@@ -23,7 +25,8 @@ interface AddServicePricePolicyProps {
 
 const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId }: AddServicePricePolicyProps) => {
   const { t } = useTranslation();
-  
+    const navigate = useNavigate();
+
   const { data: paidServices, isLoading } = useGetPaidServicesByHotelQuery(
     { hotelId: Number(hotelId), availabilityId: Number(hotelAvailabilityId) },
     { skip: !hotelId || !hotelAvailabilityId }
@@ -43,7 +46,6 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
   };
 
   const handleSubmit = async () => {
-    console.log(hotelAvailabilityId || !dateFrom || !dateTo);
     
     if (!hotelAvailabilityId) {
       return;
@@ -71,9 +73,9 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
     if (prices.length === 0) {
       return;
     }
-
     await createServicePrices({ prices }).unwrap();
     setServicePrices({});
+    navigate(`${RouteEnum.PRICE_POLICY}`);
   };
 
   if (isLoading) {

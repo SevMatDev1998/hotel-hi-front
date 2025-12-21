@@ -10,7 +10,7 @@ import BlockContainer from '../../../public/BlockContainer';
 import InputValidationLayout from '../../../../layouts/inputValidationLayout/InputValidationLayout';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { useAddHotelAvailabilityMutation } from '../../../../services/hotelAvailability/hotelAvailability.service';
-import { CreateHotelAvailabilityFormData, CreateHotelAvailabilitySchema } from '../../../../yupValidation/PriceValidation';
+import { CreateHotelAvailabilityFormData, CreateHotelAvailabilitySchema } from '../../../../yupValidation/HotelAvailabilityValidation';
 import { HotelAvailability } from '../../../../types';
 
 interface IAddPricePolicyProps {
@@ -29,9 +29,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
     { value: 'Cradle', label: 'Cradle' },
     { value: 'Additional', label: 'Additional' },
   ];
-
-  
-
 
   const { register, handleSubmit, control, formState: { errors } } = useForm<CreateHotelAvailabilityFormData>({
     resolver: yupResolver(CreateHotelAvailabilitySchema),
@@ -65,7 +62,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
   const onSubmit = async (data: CreateHotelAvailabilityFormData) => {
     if (!hotelId) return;
     console.log(data);
-    
+
     try {
       const result = await addHotelAvailability({ body: data as unknown as HotelAvailability, hotelId }).unwrap();
       if (onSuccess) {
@@ -75,9 +72,8 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
       console.error('Failed to create hotel availability:', error);
     }
   };
-    console.log(errors);
-     
-  
+
+
 
   return (
     <div>
@@ -118,14 +114,12 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
               )}
             </div>
           </div>
-
           <div className='flex flex-col gap-3 mt-6'>
             {fields.map((field, index) => (
               <div
                 key={field.id}
                 className='flex items-center'
               >
-
                 <div onClick={() => { if (fields.length > 1) remove(index) }}>
                   <img
                     src="/images/icons/remove-button-icon.svg"
@@ -134,7 +128,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
                   />
                 </div>
                 <p className='text-12'>{t("price_policy.defined_intervals")}</p>
-             
                 <div>
                   <p className='text-12'>{t("price_policy.from_age")}</p>
                   <RegisterInput

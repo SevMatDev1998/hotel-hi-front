@@ -20,10 +20,10 @@ const AddRoomPricePolicy: FC<IAddRoomPricePolicyProps> = ({ hotelId, hotelAvaila
   const { data: hotelFoods } = useGetHotelFoodsByHotelIdQuery({ hotelId: hotelId || '' }, { skip: !hotelId });
   const { data: hotelAvailabilityAgeAssessments } = useGetHotelAgeAssessmentByHotelAvailabilityIdQuery({ hotelAvailabilityId }, { skip: !hotelAvailabilityId });
 
-
+  
   return (
     <BlockContainer shadow={false}>
-      <h3>{t("price_policy.room_value_settings")}</h3>
+      <h3 className='mb-3'>{t("price_policy.room_value_settings")}</h3>
       <div className='flex flex-col gap-3'>
         {
           roomsData?.map(room => (

@@ -26,12 +26,14 @@ interface IAddRoomPricePolicyFormProps {
   room: HotelRoom;
   hotelFoods?: HotelFood[];
   hotelAvailabilityAgeAssessments?: HotelAgeAssignment[];
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
   room,
   hotelFoods,
   hotelAvailabilityAgeAssessments,
+  setIsOpen
 }) => {
   const { hotelAvailabilityId } = useParams<{ hotelAvailabilityId: string }>();
 
@@ -112,7 +114,7 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
 
 
       if (!roomPriceDto) {
-        await appToast('error', 'Пожалуйста, введите цену на комнату');
+        await appToast('error', t('price_policy.please_enter_room_price'));
         return;
       }
       
@@ -128,12 +130,11 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
 
       await createRoomPricePolicy(payload).unwrap();
 
-      await appToast('success', 'Ценовая политика успешно сохранена!');
+      await appToast('success', t('price_policy.price_policy_saved_success'));
 
+      setIsOpen(false);
     } catch (error: any) {
-      console.error('Error creating price policy:', error);
-      
-      await appToast('error', error?.data?.message || 'Ошибка при сохранении ценовой политики');
+      await appToast('error', error?.data?.message || t('price_policy.error_saving_price_policy'));
     }
   };
  
@@ -176,8 +177,9 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
           onChange={setOtherServices}
           initialData={existingData?.data?.otherServices}
         />
-        <div className='flex w-full justify-between mt-4'>
-          <Button variant='text'>
+        <div className='flex w-full justify-end gap-2 mt-4'>
+        
+          <Button variant='text' onClick={() => setIsOpen(false)}>
             {t("buttons.cancel")}
           </Button>
           <Button onClick={handleSubmitAll} isLoading={isLoading}>

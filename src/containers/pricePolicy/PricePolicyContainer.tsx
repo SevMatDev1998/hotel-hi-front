@@ -12,16 +12,15 @@ import RouteEnum from '../../enums/route.enum';
 const PricePolicyContainer = () => {
   const { t } = useTranslation();
   const navigate = useNavigate()
-  const { user } = useAppSelector((state) => state.auth)
   const open = useModal();
+ 
+  const { user } = useAppSelector((state) => state.auth)
 
   const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId })
 
   const handleOpenHotelAvailabilityModal = (availabilityId: string) => {
-    open(ShowHotelAvailabilityModal, { title: "", availabilityId,onSubmit: () =>{} , className:"bg-white" });
+    open(ShowHotelAvailabilityModal, { title: "", availabilityId, onSubmit: () => { }, className: "bg-white" });
   };
-
-
 
   return (
     <div className='flex flex-col gap-3'>
@@ -39,11 +38,15 @@ const PricePolicyContainer = () => {
               <div>
                 {item.title}
               </div>
-              <div onClick={()=>{handleOpenHotelAvailabilityModal(item.id)}}>
-                {t("price_policy.price_list")}
+              <div className='flex gap-4 items-center'>
+                <div onClick={() => { handleOpenHotelAvailabilityModal(item.id) }}>
+                  {t("price_policy.price_list")}
+                </div>
+                <span onClick={() => navigate(`${RouteEnum.PRICE_POLICY_CREATE}/${item.id}`)}>
+                  <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
+                </span>
               </div>
             </div>
-            { }
           </BlockContainer>
         ))}
       </div>

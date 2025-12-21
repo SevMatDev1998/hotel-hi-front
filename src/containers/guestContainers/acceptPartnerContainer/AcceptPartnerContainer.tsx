@@ -2,8 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import AcceptPartnerForm from "./AcceptPartnerForm";
 import { useGetCountriesQuery } from "../../../services/countries";
 import { useGetPartnerInformationQuery } from "../../../services/guests/guest.service";
-import { LegalEntityType, PartnerStatus } from "../../../types";
 import RouteEnum from "../../../enums/route.enum";
+import { LegalEntityType, PartnerStatus } from "../../../types";
 
 const AcceptPartnerContainer = () => {
 

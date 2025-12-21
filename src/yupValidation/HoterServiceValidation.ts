@@ -40,7 +40,7 @@ const PeriodActiveSchema = yup.object({
     .nullable()
     .when("hourlyAvailabilityTypeId", {
       is: HotelServiceHourlyAvailabilityType.Hours,
-      then: (s) => s.required(tv("required")).matches(HHMM, "Ֆորմատը HH:mm է"),
+      then: (s) => s.required(tv("required")).matches(HHMM, tv("time_format_hhmm")),
       otherwise: (s) => s.notRequired().nullable(),
     }),
 
@@ -52,8 +52,8 @@ const PeriodActiveSchema = yup.object({
       then: (s) =>
         s
           .required(tv("required"))
-          .matches(HHMM, "Ֆորմատը HH:mm է")
-          .test("end>start", "Ավարտի ժամը պետք է ավելի ուշ լինի", function (endHour) {
+          .matches(HHMM, tv("time_format_hhmm"))
+          .test("end>start", tv("end_hour_after_start"), function (endHour) {
             const startHour = this.parent?.startHour;
             if (!startHour || !endHour) return true;
             const startMinutes = toMinutes(startHour);
@@ -87,14 +87,14 @@ const AvailabilityGroupSchema = yup.object({
     // Если группа активна - строгая валидация
     then: (schema) => schema
       .of(PeriodActiveSchema)
-      .min(1, "Ավելացրեք առնվազն 1 ժամանակահատված")
+      .min(1, tv("add_min_one_period"))
       .required(),
     // Если группа неактивна - вообще не валидируем
     otherwise: (schema) => schema
       .of(PeriodInactiveSchema)
       .notRequired(),
   }),
-}).test("no-overlap", "Ժամանակահատվածները չեն կարող հատվել", function (group) {
+}).test("no-overlap", tv("periods_cannot_overlap"), function (group) {
   // Пересечения проверяем только для активной группы
   if (!group?.isActive || !Array.isArray(group?.periods) || group.periods.length < 2) return true;
 
@@ -110,7 +110,7 @@ const AvailabilityGroupSchema = yup.object({
     if (list[i].start < list[i - 1].end) {
       return this.createError({
         path: `periods.${i}.startMonth`,
-        message: "Ժամանակահատվածները չեն կարող հատվել",
+        message: tv("periods_cannot_overlap"),
       });
     }
   }
@@ -122,7 +122,7 @@ export const CreateHotelServiceAvailabilitySchema = yup
   .object({
     availabilities: yup.array().of(AvailabilityGroupSchema).length(2).required(),
   })
-  .test("no-overlap-between-groups", "Ժամանակահատվածները չեն կարող հատվել", function (data) {
+  .test("no-overlap-between-groups", tv("periods_cannot_overlap"), function (data) {
     if (!data?.availabilities) return true;
 
     // Собираем все периоды из всех активных групп с полной информацией
@@ -176,7 +176,7 @@ export const CreateHotelServiceAvailabilitySchema = yup
           ) {
             return this.createError({
               path: `availabilities.${p2.groupIndex}.periods.${p2.periodIndex}.startMonth`,
-              message: "Ժամանակահատվածները չեն կարող հատվել (24 часа конфликт)",
+              message: tv("periods_overlap_24h"),
             });
           }
 
@@ -196,7 +196,7 @@ export const CreateHotelServiceAvailabilitySchema = yup
             if (timesOverlap) {
               return this.createError({
                 path: `availabilities.${p2.groupIndex}.periods.${p2.periodIndex}.startHour`,
-                message: "Ժամանակահատվածները չեն կարող հատվել (время конфликт)",
+                message: tv("periods_overlap_time"),
               });
             }
           }

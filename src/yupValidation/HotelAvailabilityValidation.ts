@@ -12,7 +12,7 @@ export const CreateHotelAvailabilitySchema = yup.object({
     .test('before-checkout', tv("min_greater_than_max"), function (value) {
       const { checkoutTime } = this.parent;
       if (!value || !checkoutTime) return true;
-      return value > checkoutTime;
+      return value < checkoutTime;
     }),
   checkoutTime: yup
     .string()
@@ -20,7 +20,7 @@ export const CreateHotelAvailabilitySchema = yup.object({
     .test('after-checkin', tv("min_greater_than_max"), function (value) {
       const { checkInTime } = this.parent;
       if (!value || !checkInTime) return true;
-      return value < checkInTime;
+      return value > checkInTime;
     }),
 
   hotelAgeAssignments: yup.array().of(
@@ -57,7 +57,7 @@ export const CreateHotelAvailabilitySchema = yup.object({
       }
       return true;
     })
-    .test('no-gaps-overlaps', 'Диапазоны должны идти непрерывно', function (value) {
+    .test('no-gaps-overlaps', tv('age_ranges_continuous'), function (value) {
       if (value && value.length > 1) {
         for (let i = 1; i < value.length; i++) {
           const prevToAge = value[i - 1].toAge;
@@ -65,7 +65,7 @@ export const CreateHotelAvailabilitySchema = yup.object({
           if (currentFromAge !== prevToAge) {
             return this.createError({
               path: `hotelAgeAssignments[${i}].fromAge`,
-              message: `Должен начинаться с ${prevToAge} (предыдущий диапазон заканчивается на ${prevToAge})`
+              message: tv('must_start_from', { value: prevToAge })
             });
           }
         }

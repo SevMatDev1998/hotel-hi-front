@@ -22,6 +22,14 @@ const hotelAvailability = ApiInstance.injectEndpoints({
       }),
     }),
 
+    updateHotelAvailability: build.mutation<HotelAvailability, { body: any, availabilityId: string }>({
+      query: ({ body, availabilityId }) => ({
+        url: `${ApiEnum.HOTEL_AVAILABILITY}/${availabilityId}`,
+        method: "PUT",
+        body
+      }),
+    }),
+
     getHotelAgeAssessmentByHotelAvailabilityId: build.query<any, { hotelAvailabilityId: string }>({
       query: ({ hotelAvailabilityId }) => ({
         url: `${ApiEnum.HOTEL_AGE_ASSIGNMENTS}/hotelAvailability/${hotelAvailabilityId}`,
@@ -86,6 +94,7 @@ export const {
   useGetHotelAvailabilityQuery,
   useGetHotelAvailabilityDetailQuery,
   useAddHotelAvailabilityMutation,
+  useUpdateHotelAvailabilityMutation,
   useGetHotelAgeAssessmentByHotelAvailabilityIdQuery,
   useGetHotelAvailabilityWithDatesQuery,
 
