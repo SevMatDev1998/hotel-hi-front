@@ -25,7 +25,7 @@ const AddPricePolicyContainer = () => {
 
   const hotelAvailability = hotelAvailabilityList?.find(
     (item) => item.id.toString() === hotelAvailabilityId
-  ); 
+  );
 
   const { data: hotelAgeAssignments } = useGetHotelAgeAssessmentByHotelAvailabilityIdQuery(
     { hotelAvailabilityId: hotelAvailabilityId || '' },
@@ -53,15 +53,9 @@ const AddPricePolicyContainer = () => {
   return (
     <div className='flex flex-col gap-6'>
       {isEditingFirstBlock ? (
-        hotelAvailabilityId && hotelAvailability ? (
+        hotelAvailabilityId ? (
           <EditPricePolicy
-            availabilityData={{
-              id: hotelAvailability.id,
-              title: hotelAvailability.title,
-              checkInTime: hotelAvailability.checkInTime?.toString() || '',
-              checkoutTime: hotelAvailability.checkoutTime?.toString() || '',
-              hotelAgeAssignments: hotelAgeAssignments || []
-            }}
+            availabilityData={{ ...hotelAvailability, hotelAgeAssignments }}
             onSuccess={handleAvailabilityUpdated}
             onCancel={() => setIsEditingFirstBlock(false)}
           />
@@ -94,7 +88,7 @@ const AddPricePolicyContainer = () => {
           hotelAvailabilityId={hotelAvailabilityId}
         />
       )}
-      
+
       <AddServicePricePolicy
         hotelId={user?.hotelId}
         hotelAvailabilityId={hotelAvailabilityId ? parseInt(hotelAvailabilityId) : undefined}

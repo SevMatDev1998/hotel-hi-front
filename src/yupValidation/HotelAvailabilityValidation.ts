@@ -12,7 +12,7 @@ export const CreateHotelAvailabilitySchema = yup.object({
     .test('before-checkout', tv("min_greater_than_max"), function (value) {
       const { checkoutTime } = this.parent;
       if (!value || !checkoutTime) return true;
-      return value < checkoutTime;
+      return value > checkoutTime;
     }),
   checkoutTime: yup
     .string()
@@ -20,7 +20,7 @@ export const CreateHotelAvailabilitySchema = yup.object({
     .test('after-checkin', tv("min_greater_than_max"), function (value) {
       const { checkInTime } = this.parent;
       if (!value || !checkInTime) return true;
-      return value > checkInTime;
+      return value < checkInTime;
     }),
 
   hotelAgeAssignments: yup.array().of(
@@ -73,5 +73,28 @@ export const CreateHotelAvailabilitySchema = yup.object({
       return true;
     })
 });
+
+
+export const EditHotelAvailabilitySchema = yup.object({
+  title: yup.string().required(tv('required')),
+  checkInTime: yup
+    .string()
+    .required(tv('required'))
+    .test('before-checkout', tv("min_greater_than_max"), function (value) {
+      const { checkoutTime } = this.parent;
+      if (!value || !checkoutTime) return true;
+      return value > checkoutTime;
+    }),
+  checkoutTime: yup
+    .string()
+    .required(tv('required'))
+    .test('after-checkin', tv("min_greater_than_max"), function (value) {
+      const { checkInTime } = this.parent;
+      if (!value || !checkInTime) return true;
+      return value < checkInTime;
+    }),
+});
+
+export type EditFormData = yup.InferType<typeof EditHotelAvailabilitySchema>;
 
 export type CreateHotelAvailabilityFormData = yup.InferType<typeof CreateHotelAvailabilitySchema>;

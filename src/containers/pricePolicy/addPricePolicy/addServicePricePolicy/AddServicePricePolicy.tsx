@@ -83,11 +83,7 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
   }
 
   if (!paidServices || paidServices.length === 0) {
-    return (
-      <BlockContainer>
-        <p>{t('price_policy.no_paid_services')}</p>
-      </BlockContainer>
-    );
+    return 
   }
 
   return (

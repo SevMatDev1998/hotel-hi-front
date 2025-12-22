@@ -21,10 +21,28 @@ const PricePolicyService = ApiInstance.injectEndpoints({
       invalidatesTags: [ApiEnum.PRICE_POLICY]
     }),
 
+    deactivateRoomPricePolicy: build.mutation<void, { hotelAvailabilityId: number; roomId: number }>({
+      query: ({ hotelAvailabilityId, roomId }) => ({
+        url: `${ApiEnum.PRICE_POLICY}/rooms/${hotelAvailabilityId}/${roomId}/deactivate`,
+        method: 'PUT',
+      }),
+      invalidatesTags: [ApiEnum.PRICE_POLICY]
+    }),
+
+    activateRoomPricePolicy: build.mutation<void, { hotelAvailabilityId: number; roomId: number }>({
+      query: ({ hotelAvailabilityId, roomId }) => ({
+        url: `${ApiEnum.PRICE_POLICY}/rooms/${hotelAvailabilityId}/${roomId}/activate`,
+        method: 'PUT',
+      }),
+      invalidatesTags: [ApiEnum.PRICE_POLICY]
+    }),
+
   }),
 })
 
 export const {
   useGetRoomPricePolicyQuery,
-  useCreateRoomPricePolicyMutation
+  useCreateRoomPricePolicyMutation,
+  useDeactivateRoomPricePolicyMutation,
+  useActivateRoomPricePolicyMutation,
 } = PricePolicyService;

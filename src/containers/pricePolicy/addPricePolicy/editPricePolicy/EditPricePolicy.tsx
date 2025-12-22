@@ -11,29 +11,10 @@ import InputValidationLayout from '../../../../layouts/inputValidationLayout/Inp
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { useUpdateHotelAvailabilityMutation } from '../../../../services/hotelAvailability/hotelAvailability.service';
 import tv from '../../../../helpers/tv';
+import { EditFormData, EditHotelAvailabilitySchema } from '../../../../yupValidation/HotelAvailabilityValidation';
 
 // Simplified schema for editing (no age assignments)
-const EditHotelAvailabilitySchema = yup.object({
-  title: yup.string().required(tv('required')),
-  checkInTime: yup
-    .string()
-    .required(tv('required'))
-    .test('before-checkout', tv("min_greater_than_max"), function (value) {
-      const { checkoutTime } = this.parent;
-      if (!value || !checkoutTime) return true;
-      return value < checkoutTime;
-    }),
-  checkoutTime: yup
-    .string()
-    .required(tv('required'))
-    .test('after-checkin', tv("min_greater_than_max"), function (value) {
-      const { checkInTime } = this.parent;
-      if (!value || !checkInTime) return true;
-      return value > checkInTime;
-    }),
-});
 
-type EditFormData = yup.InferType<typeof EditHotelAvailabilitySchema>;
 
 interface IEditPricePolicyProps {
   availabilityData: {

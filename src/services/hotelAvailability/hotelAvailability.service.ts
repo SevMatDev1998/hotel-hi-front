@@ -7,7 +7,8 @@ const hotelAvailability = ApiInstance.injectEndpoints({
     getHotelAvailability: build.query<HotelAvailability[], { hotelId: string }>({
       query: ({ hotelId }) => ({
         url: `${ApiEnum.HOTEL_AVAILABILITY}/${hotelId}`,
-      })
+      }),
+      providesTags: [ApiEnum.HOTEL_AVAILABILITY]
     }),
     getHotelAvailabilityDetail: build.query<any, { availabilityId: string }>({
       query: ({ availabilityId }) => ({
@@ -28,6 +29,7 @@ const hotelAvailability = ApiInstance.injectEndpoints({
         method: "PUT",
         body
       }),
+      invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
     }),
 
     getHotelAgeAssessmentByHotelAvailabilityId: build.query<any, { hotelAvailabilityId: string }>({
