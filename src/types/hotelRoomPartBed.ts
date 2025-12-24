@@ -1,4 +1,6 @@
 import { BedType } from './enums';
+import { RoomBedType } from './roomBedType';
+import { RoomBedSize } from './roomBedSize';
 
 export interface HotelRoomPartBed {
   id?: string;
@@ -9,6 +11,8 @@ export interface HotelRoomPartBed {
   rowIndex?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  roomBedType?: RoomBedType;
+  roomBedSize?: RoomBedSize;
 }
 
 
@@ -16,12 +20,12 @@ export interface HotelRoomPartBed {
 
 export interface BedConfigurationItem {
   bedType: BedType;
-  roomBedSizeId: string;
-  roomBedTypeId: string;
+  roomBedSizeId: number;
+  roomBedTypeId: number;
 }
 
 export interface HotelRoomPartBedMutation {
-  hotelRoomPartId: string;
+  hotelRoomPartId: number;
   bedConfigurations: BedConfigurationItem[];
 
 }

@@ -88,6 +88,15 @@ const RoomsService = ApiInstance.injectEndpoints({
       invalidatesTags: [ApiEnum.HOTEL_ROOM_PART_BEDS],
     }),
 
+    batchEditHotelRoomPartBeds: build.mutation<HotelRoomPartBed[], { roomPartBeds: HotelRoomPartBedMutation[] }>({
+      query: (body) => ({
+        url: `${ApiEnum.HOTEL_ROOM_PART_BEDS}/batch-edit`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [ApiEnum.HOTEL_ROOM_PART_BEDS],
+    }),
+
     getRoomBedTypes: build.query<RoomBedType[], void>({
       query: () => ({
         url: `${ApiEnum.ROOM_BED_TYPES}`,
@@ -99,6 +108,14 @@ const RoomsService = ApiInstance.injectEndpoints({
       query: () => ({
         url: `${ApiEnum.ROOM_BED_SIZES}`,
       })
+    }),
+
+    deleteHotelRoomPart: build.mutation<void, { roomPartId: string }>({
+      query: ({ roomPartId }) => ({
+        url: `${ApiEnum.HOTEL_ROOM_PARTS}/${roomPartId}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [ApiEnum.HOTEL_ROOM_PARTS, ApiEnum.HOTEL_ROOM_PART_BEDS],
     }),
 
   }),
@@ -120,7 +137,9 @@ export const {
   useGetHotelRoomPartBedsByPartIdQuery,
   useGetRoomBedTypesQuery,
   useGetRoomBedSizesQuery,
-  useEditHotelRoomPartBedsMutation
+  useEditHotelRoomPartBedsMutation,
+  useBatchEditHotelRoomPartBedsMutation,
+  useDeleteHotelRoomPartMutation
 } = RoomsService;
 
 export const { endpoints: { editRoom } } = RoomsService

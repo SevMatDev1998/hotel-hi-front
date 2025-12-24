@@ -37,8 +37,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
   const dispatch = useAppDispatch();
 
   const onSubmit = async (data: UpdateHotelBaseInfoFormData) => {
-    console.log(data);
-
     await updateHotelBaseInformation({ id: hotelId!, data }).unwrap();
     dispatch(changeHotelInfoType("legal"));
   };
@@ -53,9 +51,6 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
     value: currency.id,
     label: currency.name,
   })) || [];
-
-  console.log(countryOptions);
-
 
 
   return (

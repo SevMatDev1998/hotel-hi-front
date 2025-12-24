@@ -7,7 +7,6 @@ const HotelContainer = () => {
   const { t } = useTranslation();
 
   const { user } = useAppSelector(state => state.auth);
-    console.log(user);
     
   if (!user) return <div>{t("loading")}</div>;
 

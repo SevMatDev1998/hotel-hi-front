@@ -14,7 +14,6 @@ export const SegmentedControlButton: React.FC<SegmentedControlButtonProps> = ({
   onClick,
   className,
 }) => {
-  console.log();
   
   return (
     <button

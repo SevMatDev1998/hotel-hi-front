@@ -33,14 +33,14 @@ const RoomTypeInformationCardRows: FC<IRoomTypeInformationCardRowsProps> = (
 
 
   useEffect(() => {
-    if (hotelRoomPartBeds) {
+    if (hotelRoomPartBeds && roomPartBedsState.length === 0) {
       const bedsWithRowIndex = hotelRoomPartBeds.map(bed => ({
         ...bed,
         rowIndex: bed.rowIndex ?? bed.id ?? Date.now().toString() + Math.random()
       }));
       setRoomPartBedsState(bedsWithRowIndex);
     }
-  }, [hotelRoomPartBeds, setRoomPartBedsState]);
+  }, [hotelRoomPartBeds]);
 
   const hendleAddBed = (type: string) => {
     const newBed: Partial<HotelRoomPartBed> = {

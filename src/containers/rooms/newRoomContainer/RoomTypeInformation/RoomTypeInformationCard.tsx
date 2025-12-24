@@ -1,35 +1,51 @@
 import { FC, useState } from "react"
-import { Button } from "../../../../components/shared/Button";
 import RoomTypeInformationCardRows from "./RoomTypeInformationCardRows";
 import { useTranslation } from "../../../../hooks/useTranslation";
-import { useEditHotelRoomPartBedsMutation } from "../../../../services/rooms";
 import { HotelRoomPart, HotelRoomPartBed } from "../../../../types"
+import SegmentedControlButton from "../../../../components/shared/SegmaentedControllButton";
+import { useEditHotelRoomPartBedsMutation } from "../../../../services/rooms";
 
 interface RoomTypeInformationCardProps {
-  hotelRoomPart: HotelRoomPart,
+  hotelRoomPart: HotelRoomPart;
+  roomPartBedsState: Partial<HotelRoomPartBed>[];
+  onBedsChange: (hotelRoomPartId: string, beds: Partial<HotelRoomPartBed>[]) => void;
 }
 
 
-const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPart }) => {
+const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ 
+  hotelRoomPart, 
+  roomPartBedsState,
+  onBedsChange 
+}) => {
 
   const { t } = useTranslation();
   const [isBadAvailable, setIsBadAvailable] = useState(false);
-  const [roomPartBedsState, setRoomPartBedsState] = useState<Partial<HotelRoomPartBed>[]>([]);
-
   const [editHotelRoomPartBeds] = useEditHotelRoomPartBedsMutation();
 
   const isRoomHasBeds = hotelRoomPart?.hotelRoomPartBeds && hotelRoomPart?.hotelRoomPartBeds.length > 0;
 
   const addHotelRoomPartBeds = (roomPartBed: Partial<HotelRoomPartBed>) => {
-    setRoomPartBedsState((prev) => [
-      ...prev,
-      roomPartBed
-    ]);
+    const updatedBeds = [...roomPartBedsState, roomPartBed];
+    onBedsChange(hotelRoomPart?.id, updatedBeds);
   }
 
-  const handleRoomBadChange = () => {
+  const setRoomPartBedsState = (beds: Partial<HotelRoomPartBed>[] | ((prev: Partial<HotelRoomPartBed>[]) => Partial<HotelRoomPartBed>[])) => {
+    if (typeof beds === 'function') {
+      const updatedBeds = beds(roomPartBedsState);
+      onBedsChange(hotelRoomPart?.id, updatedBeds);
+    } else {
+      onBedsChange(hotelRoomPart?.id, beds);
+    }
+  }
+
+  const handleNoClick = async () => {
+    // Удаляем все кровати из этой части комнаты (отправляем пустой массив)
+    await editHotelRoomPartBeds({ 
+      hotelRoomPartId: Number(hotelRoomPart?.id), 
+      bedConfigurations: [] 
+    });
+    onBedsChange(hotelRoomPart?.id, []);
     setIsBadAvailable(false);
-    editHotelRoomPartBeds({ hotelRoomPartId: hotelRoomPart?.id, bedConfigurations: roomPartBedsState });
   }
 
   return (
@@ -38,34 +54,32 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({ hotelRoomPa
         <div className="grid grid-cols-2">
           <div> {t(`room_parts_options.${hotelRoomPart?.roomPart?.name}`)} </div>
           <div>
-            {hotelRoomPart.hotelRoomPartBeds?.map((bed) => (
+            {!isBadAvailable && hotelRoomPart.hotelRoomPartBeds?.map((bed) => (
               <div key={bed.id} className="flex gap-2 text-sm">
                 <p>{t(`room_bed_types.${bed.bedType}`)}</p>
-                <p> {t(`room_bed_types_names_options.${bed.roomBedType.name}`)}-{bed.roomBedSize.size}</p>
+                <p> {t(`room_bed_types_names_options.${bed.roomBedType?.name}`)}-{bed.roomBedSize?.size}</p>
               </div>
             ))}
           </div>
         </div>
         <div className="flex  justify-end mobile:justify-start gap-4">
-          {
-            isBadAvailable ?
-              <div className="flex items-center justify-center mobile:justify-start gap-2">
-                <Button variant="text" onClick={() => setIsBadAvailable(false)}>
-                  {t("buttons.cancel")}
-                </Button>
-                <Button variant="checkButton" checked={isBadAvailable} onClick={handleRoomBadChange}>
-                  {t("buttons.save")}
-                </Button>
-              </div>
-              :
-              <div onClick={() => setIsBadAvailable(true)}>
-                {
-                  isRoomHasBeds ?
-                    <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
-                    :
-                    <img src="/images/icons/add-button-icon.svg" alt="edit icon" className="cursor-pointer" />
-                }
-              </div>
+          {isRoomHasBeds && !isBadAvailable ? 
+            <span onClick={() => setIsBadAvailable(true)}>
+              <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
+            </span>
+            :
+            <div className="flex items-center justify-center mobile:justify-start gap-2">
+              <SegmentedControlButton
+                label={t("buttons.yes")}
+                isActive={isBadAvailable}
+                onClick={() => setIsBadAvailable(true)}
+              />
+              <SegmentedControlButton
+                label={t("buttons.no")}
+                isActive={!isRoomHasBeds && !isBadAvailable}
+                onClick={handleNoClick}
+              />
+            </div>
           }
         </div>
       </div>

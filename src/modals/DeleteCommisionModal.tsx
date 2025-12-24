@@ -6,7 +6,6 @@ interface IDeleteCommissionModalProps {
   onCancel: () => void;
 }
 const DeleteCommissionModal: ModalFC<IDeleteCommissionModalProps> = ({  onCancel, availabilityId }) => {
-  console.log(availabilityId);
 
   const [deleteHotelAvailabilityDateCommissions] = useDeleteHotelAvailabilityDateCommissionsMutation();
 
