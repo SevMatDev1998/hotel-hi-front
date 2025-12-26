@@ -38,8 +38,9 @@ const MakeServiceAvailabilityModalForm: FC<MakeServiceAvailabilityModalFormProps
           isActive: true,
           periods: [
             {
-              startMonth: '',
-              endMonth: '',
+              periodType: 'FullYear',
+              startMonth: `${new Date().getFullYear()}-01-01`,
+              endMonth: `${new Date().getFullYear()}-12-31`,
               hourlyAvailabilityTypeId: 'AllDay',
               startHour: null,
               endHour: null,
@@ -51,8 +52,9 @@ const MakeServiceAvailabilityModalForm: FC<MakeServiceAvailabilityModalFormProps
           isActive: false,
           periods: [
             {
-              startMonth: '',
-              endMonth: '',
+              periodType: 'FullYear',
+              startMonth: `${new Date().getFullYear()}-01-01`,
+              endMonth: `${new Date().getFullYear()}-12-31`,
               hourlyAvailabilityTypeId: 'Hours',
               startHour: '',
               endHour: '',
@@ -66,7 +68,13 @@ const MakeServiceAvailabilityModalForm: FC<MakeServiceAvailabilityModalFormProps
   const { handleSubmit, formState } = methods;
 
   const onSubmit = ({ availabilities }: FormValues) => {
-    const activeAvailabilities = availabilities.filter(g => g.isActive);
+    const activeAvailabilities = availabilities
+      .filter(g => g.isActive)
+      .map(group => ({
+        ...group,
+        periods: group.periods.map(({ periodType, ...period }) => period)
+      }));
+    
     addHotelServiceAvailability({
       hotelServiceId,
       data: {

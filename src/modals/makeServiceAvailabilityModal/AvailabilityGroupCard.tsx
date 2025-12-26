@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { useFieldArray,UseFormReturn } from "react-hook-form";
+import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { Button } from "../../components/shared/Button";
 import CheckBox from "../../components/shared/CheckBox";
 import CardContainer from "../../containers/public/CardContainer";
 import PeriodRow from "./PeriodRow";
 import { useTranslation } from "../../hooks/useTranslation";
-import { HotelServiceHourlyAvailabilityType } from "../../types";
+import { HotelServiceHourlyAvailabilityType, HotelServicePeriodType } from "../../types";
 
 interface IAvailabilityGroupCardProps {
   methods: UseFormReturn<any>;
@@ -17,24 +17,44 @@ const AvailabilityGroupCard: FC<IAvailabilityGroupCardProps> = ({ methods, group
   const { watch, setValue } = methods;
   const isActive = watch(`availabilities.${groupIndex}.isActive`);
   const { t } = useTranslation();
-  
+
   const isPaid = groupIndex === 0;
 
   const fa = useFieldArray({
     control: methods.control,
     name: `availabilities.${groupIndex}.periods`,
   });
-  
+
   return (
     <CardContainer className="rounded-md flex flex-col gap-3">
-      <CheckBox
-        options={{ id: groupIndex, name: label }}
-        isChecked={isActive}
-        toggleValue={() => {
-          setValue(`availabilities.${groupIndex}.isActive`, !isActive);
-          setValue(`availabilities.${groupIndex}.isPaid`, isPaid);
-        }}
-      />
+      <div className="flex justify-between items-center">
+        <CheckBox
+          options={{ id: groupIndex, name: label }}
+          isChecked={isActive}
+          toggleValue={() => {
+            setValue(`availabilities.${groupIndex}.isActive`, !isActive);
+            setValue(`availabilities.${groupIndex}.isPaid`, isPaid);
+          }}
+        />
+        <Button
+          variant="outline"
+          className="max-w-[250px]"
+          disabled={!isActive}
+          onClick={() => {
+            const currentYear = new Date().getFullYear();
+            fa.append({
+              periodType: HotelServicePeriodType.FullYear,
+              startMonth: `${currentYear}-01-01`,
+              endMonth: `${currentYear}-12-31`,
+              hourlyAvailabilityTypeId: HotelServiceHourlyAvailabilityType.AllDay,
+              startHour: null,
+              endHour: null,
+            });
+          }}
+        >
+          {t('hotel_service.add_period')}
+        </  Button>
+      </div>
       {fa.fields.map((f, idx) => (
         <PeriodRow
           key={f.id}
@@ -45,24 +65,6 @@ const AvailabilityGroupCard: FC<IAvailabilityGroupCardProps> = ({ methods, group
           onRemove={() => fa.remove(idx)}
         />
       ))}
-      <div>
-        <Button
-          variant="textUnderline"
-          className="text-dusty-teal"
-          disabled={!isActive}
-          onClick={() =>
-            fa.append({
-              startMonth: "",
-              endMonth: "",
-              hourlyAvailabilityTypeId: HotelServiceHourlyAvailabilityType.AllDay,
-              startHour: null,
-              endHour: null,
-            })
-          }
-        >
-          {t('hotel_service.add_period')}
-        </  Button>
-      </div>
 
     </CardContainer>
   );

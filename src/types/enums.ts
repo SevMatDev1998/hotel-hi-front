@@ -97,6 +97,11 @@ export enum HotelServiceHourlyAvailabilityType {
   Hours = 'Hours'
 }
 
+export enum HotelServicePeriodType {
+  FullYear = 'FullYear',
+  DateRange = 'DateRange'
+}
+
 export enum ServiceOffer {
   PetsAllowed = 'PetsAllowed',
   AccessGuestsNotStayingInRoom = 'AccessGuestsNotStayingInRoom',

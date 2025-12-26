@@ -1,6 +1,7 @@
-import { HotelServiceHourlyAvailabilityType } from "../../types";
+import { HotelServiceHourlyAvailabilityType, HotelServicePeriodType } from "../../types";
 
 export interface Period {
+  periodType?: HotelServicePeriodType;
   startMonth: string;
   endMonth: string;
   hourlyAvailabilityTypeId: HotelServiceHourlyAvailabilityType;
@@ -17,3 +18,4 @@ export interface AvailabilityGroup {
 export interface FormValues {
   availabilities: [AvailabilityGroup, AvailabilityGroup];
 }
+  

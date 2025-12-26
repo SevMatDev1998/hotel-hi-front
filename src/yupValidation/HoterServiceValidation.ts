@@ -1,7 +1,7 @@
 // yupValidation/HotelServiceValidation.ts
 import * as yup from "yup";
 import tv from '../helpers/tv';
-import { HotelServiceHourlyAvailabilityType } from "../types"; // поправь путь при необходимости
+import { HotelServiceHourlyAvailabilityType, HotelServicePeriodType } from "../types"; // поправь путь при необходимости
 
 const HHMM = /^\d{2}:\d{2}$/;
 
@@ -14,15 +14,35 @@ const toMinutes = (hhmm?: string | null) => {
 
 /** Период для активной группы (строгая валидация) */
 const PeriodActiveSchema = yup.object({
-  startMonth: yup.string().required(tv("required")),
-  endMonth: yup
-    .string()
-    .required(tv("required"))
-    .test("end>=start", tv("second_letter"), function (end) {
-      const start = this.parent?.startMonth;
-      if (!start || !end) return true;
-      return new Date(end).getTime() >= new Date(start).getTime();
-    }),
+  // Тип периода обязателен
+  periodType: yup
+    .mixed<HotelServicePeriodType>()
+    .transform((v) => (v === "" || v == null ? undefined : v))
+    .oneOf(
+      [HotelServicePeriodType.FullYear, HotelServicePeriodType.DateRange],
+      tv("required")
+    )
+    .required(tv("required")),
+
+  // Даты обязательны только при DateRange
+  startMonth: yup.string().when('periodType', {
+    is: HotelServicePeriodType.DateRange,
+    then: (s) => s.required(tv("required")),
+    otherwise: (s) => s.notRequired(),
+  }),
+
+  endMonth: yup.string().when(['periodType', 'startMonth'], {
+    is: (periodType: HotelServicePeriodType, startMonth: string) => 
+      periodType === HotelServicePeriodType.DateRange,
+    then: (s) => s
+      .required(tv("required"))
+      .test("end>=start", tv("second_letter"), function (end) {
+        const start = this.parent?.startMonth;
+        if (!start || !end) return true;
+        return new Date(end).getTime() >= new Date(start).getTime();
+      }),
+    otherwise: (s) => s.notRequired(),
+  }),
 
   // Радио обязательно только когда группа активна
   hourlyAvailabilityTypeId: yup
@@ -67,6 +87,10 @@ const PeriodActiveSchema = yup.object({
 
 /** Период для неактивной группы (ничего не требуем) */
 const PeriodInactiveSchema = yup.object({
+  periodType: yup
+    .mixed<HotelServicePeriodType>()
+    .notRequired()
+    .nullable(),
   startMonth: yup.string().notRequired(),
   endMonth: yup.string().notRequired(),
   hourlyAvailabilityTypeId: yup
@@ -98,22 +122,61 @@ const AvailabilityGroupSchema = yup.object({
   // Пересечения проверяем только для активной группы
   if (!group?.isActive || !Array.isArray(group?.periods) || group.periods.length < 2) return true;
 
-  const list = group.periods
-    .map((p) => ({
-      start: p?.startMonth ? new Date(p.startMonth).getTime() : NaN,
-      end: p?.endMonth ? new Date(p.endMonth).getTime() : NaN,
+  const periods = group.periods
+    .map((p, idx) => ({
+      idx,
+      dateStart: p?.startMonth ? new Date(p.startMonth).getTime() : NaN,
+      dateEnd: p?.endMonth ? new Date(p.endMonth).getTime() : NaN,
+      hourlyType: p?.hourlyAvailabilityTypeId,
+      timeStart: toMinutes(p?.startHour),
+      timeEnd: toMinutes(p?.endHour),
     }))
-    .filter((x) => !Number.isNaN(x.start) && !Number.isNaN(x.end))
-    .sort((a, b) => a.start - b.start);
+    .filter((x) => !Number.isNaN(x.dateStart) && !Number.isNaN(x.dateEnd));
 
-  for (let i = 1; i < list.length; i++) {
-    if (list[i].start < list[i - 1].end) {
-      return this.createError({
-        path: `periods.${i}.startMonth`,
-        message: tv("periods_cannot_overlap"),
-      });
+  // Проверяем все пары периодов
+  for (let i = 0; i < periods.length; i++) {
+    for (let j = i + 1; j < periods.length; j++) {
+      const p1 = periods[i];
+      const p2 = periods[j];
+
+      // Проверяем пересечение дат
+      const datesOverlap = p1.dateStart <= p2.dateEnd && p2.dateStart <= p1.dateEnd;
+
+      if (datesOverlap) {
+        // Если хотя бы один AllDay - ошибка
+        if (
+          p1.hourlyType === HotelServiceHourlyAvailabilityType.AllDay ||
+          p2.hourlyType === HotelServiceHourlyAvailabilityType.AllDay
+        ) {
+          return this.createError({
+            path: `periods.${p2.idx}.startMonth`,
+            message: tv("periods_overlap_24h"),
+          });
+        }
+
+        // Оба Hours - проверяем время
+        if (
+          p1.hourlyType === HotelServiceHourlyAvailabilityType.Hours &&
+          p2.hourlyType === HotelServiceHourlyAvailabilityType.Hours &&
+          p1.timeStart !== null &&
+          p1.timeEnd !== null &&
+          p2.timeStart !== null &&
+          p2.timeEnd !== null
+        ) {
+          // Проверяем пересечение времени
+          const timesOverlap = !(p1.timeEnd <= p2.timeStart || p2.timeEnd <= p1.timeStart);
+
+          if (timesOverlap) {
+            return this.createError({
+              path: `periods.${p2.idx}.startMonth`,
+              message: tv("periods_overlap_time"),
+            });
+          }
+        }
+      }
     }
   }
+  
   return true;
 });
 

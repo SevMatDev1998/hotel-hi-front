@@ -1,12 +1,24 @@
 import MakeServiceAvailabilityModalForm from "./MakeServiceAvailabilityModalForm";
 import { useTranslation } from "../../hooks/useTranslation";
 import { useGetHotelServiceAvailabilityQuery } from "../../services/hotelServiceAvailability";
+import { HotelServicePeriodType } from "../../types";
 
 interface IMakeServiceAvailabilityModalProps {
   hotelServiceId: string;
   onSubmit: (payload: any) => void;
   onCancel: () => void;
 }
+
+// Функция проверки, является ли период полным годом
+const isFullYearPeriod = (startMonth: string, endMonth: string): boolean => {
+  const start = new Date(startMonth);
+  const end = new Date(endMonth);
+  
+  return (
+    start.getMonth() === 0 && start.getDate() === 1 && // 1 января
+    end.getMonth() === 11 && end.getDate() === 31      // 31 декабря
+  );
+};
 
 const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> = ({
   hotelServiceId,
@@ -22,8 +34,9 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
   if (isLoading) return null;
 
   const defaultPeriod = (isPaid: boolean) => ({
-    startMonth: "",
-    endMonth: "",
+    periodType: HotelServicePeriodType.FullYear,
+    startMonth: `${new Date().getFullYear()}-01-01`,
+    endMonth: `${new Date().getFullYear()}-12-31`,
     hourlyAvailabilityTypeId: isPaid ? "AllDay" : "Hours",
     startHour: isPaid ? undefined : "",
     endHour: isPaid ? undefined : "",
@@ -34,7 +47,13 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
       ...group,
       isPaid: index === 0, // Явно устанавливаем isPaid в зависимости от индекса
       periods: group.periods && group.periods.length > 0 
-        ? group.periods 
+        ? group.periods.map(period => ({
+            ...period,
+            // Автоматически определяем periodType на основе дат
+            periodType: isFullYearPeriod(period.startMonth, period.endMonth)
+              ? HotelServicePeriodType.FullYear
+              : HotelServicePeriodType.DateRange
+          }))
         : [defaultPeriod(index === 0)]
     }))
   } : {

@@ -13,7 +13,7 @@ interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 // Base button variant styles
 const variantClasses = {
   base: 'p-[12px] bg-dusty-teal rounded-[8px] min-w-[164px] flex items-center justify-center text-xs text-white ',
-  outline: 'p-[10px] border border-dusty-teal rounded-[8px] min-w-[164px] w-full flex items-center text-dusty-teal ',
+  outline: 'p-[10px] border border-dusty-teal rounded-[8px] min-w-[164px] w-full flex items-center text-dusty-teal text-[12px]',
   checkButton: 'w-[90px] h-[26px] items-center justify-center rounded-[5px] flex text-white border border-charcoal-gray text-charcoal-gray',
   textUnderline: 'underline bg-transparent border-none p-0 text-xs cursor-pointer',
   text: 'text-16 text-red-500 font-semibold' 
