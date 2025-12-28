@@ -5,6 +5,7 @@ import { useTranslation } from '../../../../hooks/useTranslation';
 import {
   useGetRoomPricePolicyQuery,
   useDeactivateRoomPricePolicyMutation,
+  useActivateRoomPricePolicyMutation,
 } from '../../../../services/pricePolicy/pricePolicy.service';
 import { HotelAgeAssignment, HotelFood, HotelRoom } from '../../../../types';
 import AddRoomPricePolicyForm from './addRoomPricePolicyForm/AddRoomPricePolicyFormForm';
@@ -35,7 +36,7 @@ const AddRoomPricePolicyCard: FC<IAddRoomPricePolicyCardProps> = ({
   );
 
   const [deactivate, { isLoading: isDeactivating }] = useDeactivateRoomPricePolicyMutation();
-  const [activate, { isLoading: isActivating }] = useDeactivateRoomPricePolicyMutation();
+  const [activate, { isLoading: isActivating }] = useActivateRoomPricePolicyMutation();
 
   // Determine if data exists and is active
   const isSaved = existingData?.data?.roomPrice !== null && existingData?.data?.roomPrice !== undefined;

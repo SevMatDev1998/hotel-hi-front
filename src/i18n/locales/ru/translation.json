@@ -238,6 +238,11 @@
     "not_confirmed_value": "Неподтверждённая цена",
     "notify_to_partners": "Уведомить партнёров о ценовой политике"
   },
+  "service_price_types": {
+    "HourlyRate": "Почасовая ставка",
+    "DailyRate": "Посуточная ставка",
+    "ByOrderRate": "По заказу"
+  },
   "price_policy_dates": {
     "price_offer": "Ценовое предложение",
     "period": "Период",

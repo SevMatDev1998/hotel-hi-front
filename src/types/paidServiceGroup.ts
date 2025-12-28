@@ -10,6 +10,7 @@ export interface PaidServiceItem {
   endHour: string | null;
   currentPrice: {
     id: number;
+    priceType: string;
     price: string;
     dateFrom: string;
     dateTo: string;

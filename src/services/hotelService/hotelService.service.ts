@@ -5,6 +5,7 @@ import { PaidServiceGroup, SystemService, SystemServiceGroup, SystemServiceType 
 interface CreateServicePriceDto {
   hotelServiceId: number;
   hotelAvailabilityId: number;
+  priceType: string; // HourlyRate | DailyRate | ByOrderRate
   price: number;
   dateFrom: string;
   dateTo: string;

@@ -249,6 +249,11 @@
     "error_saving_price_policy": "Սխալ գնային քաղաքականությունը պահպանելիս",
     "age_ranges_cannot_be_edited": "Տարիքային միջակայքները չեն կարող խմբագրվել"
   },
+  "service_price_types": {
+    "HourlyRate": "ժամավճար",
+    "DailyRate": "Оրավարձ",
+    "ByOrderRate": "Ըստ պատվերի"
+  },
   "price_policy_dates": {
     "set_commission": "Սահմանել միջնորդավճար",
     "price_offer": "Գնային առաջարկ",

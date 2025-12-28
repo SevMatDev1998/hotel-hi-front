@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../../../components/shared/Accordion';
 import { Button } from '../../../../components/shared/Button';
+import { Select } from '../../../../components/shared/Select';
 import BlockContainer from '../../../public/BlockContainer';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { useCreateServicePricesMutation,useGetPaidServicesByHotelQuery } from '../../../../services/hotelService/hotelService.service';
@@ -11,6 +12,7 @@ import { PaidServiceItem } from '../../../../types';
 interface ServicePriceFormData {
   hotelServiceId: number;
   hotelAvailabilityId: number;
+  priceType: string;
   price: number;
   dateFrom: string;
   dateTo: string;
@@ -36,6 +38,13 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
   const [createServicePrices, { isLoading: isSaving }] = useCreateServicePricesMutation();
   
   const [servicePrices, setServicePrices] = useState<Record<number, number>>({});
+  const [servicePriceTypes, setServicePriceTypes] = useState<Record<number, string>>({});
+
+  const priceTypeOptions = [
+    { value: 'HourlyRate', label: 'HourlyRate' },
+    { value: 'DailyRate', label: 'DailyRate' },
+    { value: 'ByOrderRate', label: 'ByOrderRate' },
+  ];
 
   const handlePriceChange = (serviceId: number, value: string) => {
     const numValue = parseFloat(value);
@@ -45,22 +54,38 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
     }));
   };
 
+  const handlePriceTypeChange = (serviceId: number, priceType: string | number) => {
+    setServicePriceTypes(prev => ({
+      ...prev,
+      [serviceId]: priceType as string,
+    }));
+  };
+
   const handleSubmit = async () => {
     
     if (!hotelAvailabilityId) {
       return;
     }
-
+    
     const prices: ServicePriceFormData[] = [];
 
     paidServices?.forEach(group => {
       group.types.forEach(type => {
         type.services.forEach(service => {
-          const price = servicePrices[service.hotelServiceAvailabilityId];
-          if (price && price > 0) {
+          // Берём либо введённую цену, либо текущую
+          const price = servicePrices[service.hotelServiceAvailabilityId] 
+            ?? (service.currentPrice ? parseFloat(service.currentPrice.price) : null);
+          
+          // Берём либо выбранный тип, либо текущий
+          const priceType = servicePriceTypes[service.hotelServiceAvailabilityId] 
+            ?? service.currentPrice?.priceType;
+          
+          // Если есть и цена, и тип → добавляем
+          if (price && price > 0 && priceType) {
             prices.push({
               hotelServiceId: service.hotelServiceId,
               hotelAvailabilityId,
+              priceType,
               price,
               dateFrom:"Fri Nov 21 2025 17:39:08 GMT+0400",
               dateTo:"Fri Nov 21 2025 17:39:08 GMT+0400",
@@ -69,12 +94,14 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
         });
       });
     });
-
+    console.log(paidServices,prices);
+      
     if (prices.length === 0) {
       return;
     }
     await createServicePrices({ prices }).unwrap();
     setServicePrices({});
+    setServicePriceTypes({});
     navigate(`${RouteEnum.PRICE_POLICY}`);
   };
 
@@ -108,10 +135,21 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
                                 const displayPrice = servicePrices[service.hotelServiceAvailabilityId] ?? 
                                   (service.currentPrice ? parseFloat(service.currentPrice.price) : '');
                                 
+                                const displayPriceType = servicePriceTypes[service.hotelServiceAvailabilityId] ?? 
+                                  (service.currentPrice?.priceType || '');
+                                
                                 return (
-                                  <div key={service.hotelServiceAvailabilityId} className="flex items-center justify-between border-b pb-2">
-                                    <span className="text-sm">{service.systemServiceName}</span>
+                                  <div key={service.hotelServiceAvailabilityId} className="flex items-center justify-between border-b pb-2 gap-2">
+                                    <span className="text-sm flex-1">{service.systemServiceName}</span>
                                     <div className="flex items-center gap-2">
+                                      <Select
+                                        name={`priceType-${service.hotelServiceAvailabilityId}`}
+                                        options={priceTypeOptions}
+                                        tr_name="service_price_types"
+                                        onSelect={(value) => handlePriceTypeChange(service.hotelServiceAvailabilityId, value)}
+                                        value={displayPriceType}
+                                        className="w-48"
+                                      />
                                       <input
                                         type="number"
                                         className="w-24 px-2 py-1 border rounded"

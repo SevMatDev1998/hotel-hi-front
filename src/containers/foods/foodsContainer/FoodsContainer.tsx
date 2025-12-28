@@ -30,7 +30,7 @@ const FoodsContainer = () => {
     const hotelFood = foodData?.find(item => item.foodType === food.type);
     return hotelFood
   });
-
+  
   return (
     <div>
       <div className="flex flex-col gap-6">

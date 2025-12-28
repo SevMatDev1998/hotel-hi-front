@@ -44,7 +44,7 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
 
   const isInactive = hotelFood === undefined
   const isBlockOpend = selectedFoodType === mainFood.type
-    
+   
   
   return (
     <BlockContainer shadow={false} className={`border-2 ${!hotelFood && !isInactive ? 'border-red-300' : 'border-white'}`}>
@@ -91,7 +91,7 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
                 />
                 <SegmentedControlButton
                   label={t("buttons.no")}
-                  isActive={hotelFood && !hotelFood.isFoodAvailable && !selectedFoodType}
+                  isActive={!hotelFood?.isFoodAvailable && !selectedFoodType}
                   onClick={handleNoClick}
                 />
               </div>
