@@ -89,6 +89,14 @@ const hotelAvailability = ApiInstance.injectEndpoints({
       }),
       invalidatesTags:[ApiEnum.HOTEL_AVAILABILITY]
     }),
+
+    copyHotelAvailability: build.mutation<HotelAvailability, { availabilityId: string }>({
+      query: ({ availabilityId }) => ({
+        url: `${ApiEnum.HOTEL_AVAILABILITY}/copy/${availabilityId}`,
+        method: "POST",
+      }),
+      invalidatesTags: [ApiEnum.HOTEL_AVAILABILITY]
+    }),
   }),
 })
 
@@ -112,5 +120,8 @@ export const {
   // delete multiple dates (batch)
   useDeleteHotelAvailabilityDatesBatchMutation,
   
-  useDeleteHotelAvailabilityDateCommissionsMutation
+  useDeleteHotelAvailabilityDateCommissionsMutation,
+  
+  // copy hotel availability
+  useCopyHotelAvailabilityMutation
 } = hotelAvailability;

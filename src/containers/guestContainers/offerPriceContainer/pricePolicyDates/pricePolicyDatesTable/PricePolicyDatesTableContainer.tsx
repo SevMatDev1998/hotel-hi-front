@@ -3,8 +3,8 @@ import CommissionDateView from "../../../../../components/shared/CommissionDateV
 import BlockContainer from "../../../../public/BlockContainer";
 import { useTranslation } from "../../../../../hooks/useTranslation";
 import { HotelAvailabilityDateCommission } from "../../../../../types/hotelAvailabilityDateCommission";
-
-
+import useModal from "../../../../../hooks/useModal";
+import PDFPreviewModal from "../../../../../modals/PDFPreviewModal";
 
 interface HotelAvailability {
   id: string;
@@ -15,13 +15,21 @@ interface HotelAvailability {
 
 interface IPricePolicyDatesTableContainerProps {
   hotelAvailabilityWithDates?: HotelAvailability[];
-  // onDelete?: (id: number) => void;
 }
 
 const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> = ({
   hotelAvailabilityWithDates = [],
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const open = useModal();
+
+  const handleOpenPdfModal = (availabilityId: string, title: string) => {
+    open(PDFPreviewModal, { 
+      availabilityId, 
+      title,
+      className: "bg-white max-w-6xl"
+    });
+  };
 
   if (!hotelAvailabilityWithDates.length) {
     return (
@@ -75,7 +83,10 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
               className="grid grid-cols-[1fr_2fr_3fr_50px] items-center px-4 py-3"
             >
               <CommissionDateView dateCommissions={dateCommissions} />
-              <div className="flex items-center gap-2 ">
+              <div 
+                className="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors"
+                onClick={() => handleOpenPdfModal(availability.id, availability.title)}
+              >
                 <span
                   className="inline-block w-3 h-3 rounded-full"
                   style={{ backgroundColor: availability.color }}
