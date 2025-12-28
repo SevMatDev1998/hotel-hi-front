@@ -32,7 +32,7 @@ const AcceptPartnerContainer = () => {
   
   return (
     <div>
-      {partnerData &&
+      {partnerData && countryOptions.length > 0 &&
         <AcceptPartnerForm
           countryOptions={countryOptions}
           legalEntityOptions={legalEntityOptions}

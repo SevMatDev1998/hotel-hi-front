@@ -16,7 +16,7 @@ const PricePolicyContainer = () => {
  
   const { user } = useAppSelector((state) => state.auth)
 
-  const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId })
+  const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId, refetchOnMountOrArgChange: true });
 
   const handleOpenHotelAvailabilityModal = (availabilityId: string) => {
     open(ShowHotelAvailabilityModal, { title: "", availabilityId, onSubmit: () => { }, className: "bg-white" });
@@ -51,7 +51,7 @@ const PricePolicyContainer = () => {
         ))}
       </div>
       <div className='flex justify-end mt-4'>
-        <Button onClick={() => { navigate(RouteEnum.PRICE_POLICY_DATES) }}>
+        <Button disabled={!hotelAvailabilites?.length} onClick={() => { navigate(RouteEnum.PRICE_POLICY_DATES) }}>
           {t("price_policy.attach_date_to_price_offer")}
         </Button>
       </div>

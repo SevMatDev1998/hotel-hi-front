@@ -30,6 +30,8 @@ const FoodsContainer = () => {
     const hotelFood = foodData?.find(item => item.foodType === food.type);
     return hotelFood
   });
+  console.log(foodData);
+  
   
   return (
     <div>

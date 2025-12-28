@@ -6,9 +6,10 @@ const FoodsService = ApiInstance.injectEndpoints({
   endpoints: build => ({
 
     // get hotel foods by hotel id
-    getHotelFoodsByHotelId: build.query<HotelFood[], { hotelId?: string }>({
-      query: ({ hotelId }) => ({
+    getHotelFoodsByHotelId: build.query<HotelFood[], { hotelId?: string; availableOnly?: boolean }>({
+      query: ({ hotelId, availableOnly }) => ({
         url: `${ApiEnum.HOTEL_FOODS}/hotel/${hotelId}`,
+        params: availableOnly !== undefined ? { availableOnly } : {}
       }),
       providesTags: [ApiEnum.CUISNESSE]
     }),

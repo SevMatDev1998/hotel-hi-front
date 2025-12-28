@@ -17,7 +17,7 @@ const AddRoomPricePolicy: FC<IAddRoomPricePolicyProps> = ({ hotelId, hotelAvaila
 
   const { data: roomsData } = useGetHotelRoomsByHotelIdQuery({ hotelId: hotelId! }, { skip: !hotelId });
 
-  const { data: hotelFoods } = useGetHotelFoodsByHotelIdQuery({ hotelId: hotelId || '' }, { skip: !hotelId });
+  const { data: hotelFoods } = useGetHotelFoodsByHotelIdQuery({ hotelId: hotelId || '', availableOnly: true }, { skip: !hotelId });
   const { data: hotelAvailabilityAgeAssessments } = useGetHotelAgeAssessmentByHotelAvailabilityIdQuery({ hotelAvailabilityId }, { skip: !hotelAvailabilityId });
 
   

@@ -29,6 +29,8 @@ export const MainLayout: FC = () => {
   useEffect(() => {
     if (isLoading || isFetching) return;
 
+    if(isGuest) return
+
     if (!jwtToken && isPrivate) {
       navigate(RouteEnum.LOGIN);
       return;
