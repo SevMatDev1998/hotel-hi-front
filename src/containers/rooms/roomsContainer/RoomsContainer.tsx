@@ -29,8 +29,8 @@ const RoomsContainer = () => {
       <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
       <div className="grid grid-cols-2 mobile:grid-cols-1">
         <div>
-          <p>{t("rooms.type_of_rooms_in_the_hotel")} - {roomsData?.length}</p>
-          <p>{t("rooms.total_number_of_rooms")} - {calculateTotalNumberOfRooms(roomsData)}</p>
+          <p>{t("rooms.type_of_rooms_in_the_hotel")}  {roomsData?.length}</p>
+          <p>{t("rooms.total_number_of_rooms")}  {calculateTotalNumberOfRooms(roomsData)}</p>
         </div>
         <div className="grid justify-items-end mobile:justify-items-start">
           <Button onClick={handleSetNavigationAccessStep} disabled={!roomsData?.length}> 

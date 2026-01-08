@@ -8,6 +8,7 @@ interface IInput {
   className?: string;
   wrapperClassName?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string | number;
 }
 
 const Input: FC<IInput> = ({
@@ -17,6 +18,7 @@ const Input: FC<IInput> = ({
   className = "",
   wrapperClassName = "",
   onChange,
+  value,
 }) => {
   return (
     <div className={wrapperClassName}>
@@ -33,6 +35,7 @@ const Input: FC<IInput> = ({
           className
         )}
         placeholder={label}
+        value={value}
       />
     </div>
   );

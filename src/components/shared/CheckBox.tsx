@@ -24,7 +24,7 @@ const CheckBox: FC<CheckBoxProps> = ({ options, isChecked, toggleValue, tr_name 
           <Check className="absolute top-[4px] left-[1px] w-3 h-3 text-white pointer-events-none" strokeWidth={3} />
         )}
       </div>
-      <span className="text-12">{tr_name ? t(`${tr_name}.${options.name}`) : options.name}</span>
+      <span className="text-11">{tr_name ? t(`${tr_name}.${options.name}`) : options.name}</span>
     </label>
   );
 };

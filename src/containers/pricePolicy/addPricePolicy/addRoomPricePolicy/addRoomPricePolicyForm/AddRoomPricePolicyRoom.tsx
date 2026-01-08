@@ -3,6 +3,7 @@ import CardContainer from '../../../../public/CardContainer';
 import { useTranslation } from '../../../../../hooks/useTranslation';
 import { HotelRoom } from '../../../../../types';
 import { CreateHotelRoomPriceDto } from '../../../../../types/pricePolicyDto';
+import Input from '../../../../../components/shared/Input';
 
 interface IAddRoomPricePolicyRoomProps {
   room: HotelRoom;
@@ -48,11 +49,12 @@ const AddRoomPricePolicyRoom: React.FC<IAddRoomPricePolicyRoomProps> = ({
           <tr>
             <td className="border px-4 py-2">{room.mainGuestQuantity}</td>
             <td className="border px-4 py-2">
-              <input
+              <Input
                 type="number"
                 className="w-full"
                 value={price}
                 onChange={(e) => handleChange(e.target.value)}
+                label=''
               />
             </td>
           </tr>

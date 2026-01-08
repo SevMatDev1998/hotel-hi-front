@@ -35,8 +35,8 @@ const HotelServicesContainer = () => {
           <div className='flex flex-col gap-2'>
             <p>{t("hotel_service.hotel_provided_services")}</p>
             <div className='flex gap-3'>
-              <p>{t("hotel_service.paid_service")}- {serviceCounts?.paidCount || 0}</p>
-              <p>{t("hotel_service.free_service")}- {serviceCounts?.freeCount || 0}</p>
+              <p>{t("hotel_service.paid_service")} {serviceCounts?.paidCount || 0}</p>
+              <p>{t("hotel_service.free_service")} {serviceCounts?.freeCount || 0}</p>
             </div>
           </div>
           <div className="justify-items-end mobile:justify-items-start">

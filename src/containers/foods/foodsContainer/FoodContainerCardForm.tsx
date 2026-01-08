@@ -65,9 +65,9 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
     >
       <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center' >
         <div >
-          <p >{t("foods.delivery_times")}</p>
+          <p className='text-12' >{t("foods.delivery_times")}</p>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 text-11">
           <div className="flex items-center gap-3 border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none max-w-[min-content] ">
             <Controller
               name="startDate"
@@ -98,11 +98,11 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
         </div>
       </div>
       <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
-        <p >
+        <p className='text-12' >
           {t("foods.delivery_methods")}
         </p>
         <div className="flex flex-col gap-1">
-          <div className="grid grid-cols-3 mobile:grid-cols-2 gap-1">
+          <div className="grid grid-cols-3 mobile:grid-cols-2 gap-1 ">
             {foodOfferTypes.map((type) => (
               <Controller
                 key={type.id}
@@ -132,7 +132,7 @@ const FoodContainerCardForm: React.FC<IFoodContainerCardFormProps> = ({ hotelFoo
         </div>
       </div>
       <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 '>
-        <p>{t("foods.food_types")}</p>
+        <p className='text-12'>{t("foods.food_types")}</p>
         <div className="flex flex-col gap-1">
           <div className="grid grid-cols-3 mobile:grid-cols-2 gap-1">
             {cuisines.map((cuisine) => (

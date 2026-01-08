@@ -8,6 +8,7 @@ import { useTranslation } from '../../../../hooks/useTranslation';
 import { useCreateServicePricesMutation,useGetPaidServicesByHotelQuery } from '../../../../services/hotelService/hotelService.service';
 import RouteEnum from '../../../../enums/route.enum';
 import { PaidServiceItem } from '../../../../types';
+import Input from '../../../../components/shared/Input';
 
 interface ServicePriceFormData {
   hotelServiceId: number;
@@ -94,7 +95,6 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
         });
       });
     });
-    console.log(paidServices,prices);
       
     if (prices.length === 0) {
       return;
@@ -150,7 +150,7 @@ const AddServicePricePolicy = ({ hotelAvailabilityId, dateFrom, dateTo, hotelId 
                                         value={displayPriceType}
                                         className="w-48"
                                       />
-                                      <input
+                                      <Input
                                         type="number"
                                         className="w-24 px-2 py-1 border rounded"
                                         placeholder={t('price_policy.price')}

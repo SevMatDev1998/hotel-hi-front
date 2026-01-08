@@ -3,6 +3,7 @@ import CardContainer from '../../../../public/CardContainer';
 import { useTranslation } from '../../../../../hooks/useTranslation';
 import { HotelAgeAssignment } from '../../../../../types';
 import { CreateHotelAgeAssignmentPriceDto } from '../../../../../types/pricePolicyDto';
+import Input from '../../../../../components/shared/Input';
 
 interface IAddRoomPricePolicyAgeAssignmentProps {
   hotelRoomId: number;
@@ -77,7 +78,7 @@ const AddRoomPricePolicyAgeAssignment: React.FC<IAddRoomPricePolicyAgeAssignment
           <tr>
             {hotelAvailabilityAgeAssessments.map((age) => (
               <td key={age.id} className="border px-3 py-2">
-                <input
+                <Input
                   type="number"
                   className="w-full text-center"
                   value={prices[age.id] ?? ''}

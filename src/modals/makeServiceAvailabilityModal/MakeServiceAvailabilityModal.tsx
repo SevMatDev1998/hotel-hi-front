@@ -72,7 +72,7 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
   };
 
   return (
-    <div className="p-5 flex flex-col space-y-5 w-[900px]">
+    <div className="p-5 flex flex-col space-y-5 w-[950px] tablet:w-[800px] mobile:w-full">
       <h3>{t("hotel_service.set_availability")}</h3>
       <MakeServiceAvailabilityModalForm
         hotelServiceAvailabilities={availabilityData}

@@ -43,46 +43,48 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
 
 
   const isInactive = hotelFood === undefined
-  const isBlockOpend = selectedFoodType === mainFood.type
+  const isBlockOpened = selectedFoodType === mainFood.type
    
   
   return (
-    <BlockContainer shadow={false} className={`border-2 ${!hotelFood && !isInactive ? 'border-red-300' : 'border-white'}`}>
+    <BlockContainer shadow={false} className={`border-2 ${isInactive ? 'border-red-300' : 'border-white'}`}>
       <div className='flex flex-col gap-4'>
         <div className='flex justify-end items-start'>
           <div className={`flex flex-col w-full gap-3`}>
-            <div className='grid grid-cols-2'>
-              <h3>{t(`foods.${mainFood.type}`)}</h3>
-             {!isBlockOpend && <p>{hotelFood?.startDate} - {hotelFood?.endDate}</p>} 
+            <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1  text-11' >
+              <h3 className='text-13'>{t(`foods.${mainFood.type}`)}</h3>
+             {!isBlockOpened && hotelFood?.isFoodAvailable && <p className='text-12'>{hotelFood?.startDate} - {hotelFood?.endDate}</p>} 
             </div>
-            <span className={!isBlockOpend ? 'block' : 'hidden'}>
-            <div className='grid grid-cols-2'>
-              <p>{t("foods.food_types")}</p>
-              <div className='flex gap-3'>
-                {hotelFood?.cuisineIds && hotelFood.cuisineIds.map((id: number) => {
-                  const cuisine = cuisines.find((c: any) => c.id === id);
-                  return cuisine ? <span key={id}>{t(`cuisines.${cuisine.name}`)}</span> : null;
-                })}
-              </div>
-            </div>
-            <div className='grid grid-cols-2'>
-              <p>{t("foods.delivery_methods")}</p>
-              <div className='flex gap-3'>
-                {hotelFood?.foodOfferTypeIds && hotelFood.foodOfferTypeIds.map((id: number) => {
-                  const foodType = foodOfferTypes.find((f: any) => f.id === id);
-                  return foodType ? <span key={id}>{t(`food_offer_types.${foodType.name}`)}</span> : null;
-                })}
-              </div>
-            </div>
-            </span>
+            {!isBlockOpened && hotelFood && hotelFood.isFoodAvailable && (
+              <>
+                <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2'>
+                  <p className='text-12'>{t("foods.food_types")}</p>
+                  <div className='flex gap-3 flex-wrap'>
+                    {hotelFood.cuisineIds && hotelFood.cuisineIds.map((id: number) => {
+                      const cuisine = cuisines.find((c: any) => c.id === id);
+                      return cuisine ? <span key={id} className='text-11'>{t(`cuisines.${cuisine.name}`)}</span> : null;
+                    })}
+                  </div>
+                </div>
+                <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2'>
+                  <p className='text-12'>{t("foods.delivery_methods")}</p>
+                  <div className='flex gap-3 flex-wrap'>
+                    {hotelFood.foodOfferTypeIds && hotelFood.foodOfferTypeIds.map((id: number) => {
+                      const foodType = foodOfferTypes.find((f: any) => f.id === id);
+                      return foodType ? <span key={id} className='text-11'>{t(`food_offer_types.${foodType.name}`)}</span> : null;
+                    })}
+                  </div>
+                </div>
+              </>
+            )}
 
           </div>
           <div >
-            {hotelFood && hotelFood.isFoodAvailable && !selectedFoodType ? 
+            {hotelFood && hotelFood.isFoodAvailable && !selectedFoodType ? (
               <span onClick={() => setSelectedFoodType(hotelFood.foodType ? hotelFood.foodType : null)}>
                 <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
               </span>
-              :
+            ) : isInactive || selectedFoodType || (hotelFood && !hotelFood.isFoodAvailable) ? (
               <div className="flex items-center justify-center mobile:justify-start gap-2">
                 <SegmentedControlButton
                   label={t("buttons.yes")}
@@ -91,11 +93,11 @@ const FoodContainerCard: FC<IFoodContainerCardProps> = ({ mainFood, hotelFood })
                 />
                 <SegmentedControlButton
                   label={t("buttons.no")}
-                  isActive={!hotelFood?.isFoodAvailable && !selectedFoodType}
+                  isActive={hotelFood?.isFoodAvailable === false && !selectedFoodType}
                   onClick={handleNoClick}
                 />
               </div>
-            }
+            ) : null}
           </div>
         </div>
         {selectedFoodType && (

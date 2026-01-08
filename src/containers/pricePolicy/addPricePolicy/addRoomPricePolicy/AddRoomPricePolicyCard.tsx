@@ -77,8 +77,8 @@ const AddRoomPricePolicyCard: FC<IAddRoomPricePolicyCardProps> = ({
             disabled={isLoading || isDeactivating || isActivating}
           />
           <div>
-            <h3>
-              {t(`room_class_options.${room?.roomClass?.name}`)},{room?.roomView?.name && t(`room_view_options.${room.roomView.name}`)} - {room.area}
+            <h3 className='text-14'>
+              {t(`room_class_options.${room?.roomClass?.name}`)},{room?.roomView?.name && t(`room_view_options.${room.roomView.name}`)} - {room.area} մ²
             </h3>
           </div>
         </div>

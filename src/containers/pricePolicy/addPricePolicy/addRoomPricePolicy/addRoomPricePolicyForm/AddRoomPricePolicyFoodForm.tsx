@@ -4,6 +4,7 @@ import CardContainer from '../../../../public/CardContainer';
 import { useTranslation } from '../../../../../hooks/useTranslation';
 import { HotelAgeAssignment, HotelFood } from '../../../../../types';
 import { CreateHotelFoodPriceDto } from '../../../../../types/pricePolicyDto';
+import Input from '../../../../../components/shared/Input';
 
 interface IAddRoomPricePolicyFoodProps {
   hotelFoods?: HotelFood[];
@@ -98,8 +99,11 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
 
   return (
     <CardContainer className='rounded-md p-4'>
-      <p >{t('price_policy.included_food_in_room_price')}</p>
-      <div className="flex flex-wrap gap-4 mb-4">
+      <div className='flex items-center gap-3 mb-4'>
+        <div>
+          <h3 className='text-12'>{t('price_policy.included_food_in_room_price')}</h3>
+        </div>
+      <div className="flex flex-wrap items-center mt-1 gap-4 ">
         {hotelFoods.map((food) => (
           <CheckBox
             key={food.id}
@@ -108,6 +112,7 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
             toggleValue={() => toggleFood(food.id)}
           />
         ))}
+      </div>
       </div>
 
       {visibleFoods.length > 0 && (
@@ -130,13 +135,14 @@ const AddRoomPricePolicyFood: React.FC<IAddRoomPricePolicyFoodProps> = ({
                   const key = `${food.id}-${age.id}`;
                   return (
                     <td key={key} className="border px-3 py-2">
-                      <input
+                      <Input
                         type="number"
                         className="w-full text-center "
                         value={prices[key] ?? ''}
                         onChange={(e) =>
                           handlePriceChange(food.id, age.id, e.target.value)
                         }
+                        label=''
                       />
                     </td>
                   );

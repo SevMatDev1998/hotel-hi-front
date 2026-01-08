@@ -81,10 +81,11 @@ export const getNotificationsColumns = (
             e.stopPropagation();
             onSendNotification(row.original.id);
           }}
+          isLoading ={isNotificationSendLoading}
             disabled={!row.original.isPartnerCommissionAccept ||isNotificationSendLoading}
           className={row.original.isPartnerCommissionAccept ? "text-dusty-teal" : "text-black"}
         >
-          {t("notifications.notify")}
+          { t("notifications.notify")}
         </Button>
       ),
     }

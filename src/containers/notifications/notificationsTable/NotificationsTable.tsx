@@ -203,8 +203,6 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
         onSearch={handleChange}
         search={search}
       />
-
-      eee
     </div>
   );
 }

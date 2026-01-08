@@ -40,13 +40,13 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
   return (
     <div className="flex items-center gap-2 w-full  text-12">
       {canRemove  &&
-      <div onClick={onRemove}> 
-        <img src="/images/icons/remove-button-icon.svg" alt="period icon" />
+      <div className="cursor-pointer w-[20px] h-[20px]" onClick={onRemove} >  
+        <img src="/images/icons/remove-button-icon.svg" alt="period icon"  />
       </div>
       }
-      <div className="flex flex-wrap items-center gap-3 w-full">
+      <div className="flex  mobile:flex-col  gap-3 w-full">
         <div className="flex flex-col border border-gray-300 rounded-md p-2">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 mobile:w-[100%]">
             <div className="flex items-center gap-4">
               <label className="flex items-center gap-1">
                 <input
@@ -73,8 +73,7 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
                 {e.periodType.message}
               </span>
             )}
-          </div>
-          
+          </div>       
           <div className="flex border rounded-md mt-2">
             <input
               type="date"
@@ -96,7 +95,6 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
           )}
         </div>
         <div className="flex items-center gap-4 border border-gray-300 rounded-md p-2" >
-
         <div className="flex flex-col ">
           <div className="flex items-center gap-4">
             <label className="flex items-center gap-1">

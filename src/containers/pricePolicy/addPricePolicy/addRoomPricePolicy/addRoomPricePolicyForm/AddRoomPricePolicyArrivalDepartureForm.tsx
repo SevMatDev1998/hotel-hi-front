@@ -5,6 +5,7 @@ import CardContainer from "../../../../public/CardContainer";
 import { useTranslation } from "../../../../../hooks/useTranslation";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
 import { CreateHotelAdditionalServiceDto } from "../../../../../types/pricePolicyDto";
+import Input from "../../../../../components/shared/Input";
 
 interface IAddRoomPricePolicyArrivalDepartureFormProps {
   hotelAvailabilityId: number;
@@ -120,11 +121,12 @@ const AddRoomPricePolicyArrivalDepartureForm: React.FC<IAddRoomPricePolicyArriva
             value={row.time}
             onChange={(value) => updateRow(row.id, "time", value)}
           />
-          <input
+          <Input
             type="number"
             placeholder="%"
             value={row.percentage}
             onChange={e => updateRow(row.id, "percentage", e.target.value)}
+            label=''
           />
         </div>
       ))}
