@@ -9,7 +9,9 @@ export interface CreateHotelFoodPriceDto {
 export interface CreateHotelRoomPriceDto {
   hotelRoomId: number;
   hotelAvailabilityId: number;
+  guestCount: number;
   price: number;
+  isActive?: boolean;
 }
 
 export interface CreateHotelAdditionalServiceDto {
@@ -43,7 +45,7 @@ export interface CreateHotelAgeAssignmentPriceDto {
 export interface CreateRoomPricePolicyDto {
   hotelAvailabilityId: number;
   foodPrices: CreateHotelFoodPriceDto[];
-  roomPrice: CreateHotelRoomPriceDto;
+  roomPrices: CreateHotelRoomPriceDto[];
   arrivalDepartureServices: CreateHotelAdditionalServiceDto[];
   otherServices: CreateOtherServiceDto[];
   hotelAgeAssignmentPrices: CreateHotelAgeAssignmentPriceDto[];
@@ -55,7 +57,7 @@ export interface GetRoomPricePolicyResponse {
     hotelAvailabilityId: number;
     hotelRoomId: number;
     foodPrices: (CreateHotelFoodPriceDto & { id: number; createdAt: string; updatedAt: string })[];
-    roomPrice: (CreateHotelRoomPriceDto & { id: number; createdAt: string; updatedAt: string }) | null;
+    roomPrices: (CreateHotelRoomPriceDto & { id: number; createdAt: string; updatedAt: string })[];
     ageAssignmentPrices: (CreateHotelAgeAssignmentPriceDto & { id: number; createdAt: string; updatedAt: string })[];
     arrivalDepartureServices: (CreateHotelAdditionalServiceDto & { id: number; createdAt: string; updatedAt: string })[];
     otherServices: (CreateOtherServiceDto & { id: number; createdAt: string; updatedAt: string })[];

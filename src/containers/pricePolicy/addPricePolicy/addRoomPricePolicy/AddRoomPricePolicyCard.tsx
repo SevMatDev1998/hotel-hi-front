@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Switch } from '../../../../components/shared/Switch';
 import { useTranslation } from '../../../../hooks/useTranslation';
@@ -39,8 +39,10 @@ const AddRoomPricePolicyCard: FC<IAddRoomPricePolicyCardProps> = ({
   const [activate, { isLoading: isActivating }] = useActivateRoomPricePolicyMutation();
 
   // Determine if data exists and is active
-  const isSaved = existingData?.data?.roomPrice !== null && existingData?.data?.roomPrice !== undefined;
-  const isActive = existingData?.data?.roomPrice?.isActive === true;
+  const isSaved = existingData?.data?.roomPrices && existingData.data.roomPrices.length > 0;
+  const isActive = existingData?.data?.roomPrices && existingData.data.roomPrices.length > 0 
+    ? existingData.data.roomPrices.some(rp => rp.isActive === true)
+    : false;
 
   const handleToggleChange = async () => {
     if (!isSaved) {

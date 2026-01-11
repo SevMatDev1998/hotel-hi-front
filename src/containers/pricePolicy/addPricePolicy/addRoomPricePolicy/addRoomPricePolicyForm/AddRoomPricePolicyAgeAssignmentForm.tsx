@@ -69,7 +69,9 @@ const AddRoomPricePolicyAgeAssignment: React.FC<IAddRoomPricePolicyAgeAssignment
           <tr>
             {hotelAvailabilityAgeAssessments.map((age) => (
               <th key={age.id} className="border px-3 py-2">
-                {age.fromAge}-{age.toAge}{t('price_policy.annual')}
+                 {age.fromAge}
+                {age.toAge === 180 ? ` ${t('price_policy.and_above')}` : `-${age.toAge}`}
+                {` ${t('price_policy.annual')}`}
               </th>
             ))}
           </tr>
@@ -83,7 +85,7 @@ const AddRoomPricePolicyAgeAssignment: React.FC<IAddRoomPricePolicyAgeAssignment
                   className="w-full text-center"
                   value={prices[age.id] ?? ''}
                   onChange={(e) => handlePriceChange(age.id, e.target.value)}
-                  placeholder="0"
+                  label=''
                 />
               </td>
             ))}

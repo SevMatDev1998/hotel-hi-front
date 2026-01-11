@@ -38,16 +38,17 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
   const { hotelAvailabilityId } = useParams<{ hotelAvailabilityId: string }>();
 
   const hotelRoomId = Number(room.id);
+  const availabilityId = Number(hotelAvailabilityId);
   const { t } = useTranslation();
   const [createRoomPricePolicy, { isLoading }] = useCreateRoomPricePolicyMutation();
 
   const { data: existingData } = useGetRoomPricePolicyQuery(
-    { hotelAvailabilityId, roomId: hotelRoomId },
-    { skip: !hotelAvailabilityId || !hotelRoomId }
+    { hotelAvailabilityId: availabilityId, roomId: hotelRoomId },
+    { skip: !availabilityId || !hotelRoomId }
   );
 
   const [foodPrices, setFoodPrices] = useState<CreateHotelFoodPriceDto[]>([]);
-  const [roomPrice, setRoomPrice] = useState<Omit<CreateHotelRoomPriceDto, 'hotelAvailabilityId'> | null>(null);
+  const [roomPrices, setRoomPrices] = useState<Omit<CreateHotelRoomPriceDto, 'hotelAvailabilityId'>[]>([]);
   const [ageAssignmentPrices, setAgeAssignmentPrices] = useState<CreateHotelAgeAssignmentPriceDto[]>([]);
   const [arrivalDeparturePolicies, setArrivalDeparturePolicies] = useState<Omit<CreateHotelAdditionalServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]>([]);
   const [otherServices, setOtherServices] = useState<Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]>([]);
@@ -61,10 +62,9 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
         setFoodPrices(data.foodPrices);
       }
 
-      if (data.roomPrice) {
-         
-        const { id, createdAt, updatedAt, hotelAvailabilityId, ...roomPriceData } = data.roomPrice;
-        setRoomPrice(roomPriceData);
+      if (data.roomPrices && data.roomPrices.length > 0) {
+        const roomPricesData = data.roomPrices.map(({ id, createdAt, updatedAt, hotelAvailabilityId, ...rest }) => rest);
+        setRoomPrices(roomPricesData);
       }
 
       if (data.ageAssignmentPrices?.length > 0) {
@@ -90,38 +90,37 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
     try {
       const arrivalDepartureServices: CreateHotelAdditionalServiceDto[] = arrivalDeparturePolicies.map(service => ({
         ...service,
-        hotelAvailabilityId,
+        hotelAvailabilityId: availabilityId,
         hotelRoomId,
       }));
 
       const additionalServices: CreateOtherServiceDto[] = otherServices.map(service => ({
         ...service,
-        hotelAvailabilityId,
+        hotelAvailabilityId: availabilityId,
         hotelRoomId,
       }));
 
-      const roomPriceDto: CreateHotelRoomPriceDto | null = roomPrice ? {
-        ...roomPrice,
-        hotelAvailabilityId,
-      } : null;
-
+      const roomPricesDto: CreateHotelRoomPriceDto[] = roomPrices.map(rp => ({
+        ...rp,
+        hotelAvailabilityId: availabilityId,
+      }));
 
       const foodPricesDto: CreateHotelFoodPriceDto[] = foodPrices.map(service => ({
         ...service,
-        hotelAvailabilityId,
+        hotelAvailabilityId: availabilityId,
         hotelRoomId,
       }));
 
 
-      if (!roomPriceDto) {
+      if (!roomPricesDto || roomPricesDto.length === 0) {
         await appToast('error', t('price_policy.please_enter_room_price'));
         return;
       }
       
       const payload: CreateRoomPricePolicyDto = {
-        hotelAvailabilityId,
+        hotelAvailabilityId: availabilityId,
         foodPrices: foodPricesDto,
-        roomPrice: roomPriceDto,
+        roomPrices: roomPricesDto,
         arrivalDepartureServices,
         otherServices: additionalServices,
         hotelAgeAssignmentPrices: ageAssignmentPrices,
@@ -142,7 +141,7 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
     <div>
       <div className='flex flex-col gap-4 mb-6'>
         <AddRoomPricePolicyFoodForm
-          hotelAvailabilityId={hotelAvailabilityId}
+          hotelAvailabilityId={availabilityId}
           hotelFoods={hotelFoods}
           hotelAvailabilityAgeAssessments={hotelAvailabilityAgeAssessments}
           onChange={setFoodPrices}
@@ -151,12 +150,9 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
 
         <AddRoomPricePolicyRoomForm
           room={room}
-          hotelAvailabilityId={hotelAvailabilityId}
-          onChange={setRoomPrice}
-          initialData={existingData?.data?.roomPrice ? {
-            hotelRoomId: existingData.data.roomPrice.hotelRoomId,
-            price: Number(existingData.data.roomPrice.price)
-          } : undefined}
+          hotelAvailabilityId={availabilityId}
+          onChange={setRoomPrices}
+          initialData={existingData?.data?.roomPrices}
         />
 
         <AddRoomPricePolicyAgeAssignmentForm
