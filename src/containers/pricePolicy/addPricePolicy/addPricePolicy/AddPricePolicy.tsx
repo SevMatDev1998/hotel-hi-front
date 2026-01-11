@@ -27,7 +27,6 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
   const roomBedTypeOptions = [
     { value: 'Main', label: 'Main' },
     { value: 'Cradle', label: 'Cradle' },
-    { value: 'Additional', label: 'Additional' },
   ];
 
   const { register, handleSubmit, control, formState: { errors } } = useForm<CreateHotelAvailabilityFormData>({
@@ -79,7 +78,7 @@ const AddPricePolicy: FC<IAddPricePolicyProps> = ({ hotelId, onSuccess }) => {
     <div>
       <BlockContainer shadow={false}>
         <form className='flex flex-col gap-3' onSubmit={handleSubmit(onSubmit)}>
-          <h3>{t("price_policy.price_offer_settings")}</h3>
+          <h3>{t("price_policy.price_offer_setting")}</h3>
           <InfoBlock text='Նշված ժամանակահատվածում վերապահումներ ստանալու հնարավորություն կունենաք։ Նաև գների կարգավորման միջոցով փոփոխություններ կատարել' />
           <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
             <div><span>{t("hotel_availability.price_offer_name")} *</span></div>

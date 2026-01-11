@@ -29,9 +29,13 @@ const HotelSericesService = ApiInstance.injectEndpoints({
       })
     }),
 
-    getAdditionalServices: build.query<SystemService, void>({
-      query: () => ({
+    getAdditionalServices: build.query<SystemService[], { hotelId?: number; availabilityId?: number }>({
+      query: ({ hotelId, availabilityId }) => ({
         url: `${ApiEnum.SYSTEM_SERVICES}/additional-services`,
+        params: { 
+          ...(hotelId && { hotelId }),
+          ...(availabilityId && { availabilityId })
+        },
       }),
     }),
 
