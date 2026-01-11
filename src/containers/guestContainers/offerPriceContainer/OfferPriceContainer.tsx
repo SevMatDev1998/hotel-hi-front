@@ -13,8 +13,6 @@ const OfferPriceContainer = () => {
   }
   return (
     <div>
-      OfferPriceContainer
-      <p>Hotel ID: {hotelId}</p>
       <PricePolicyDatesCalendarContainer hotelAvailabilityWithDates={hotelAvailabilityWithDates} hotelId={hotelId!} />
       <PricePolicyDatesTableContainer hotelAvailabilityWithDates={hotelAvailabilityWithDates} />
     </div>

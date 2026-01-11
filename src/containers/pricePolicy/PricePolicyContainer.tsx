@@ -6,7 +6,7 @@ import BlockContainer from '../public/BlockContainer';
 import useAppSelector from '../../hooks/useAppSelector';
 import useModal from '../../hooks/useModal';
 import { useTranslation } from '../../hooks/useTranslation';
-import { useGetHotelAvailabilityQuery } from '../../services/hotelAvailability/hotelAvailability.service';
+import { useGetHotelAvailabilityQuery, useCopyHotelAvailabilityMutation } from '../../services/hotelAvailability/hotelAvailability.service';
 import RouteEnum from '../../enums/route.enum';
 
 const PricePolicyContainer = () => {
@@ -16,10 +16,19 @@ const PricePolicyContainer = () => {
  
   const { user } = useAppSelector((state) => state.auth)
 
-  const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId }, { skip: !user?.hotelId, refetchOnMountOrArgChange: true });
+  const { data: hotelAvailabilites } = useGetHotelAvailabilityQuery({ hotelId: user?.hotelId || '' }, { skip: !user?.hotelId, refetchOnMountOrArgChange: true });
+  const [copyHotelAvailability, { isLoading: isCopying }] = useCopyHotelAvailabilityMutation();
 
   const handleOpenHotelAvailabilityModal = (availabilityId: string) => {
     open(ShowHotelAvailabilityModal, { title: "", availabilityId, onSubmit: () => { }, className: "bg-white" });
+  };
+
+  const handleCopyAvailability = async (availabilityId: number) => {
+    try {
+      await copyHotelAvailability({ availabilityId: availabilityId.toString() }).unwrap();
+    } catch (error) {
+      console.error('Failed to copy availability:', error);
+    }
   };
 
   return (
@@ -33,20 +42,24 @@ const PricePolicyContainer = () => {
       </div>
       <div className='flex flex-col gap-3'>
         {!!hotelAvailabilites?.length && hotelAvailabilites?.map((item) => (
-          <BlockContainer shadow={false}  >
+          <BlockContainer shadow={false} key={item.id}>
             <div className='flex justify-between'>
               <div>
                 {item.title}
               </div>
               <div className='flex gap-4 items-center'>
-                <div onClick={() => { handleOpenHotelAvailabilityModal(item.id) }}>
+                <div onClick={() => handleCopyAvailability(item.id)} className="cursor-pointer">
+                  {isCopying ? t("Copying...") : t("Copy")}
+                </div>
+                <div onClick={() => { handleOpenHotelAvailabilityModal(item.id.toString()) }} className="cursor-pointer">
                   {t("price_policy.price_list")}
                 </div>
-                <span onClick={() => navigate(`${RouteEnum.PRICE_POLICY_CREATE}/${item.id}`)}>
+                <span onClick={() => navigate(`${RouteEnum.PRICE_POLICY_CREATE}/${item.id}`)} className="cursor-pointer">
                   <img src="/images/icons/edit-icon.svg" alt="edit icon" className="cursor-pointer" />
                 </span>
               </div>
             </div>
+
           </BlockContainer>
         ))}
       </div>
