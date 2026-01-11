@@ -13,7 +13,7 @@ interface IPDFPreviewModalProps {
   title?: string;
 }
 
-const PDFPreviewModal: ModalFC<IPDFPreviewModalProps> = ({ availabilityId, title }) => {
+const PDFPreviewModal: ModalFC<IPDFPreviewModalProps> = ({ availabilityId }) => {
   const { t } = useTranslation();
   const [numPages, setNumPages] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,27 +37,9 @@ const PDFPreviewModal: ModalFC<IPDFPreviewModalProps> = ({ availabilityId, title
 
   return (
     <div className="flex flex-col h-[900px]">
-      <div className="flex justify-between items-center mb-4 px-6 pt-6">
-        <h2 className="text-xl font-bold">{title || t("price_policy.price_list")}</h2>
-        <Button onClick={handleDownload} variant="outline">
-          <div className="flex items-center gap-2">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
+      <div className="flex justify-end items-center m-4">
+        <Button onClick={handleDownload} variant="outline" className="w-[200px]">
             {t("common.download")} PDF
-          </div>
         </Button>
       </div>
       
@@ -68,7 +50,9 @@ const PDFPreviewModal: ModalFC<IPDFPreviewModalProps> = ({ availabilityId, title
           </div>
         )}
         
-        <div className="flex flex-col items-center gap-4 ">
+        <div className="flex flex-col items-center gap-1 ">
+        <h3 className="">{t("price_policy.price_list")}</h3>
+
           <Document
             file={pdfUrl}
             onLoadSuccess={onDocumentLoadSuccess}
@@ -83,14 +67,14 @@ const PDFPreviewModal: ModalFC<IPDFPreviewModalProps> = ({ availabilityId, title
             }
           >
             {Array.from(new Array(numPages), (el, index) => (
-              <Page
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-                className="border border-gray-300 rounded-lg mb-4"
-                width={800}
-              />
+              <div key={`page_${index + 1}`} >
+                <Page
+                  pageNumber={index + 1}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                  width={800}
+                />
+              </div>
             ))}
           </Document>
         </div>

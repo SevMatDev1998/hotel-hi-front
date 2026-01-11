@@ -4,7 +4,7 @@ import { Button } from '../../../../../components/shared/Button';
 import appToast from '../../../../../helpers/appToast';
 import AddRoomPricePolicyAdditionalServicesForm from './AddRoomPricePolicyAdditionalServicesForm';
 import AddRoomPricePolicyAgeAssignmentForm from './AddRoomPricePolicyAgeAssignmentForm';
-import AddRoomPricePolicyArrivalDepartureForm from './AddRoomPricePolicyArrivalDepartureForm';
+// import AddRoomPricePolicyArrivalDepartureForm from './AddRoomPricePolicyArrivalDepartureForm';
 import AddRoomPricePolicyFoodForm from './AddRoomPricePolicyFoodForm';
 import AddRoomPricePolicyRoomForm from './AddRoomPricePolicyRoom';
 import { useTranslation } from '../../../../../hooks/useTranslation';
@@ -166,16 +166,17 @@ const AddRoomPricePolicyForm: FC<IAddRoomPricePolicyFormProps> = ({
           initialData={existingData?.data?.ageAssignmentPrices}
         />
 
-        <AddRoomPricePolicyArrivalDepartureForm
+        {/* <AddRoomPricePolicyArrivalDepartureForm
           hotelAvailabilityId={hotelAvailabilityId}
           hotelRoomId={hotelRoomId}
           onChange={setArrivalDeparturePolicies}
           initialData={existingData?.data?.arrivalDepartureServices}
-        />
+        /> */}
 
         <AddRoomPricePolicyAdditionalServicesForm
           onChange={setOtherServices}
           initialData={existingData?.data?.otherServices}
+          hotelAvailabilityId={Number(hotelAvailabilityId)}
         />
         <div className='flex w-full justify-end gap-2 mt-4'>
         

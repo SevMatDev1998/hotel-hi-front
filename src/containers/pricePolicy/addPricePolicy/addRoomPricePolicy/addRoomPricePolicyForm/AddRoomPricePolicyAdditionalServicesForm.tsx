@@ -1,35 +1,32 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckBox from "../../../../../components/shared/CheckBox";
 import { Switch } from "../../../../../components/shared/Switch";
 import CardContainer from "../../../../public/CardContainer";
 import { useTranslation } from "../../../../../hooks/useTranslation";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
 import { CreateOtherServiceDto } from "../../../../../types/pricePolicyDto";
+import useAppSelector from "../../../../../hooks/useAppSelector";
 
 interface IAddRoomPricePolicyAdditionalServicesFormProps {
   onChange: (data: Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]) => void;
   initialData?: any[];
+  hotelAvailabilityId?: number;
 }
-
-const TARGET_SERVICE_NAMES = ["Food delivery", "Provision of a crib"];
 
 const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAdditionalServicesFormProps> = ({ 
   onChange,
-  initialData
+  initialData,
+  hotelAvailabilityId
 }) => {
-  const { data: additionalServicesData } = useGetAdditionalServicesQuery();
-    const { t } = useTranslation();
+  const { user } = useAppSelector((state) => state.auth);
+  const { data: additionalServicesData = [] } = useGetAdditionalServicesQuery({ 
+    hotelId: user?.hotelId,
+    availabilityId: hotelAvailabilityId
+  });
+  const { t } = useTranslation();
 
-  // ✅ Filter only required services safely and memoized
-  const services = useMemo(
-    () => {
-      const servicesArray = Array.isArray(additionalServicesData) 
-        ? additionalServicesData 
-        : additionalServicesData ? [additionalServicesData] : [];
-      return servicesArray.filter(s => TARGET_SERVICE_NAMES.includes(s.name));
-    },
-    [additionalServicesData]
-  );
+  // ✅ Backend уже фильтрует, показываем все что пришло
+  const services = Array.isArray(additionalServicesData) ? additionalServicesData : [];
 
   // ✅ Create state indexed by serviceId (clean scalable structure)
   const [values, setValues] = useState<Record<number, { enabled: boolean; price: string; isNotFixed: boolean }>>({});
