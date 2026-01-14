@@ -7,18 +7,20 @@ interface CheckBoxProps {
   isChecked: boolean;
   toggleValue: () => void;
   tr_name?: string;
+  disabled?: boolean;
 }
 
-const CheckBox: FC<CheckBoxProps> = ({ options, isChecked, toggleValue, tr_name }) => {
+const CheckBox: FC<CheckBoxProps> = ({ options, isChecked, toggleValue, tr_name, disabled }) => {
   const { t } = useTranslation()
   return (
-    <label className="flex items-center gap-2 cursor-pointer select-none">
+    <label className={`flex items-center gap-2 select-none ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>
       <div className="relative">
         <input
           type="checkbox"
           checked={isChecked}
           onChange={toggleValue}
-          className="h-[14px] w-[14px] rounded border border-ash-gray appearance-none checked:bg-dusty-teal checked:border-dusty-teal cursor-pointer"
+          disabled={disabled}
+          className="h-[14px] w-[14px] rounded border border-ash-gray appearance-none checked:bg-dusty-teal checked:border-dusty-teal cursor-pointer disabled:cursor-not-allowed"
         />
         {isChecked && (
           <Check className="absolute top-[4px] left-[1px] w-3 h-3 text-white pointer-events-none" strokeWidth={3} />

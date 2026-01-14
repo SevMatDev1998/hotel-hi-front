@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import CardContainer from "../../../../public/CardContainer";
 import CheckBox from "../../../../../components/shared/CheckBox";
 import { Switch } from "../../../../../components/shared/Switch";
-import CardContainer from "../../../../public/CardContainer";
 import { useTranslation } from "../../../../../hooks/useTranslation";
 import { useGetAdditionalServicesQuery } from "../../../../../services/hotelService";
 import { CreateOtherServiceDto } from "../../../../../types/pricePolicyDto";
 import useAppSelector from "../../../../../hooks/useAppSelector";
+import Input from "../../../../../components/shared/Input";
 
 interface IAddRoomPricePolicyAdditionalServicesFormProps {
   onChange: (data: Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[]) => void;
@@ -67,7 +68,13 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
 
   useEffect(() => {
     const formatted: Omit<CreateOtherServiceDto, 'hotelAvailabilityId' | 'hotelRoomId'>[] = services
-      .filter(s => values[s.id]?.enabled)
+      .filter(s => {
+        const item = values[s.id];
+        if (!item?.enabled) return false;
+        const hasPrice = item.price && item.price !== '' && Number(item.price) > 0;
+        const hasCheckbox = item.isNotFixed;
+        return hasPrice || hasCheckbox;
+      })
       .map(s => ({
         systemServiceId: s.id,
         price: values[s.id].price ? Number(values[s.id].price) : null,
@@ -80,10 +87,17 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
   }, [values, services, onChange]);
 
   const update = (id: number, field: "enabled" | "price" | "isNotFixed", value: any) => {
-    setValues(prev => ({
-      ...prev,
-      [id]: { ...prev[id], [field]: value },
-    }));
+    setValues(prev => {
+      const updated = { ...prev };
+      if (field === "enabled" && value === false) {
+        updated[id] = { enabled: false, price: "", isNotFixed: false };
+      } else if (field === "isNotFixed" && value === true) {
+        updated[id] = { ...prev[id], [field]: value, price: "" };
+      } else {
+        updated[id] = { ...prev[id], [field]: value };
+      }
+      return updated;
+    });
   };
 
   return (
@@ -105,10 +119,10 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
               <span>{service.name}</span>
             </div>
 
-            <input
+            <Input
               type="number"
               className="border p-1 w-24"
-              disabled={!item.enabled}
+              disabled={!item.enabled || item.isNotFixed}
               placeholder="Արժեք"
               value={item.price}
               onChange={e => update(service.id, "price", e.target.value)}
@@ -118,6 +132,7 @@ const AddRoomPricePolicyAdditionalServicesForm: React.FC<IAddRoomPricePolicyAddi
               options={{ id: service.id, name: t("price_policy.not_confirmed_value") }}
               isChecked={item.isNotFixed}
               toggleValue={() => update(service.id, "isNotFixed", !item.isNotFixed)}
+              disabled={!item.enabled}
             />
 
           </div>
