@@ -85,7 +85,7 @@ const PricePolicyDatesTableContainer: FC<IPricePolicyDatesTableContainerProps> =
               <CommissionDateView dateCommissions={dateCommissions} />
               <div 
                 className="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors"
-                onClick={() => handleOpenPdfModal(availability.id, availability.title)}
+                onClick={() => handleOpenPdfModal(availability.id, "")}
               >
                 <span
                   className="inline-block w-3 h-3 rounded-full"

@@ -26,6 +26,17 @@ const GuestService = ApiInstance.injectEndpoints({
                 params: {  hotelId }
             }),
         }),
+
+        getHotelInfoByAvailabilityId: build.query<{
+            hotelName: string;
+            city: string;
+            state: string;
+            userEmail: string;
+        }, { availabilityId: string }>({
+            query: ({ availabilityId }) => ({
+                url: `${ApiEnum.GUESTS}/availability/${availabilityId}/hotel-info`,
+            }),
+        }),
     })
 })
 
@@ -34,6 +45,7 @@ const GuestService = ApiInstance.injectEndpoints({
 export const {
     useGetPartnerInformationQuery,
     useAcceptPartnerShipMutation,
-    useGetHotelAvailabilityWithDatesByPartneridQuery
+    useGetHotelAvailabilityWithDatesByPartneridQuery,
+    useGetHotelInfoByAvailabilityIdQuery,
 } = GuestService;
 

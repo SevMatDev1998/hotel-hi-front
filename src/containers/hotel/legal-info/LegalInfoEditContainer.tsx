@@ -131,26 +131,17 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
               <div >
                 <span >{t("hotel.phone_number")} *</span>
               </div>
-              <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-6'>
-                {/* <div  >
-                  <RegisterSelect
-                    name="countryId"
-                    options={courseOptions}
-                    register={register}
-                    // error={errors.courseId}
-                    required
-                    className='rounded-[5px]'
-
-                  />
-                </div> */}
-                <InputValidationLayout errors={errors} name="bankPhoneNumber">
+              <InputValidationLayout className='relative' errors={errors} name="bankPhoneNumber">
+                <span>
                   <RegisterInput
                     register={register}
                     name="bankPhoneNumber"
-                    className='rounded-[5px]'
+                    type="text"
+                    className='rounded-[5px] pl-[50px]'
                   />
-                </InputValidationLayout>
-              </div>
+                  <p className='absolute top-[10px] left-3 text-14'>+374</p>
+                </span>
+              </InputValidationLayout>
             </div>
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
