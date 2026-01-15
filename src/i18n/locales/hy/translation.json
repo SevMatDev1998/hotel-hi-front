@@ -254,7 +254,10 @@
     "please_enter_room_price": "Խնդրում ենք մուտքագրել սենյակի գինը",
     "price_policy_saved_success": "Գնային քաղաքականությունը հաջողությամբ պահպանվեց",
     "error_saving_price_policy": "Սխալ գնային քաղաքականությունը պահպանելիս",
-    "age_ranges_cannot_be_edited": "Տարիքային միջակայքները չեն կարող խմբագրվել"
+    "age_ranges_cannot_be_edited": "Տարիքային միջակայքները չեն կարող խմբագրվել",
+    "download_pdf": "Ներբեռնել PDF",
+    "loading_pdf": "PDF բեռնում...",
+    "error_loading_pdf": "PDF բեռնելու սխալ"
   },
   "service_price_types": {
     "HourlyRate": "ժամավճար",

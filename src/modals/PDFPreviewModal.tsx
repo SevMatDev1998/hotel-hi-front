@@ -39,14 +39,14 @@ const PDFPreviewModal: ModalFC<IPDFPreviewModalProps> = ({ availabilityId }) => 
     <div className="flex flex-col h-[900px]">
       <div className="flex justify-end items-center m-4">
         <Button onClick={handleDownload} variant="outline" className="w-[200px]">
-            {t("common.download")} PDF
+            {t("price_policy.download_pdf")}
         </Button>
       </div>
       
       <div className="flex-1 px-6 pb-6 overflow-auto">
         {loading && (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500">Загрузка PDF...</p>
+            <p className="text-gray-500">{t("price_policy.loading_pdf")}</p>
           </div>
         )}
         
@@ -59,9 +59,9 @@ const PDFPreviewModal: ModalFC<IPDFPreviewModalProps> = ({ availabilityId }) => 
             loading={null}
             error={
               <div className="flex flex-col items-center justify-center h-full">
-                <p className="text-red-500 mb-4">Ошибка загрузки PDF</p>
+                <p className="text-red-500 mb-4">{t("price_policy.error_loading_pdf")}</p>
                 <Button onClick={handleDownload} variant="primary">
-                  {t("common.download")} PDF
+                  {t("price_policy.download_pdf")}
                 </Button>
               </div>
             }
