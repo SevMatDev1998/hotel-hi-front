@@ -19,13 +19,14 @@ const AvailableServices: FC<IAvailableServicesProps> = ({ availableServices, hot
   }
 
   return (
-    <div className="flex gap-4 flex-wrap">
+    <div className="grid grid-cols-3 mobile:grid-cols-2 gap-3">
       {!!availableServices && availableServices?.map((service) => (
         <div key={service.id} className="flex gap-2 cursor-pointer" onClick={() => { hendleAddHotelSevice(service.id) }}>
           <img
             src="/images/icons/add-button-icon.svg"
             alt="add icon"
-            className="cursor-pointer"
+            className="cursor-pointer h-4 w-4"
+
           />
           <div>{t(`services_t.system_services.${service.name}`)}</div>
         </div>

@@ -57,7 +57,7 @@ const RoomTypeInformationCard: FC<RoomTypeInformationCardProps> = ({
             {!isBadAvailable && hotelRoomPart.hotelRoomPartBeds?.map((bed) => (
               <div key={bed.id} className="flex gap-2 text-sm">
                 <p>{t(`room_bed_types.${bed.bedType}`)}</p>
-                <p> {t(`room_bed_types_names_options.${bed.roomBedType?.name}`)}-{bed.roomBedSize?.size}</p>
+                <p className="whitespace-nowrap"> {t(`room_bed_types_names_options.${bed.roomBedType?.name}`)} {t("room_bad.size")} {bed.roomBedSize?.size}</p>
               </div>
             ))}
           </div>

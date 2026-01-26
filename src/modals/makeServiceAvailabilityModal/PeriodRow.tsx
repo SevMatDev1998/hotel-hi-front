@@ -25,7 +25,6 @@ const PeriodRow: FC<Props> = ({ methods, groupIndex, periodIndex, canRemove, onR
   const isDateRange = periodType === HotelServicePeriodType.DateRange;
 
   const e = (errors?.availabilities as any)?.[groupIndex]?.periods?.[periodIndex];
-  console.log(errors);
 
   // Автоматически устанавливаем даты при выборе FullYear
   useEffect(() => {

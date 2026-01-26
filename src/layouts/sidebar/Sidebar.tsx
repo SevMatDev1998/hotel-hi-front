@@ -42,8 +42,8 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={`${isSidebarOpen ? 'block' : 'hidden'}   w-64 h-full mobile:fixed mobile:left-0 mobile:top-0`} >
-      <div className="flex h-full w-64 flex-col  py-7 px-8 z-[999999] relative  mobile:bg-white mobile:shadow-block-shadow">
+      className={`${isSidebarOpen ? 'block' : 'hidden'}   w-64 h-full mobile:fixed mobile:left-0 mobile:top-0 z-[999999] relative`} >
+      <div className="flex h-full w-64 flex-col  py-7 px-8 mobile:bg-white mobile:shadow-block-shadow">
         <div className="flex h-16 items-center cursor-pointer gap-4" >
           <img src="/images/icons/secundary-logo.svg" alt="Logo" className="h-8" />
           <h1 className="text-xl font-bold ">Hotel Hive</h1>

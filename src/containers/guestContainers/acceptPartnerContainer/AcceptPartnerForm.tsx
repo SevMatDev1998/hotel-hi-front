@@ -119,6 +119,7 @@ const AcceptPartnerForm: FC<AcceptPartnerFormProps> = ({ countryOptions, legalEn
                     register={register}
                     name="email"
                     className='rounded-[5px]'
+                    disabled
                   />
                 </InputValidationLayout>
               </div>

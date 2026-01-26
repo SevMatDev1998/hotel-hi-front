@@ -127,12 +127,13 @@ const LegalInfoEditContainer: FC<ILegalInfoEditContainerProps> = ({ hotelLegalIn
                 />
               </InputValidationLayout>
             </div>
+            
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.phone_number")} *</span>
               </div>
               <InputValidationLayout className='relative' errors={errors} name="bankPhoneNumber">
-                <span>
+                <span> 
                   <RegisterInput
                     register={register}
                     name="bankPhoneNumber"

@@ -8,9 +8,10 @@ import {
 
 interface Props {
   typeId: number;
+  serviceTypeName: string;
 }
 
-const SystemServices = ({ typeId }: Props) => {
+const SystemServices = ({ typeId, serviceTypeName }: Props) => {
   const { user } = useAppSelector((state) => state.auth);
   const { data: services } = useGetSystemServicesByTypeIdQuery(
     { typeId },
@@ -28,7 +29,7 @@ const SystemServices = ({ typeId }: Props) => {
   return (
     <div className="flex flex-col gap-4">
       <AvailableServices availableServices={services} hotelId={user?.hotelId} />
-      <ExistingSystemServices existingSystemServices={hotelServiceData} />
+      <ExistingSystemServices existingSystemServices={hotelServiceData} serviceTypeName={serviceTypeName} />
     </div>
   );
 };

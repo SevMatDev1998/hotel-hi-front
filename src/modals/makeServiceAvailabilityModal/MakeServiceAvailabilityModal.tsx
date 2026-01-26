@@ -5,6 +5,8 @@ import { HotelServicePeriodType } from "../../types";
 
 interface IMakeServiceAvailabilityModalProps {
   hotelServiceId: string;
+  serviceName: string;
+  serviceTypeName: string;
   onSubmit: (payload: any) => void;
   onCancel: () => void;
 }
@@ -22,6 +24,8 @@ const isFullYearPeriod = (startMonth: string, endMonth: string): boolean => {
 
 const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> = ({
   hotelServiceId,
+  serviceName,
+  serviceTypeName,
   onCancel,
 }) => {
 
@@ -74,6 +78,10 @@ const MakeServiceAvailabilityModal: ModalFC<IMakeServiceAvailabilityModalProps> 
   return (
     <div className="p-5 flex flex-col space-y-5 w-[950px] tablet:w-[800px] mobile:w-full">
       <h3>{t("hotel_service.set_availability")}</h3>
+      <div className="flex gap-2">
+        <p>{serviceTypeName}</p>
+        <p>{serviceName}</p>
+      </div>
       <MakeServiceAvailabilityModalForm
         hotelServiceAvailabilities={availabilityData}
         hotelServiceId={hotelServiceId}

@@ -3,7 +3,7 @@ import cls from '../../utils/cls';
 
 interface SegmentedControlButtonProps {
   label: string;
-  isActive: boolean;
+  isActive?: boolean;
   onClick: () => void;
   className?: string;
 }

@@ -74,13 +74,12 @@ export const UpdateHotelLegalInfoSchema = yup.object({
     .required(tv('required'))
     .min(2, tv('min', { min: 2 }))
     .max(100, tv('max', { max: 100 })),
+  
 
   bankPhoneNumber: yup
     .string()
     .required(tv('required'))
-    .matches(/^\+\d{11}$/, tv('phone_number'))
-    .min(6, tv('min', { min: 6 }))
-    .max(15, tv('max', { max: 15 })),
+    .matches(/^\d{8}$/, tv('exact_length', { length: 8 })),
 
 
   priceSendEmail: yup

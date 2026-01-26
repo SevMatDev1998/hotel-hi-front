@@ -187,7 +187,8 @@
   "room_bad": {
     "bed_available": "Առկա մահճակալ",
     "add_base_bed": "Ավելացնել հիմնական մահճակալ",
-    "add_additional_bed": "Ավելացնել լրացուցիչ մահճակալ"
+    "add_additional_bed": "Ավելացնել լրացուցիչ մահճակալ",
+    "size": "Չափս"
   },
   "room_bed_types": {
     "Main": "Հիմնական",

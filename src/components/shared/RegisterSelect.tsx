@@ -35,13 +35,13 @@ export const RegisterSelect: React.FC<SelectProps> = ({
   const { t } = useTranslation();
   
   return (
-    <div className="relative">
+    <div className="relative z-0">
       {label && (
         <label htmlFor={name} className="block text-sm font-medium text-gray-700">
           {label}
         </label>
       )}
-      <div className="relative">
+      <div className="relative z-0">
         <select
           id={name}
           className={clsx( 

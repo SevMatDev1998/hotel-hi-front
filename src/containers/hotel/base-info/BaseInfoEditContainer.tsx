@@ -65,12 +65,9 @@ const BaseInfoEditContainer: FC<BaseInfoEditnoContainerProps> = ({ hotelBaseInfo
               </span>
             </div>}
           <div className='mb-6'>
-
             <InfoBlock text={t("You will have the opportunity to receive reservations during the mentioned period. Also to make changes through price regulation")} />
           </div>
-
           <div className="space-y-4 ml-5">
-
             <div className='grid grid-cols-[1fr_3fr] mobile:grid-cols-1 gap-2 items-center'>
               <div >
                 <span >{t("hotel.hotel_name")} *</span>

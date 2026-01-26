@@ -20,7 +20,7 @@ const SystemServiceTypes = ({ groupId }: Props) => {
         <AccordionItem key={type.id} value={`type-${type.id}`} className='border-none'>
           <AccordionTrigger>{t(`services_t.types.${type.name}`)}</AccordionTrigger>
           <AccordionContent>
-            <SystemServices typeId={type.id} />
+            <SystemServices typeId={type.id} serviceTypeName={t(`services_t.types.${type.name}`)} />
           </AccordionContent>
         </AccordionItem>
       ))}

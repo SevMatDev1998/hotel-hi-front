@@ -85,7 +85,7 @@ export const getNotificationsColumns = (
             disabled={!row.original.isPartnerCommissionAccept ||isNotificationSendLoading}
           className={row.original.isPartnerCommissionAccept ? "text-dusty-teal" : "text-black"}
         >
-          { t("notifications.notify")}
+          { row.original.isPartnerCommissionAccept ? t("notifications.notify") : new Date(row.original.lastNotificationSentAt).toLocaleDateString() }
         </Button>
       ),
     }

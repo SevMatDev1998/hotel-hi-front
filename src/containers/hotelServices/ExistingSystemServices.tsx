@@ -8,9 +8,10 @@ import { SystemService } from "../../types";
 
 interface IExistingSystemServicesProps {
   existingSystemServices: SystemService[]
+  serviceTypeName: string
 }
 
-const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSystemServices }) => {
+const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSystemServices, serviceTypeName }) => {
 
   const open = useModal();
   const { t } = useTranslation();
@@ -21,10 +22,11 @@ const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSyst
     deleteService({ hotelServiceId: serviceId })
   }
 
-  const handleLogOut = (hotelServiceId: string) => {
-    // You must provide a valid hotelRoomId (replace 0 with the actual id if available)
+  const handleLogOut = (systemService: SystemService) => {
     open(MakeServiceAvailabilityModal, {
-      hotelServiceId: hotelServiceId,
+      hotelServiceId: systemService.id,
+      serviceName: t(`services_t.system_services.${systemService.service.name}`),
+      serviceTypeName: serviceTypeName,
       className: "bg-white"
     });
   };
@@ -47,7 +49,7 @@ const ExistingSystemServices: FC<IExistingSystemServicesProps> = ({ existingSyst
             <Button
               variant="textUnderline"
               color={!!systemService.hotelServiceAvailabilities?.length > 0 ? "#C69A3C" : ""}
-              onClick={() => handleLogOut(systemService.id)}
+              onClick={() => handleLogOut(systemService)}
             >
               {!!systemService.hotelServiceAvailabilities?.length > 0
                 ? t("hotel_service.see_availability")
