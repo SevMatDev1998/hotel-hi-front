@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../../components/shared/Button";
 import { DataTable } from "../../../components/shared/Table";
@@ -9,7 +9,8 @@ import {
   useLazyGetPartnerCommissionsQuery,
   useSavePartnerCommissionsMutation,
   useSendPartnerNotificationMutation,
-  useUpdatePartnerCommissionMutation
+  useUpdatePartnerCommissionMutation,
+  useSendAllNotificationsMutation
 } from "../../../services/notifications/notifications.service";
 import CommissionDateView from "../../../components/shared/CommissionDateView";
 import EditCommissionModal from "../../../modals/EditCommisionModal";
@@ -29,6 +30,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
   const [page, setPage] = useState<string>("1");
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
   const [expandedPartnerId, setExpandedPartnerId] = useState<number | null>(null);
+  const [selectedPartners, setSelectedPartners] = useState<Set<string>>(new Set());
 
   const { data: notifications } = useGetAllNotificationsQuery({ hotelId: hotelId! }, {
     skip: !hotelId,
@@ -41,6 +43,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
   const [saveCommissions] = useSavePartnerCommissionsMutation();
   const [sendNotification, { isLoading: isNotificationSendLoading }] = useSendPartnerNotificationMutation();
   const [updatePartnerCommission] = useUpdatePartnerCommissionMutation();
+  const [sendAllNotifications, { isLoading: isSendAllLoading }] = useSendAllNotificationsMutation();
 
   const onChangePage = (pageNumber: string) => {
     if (pageNumber !== page) {
@@ -54,6 +57,18 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
     }, 500)
   }, [setSearch, debounse])
 
+  useEffect(() => {
+    if (notifications) {
+      const initialSelected = new Set<string>();
+      notifications.forEach((partner: any) => {
+        if (!partner.lastNotificationSentAt) {
+          initialSelected.add(partner.id);
+        }
+      });
+      setSelectedPartners(initialSelected);
+    }
+  }, [notifications]);
+
   const handleToggleRow = useCallback((partnerId: number) => {
     setExpandedRows(prev => {
       const newSet = new Set(prev);
@@ -61,10 +76,9 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
         newSet.delete(partnerId);
         setExpandedPartnerId(null);
       } else {
-        newSet.clear(); // Only one row expanded at a time
+        newSet.clear();
         newSet.add(partnerId);
         setExpandedPartnerId(partnerId);
-        // Fetch commissions for this partner
         if (hotelId) {
           getPartnerCommissions({ hotelId, partnerId: partnerId.toString() });
         }
@@ -73,18 +87,35 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
     });
   }, [hotelId, getPartnerCommissions]);
 
-  const handleToggleNotification = useCallback((partnerId: number, enabled: boolean) => {
-    console.log('Toggle notification for partner:', partnerId, 'enabled:', enabled);
+  const handleToggleNotification = useCallback((partnerId: string, enabled: boolean) => {
+    setSelectedPartners(prev => {
+      const newSet = new Set(prev);
+      if (enabled) {
+        newSet.add(partnerId);
+      } else {
+        newSet.delete(partnerId);
+      }
+      return newSet;
+    });
   }, []);
 
   const handleSendNotification = useCallback(async (partnerId: string) => {
     if (!hotelId) return;
-    sendNotification({
+    await sendNotification({
       hotelId: hotelId,
       partnerId
     }).unwrap();
-
   }, [hotelId, sendNotification]);
+
+  const handleSendAll = useCallback(async () => {
+    if (!hotelId || selectedPartners.size === 0) return;
+    
+    const partnerIds = Array.from(selectedPartners);
+    await sendAllNotifications({
+      hotelId: hotelId,
+      partnerIds
+    }).unwrap();
+  }, [hotelId, selectedPartners, sendAllNotifications]);
 
   const handleSaveCommissions = useCallback(async () => {
     if (!expandedPartnerId || !partnerCommissions) return;
@@ -141,7 +172,6 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
                       <td className="py-3 px-4 align-top">
                         <CommissionDateView dateCommissions={commissions} />
                       </td>
-                      {/* Second column - availability name with color (once) */}
                       <td className="py-3 px-4 align-top">
                         <div className="flex items-center gap-2">
                           <span
@@ -189,6 +219,15 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
 
   return (
     <div>
+      <div className="flex justify-end mb-4">
+        <Button
+          onClick={handleSendAll}
+          disabled={selectedPartners.size === 0 || isSendAllLoading}
+          isLoading={isSendAllLoading}
+        >
+          {t("notifications.send_all")} ({selectedPartners.size})
+        </Button>
+      </div>
       <DataTable
         data={tableData}
         columns={getNotificationsColumns(
@@ -197,6 +236,7 @@ const NotifiacationsTable = ({ hotelId }: INotificationsTableProps) => {
           handleToggleRow,
           handleToggleNotification,
           isNotificationSendLoading,
+          selectedPartners,
         )}
         onChangePage={onChangePage}
         totalCount={notifications?.meta?.totalPages || 0}
