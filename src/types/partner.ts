@@ -13,6 +13,7 @@ export interface Partner {
   countryId: number;
   legalEntityTypeId: LegalEntityType;
   isPartnerCommissionAccept: boolean;
+  lastNotificationSentAt?: Date | null;
   isSystem: boolean;
   createdAt: Date;
   updatedAt: Date;

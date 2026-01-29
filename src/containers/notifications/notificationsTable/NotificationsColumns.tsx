@@ -74,19 +74,28 @@ export const getNotificationsColumns = (
     {
       id: 'notified',
       header: t("notifications.notified"),
-      cell: ({ row }: { row: { original: Partner } }) => (
-        <Button
-          variant='text'
-          onClick={(e) => {
-            e.stopPropagation();
-            onSendNotification(row.original.id);
-          }}
-          isLoading ={isNotificationSendLoading}
-            disabled={!row.original.isPartnerCommissionAccept ||isNotificationSendLoading}
-          className={row.original.isPartnerCommissionAccept ? "text-dusty-teal" : "text-black"}
-        >
-          { row.original.isPartnerCommissionAccept ? t("notifications.notify") : new Date(row.original.lastNotificationSentAt).toLocaleDateString() }
-        </Button>
-      ),
+      cell: ({ row }: { row: { original: Partner } }) => {
+        const hasSchedule = row.original.lastNotificationSentAt;
+        const canNotify = row.original.isPartnerCommissionAccept;
+        const isButtonActive = canNotify && !hasSchedule;
+          
+        return (
+          <Button
+            variant='text'
+            onClick={(e) => {
+              e.stopPropagation();
+              onSendNotification(row.original.id);
+            }}
+            isLoading={isNotificationSendLoading}
+            disabled={!isButtonActive || isNotificationSendLoading}
+            className={isButtonActive ? "text-dusty-teal cursor-pointer" : "text-dusty-teal cursor-not-allowed"}
+          >
+            {hasSchedule 
+              ? new Date(row.original.lastNotificationSentAt!).toLocaleDateString() 
+              : t("notifications.notify")
+            }
+          </Button>
+        );
+      },
     }
   ];
